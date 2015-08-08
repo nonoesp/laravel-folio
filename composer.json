@@ -1,6 +1,6 @@
 {
     "name": "nonoesp/writing",
-    "description": "",
+    "description": "A writing system for Laravel 4.",
     "authors": [
         {
             "name": "Nono Martínez Alonso",
