@@ -19,6 +19,8 @@ class WritingServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('nonoesp/writing');
+
+    	include __DIR__.'/routes.php';		
 	}
 
 	/**
@@ -28,7 +30,16 @@ class WritingServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->app->booting(function()
+		{
+		  $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+		  $loader->alias('Writing', 'Nonoesp\Writing\Facades\Writing');
+		});
+
+		$this->app['writing'] = $this->app->share(function($app)
+		{
+		return new Writing;
+		});
 	}
 
 	/**
@@ -38,7 +49,7 @@ class WritingServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('writing');
 	}
 
 }
