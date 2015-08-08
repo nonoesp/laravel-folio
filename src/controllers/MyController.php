@@ -31,7 +31,7 @@ class MyController extends \BaseController {
 		// Get Expected Articles
 		$show_expected = 3;
 		$articles_expected = \Article::expected()->orderBy('published_at', 'ASC')->take($show_expected)->get()->reverse();
-		return \View::make('page.writing')->with(array('articles' => $articles,
+		return \View::make('writing::base')->with(array('articles' => $articles,
 													  'ids' => $ids_array,
 													  'articles_expected' => $articles_expected));
 	}
@@ -52,7 +52,7 @@ class MyController extends \BaseController {
 			}
 		}
 
-		return \View::make('page.writing')->
+		return \View::make('writing::base')->
 		             with(array(
 		             	  'articles' => $articles,
 		             	  'ids' => $ids_array, 
@@ -64,7 +64,7 @@ class MyController extends \BaseController {
 		$article = \Article::whereSlug($slug)->first();
 		$article->visits++;
 		$article->save();
-		return \View::make('page.writing')->with('article', $article);
+		return \View::make('writing::base')->with('article', $article);
 	}
 
 	public function showArticleWithId($id) {

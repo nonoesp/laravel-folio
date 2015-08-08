@@ -20,9 +20,6 @@ class Writing {
 		$result = '';
 		$idx = 0;
 		foreach($tags as $tag) {
-			/*if($idx > 0) {
-				$result .= ', ';
-			}*/
 			$result .= Writing::articleTag($tag, $class);
 			$idx++;
 		}
