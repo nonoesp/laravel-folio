@@ -57,7 +57,7 @@
 			@if ($article_type == 'SUMMARY_ARTICLE_TYPE')
 				<p>
 					{{ Thinker::limitMarkdownText(Markdown::string($article->text), 275, array('figcaption')) }}
-					{{ HTML::link(Config::get('writing::path').'/'.$article->slug, trans('blog.continue-reading')) }}
+					{{ HTML::link(Config::get('writing::path').'/'.$article->slug, trans('writing::base.continue-reading')) }}
 				</p>
 			@endif
 		
