@@ -30,7 +30,7 @@ class Writing {
 	}
 
 	public static function articleTag($tag, $class) {
-		return \HTML::link(Config::get('writing::path').'/tag/'.\Conner\Tagging\TaggingUtil::slug($tag), $tag, array('class' => $class));
+		return \HTML::link(\Config::get('writing::path').'/tag/'.\Conner\Tagging\TaggingUtil::slug($tag), $tag, array('class' => $class));
 	}
 
 }
