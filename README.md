@@ -16,6 +16,7 @@ This package assumes your Laravel app is providing a `layout.main` view which is
 * c-article
 * c-load-more
 * o-wrap
+* o-video-thumb
 
 ## TODO
 

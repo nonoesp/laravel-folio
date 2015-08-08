@@ -1,5 +1,7 @@
 <?php namespace Nonoesp\Writing;
 
+use Nonoesp\Writing\Article;
+
 class MyController extends \BaseController {
 
 	/*
@@ -19,9 +21,9 @@ class MyController extends \BaseController {
 
 		// Get Articles + Articles ids
 		$show = 5;
-		$left = \Article::published()->count();
-  		$articles = \Article::published()->orderBy('published_at', 'DESC')->skip(0)->take($show)->get();
-		$ids = \Article::published()->select('id','published_at')->orderBy('published_at', 'DESC')->skip($show)->take($left)->get();
+		$left = Article::published()->count();
+  		$articles = Article::published()->orderBy('published_at', 'DESC')->skip(0)->take($show)->get();
+		$ids = Article::published()->select('id','published_at')->orderBy('published_at', 'DESC')->skip($show)->take($left)->get();
 		$ids_array = array();
 
 		foreach($ids as $id) {
@@ -30,7 +32,7 @@ class MyController extends \BaseController {
 
 		// Get Expected Articles
 		$show_expected = 3;
-		$articles_expected = \Article::expected()->orderBy('published_at', 'ASC')->take($show_expected)->get()->reverse();
+		$articles_expected = Article::expected()->orderBy('published_at', 'ASC')->take($show_expected)->get()->reverse();
 		return \View::make('writing::base')->with(array('articles' => $articles,
 													  'ids' => $ids_array,
 													  'articles_expected' => $articles_expected));
@@ -40,12 +42,12 @@ class MyController extends \BaseController {
 	public function showArticleTag($tag) {
 
 		$show = 5;
-		$left = \Article::withAnyTag($tag)->published()->count() - $show;
+		$left = Article::withAnyTag($tag)->published()->count() - $show;
 
-  		$articles = \Article::withAnyTag($tag)->published()->orderBy('published_at', 'DESC')->skip(0)->take($show)->get();
+  		$articles = Article::withAnyTag($tag)->published()->orderBy('published_at', 'DESC')->skip(0)->take($show)->get();
 		$ids_array = array();  		
   		if ($left > 0) {
-			$ids = \Article::withAnyTag($tag)->published()->select('id','published_at')->orderBy('published_at', 'DESC')->skip($show)->take($left)->get();
+			$ids = Article::withAnyTag($tag)->published()->select('id','published_at')->orderBy('published_at', 'DESC')->skip($show)->take($left)->get();
 
 			foreach($ids as $id) {
 				array_push($ids_array, $id->id);
@@ -61,14 +63,14 @@ class MyController extends \BaseController {
 
 	public function showArticle($slug) {
 
-		$article = \Article::whereSlug($slug)->first();
+		$article = Article::whereSlug($slug)->first();
 		$article->visits++;
 		$article->save();
 		return \View::make('writing::base')->with('article', $article);
 	}
 
 	public function showArticleWithId($id) {
-		$article = \Article::withTrashed()->find($id);
+		$article = Article::withTrashed()->find($id);
 		return \Redirect::to(\Config::get('writing::path').'/'.$article->slug);
 	}
 
@@ -80,7 +82,7 @@ class MyController extends \BaseController {
 		// Echo Articles
 		foreach(\Input::get('ids') as $id) {
 			echo \View::make('partial.blog.c-article')->
-			           with(array('article' => \Article::find($id),
+			           with(array('article' => Article::find($id),
 			           	  		  'article_type' => $article_type,
 			           	  		  'isTitleLinked' => true));
 		}
@@ -101,7 +103,7 @@ class MyController extends \BaseController {
 
 	       // creating rss feed with our most recent articles
 		   $show = 30;
-	  	   $articles = \Article::published()->orderBy('published_at', 'DESC')->take($show)->get();
+	  	   $articles = Article::published()->orderBy('published_at', 'DESC')->take($show)->get();
 
 	       // set your feed's title, description, link, pubdate and language
 	       $feed->title = \Config::get('settings.title');

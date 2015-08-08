@@ -11,7 +11,6 @@
   $(document).on('click', '.js-c-load-more__load-more', function(){
   	$(".js-c-load-more").addClass('is-loading');
     loadMore();
-    alert('Bingo!');
   });
 
 

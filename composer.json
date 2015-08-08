@@ -14,7 +14,8 @@
     "autoload": {
         "classmap": [
             "src/migrations",
-            "src/controllers"
+            "src/controllers",
+            "src/models"
         ],
         "psr-0": {
             "Nonoesp\\Writing\\": "src/"

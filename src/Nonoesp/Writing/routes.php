@@ -2,6 +2,12 @@
 
 $path = Config::get('writing::path');
 
+use Nonoesp\Writing\Talker;
+
+Route::get($path.'/talker', function() {
+	Talker::talk();
+});
+
 /*----------------------------------------------------------------*/
 /* BlogController
 /*----------------------------------------------------------------*/
@@ -12,3 +18,4 @@ Route::get($path.'/{id}', 'Nonoesp\Writing\MyController@showArticleWithId')->whe
 Route::get($path.'/{slug}', 'Nonoesp\Writing\MyController@showArticle');
 Route::post('/articles', 'Nonoesp\Writing\MyController@getArticlesWithIds');
 Route::get('/feed', array('as' => 'feed', 'uses' => 'Nonoesp\Writing\MyController@getFeed'));
+
