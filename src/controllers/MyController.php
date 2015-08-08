@@ -107,7 +107,7 @@ class MyController extends \BaseController {
 	       $feed->title = \Config::get('settings.title');
 	       $feed->description = \Config::get('settings.description');
 	       $feed->logo = 'http://ar-ma.net/img/image_src.jpg';
-	       $feed->link = \URL::to('/writing');
+	       $feed->link = \URL::to('/'.\Config::get('writing::path'));
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
 	       $feed->pubdate = $articles[0]->created_at;
 	       $feed->lang = 'en';
@@ -124,14 +124,14 @@ class MyController extends \BaseController {
 	       	   }
 
 	       	   if ($article->video) {
-	       	   	 $image = '<p><a href="http://ar-ma.net/writing/'.$article->slug.'"><img src="'.\Thinker::getVideoThumb($article->video).'" alt="'.$article->title.'"></a></p>';
+	       	   	 $image = '<p><a href="http://ar-ma.net/'.\Config::get('writing::path').'/'.$article->slug.'"><img src="'.\Thinker::getVideoThumb($article->video).'" alt="'.$article->title.'"></a></p>';
 	       	   }
 
 	       	   if ($imageURL != '') {
 	       	   	 $image = '<p><img src="'.$imageURL.'" alt="'.$article->title.'"></p>';
 	       	   }
 
-	           $feed->add($article->title, $default_author, \URL::to('writing/'.$article->slug), $article->published_at, '', str_replace('<img', '<img width="100%"', $image.\Markdown::string($article->text)));
+	           $feed->add($article->title, $default_author, \URL::to(\Config::get('writing::path').'/'.$article->slug), $article->published_at, '', str_replace('<img', '<img width="100%"', $image.\Markdown::string($article->text)));
 	       }
 
 	    }
