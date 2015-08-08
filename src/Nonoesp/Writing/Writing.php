@@ -3,7 +3,7 @@
 class Writing {
  
 	public static function greeting() {
-		return 'Hello, I am the Writing class.';
+		return 'Hello, I am the Writing class. An update here.';
 	}
 
 }
