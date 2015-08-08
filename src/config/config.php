@@ -2,5 +2,5 @@
 
 return array(
 
-	'path' => 'the-blog',
+	'path' => 'blog',
 );
