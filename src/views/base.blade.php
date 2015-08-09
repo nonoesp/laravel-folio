@@ -143,6 +143,7 @@
     @endif
 
     <script type="text/javascript" src="/packages/nonoesp/writing/js/writing.js"></script>
+    <script type="text/javascript" src="/js/header.js"></script>
 
 @stop
 
