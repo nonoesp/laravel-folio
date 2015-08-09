@@ -27,9 +27,9 @@
  --><div class="[ grid__item  one-quarter  portable--one-whole ]  [ -u-border ]">
 	  {{-- Title --}}
 	  @if (isset($isTitleLinked))
-	    <h1>[ {{ HTML::link(Config::get('writing::path').'/'.$article->slug, Thinker::title($article->title)) }} ]</h1>
+	    <h1>{{ HTML::link(Config::get('writing::path').'/'.$article->slug, Thinker::title($article->title)) }}</h1>
 	  @else
-	    <h1>[ {{ Thinker::title($article->title) }} ]</h1>
+	    <h1>{{ Thinker::title($article->title) }}</h1>
 	  @endif
 	  <div class="c-article__date">{{ $date }}</div>
 
@@ -57,7 +57,7 @@
 			@if ($article_type == 'SUMMARY_ARTICLE_TYPE')
 				<p>
 					{{ Thinker::limitMarkdownText(Markdown::string($article->text), 275, array('figcaption')) }}
-					{{ HTML::link(Config::get('writing::path').'/'.$article->slug, '['.trans('writing::base.continue-reading').']') }}
+					{{ HTML::link(Config::get('writing::path').'/'.$article->slug, trans('writing::base.continue-reading')) }}
 				</p>
 			@endif
 		
