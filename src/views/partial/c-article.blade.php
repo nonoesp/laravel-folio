@@ -19,19 +19,56 @@
 
     // Date
     $date = new Date($article->published_at);
-    $date = ucWords($date->format('l j, F Y'));
+    $date = ucWords(substr($date->format('F'), 0, 3).$date->format(' j, Y'));
+
+    // Author
+    $user_thumbnail = NULL;
+    $user = NULL;
+    if($article->user_id) {
+ 	   $user = User::find($article->user_id);
+ 	   $user_thumbnail = View::make('partial.c-user-picture')->with(["user" => $user,
+	  										     		   			 "size" => 36]);
+	}
 ?>
 
 <article class="[ grid ]  [ c-article @if(isset($class)) {{ $class }} @endif{{ Writing::articleCategoryClass($article->tagNames(), 'c-article') }}{{ (count($article->tagNames()) > 0) ? 'is-tagged' : '' }} ]"><!--
 
  --><div class="[ grid__item  one-quarter  portable--one-whole ]  [ -u-border ]">
+
+
 	  {{-- Title --}}
 	  @if (isset($isTitleLinked))
 	    <h1>{{ HTML::link(Config::get('writing::path').'/'.$article->slug, Thinker::title($article->title)) }}</h1>
 	  @else
 	    <h1>{{ Thinker::title($article->title) }}</h1>
 	  @endif
-	  <div class="c-article__date">{{ $date }}</div>
+
+	  {{-- Meta --}}
+
+	  @if(isset($user))
+
+		  <div class="c-article__meta">
+			  {{ $user_thumbnail }}
+			  <div class="c-article__meta__inline">
+			  	<div class="c-article__meta__inline--user">
+			  		<a href="/author" class="c-article__link--accent">@if($user){{ $user->name }}@endif</a>
+			  	</div>
+			  	<br>
+			  	<div class="c-article__meta__inline--date">
+			  		{{ $date }}
+			  	</div>
+			  </div>
+		  </div>	
+
+	  @else
+
+		  <div class="c-article__meta">
+			  	<div class="c-article__meta__inline--date-big">
+			  		{{ $date }}
+			  	</div>
+		  </div>
+  
+	  @endif
 
     </div><!--
 
