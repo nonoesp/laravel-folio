@@ -31,7 +31,7 @@ class Writing {
 	}
 
 	public static function userURL($user) {
-		return '@'.$user->twitter;
+		return '/@'.$user->twitter;
 	}
 
 }

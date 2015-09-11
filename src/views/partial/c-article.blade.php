@@ -49,12 +49,12 @@
 
 		  <div class="c-article__meta">
 			  {{ $user_thumbnail }}
-			  <div class="c-article__meta__inline">
-			  	<div class="c-article__meta__inline--user">
+			  <div class="[ c-article__inline-container ]">
+			  	<div class="[ c-article__inline-detail  c-article__inline-detail--user ]">
 			  		<a href="{{ Writing::userURL($user) }}" class="c-article__link--accent">@if($user){{ $user->name }}@endif</a>
 			  	</div>
 			  	<br>
-			  	<div class="c-article__meta__inline--date">
+			  	<div class="[ c-article__inline-detail ]">
 			  		{{ $date }}
 			  	</div>
 			  </div>
@@ -63,7 +63,7 @@
 	  @else
 
 		  <div class="c-article__meta">
-			  	<div class="c-article__meta__inline--date-big">
+			  	<div class="[ c-article__inline-detail  c-article__inline-detail--medium ]">
 			  		{{ $date }}
 			  	</div>
 		  </div>
