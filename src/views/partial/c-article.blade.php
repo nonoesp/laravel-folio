@@ -51,7 +51,7 @@
 			  {{ $user_thumbnail }}
 			  <div class="c-article__meta__inline">
 			  	<div class="c-article__meta__inline--user">
-			  		<a href="/author" class="c-article__link--accent">@if($user){{ $user->name }}@endif</a>
+			  		<a href="{{ Writing::userURL($user) }}" class="c-article__link--accent">@if($user){{ $user->name }}@endif</a>
 			  	</div>
 			  	<br>
 			  	<div class="c-article__meta__inline--date">

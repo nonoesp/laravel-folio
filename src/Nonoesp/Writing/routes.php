@@ -19,3 +19,7 @@ Route::get($path.'/{slug}', 'Nonoesp\Writing\MyController@showArticle');
 Route::post('/articles', 'Nonoesp\Writing\MyController@getArticlesWithIds');
 Route::get('/feed', array('as' => 'feed', 'uses' => 'Nonoesp\Writing\MyController@getFeed'));
 
+Route::get('/@{user_twitter}', function($user_twitter) {
+	$user = \User::where('twitter', '=', $user_twitter)->first();
+	return \View::make('writing::profile')->withUser($user);
+});
