@@ -21,7 +21,7 @@ This package assumes your Laravel app is providing a `layout.main` view which is
 
 ## TODO
 
-* Add assets inside package, make them publishable. At least `writing.js`.
+* Put user route inside controller.
 
 # Notes++
 
