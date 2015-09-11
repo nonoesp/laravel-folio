@@ -124,6 +124,12 @@
                      with(['article' => $article,
                            'class' => '-u-no-margin-bottom  -u-no-border-bottom']) }}
 
+      @section('metadata')
+        <!-- Metadata Extra for Article -->
+        <<meta property="article:published_time" content="{{ $article->published_at }}"/>
+        <meta property="article:modified_time" content="{{ $article->modified_at }}"/>
+      @stop
+
       @endif
 
     </div>
