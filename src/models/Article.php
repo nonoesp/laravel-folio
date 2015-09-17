@@ -1,9 +1,7 @@
 <?php namespace Nonoesp\Writing;
 
-use \Illuminate\Database\Eloquent\SoftDeletingTrait;
-
 class Article extends \Eloquent {
-	use \SoftDeletingTrait;
+	use \Illuminate\Database\Eloquent\SoftDeletingTrait;
 	use \Conner\Tagging\TaggableTrait;
 
 	protected $dates = ['deleted_at'];

@@ -1,6 +1,7 @@
 <?php namespace Nonoesp\Writing;
 
-use Nonoesp\Writing\Article;
+//use Nonoesp\Writing\Article;
+use Article;
 
 class WritingController extends \BaseController {
 
