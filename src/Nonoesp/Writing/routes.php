@@ -12,12 +12,12 @@ Route::get($path.'/talker', function() {
 /* BlogController
 /*----------------------------------------------------------------*/
 
-Route::get($path, array('as' => 'blog', 'uses' => 'Nonoesp\Writing\MyController@showHome'));
-Route::get($path.'/tag/{tag}', 'Nonoesp\Writing\MyController@showArticleTag');
-Route::get($path.'/{id}', 'Nonoesp\Writing\MyController@showArticleWithId')->where('id', '[0-9]+');
-Route::get($path.'/{slug}', 'Nonoesp\Writing\MyController@showArticle');
-Route::post('/articles', 'Nonoesp\Writing\MyController@getArticlesWithIds');
-Route::get('/feed', array('as' => 'feed', 'uses' => 'Nonoesp\Writing\MyController@getFeed'));
+Route::get($path, array('as' => 'blog', 'uses' => 'Nonoesp\Writing\WritingController@showHome'));
+Route::get($path.'/tag/{tag}', 'Nonoesp\Writing\WritingController@showArticleTag');
+Route::get($path.'/{id}', 'Nonoesp\Writing\WritingController@showArticleWithId')->where('id', '[0-9]+');
+Route::get($path.'/{slug}', 'Nonoesp\Writing\WritingController@showArticle');
+Route::post('/articles', 'Nonoesp\Writing\WritingController@getArticlesWithIds');
+Route::get('/feed', array('as' => 'feed', 'uses' => 'Nonoesp\Writing\WritingController@getFeed'));
 
 Route::get('/@{user_twitter}', function($user_twitter) {
 	$user = \User::where('twitter', '=', $user_twitter)->first();

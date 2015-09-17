@@ -2,7 +2,7 @@
 
 use Nonoesp\Writing\Article;
 
-class MyController extends \BaseController {
+class WritingController extends \BaseController {
 
 	/*
 	|--------------------------------------------------------------------------

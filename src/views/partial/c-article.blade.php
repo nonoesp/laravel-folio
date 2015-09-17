@@ -98,8 +98,10 @@
 				</p>
 			@endif
 		
-		{{-- Tags --}}
+		{{-- Tags --}} tags
+		<?php print_r($article->tagNames()); ?>
 			@if (count($article->tagNames()) > 0)
+			tags
 				<p class="c-article__tags">{{ Writing::displayArticleTags($article->tagNames(), 'c-article__tag u-case-upper') }}</p>
 			@endif
 
