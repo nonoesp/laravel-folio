@@ -64,7 +64,7 @@
 							$date = ucWords(substr($date->format('F'), 0, 3).$date->format(' j, Y'));
 						?>
 
-	   					{{ HTML::link(Config::get('writing::path').'/'.$article->slug, $article->title, ['class' => 'u-font-size--b']) }}
+	   					{{ HTML::link(Config::get('writing.path').'/'.$article->slug, $article->title, ['class' => 'u-font-size--b']) }}
 
    						<div class="c-article__inline-container">
    							<div class="c-article__inline-detail">
