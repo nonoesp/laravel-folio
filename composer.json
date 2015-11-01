@@ -12,10 +12,12 @@
         "classmap": [
             "src/controllers"
         ],
-        "psr-0": {
-            "Writing\\": "src/"
+        "psr-4": {
+            "Nonoesp\\Writing\\": "src"
         }
     },
     "minimum-stability" : "dev",
-    "require": {}
+    "require": {
+        "illuminate/support": "~5"
+    }
 }

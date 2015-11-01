@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Nonoesp\\Writing\\Controllers\\Controller' => $baseDir . '/src/controllers/Controller.php',
-    'Nonoesp\\Writing\\WritingController' => $baseDir . '/src/controllers/WritingController.php',
+    'Nonoesp\\Writing\\Controllers\\WritingController' => $baseDir . '/src/controllers/WritingController.php',
 );
