@@ -1,6 +1,6 @@
-# laravel-writing
+# Writing System for Laravel 5
 
-A writing system for Laravel 5.
+A blogging system for Laravel 5.
 
 ## Installation
 
