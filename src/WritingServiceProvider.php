@@ -31,6 +31,9 @@ class WritingServiceProvider extends ServiceProvider
         $this->publishes([$path_assets => $publish_path_assets,], 'assets');
         $this->publishes([__DIR__.'/../config/config.php' => $publish_path_config,], 'config');
 
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'writing');
+
+
         // Views
         if (is_dir($publish_path_views)) {
             $this->loadViewsFrom($publish_path_views, 'writing'); // Load published views
