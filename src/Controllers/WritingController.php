@@ -77,7 +77,7 @@ class WritingController extends Controller
 
 		// Echo Articles
 		foreach(\Input::get('ids') as $id) {
-			echo view('partial.blog.c-article')->
+			echo view('writing::partial.c-article')->
 			           with(array('article' => Article::find($id),
 			           	  		  'article_type' => $article_type,
 			           	  		  'isTitleLinked' => true));

@@ -20,7 +20,7 @@ if(Writing::isAvailableURI()) {
 		return view('writing::profile')->withUser($user);
 	});
 	Route::get('/feed', array('as' => 'feed', 'uses' => 'Nonoesp\Writing\Controllers\WritingController@getFeed'));
-	Route::post('/articles', 'Nonoesp\Writing\Controllers\WritingController@getArticlesWithIds');
+	Route::any('/articles', 'Nonoesp\Writing\Controllers\WritingController@getArticlesWithIds');
 	Route::get($path, array('as' => 'blog', 'uses' => 'Nonoesp\Writing\Controllers\WritingController@showHome'));
 	Route::get($path.'tag/{tag}', 'Nonoesp\Writing\Controllers\WritingController@showArticleTag');
 	Route::get($path.'{id}', 'Nonoesp\Writing\Controllers\WritingController@showArticleWithId')->where('id', '[0-9]+');	
