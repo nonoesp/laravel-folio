@@ -1,18 +1,18 @@
 @extends('layout.main')
 
 <?php
-	use Arma\Article;
+
 	// Settings
 	$header_classes = 'c-header--relative';
 
 	// User Articles
 	$articles = Article::where('user_id', '=', $user->id)->orderBy('id', 'DESC')->take(5)->get();
 
-	$user_thumbnail = \View::make('partial.c-user-picture')->with(["user" => $user,
-	         													   "size" => 75,
-	         													   "margin_top" => "-15",
-	         													   "margin_bottom" => "15",
-	         													   "shouldLink" => false]);
+	$user_thumbnail = View::make('partial.c-user-picture')->with(["user" => $user,
+	         													  "size" => 75,
+	         													  "margin_top" => "-15",
+	         													  "margin_bottom" => "15",
+	         													  "shouldLink" => false]);
 ?>
 
 
@@ -64,7 +64,7 @@
 							$date = ucWords(substr($date->format('F'), 0, 3).$date->format(' j, Y'));
 						?>
 
-	   					{{ HTML::link(Config::get('writing.path').'/'.$article->slug, $article->title, ['class' => 'u-font-size--b']) }}
+	   					{{ HTML::link(Writing::path().$article->slug, $article->title, ['class' => 'u-font-size--b']) }}
 
    						<div class="c-article__inline-container">
    							<div class="c-article__inline-detail">

@@ -1,5 +1,9 @@
 <?php namespace Nonoesp\Writing;
+ 
  use Lang;
+ use Config;
+ use Request;
+ use HTML;
 
 class Writing {
 
@@ -28,11 +32,27 @@ class Writing {
 	}
 
 	public static function tagWithClass($tag, $class) {
-		return \HTML::link(\Config::get('writing.path').'/tag/'.$tag->slug, $tag->name, array('class' => $class));
+		return HTML::link(Writing::path().'tag/'.$tag->slug, $tag->name, array('class' => $class));
 	}
 
 	public static function userURL($user) {
 		return '/@'.$user->twitter;
+	}
+
+	public static function path() {
+		if(Config::get('writing.use_path_prefix')) {
+			return Config::get('writing.path').'/';
+		} else {
+			return '';
+		}
+	}
+
+	public static function isAvailableURI() {
+		if(!in_array(Request::path(), Config::get('writing.protected_uris'))) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

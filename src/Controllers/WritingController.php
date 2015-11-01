@@ -3,11 +3,11 @@
 namespace Nonoesp\Writing\Controllers;
 
 use Illuminate\Http\Request;
-//use Arma\Http\Requests;
-//use Arma\Http\Controllers\Controller;
+use Article, User; // Must be defined in your aliases
+use Nonoesp\Writing\Writing;
 use View;
-use Arma\Article;
-use Arma\User;
+use Config;
+
 
 class WritingController extends Controller
 {
@@ -57,15 +57,17 @@ class WritingController extends Controller
 
 	public function showArticle($slug) {
 
-		$article = Article::whereSlug($slug)->first();
-		$article->visits++;
-		$article->save();
-		return view('writing::base')->with('article', $article);
+		if($article = Article::whereSlug($slug)->first()) {
+			$article->visits++;
+			$article->save();
+			return view('writing::base')->with('article', $article);			
+		}
+
 	}
 
 	public function showArticleWithId($id) {
 		$article = Article::withTrashed()->find($id);
-		return \Redirect::to(\Config::get('writing::path').'/'.$article->slug);
+		return \Redirect::to(Writing::path().$article->slug);
 	}
 
 	public function getArticlesWithIds() {
@@ -100,10 +102,10 @@ class WritingController extends Controller
 	  	   $articles = Article::published()->orderBy('published_at', 'DESC')->take($show)->get();
 
 	       // set your feed's title, description, link, pubdate and language
-	       $feed->title = \Config::get('settings.title');
-	       $feed->description = \Config::get('settings.description');
+	       $feed->title = Config::get('settings.title');
+	       $feed->description = Config::get('settings.description');
 	       $feed->logo = 'http://ar-ma.net/img/image_src.jpg';
-	       $feed->link = \URL::to('/'.\Config::get('writing::path'));
+	       $feed->link = \URL::to('/'.Writing::path());
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
 	       $feed->pubdate = $articles[0]->created_at;
 	       $feed->lang = 'en';
@@ -120,14 +122,14 @@ class WritingController extends Controller
 	       	   }
 
 	       	   if ($article->video) {
-	       	   	 $image = '<p><a href="http://ar-ma.net/'.\Config::get('writing::path').'/'.$article->slug.'"><img src="'.\Thinker::getVideoThumb($article->video).'" alt="'.$article->title.'"></a></p>';
+	       	   	 $image = '<p><a href="http://ar-ma.net/'.Writing::path().$article->slug.'"><img src="'.\Thinker::getVideoThumb($article->video).'" alt="'.$article->title.'"></a></p>';
 	       	   }
 
 	       	   if ($imageURL != '') {
 	       	   	 $image = '<p><img src="'.$imageURL.'" alt="'.$article->title.'"></p>';
 	       	   }
 
-	           $feed->add($article->title, $default_author, \URL::to(\Config::get('writing::path').'/'.$article->slug), $article->published_at, '', str_replace('<img', '<img width="100%"', $image.\Markdown::string($article->text)));
+	           $feed->add($article->title, $default_author, \URL::to(Writing::path().$article->slug), $article->published_at, '', str_replace('<img', '<img width="100%"', $image.\Markdown::string($article->text)));
 	       }
 
 	    }

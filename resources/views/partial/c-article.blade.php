@@ -23,7 +23,7 @@
     $user_thumbnail = NULL;
     $user = NULL;
     if($article->user_id) {
- 	   $user = Arma\User::find($article->user_id);
+ 	   $user = User::find($article->user_id);
  	   $user_thumbnail = View::make('partial.c-user-picture')->with(["user" => $user,
 	  										     		   			 "size" => 36]);
 	}
@@ -36,7 +36,7 @@
 
 	  {{-- Title --}}
 	  @if (isset($isTitleLinked))
-	    <h1>{{ HTML::link(Config::get('writing.path').'/'.$article->slug, Thinker::title($article->title)) }}</h1>
+	    <h1>{{ HTML::link(Writing::path().$article->slug, Thinker::title($article->title)) }}</h1>
 	  @else
 	    <h1>{{ Thinker::title($article->title) }}</h1>
 	  @endif
@@ -92,7 +92,7 @@
 			@if ($article_type == 'SUMMARY_ARTICLE_TYPE')
 				<p>
 					{{ Thinker::limitMarkdownText(Markdown::string($article->text), 275, array('figcaption')) }}
-					{{ HTML::link(Config::get('writing.path').'/'.$article->slug, trans('writing::base.continue-reading')) }}
+					{{ HTML::link(Writing::path().$article->slug, trans('writing::base.continue-reading')) }}
 				</p>
 			@endif
 		
