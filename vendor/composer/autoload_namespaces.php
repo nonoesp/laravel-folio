@@ -6,6 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Nonoesp\\Writing\\' => array($baseDir . '/src'),
-    'Illuminate\\Support' => array($vendorDir . '/illuminate/support'),
 );

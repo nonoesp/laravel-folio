@@ -6,7 +6,4 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Nonoesp\\Writing\\Article' => $baseDir . '/src/models/Article.php',
-    'Nonoesp\\Writing\\Talker' => $baseDir . '/src/models/Talker.php',
-    'Nonoesp\\Writing\\WritingController' => $baseDir . '/src/controllers/WritingController.php',
 );

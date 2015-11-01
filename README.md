@@ -1,6 +1,8 @@
 # laravel-writing
 
-A writing system for Laravel 4.
+A writing system for Laravel 5.
+
+*The following notes are deprecated and are for the Laravel 4 version.*
 
 ## Installation
 
@@ -38,7 +40,7 @@ The following command will copy your assets into `/public/packages/vendor/packag
 
 ## License
 
-Thinker is licensed under the MIT license. (http://opensource.org/licenses/MIT)
+Writing is licensed under the MIT license. (http://opensource.org/licenses/MIT)
 
 ## Me
 
