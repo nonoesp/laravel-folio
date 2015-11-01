@@ -13,7 +13,7 @@
             "src/controllers"
         ],
         "psr-4": {
-            "Nonoesp\\Writing\\": "src"
+            "Nonoesp\\Writing\\": "src/"
         }
     },
     "minimum-stability" : "dev",
