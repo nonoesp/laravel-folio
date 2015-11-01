@@ -3,7 +3,7 @@
 return array(
 
 	// Wrap all routes around a given path (i.e. writing/ or /blog)
-	'use_path_prefix' => false,
+	'use_path_prefix' => true,
 
 	// Path without end/start slashes
 	'path' => 'writing',
