@@ -12,6 +12,8 @@ Add `'Nonoesp/Writing/WritingServiceProvider',` to `providers` in `/app/config/a
 
 ## Dependencies
 
+This package requires ```nonoesp/thinker```.
+
 This package assumes your Laravel app is providing a `layout.main` view which is used as a view template, extended by laravel-writing. Also, the content of this package appears in the @section('content') section.
 
 ## SCSS Dependencies
