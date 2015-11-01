@@ -37,7 +37,7 @@
 
          --><div class="[ grid__item  one-half  portable--one-whole ]  [ -u-border ]">
 
-         		<h1>{{ $user->name }} Yeah</h1>
+         		<h1>{{ $user->name }}</h1>
 
          		@if($user->title)
 	         		<div class=" [ c-article__meta  c-article__meta--closer ]">
