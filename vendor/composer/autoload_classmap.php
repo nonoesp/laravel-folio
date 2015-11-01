@@ -6,4 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Nonoesp\\Writing\\Controllers\\Controller' => $baseDir . '/src/controllers/Controller.php',
+    'Nonoesp\\Writing\\WritingController' => $baseDir . '/src/controllers/WritingController.php',
 );

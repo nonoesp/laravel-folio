@@ -1,10 +1,10 @@
 <?php
 
-namespace Nonoesp\Writing;
+namespace Nonoesp\Writing\Controllers;
 
 use Illuminate\Http\Request;
-use Arma\Http\Requests;
-use Arma\Http\Controllers\Controller;
+//use Arma\Http\Requests;
+//use Arma\Http\Controllers\Controller;
 use View;
 use Arma\Article;
 use Arma\User;

@@ -53,8 +53,9 @@ class WritingServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Register Controller
-        //$this->app->make('Nonoesp\Writing\WritingController');
+        // Register Controllers
+        //$this->app->make('Nonoesp\Writing\Controllers\Controller');
+        //$this->app->make('Nonoesp\Writing\Controllers\WritingController');
 
         // Merge Config
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'writing');
