@@ -24,6 +24,8 @@ if(Writing::isAvailableURI()) {
 	Route::get($path, array('as' => 'blog', 'uses' => 'Nonoesp\Writing\Controllers\WritingController@showHome'));
 	Route::get($path.'tag/{tag}', 'Nonoesp\Writing\Controllers\WritingController@showArticleTag');
 	Route::get($path.'{id}', 'Nonoesp\Writing\Controllers\WritingController@showArticleWithId')->where('id', '[0-9]+');	
-	Route::get($path.'{slug}', 'Nonoesp\Writing\Controllers\WritingController@showArticle');
 
+	if(Writing::isWritingURI()) { // Check this is an actual article route
+		Route::get($path.'{slug}', 'Nonoesp\Writing\Controllers\WritingController@showArticle');		
+	}
 }

@@ -9,5 +9,5 @@ return array(
 	'path' => 'writing',
 
 	// URIs protected from Writing routes
-	'protected_uris' => ['example', 'profile', 'about']
+	'protected_uris' => ['example', 'profile', 'about', 'magic']
 );

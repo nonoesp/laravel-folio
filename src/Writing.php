@@ -4,6 +4,8 @@
  use Config;
  use Request;
  use HTML;
+ use DB;
+ use Article; // Must be defined in your aliases
 
 class Writing {
 
@@ -53,6 +55,52 @@ class Writing {
 		} else {
 			return false;
 		}
+	}
+
+	public static function isWritingURI() {
+
+
+		$path = Request::path();
+		$writing_path = Writing::path();
+		$URIhasWritingPathPrefix = 0;
+		$isUsingPathPrefix = Config::get('writing.use_path_prefix');
+		$slug = $path;
+
+		/*if($isUsingPathPrefix) {
+			echo 'using_prefix = true;<br>';
+		} else {
+			echo 'using_prefix = false;<br>';
+		}*/
+
+		if($isUsingPathPrefix == true) {
+			$URIhasWritingPathPrefix = count(explode($writing_path, $path)) - 1;
+			if($URIhasWritingPathPrefix) {
+				$slug = str_replace($writing_path, "", $path);
+			} else {
+				return false;
+			}
+
+			if($article = DB::table('articles')->whereSlug($slug)->first()) {
+				return true;
+			} else {
+				return false;
+			}						
+		}
+
+		if(!$isUsingPathPrefix) {
+
+			if($URIhasWritingPathPrefix) {
+				return false;
+			}
+
+			if($article = DB::table('articles')->whereSlug($slug)->first()) {
+				return true;
+			} else {
+				return false;
+			}		
+		}
+
+		return false;
 	}
 
 }
