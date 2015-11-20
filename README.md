@@ -2,16 +2,6 @@
 
 A blogging system for Laravel 5.
 
-## Release Notes
-
-### v0.8.0
-
-* Introduced special tag CSS class names. A class like c-article-tagName will be added to a series of special tags or categories when a post contains them. This allows to create custom CSS for posts tagged with an specific tag.
-
-### v0.7.1
-
-* Selective routes only if slug exists.
-
 ## Installation
 
 Run `compose require nonoesp/writing:*`
@@ -59,6 +49,16 @@ This package assumes your Laravel app is providing a `layout.main` view which is
 ## TODO
 
 * Put user route inside controller.
+
+## Release Notes
+
+### v0.8.0
+
+* Introduced special tag CSS class names. A class like c-article-tagName will be added to a series of special tags or categories when a post contains them. This allows to create custom CSS for posts tagged with an specific tag.
+
+### v0.7.1
+
+* Selective routes only if slug exists.
 
 ***
 

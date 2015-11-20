@@ -9,5 +9,8 @@ return array(
 	'path' => 'writing',
 
 	// URIs protected from Writing routes
-	'protected_uris' => ['example', 'profile', 'about', 'magic']
+	'protected_uris' => ['example', 'profile', 'about', 'magic'],
+
+	// Special tags (add a class to articles containing them)
+	'special-tags' => ['case-study'],
 );

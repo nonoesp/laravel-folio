@@ -11,7 +11,7 @@ class Writing {
 
 	public static function articleCategoryClass($tags, $class) {
 
-		$categories = \Config::get('blog.special-tags'); //TODO: lang in package
+		$categories = Config::get('writing.special-tags'); //TODO: lang in package
 
 		foreach($tags as $tag) {
 			$tag = strtolower($tag);

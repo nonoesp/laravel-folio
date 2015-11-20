@@ -31,7 +31,7 @@
 
 <article class="[ grid ]  [ c-article @if(isset($class)) {{ $class }} @endif{{ Writing::articleCategoryClass($article->tagNames(), 'c-article') }}{{ (count($article->tagNames()) > 0) ? 'is-tagged' : '' }} ]"><!--
 
- --><div class="[ grid__item  one-quarter  portable--one-whole ]  [ -u-border ]">
+ --><div class="[ grid__item  one-quarter  portable--one-whole ]  [ c-article__header ]  [ -u-border ]">
 
 
 	  {{-- Title --}}
@@ -70,7 +70,7 @@
 
     </div><!--
 
- --><div class="[ grid__item  one-half  portable--one-whole ]  [ -u-border ]">
+ --><div class="[ grid__item  one-half  portable--one-whole ]  [ c-article__body ]  [ -u-border ]">
 
  		@if ($article_type == 'DEFAULT_ARTICLE_TYPE')
 			{{-- Cover Image --}}
