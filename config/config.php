@@ -13,4 +13,7 @@ return array(
 
 	// Special tags (add a class to articles containing them)
 	'special-tags' => ['case-study'],
+
+	// Middlewares to filter provided routes
+	'middlewares' => ['login']
 );

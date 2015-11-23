@@ -7,11 +7,15 @@ use Redirect;
 use Config;
 use Request;
 
-$path = Writing::path();
+
 
 /*----------------------------------------------------------------*/
 /* WritingController
 /*----------------------------------------------------------------*/
+
+Route::group(['middleware' => Config::get("writing.middlewares")], function () {
+
+$path = Writing::path();
 
 if(Writing::isAvailableURI()) {
 
@@ -29,3 +33,5 @@ if(Writing::isAvailableURI()) {
 		Route::get($path.'{slug}', 'Nonoesp\Writing\Controllers\WritingController@showArticle');		
 	}
 }
+
+});
