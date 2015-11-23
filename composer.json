@@ -18,6 +18,7 @@
     },
     "minimum-stability" : "dev",
     "require": {
-        "illuminate/support": "~5"
+        "illuminate/support": "~5",
+        "rtconner/laravel-tagging": "~2.0"
     }
 }

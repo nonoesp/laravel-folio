@@ -35,11 +35,15 @@ On the config/writing.php file you can customize:
 
 ## Dependencies
 
-This package requires ```nonoesp/thinker```.
+* ```nonoesp/thinker``` needs to be installed.
 
-This package assumes your Laravel app is providing a `layout.main` view which is used as a view template, extended by laravel-writing. Also, the content of this package appears in the @section('content') section.
+* You need to provide an Article model and add it to your config/app.php file (as mentioned before).
 
-## SCSS Dependencies
+* You need to provide a `layout.main` view with a @section(‘content’), which this package will use.
+
+## Stylesheets
+
+The package provides HTML structure but, for the moment being, it is CSS agnostic.
 
 * c-article
 * c-load-more
@@ -49,6 +53,7 @@ This package assumes your Laravel app is providing a `layout.main` view which is
 ## TODO
 
 * Put user route inside controller.
+* Embed Article model inside package — there is a issue with rtconner/tagging not working when the model is owned by the package.
 
 ## Release Notes
 
@@ -60,26 +65,9 @@ This package assumes your Laravel app is providing a `layout.main` view which is
 
 * Selective routes only if slug exists.
 
-***
-
-# Notes++
-
-*This should be passed later on to Notes-Laravel*
-
-To use the controllers inside your own workbench/package, you need to manually add "src/controllers" to your classmap, and run `composer dump-autoload`. Then you are good to go. Make sure your controller extends `\BaseController` and not `BaseController`, and then use your controller as `Route::get('path', 'Vendor\Package\ControllerName@yourMethod');`.
-
-
-## Publish Package Assets while Developing in the Workbench
-
-The following command will copy your assets into `/public/packages/vendor/package/`. Development should be continued on the workbench. Then you can run the command again if you want to update the previously published assets.
-
-// Deprecated (Laravel 4)
-
-`php artisan asset:publish --bench="vendor/package"`
-
 ## License
 
-Writing is licensed under the MIT license. (http://opensource.org/licenses/MIT)
+Writing is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Me
 
