@@ -64,22 +64,22 @@
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/contracts.git",
-            "reference": "c34c7c8a89ea61b2eadd7fa825e118b635e21e6c"
+            "reference": "f607d5908fc702875de1baacdd70aa33dbb7519e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/contracts/zipball/c34c7c8a89ea61b2eadd7fa825e118b635e21e6c",
-            "reference": "c34c7c8a89ea61b2eadd7fa825e118b635e21e6c",
+            "url": "https://api.github.com/repos/illuminate/contracts/zipball/f607d5908fc702875de1baacdd70aa33dbb7519e",
+            "reference": "f607d5908fc702875de1baacdd70aa33dbb7519e",
             "shasum": ""
         },
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2015-10-08 10:49:05",
+        "time": "2015-11-18 18:30:05",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "5.2-dev"
+                "dev-master": "5.3-dev"
             }
         },
         "installation-source": "source",
@@ -108,12 +108,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/inflector.git",
-            "reference": "097e7ba84f64a427e55008117ef2bb94096731dc"
+            "reference": "90b2128806bfde671b6952ab8bea493942c1fdae"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/inflector/zipball/097e7ba84f64a427e55008117ef2bb94096731dc",
-            "reference": "097e7ba84f64a427e55008117ef2bb94096731dc",
+            "url": "https://api.github.com/repos/doctrine/inflector/zipball/90b2128806bfde671b6952ab8bea493942c1fdae",
+            "reference": "90b2128806bfde671b6952ab8bea493942c1fdae",
             "shasum": ""
         },
         "require": {
@@ -122,11 +122,11 @@
         "require-dev": {
             "phpunit/phpunit": "4.*"
         },
-        "time": "2015-10-07 18:00:26",
+        "time": "2015-11-06 14:35:42",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.0.x-dev"
+                "dev-master": "1.1.x-dev"
             }
         },
         "installation-source": "source",
@@ -177,31 +177,33 @@
         "source": {
             "type": "git",
             "url": "https://github.com/illuminate/support.git",
-            "reference": "04afec70fafcb780e79595d83629c0042363c348"
+            "reference": "8b268bb426e6bf2955c4c693027c43c461572ceb"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/illuminate/support/zipball/04afec70fafcb780e79595d83629c0042363c348",
-            "reference": "04afec70fafcb780e79595d83629c0042363c348",
+            "url": "https://api.github.com/repos/illuminate/support/zipball/8b268bb426e6bf2955c4c693027c43c461572ceb",
+            "reference": "8b268bb426e6bf2955c4c693027c43c461572ceb",
             "shasum": ""
         },
         "require": {
             "danielstjules/stringy": "~2.1",
             "doctrine/inflector": "~1.0",
             "ext-mbstring": "*",
-            "illuminate/contracts": "5.2.*",
+            "illuminate/contracts": "5.3.*",
             "php": ">=5.5.9"
         },
         "suggest": {
+            "illuminate/filesystem": "Required to use the composer class (5.2.*).",
             "jeremeamia/superclosure": "Required to be able to serialize closures (~2.0).",
-            "paragonie/random_compat": "Provides a compatible interface like PHP7's random_bytes() in PHP 5 projects (^1.0.6).",
-            "symfony/var-dumper": "Required to use the dd function (2.8.*|3.0.*)."
+            "paragonie/random_compat": "Provides a compatible interface like PHP7's random_bytes() in PHP 5 projects (~1.1).",
+            "symfony/process": "Required to use the composer class (3.0.*).",
+            "symfony/var-dumper": "Required to use the dd function (3.0.*)."
         },
-        "time": "2015-10-29 16:06:37",
+        "time": "2015-11-18 20:15:13",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "5.2-dev"
+                "dev-master": "5.3-dev"
             }
         },
         "installation-source": "source",
