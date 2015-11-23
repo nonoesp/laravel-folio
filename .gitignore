@@ -2,4 +2,3 @@ composer.phar
 composer.lock
 .DS_Store
 sy.sh
-/vendor
