@@ -50,8 +50,9 @@ The package provides HTML structure but, for the moment being, it is CSS agnosti
 * o-wrap
 * o-video-thumb
 
-## TODO
+## To-dos
 
+* Test Disqus implementation for comments.
 * Put user route inside controller.
 * Embed Article model inside package — there is a issue with rtconner/tagging not working when the model is owned by the package.
 
