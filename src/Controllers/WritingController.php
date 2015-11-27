@@ -7,17 +7,44 @@ use Article, User; // Must be defined in your aliases
 use Nonoesp\Writing\Writing;
 use View;
 use Config;
-
+use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
 
 class WritingController extends Controller
 {
 	public function showHome() {
 
+		// Get user's Twitter handle (or visitor)
+		$twitter_handle = Authenticate::isUserLoggedInTwitter();
+
 		// Get Articles + Articles ids
 		$show = 5;
-		$left = Article::published()->count();
-  		$articles = Article::published()->orderBy('published_at', 'DESC')->skip(0)->take($show)->get();
-		$ids = Article::published()->select('id','published_at')->orderBy('published_at', 'DESC')->skip($show)->take($left)->get();
+
+		//$left = Article::published()->count();
+  		//$articles = Article::published()->orderBy('published_at', 'DESC')->skip(0)->take($show)->get();
+		//$ids = Article::published()->select('id','published_at')->orderBy('published_at', 'DESC')->skip($show)->take($left)->get();
+		
+		$left = Article::published()
+		               ->public()
+		               ->visibleFor($twitter_handle)
+		               ->count();
+
+  		$articles = Article::published()
+  		                   ->public()
+  		                   ->visibleFor($twitter_handle)
+  		                   ->orderBy('published_at', 'DESC')
+  		                   ->skip(0)
+  		                   ->take($show)
+  		                   ->get();
+
+		$ids = Article::published()
+		              ->public()
+		              ->visibleFor($twitter_handle)
+		              ->select('id','published_at')
+		              ->orderBy('published_at', 'DESC')
+		              ->skip($show)
+		              ->take($left)
+		              ->get();	
+
 		$ids_array = array();
 
 		foreach($ids as $id) {

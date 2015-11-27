@@ -109,6 +109,8 @@ Route::get('article/{id}', function($id) {
 
   $article = Article::find($id);
 
+  echo "<title>".$article->title."</title>";
+
   if($article->isPublic()) {
     // SHOW ARTICLE
     echo "Public article. Show.";
@@ -150,6 +152,7 @@ Route::get('article/{id}', function($id) {
 
 
 // Testing what a user would see depending on how he's logged.
+
 // SAMPLE FOR HOW HOME PAGE AND TAGS SHOULD WORK
 
 Route::get('/articles/archive', function() {
@@ -190,7 +193,7 @@ Route::get('/articles/archive', function() {
 
 // REFRESHES ALL ARTICLES' RECIPIENTS relational database
 
-Route::get('/recipients/{id}', function($id) {
+Route::get('/recipients', function() {
 
 
 	$articles = Article::all();
