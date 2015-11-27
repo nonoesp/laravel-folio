@@ -56,9 +56,17 @@ The package provides HTML structure but, for the moment being, it is CSS agnosti
 * Put user route inside controller.
 * Embed Article model inside package — there is a issue with rtconner/tagging not working when the model is owned by the package.
 
+## Features
+
+* **Article recipients**. Make articles only visible to certain Twitter handles.
+
 ## Release Notes
 
 ### v0.8.0
+
+* Added article recipients. Add a list of Twitter handles to your article to restrict their visibility to those users when they are logged in. Otherwise, the site just shows visitor posts with no recipients.
+
+### v0.7.2
 
 * Introduced special tag CSS class names. A class like c-article-tagName will be added to a series of special tags or categories when a post contains them. This allows to create custom CSS for posts tagged with an specific tag.
 

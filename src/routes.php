@@ -8,6 +8,9 @@ use Auth;
 use Redirect;
 use Config;
 use Request;
+use Markdown;
+use Authenticate; // nonoesp/authenticate
+use Recipient;
 
 /*----------------------------------------------------------------*/
 /* WritingController
@@ -94,3 +97,132 @@ Route::get($path.'archive', function() {
 	});	
 
 });
+
+
+// ------------------------------------------------------------
+
+
+Route::get('article/{id}', function($id) {
+  
+    echo "<style>img {max-width:100%;}</style>"
+        .'<div style="max-width:600px;margin-left:auto;margin-right:auto;">';
+
+  $article = Article::find($id);
+
+  if($article->isPublic()) {
+    // SHOW ARTICLE
+    echo "Public article. Show.";
+        echo '<br><br>';
+        echo $article->title;
+        echo Markdown::string($article->text);
+  } else {
+
+    echo "<p>Private article.</p>";
+    echo "<h2>".$article->title."</h2>";
+
+    if($twitter_handle = Authenticate::isUserLoggedInTwitter())
+    {
+      echo "User is logged with $twitter_handle, ".HTML::link('/logout', "logout").".<br><br>";
+
+      // Check if logged user can see content
+      if($article->visibleFor($twitter_handle))
+      {
+        // Logged twitter can see content
+        echo "$twitter_handle can view this content. Display.";
+        echo '<br><br>';
+        echo $article->title;
+        echo Markdown::string($article->text);
+      } else {
+
+        // Logged twitter can't see content
+        echo "$twitter_handle can't view this content.";
+      }
+
+    } else {
+
+      // Private content, please log in
+      echo "User is not logged in twitter. Please, ".HTML::link('/twitter/login', "log in").".";
+    }
+
+    echo "</div>";
+  }
+});
+
+
+// Testing what a user would see depending on how he's logged.
+// SAMPLE FOR HOW HOME PAGE AND TAGS SHOULD WORK
+
+Route::get('/articles/archive', function() {
+
+	if($twitter_handle = Authenticate::isUserLoggedInTwitter())
+	{
+		echo "Logged as @$twitter_handle, ".HTML::link('/logout', 'logout').".<br><br>";
+	} else {
+		echo "Guest, not logged in, ".HTML::link('/twitter/login', 'login').".<br><br>";
+	}
+
+	$articles = Article::orderBy('id', 'DESC')
+					   ->public()
+					   ->published()
+					   ->visibleFor($twitter_handle)
+					   ->take(15)
+					   ->get();
+
+	//$articles = Article::test(250)->get();
+
+	foreach($articles as $article)
+	{
+		echo "<b>".$article->id.") ".$article->title."</b>";
+
+		echo " -- [ ";
+		$i = 0;
+		foreach($article->recipients()->get() as $recipient) {
+			if($i > 0) echo ", ";
+			echo $recipient->twitter;
+			$i++;
+		}
+
+		echo " ]<br>";		
+	}
+
+});
+
+
+// REFRESHES ALL ARTICLES' RECIPIENTS relational database
+
+Route::get('/recipients/{id}', function($id) {
+
+
+	$articles = Article::all();
+
+	foreach($articles as $article) {
+
+		//$article = Article::find($id);
+
+		// Refresh article recipients
+
+		$article->recipients()->delete();
+
+		if($article->recipients != NULL) {
+
+			foreach($article->recipientsArray() as $recipient) {
+				echo $recipient.'<br>';
+
+				$article->recipients()->save(new Recipient(["twitter" => $recipient]));
+			}
+
+			echo '<br>';
+
+			foreach($article->recipients()->get() as $recipient)
+			{
+				echo $recipient->article_id;
+				echo " — ".$recipient->twitter;
+				echo '<br>';
+			}
+
+			echo '--<br>';
+		}
+	}
+});
+
+
