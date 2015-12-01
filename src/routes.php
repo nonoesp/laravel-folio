@@ -175,6 +175,8 @@ Route::get('/articles/archive', function() {
 
 	foreach($articles as $article)
 	{
+		print_r( $article->recipientsArray() );
+
 		echo "<b>".$article->id.") ".$article->title."</b>";
 
 		echo " -- [ ";
