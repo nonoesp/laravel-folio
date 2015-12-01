@@ -1,9 +1,0 @@
-.project
-.settings
-!empty
-.idea
-.buildpath
-composer.phar
-composer.lock
-/vendor
-.DS_Store
