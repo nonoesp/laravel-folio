@@ -15,5 +15,5 @@ return array(
 	'special-tags' => ['case-study'],
 
 	// Middlewares to filter provided routes
-	'middlewares' => ['login']
+	'middlewares' => []//['login']
 );

@@ -86,7 +86,26 @@
 
 		{{-- Text --}}
 			@if ($article_type == 'DEFAULT_ARTICLE_TYPE')
-				{{ Markdown::string($article->text) }}
+
+				@if ($article->isPublic())
+					{{ Markdown::string($article->text) }}
+				@else
+					@if($twitter_handle = Authenticate::isUserLoggedInTwitter())
+						<?php /*@if($article->visibleFor($twitter_handle) OR Auth::user()->is_admin)*/ ?>
+						@if($article->visibleFor($twitter_handle))
+							{{--Visible for @twitter_handle--}}
+							{{ Markdown::string($article->text) }}
+						@else
+							{{--Not visible for this @twitter_handle--}}
+							<p>Oh, this content doesn't seem to be visible for {{ "@".$twitter_handle }}.</p>
+						@endif
+					@else
+						{{--Need to log in in Twitter to access content--}}
+						<p>Hi there, log in with Twitter to view this content, {{ HTML::link('/twitter/login', "log in") }}</p>
+					@endif
+
+				@endif
+
 			@endif
 
 			@if ($article_type == 'SUMMARY_ARTICLE_TYPE')

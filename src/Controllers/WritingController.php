@@ -47,13 +47,21 @@ class WritingController extends Controller
 
 		$ids_array = array();
 
-		foreach($ids as $id) {
+		foreach($ids as $id)
+		{
 			array_push($ids_array, $id->id);
 		}
 
 		// Get Expected Articles
 		$show_expected = 3;
-		$articles_expected = Article::expected()->orderBy('published_at', 'ASC')->take($show_expected)->get()->reverse();
+
+		$articles_expected = Article::expected()
+								    ->public()
+									->orderBy('published_at', 'ASC')
+									->take($show_expected)
+									->get()
+									->reverse();
+
 		return view('writing::base')->with(array('articles' => $articles,
 													  'ids' => $ids_array,
 													  'articles_expected' => $articles_expected));
@@ -62,15 +70,41 @@ class WritingController extends Controller
 	// Simplify making showHome a generic function, then call it directly from route or from Controller function
 	public function showArticleTag($tag) {
 
+		// Get user's Twitter handle (or visitor)
+		$twitter_handle = Authenticate::isUserLoggedInTwitter();
+
 		$show = 5;
-		$left = Article::withAnyTag($tag)->published()->count() - $show;
+		$left = Article::withAnyTag($tag)
+		               ->published()
+		               ->public()
+		               ->visibleFor($twitter_handle)
+		               ->count() - $show;
 
-  		$articles = Article::withAnyTag($tag)->published()->orderBy('published_at', 'DESC')->skip(0)->take($show)->get();
-		$ids_array = array();  		
-  		if ($left > 0) {
-			$ids = Article::withAnyTag($tag)->published()->select('id','published_at')->orderBy('published_at', 'DESC')->skip($show)->take($left)->get();
+  		$articles = Article::withAnyTag($tag)  		
+  		                   ->published()
+  		                   ->public()
+  		                   ->visibleFor($twitter_handle)  		                   
+  		                   ->orderBy('published_at', 'DESC')
+  		                   ->skip(0)
+  		                   ->take($show)
+  		                   ->get();
 
-			foreach($ids as $id) {
+		$ids_array = array();
+
+  		if ($left > 0)
+  		{
+			$ids = Article::withAnyTag($tag)
+						  ->published()
+  		                  ->public()
+  		                  ->visibleFor($twitter_handle)						  
+						  ->select('id','published_at')
+						  ->orderBy('published_at', 'DESC')
+						  ->skip($show)
+						  ->take($left)
+						  ->get();
+
+			foreach($ids as $id)
+			{
 				array_push($ids_array, $id->id);
 			}
 		}
