@@ -38,6 +38,30 @@ if(Writing::isAvailableURI()) {
 	}
 }
 
+/*----------------------------------------------------------------*/
+/* AdminController
+/*----------------------------------------------------------------*/
+
+Route::group(array('middleware' => 'login'), function(){
+
+  Route::get('/admin', 'Nonoesp\Writing\Controllers\AdminController@getDashboard');
+
+  // Articles
+  Route::get('/admin/articles', 'Nonoesp\Writing\Controllers\AdminController@getArticleList');
+  Route::any('/admin/article/edit/{id}', array('as' => 'article.edit', 'uses' => 'Nonoesp\Writing\Controllers\AdminController@ArticleEdit'));
+  Route::get('/admin/article/add', 'Nonoesp\Writing\Controllers\AdminController@getArticleCreate');
+  Route::post('/admin/article/add', 'Nonoesp\Writing\Controllers\AdminController@postArticleCreate');
+  Route::get('/admin/article/delete/{id}', 'Nonoesp\Writing\Controllers\AdminController@getArticleDelete');
+  Route::get('/admin/article/restore/{id}', 'Nonoesp\Writing\Controllers\AdminController@getArticleRestore');
+
+  // Visits
+  Route::get('/admin/visits', 'Nonoesp\Writing\Controllers\AdminController@getVisits');
+
+});
+
+/*----------------------------------------------------------------*/
+
+
 //TODO: archive
 
 Route::get($path.'archive', function() {

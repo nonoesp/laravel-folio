@@ -15,5 +15,8 @@ return array(
 	'special-tags' => ['case-study'],
 
 	// Middlewares to filter provided routes
-	'middlewares' => []//['login']
+	'middlewares' => [],//['login']
+
+	// Initial amount of articles to show in archive
+	'archive-show' => 5
 );

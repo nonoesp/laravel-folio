@@ -17,7 +17,7 @@ class WritingController extends Controller
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
 		// Get Articles + Articles ids
-		$show = 5;
+		$show = Config::get("writing.archive-show");
 
 		//$left = Article::published()->count();
   		//$articles = Article::published()->orderBy('published_at', 'DESC')->skip(0)->take($show)->get();
