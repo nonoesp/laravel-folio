@@ -73,7 +73,7 @@ class WritingController extends Controller
 		// Get user's Twitter handle (or visitor)
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
-		$show = 5;
+		$show = Config::get("writing.archive-show");
 		$left = Article::withAnyTag($tag)
 		               ->published()
 		               ->public()
@@ -156,7 +156,7 @@ class WritingController extends Controller
 	    // check if there is cached feed and build new only if is not
 	    if (!$feed->isCached())
 	    {
-	    	$default_author = 'AR-MA';
+	    	$default_author = 'Nono Martínez Alonso';
 
 	       // creating rss feed with our most recent articles
 		   $show = 30;
