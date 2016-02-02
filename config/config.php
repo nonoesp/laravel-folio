@@ -18,5 +18,8 @@ return array(
 	'middlewares' => [],//['login']
 
 	// Initial amount of articles to show in archive
-	'archive-show' => 5
+	'archive-show' => 5,
+
+	// Admin path prefix
+	'admin_path' => 'admin',
 );

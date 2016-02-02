@@ -8,6 +8,7 @@ use Nonoesp\Writing\Writing;
 use View;
 use Config;
 use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
+use Input;
 
 class AdminController extends Controller
 {
@@ -20,16 +21,17 @@ class AdminController extends Controller
 
 		foreach($articles as $article)
 		{
-			echo $article->title.'<br>';
+			echo '<a href="/'.Config::get('writing.admin_path').'/article/edit/'.$article->id.'">'.$article->title.'<br>';
 		}
 
 		//return View::make('admin.article-list')->withArticles($articles);
 	}
 
-	public function ArticleEdit($id) {
+	public function ArticleEdit(Request $request, $id) {
 
 		$article = Article::withTrashed()->find($id);
-		if (Request::isMethod('post')) {
+
+		if ($request->isMethod('post')) {
 		  	if($article->title != Input::get('title')) {
 				$article->title = Input::get('title');
 		    	$article->slug = Helper::uniqueSlugWithTableAndTitle('articles', $article->title);
@@ -37,9 +39,9 @@ class AdminController extends Controller
 		  	$article->published_at = Input::get('published_at');
 		  	$article->image = Input::get('image');
 		  	$article->video = Input::get('video');
-		  	$article->tags = Input::get('tags');
-		  	if ($article->tags != '') {
-		    	$article->retag(explode(",", $article->tags));		  	
+		  	$article->tags_str = Input::get('tags_str');
+		  	if ($article->tags_str != '') {
+		    	$article->retag(explode(",", $article->tags_str));		  	
 		    } else {
 		    	$article->untag();
 		    }
@@ -47,7 +49,7 @@ class AdminController extends Controller
 			$article->save();
 		}
 
-		return View::make('admin.article-edit')->withArticle($article);
+		return View::make('writing::admin.article-edit')->withArticle($article);
 	}
 
 	public function getArticleCreate() {
