@@ -101,12 +101,14 @@
 
       @if($writing_type == 'MULTIPLE_WRITING_TYPE')
 
-          @foreach($articles_expected as $article)
-            <div class="c-article">
-              <p>Expected — {{ $article->title }}</p>
-            </div>
-          @endforeach
-
+          @if(isset($articles_expected))
+            @foreach($articles_expected as $article)
+              <div class="c-article">
+                <p>Expected — {{ $article->title }}</p>
+              </div>
+            @endforeach
+          @endif
+          
           @foreach($articles as $article)
 
             {{ View::make('writing::partial.c-article')->

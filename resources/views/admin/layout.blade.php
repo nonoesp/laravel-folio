@@ -22,7 +22,7 @@
 	<div class="admin-wrap">
 
 	@if(!isset($shouldHideMenu))
-		{{--View::make('writing::admin.partial.menu') --}}
+		{{ View::make('writing::admin.c-menu') }}
 	@endif
 	<div class="admin-title u-borderBottom">@yield('title', 'Admin')</div>
 

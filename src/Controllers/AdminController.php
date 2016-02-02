@@ -3,12 +3,13 @@
 namespace Nonoesp\Writing\Controllers;
 
 use Illuminate\Http\Request;
-use Article, User; // Must be defined in your aliases
+use Article, User, Thinker; // Must be defined in your aliases
 use Nonoesp\Writing\Writing;
 use View;
 use Config;
 use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
 use Input;
+use Redirect;
 
 class AdminController extends Controller
 {
@@ -19,12 +20,7 @@ class AdminController extends Controller
 	public function getArticleList() {
 		$articles = Article::withTrashed()->orderBy('published_at', 'DESC')->get();
 
-		foreach($articles as $article)
-		{
-			echo '<a href="/'.Config::get('writing.admin_path').'/article/edit/'.$article->id.'">'.$article->title.'<br>';
-		}
-
-		//return View::make('admin.article-list')->withArticles($articles);
+		return View::make('writing::admin.article-list')->withArticles($articles);
 	}
 
 	public function ArticleEdit(Request $request, $id) {
@@ -34,7 +30,7 @@ class AdminController extends Controller
 		if ($request->isMethod('post')) {
 		  	if($article->title != Input::get('title')) {
 				$article->title = Input::get('title');
-		    	$article->slug = Helper::uniqueSlugWithTableAndTitle('articles', $article->title);
+		    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->title);
 		  	}
 		  	$article->published_at = Input::get('published_at');
 		  	$article->image = Input::get('image');
@@ -53,7 +49,7 @@ class AdminController extends Controller
 	}
 
 	public function getArticleCreate() {
-		return View::make('admin.article-add');
+		return View::make('writing::admin.article-add');
 	}
 
 	public function postArticleCreate() {
@@ -63,8 +59,8 @@ class AdminController extends Controller
 		$article->text = Input::get('text');
 		$article->image = Input::get('image');
 		$article->video = Input::get('video');
-		$article->tags = Input::get('tags');				
-		$article->slug = Helper::uniqueSlugWithTableAndTitle('articles', $article->title);
+		$article->tags_str = Input::get('tags_str');				
+		$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->title);
 		$article->published_at = Input::get('published_at');
 		if(!$article->published_at) {		
 			$article->published_at = Date::now();
@@ -72,8 +68,8 @@ class AdminController extends Controller
 		$article->save();
 
 		// laravel-tagging
-		if($article->tags != '') {
-		  $tags = explode(",", $article->tags);
+		if($article->tags_str != '') {
+		  $tags = explode(",", $article->tags_str);
 		  $article->tag($tags);
 		}
 

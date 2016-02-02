@@ -10,7 +10,7 @@
 
 <div class="admin-form">
 
-	<p>Editing Article {{ $article->id }}</p>
+	<p>Editing Article {{ $article->id }} <a href="{{ '/'.Writing::path().$article->slug }}">Preview</a></p>
 
 	<?php if( Request::isMethod('post') ) { echo '<p>Changes saved.</p>'; } ?>
 
