@@ -7,19 +7,18 @@
 	<title>{{ $site_title or 'Admin' }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="/css/normalize.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/admin.css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css">
 
 	<!--TypeKit-->
-	<script type="text/javascript" src="//use.typekit.net/{{{ Config::get('services.typekit.nonoma') }}}.js"></script>
+	<script type="text/javascript" src="//use.typekit.net/{{{ $services_typekit or Config::get('services.typekit.main') }}}.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>	
 		
 </head>
 
 <body>
 
-<div class="admin">
-	<div class="admin-wrap">
+  <div class="[ o-band ]  [ u-border-bottom  -u-no-padding-bottom ]">
+    <div class="[ o-wrap  o-wrap--tiny ]">
 
 	@if(!isset($shouldHideMenu))
 		{{ View::make('writing::admin.c-menu') }}

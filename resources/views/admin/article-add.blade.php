@@ -24,6 +24,8 @@
 
 			<p>{{ Form::text('tags_str', '', ['placeholder' => 'Tags']) }}</p>			
 
+			<p>{{ Form::text('recipients_str', '', ['placeholder' => '@recipients']) }}</p>
+
 			<p>{{ Form::submit('Create') }}</p>
 
 		{{ Form::close() }}
