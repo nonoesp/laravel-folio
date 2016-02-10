@@ -22,4 +22,13 @@ return array(
 
 	// Admin path prefix
 	'admin_path' => 'admin',
+
+	// RSS Feed configuration
+	'feed' => array(
+		'route' => 'feed.xml',
+		'title' => 'My Untitled Feed',
+		'description' => 'A description here would come handy.',
+		'show' => '30', // maximum amount of articles to display
+		'logo' => '', // (optional) URL to your feed's logo
+		)
 );

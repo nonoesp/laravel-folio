@@ -160,13 +160,13 @@ class WritingController extends Controller
 	    	$default_author = 'Nono Martínez Alonso';
 
 	       // creating rss feed with our most recent articles
-		   $show = 30;
+		   $show = Config::get('writing.feed.show');
 	  	   $articles = Article::published()->orderBy('published_at', 'DESC')->take($show)->get();
 
 	       // set your feed's title, description, link, pubdate and language
-	       $feed->title = Config::get('settings.title');
-	       $feed->description = Config::get('settings.description');
-	       $feed->logo = $request->root().'/img/image_src.jpg';
+	       $feed->title = Config::get('writing.feed.title');
+	       $feed->description = Config::get('writing.feed.description');
+	       $feed->logo = Config::get('writing.feed.logo');
 	       $feed->link = \URL::to('/'.Writing::path());
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
 	       $feed->pubdate = $articles[0]->created_at;
