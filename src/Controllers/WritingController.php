@@ -8,6 +8,7 @@ use Nonoesp\Writing\Writing;
 use View;
 use Config;
 use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
+use App;
 
 class WritingController extends Controller
 {
@@ -145,10 +146,10 @@ class WritingController extends Controller
 		}
 	}
 
-	public function getFeed() {
+	public function getFeed(Request $request) {
 		
 		// create new feed
-	    $feed = \Feed::make();
+	    $feed = App::make("feed");
 
 	    // cache the feed for 60 minutes (second parameter is optional)
 	    $feed->setCache(60, 'laravelFeedKey');
@@ -165,13 +166,14 @@ class WritingController extends Controller
 	       // set your feed's title, description, link, pubdate and language
 	       $feed->title = Config::get('settings.title');
 	       $feed->description = Config::get('settings.description');
-	       $feed->logo = 'http://ar-ma.net/img/image_src.jpg';
+	       $feed->logo = $request->root().'/img/image_src.jpg';
 	       $feed->link = \URL::to('/'.Writing::path());
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
 	       $feed->pubdate = $articles[0]->created_at;
 	       $feed->lang = 'en';
 	       $feed->setShortening(false); // true or false
 	       $feed->setTextLimit(159); // maximum length of description text
+	       $feed->setView("writing::feed.rss");
 
 	       foreach ($articles as $article)
 	       {
@@ -183,7 +185,9 @@ class WritingController extends Controller
 	       	   }
 
 	       	   if ($article->video) {
-	       	   	 $image = '<p><a href="http://ar-ma.net/'.Writing::path().$article->slug.'"><img src="'.\Thinker::getVideoThumb($article->video).'" alt="'.$article->title.'"></a></p>';
+	       	   	 $image = '<p><a href="'.$request->root().'/'.Writing::path().$article->slug.'">'
+	       	   	         .'<img src="'.\Thinker::getVideoThumb($article->video)
+	       	   	         .'" alt="'.$article->title.'"></a></p>';
 	       	   }
 
 	       	   if ($imageURL != '') {
