@@ -161,7 +161,12 @@ class WritingController extends Controller
 
 	       // creating rss feed with our most recent articles
 		   $show = Config::get('writing.feed.show');
-	  	   $articles = Article::published()->orderBy('published_at', 'DESC')->take($show)->get();
+	  	   
+			$articles = Article::published()
+			                   ->public()
+			                   ->orderBy('published_at', 'DESC')
+			                   ->take($show)
+			                   ->get();
 
 	       // set your feed's title, description, link, pubdate and language
 	       $feed->title = Config::get('writing.feed.title');
@@ -169,7 +174,7 @@ class WritingController extends Controller
 	       $feed->logo = Config::get('writing.feed.logo');
 	       $feed->link = \URL::to('/'.Writing::path());
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
-	       $feed->pubdate = $articles[0]->created_at;
+	       $feed->pubdate = $articles[0]->published_at;
 	       $feed->lang = 'en';
 	       $feed->setShortening(false); // true or false
 	       $feed->setTextLimit(159); // maximum length of description text
