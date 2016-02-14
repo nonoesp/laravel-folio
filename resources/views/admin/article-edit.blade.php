@@ -30,6 +30,8 @@
 		
 		<p>{{ Form::text('recipients_str', null, array('placeholder' => '@recipients')) }}</p>
 
+		<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS</label></p>
+
 		<p>{{ Form::submit('Save') }}</p>
 
 	{{ Form::close() }}

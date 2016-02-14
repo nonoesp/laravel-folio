@@ -43,6 +43,7 @@ class AdminController extends Controller
 		    	$article->untag();
 		    }
 		    $article->recipients_str = Input::get('recipients_str');
+		    $article->rss = (Input::get('rss') ? true : false);
 		    $article->recipients()->delete();
 		    if($article->recipients_str != NULL)
 		    {
@@ -70,7 +71,8 @@ class AdminController extends Controller
 		$article->image = Input::get('image');
 		$article->video = Input::get('video');
 		$article->tags_str = Input::get('tags_str');	
-	    $article->recipients_str = Input::get('recipients_str');		
+	    $article->recipients_str = Input::get('recipients_str');	
+	    $article->rss = (Input::get('rss') ? true : false);
 		$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->title);
 
 		// Publishing Date
