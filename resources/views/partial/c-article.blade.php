@@ -101,7 +101,11 @@
 						@endif
 					@else
 						{{--Need to log in in Twitter to access content--}}
-						<p>Hi there, log in with Twitter to view this content, {{ HTML::link('/twitter/login', "log in") }}</p>
+						<p class="u-text-align--center">
+							Access to see this content.
+							<br><br>
+							<a href="/twitter/login" class="u-a--box-shadow-reset">{{ Form::button('Sign in with Twitter', array('class' => 'button--twitter-hero')) }}</a>
+						</p>
 					@endif
 
 				@endif
