@@ -164,6 +164,7 @@ class WritingController extends Controller
 	  	   
 			$articles = Article::published()
 			                   ->public()
+			                   ->rss()
 			                   ->orderBy('published_at', 'DESC')
 			                   ->take($show)
 			                   ->get();
