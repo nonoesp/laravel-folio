@@ -52,6 +52,7 @@ The package provides HTML structure but, for the moment being, it is CSS agnosti
 
 ## To-dos
 
+* Add explicit slugs.
 * Add migrations to create database tables.
 * Test Disqus implementation for comments.
 * Put user route inside controller.
