@@ -2,6 +2,9 @@
     "name": "nono/writing",
     "description": "A Laravel blogging system.",
     "license": "MIT",
+    "require": {
+            "rtconner/laravel-tagging": "~2.0"
+        },
     "authors": [
         {
             "name": "Nono Martínez Alonso",

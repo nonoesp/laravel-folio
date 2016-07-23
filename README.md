@@ -4,7 +4,7 @@ A blogging system for Laravel 5.
 
 ## Installation
 
-Run `compose require nonoesp/writing:*`
+Run `composer require nonoesp/writing:*` on the Terminal (or add the dependency manually to your `composer.json` as `"nonoesp/writing": "*"`, then run `composer update` on the Terminal).
 
 Add `'Nonoesp/Writing/WritingServiceProvider',` to `providers` in `/app/config/app.php`
 
@@ -35,13 +35,12 @@ On the config/writing.php file you can customize:
 
 ## Dependencies
 
-* ```nonoesp/thinker``` needs to be installed.
+* `nonoesp/thinker` package.
+* `rtconner/laravel-tagging` package.
+* `Article` model, which needs to be added to your config/app.php file (as mentioned before).
+* `layout.main` view with a @section(‘content’), which this package will use.
 
-* You need to provide an Article model and add it to your config/app.php file (as mentioned before).
-
-* You need to provide a `layout.main` view with a @section(‘content’), which this package will use.
-
-## Stylesheets
+## Stylesheets
 
 The package provides HTML structure but, for the moment being, it is CSS agnostic.
 
