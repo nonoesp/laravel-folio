@@ -41,9 +41,37 @@ class Writing {
 		return '/@'.$user->twitter;
 	}
 
+/*
 	public static function path() {
 		if(Config::get('writing.use_path_prefix')) {
 			return Config::get('writing.path').'/';
+		} else {
+			return '';
+		}
+	}*/
+
+   /*
+ 	* Returns
+ 	* - path string if existing, e.g. "writing"
+ 	* - false if non-existing
+ 	*/
+
+	public static function pathOrFalse() {
+		if($path = Config::get('writing.path-prefix')) {
+			return $path;
+		} else {
+			return false;
+		}
+	}
+
+	/*
+	 * Returns a string either with:
+	 * - path and a slash, e.g. "writing/"
+	 * - empty string, i.e. ""
+	 */
+	public static function path() {
+		if($path = Writing::pathOrFalse()) {
+			return $path.'/';
 		} else {
 			return '';
 		}
@@ -57,24 +85,20 @@ class Writing {
 		}
 	}
 
+	/*
+	 * Returns true when the current URI belongs to the package or not.
+	 */
+
 	public static function isWritingURI() {
 
-
 		$path = Request::path();
-		$writing_path = Writing::path();
-		$URIhasWritingPathPrefix = 0;
-		$isUsingPathPrefix = Config::get('writing.use_path_prefix');
 		$slug = $path;
 
-		/*if($isUsingPathPrefix) {
-			echo 'using_prefix = true;<br>';
-		} else {
-			echo 'using_prefix = false;<br>';
-		}*/
+		if($writing_path = Writing::path()) {
 
-		if($isUsingPathPrefix == true) {
-			$URIhasWritingPathPrefix = count(explode($writing_path, $path)) - 1;
-			if($URIhasWritingPathPrefix) {
+			// Config has path-prefix
+			$URIContainsWritingPathPrefix = count(explode($writing_path, $path)) - 1;
+			if($URIContainsWritingPathPrefix) {
 				$slug = str_replace($writing_path, "", $path);
 			} else {
 				return false;
@@ -84,15 +108,11 @@ class Writing {
 				return true;
 			} else {
 				return false;
-			}						
-		}
+			}			
 
-		if(!$isUsingPathPrefix) {
+		} else {
 
-			if($URIhasWritingPathPrefix) {
-				return false;
-			}
-
+			// Config doesn't have path-prefix
 			if($article = DB::table('articles')->whereSlug($slug)->first()) {
 				return true;
 			} else {

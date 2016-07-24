@@ -25,8 +25,6 @@
 
     	--><div class="[ grid__item  one-whole ]  [ -u-border  u-text-align--center ]">
 	   		
-
-
 	   		</div><!--
 
     	--><div class="[ grid__item  one-quarter  portable--one-whole ]  [ -u-border  u-text-align--desk-right ]">
@@ -64,7 +62,7 @@
 							$date = ucWords(substr($date->format('F'), 0, 3).$date->format(' j, Y'));
 						?>
 
-	   					{{ HTML::link(Writing::path().$article->slug, $article->title, ['class' => 'u-font-size--b']) }}
+	   					{{ HTML::link(Writing::pathString().$article->slug, $article->title, ['class' => 'u-font-size--b']) }}
 
    						<div class="c-article__inline-container">
    							<div class="c-article__inline-detail">

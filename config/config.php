@@ -2,11 +2,10 @@
 
 return array(
 
-	// Wrap all routes around a given path (i.e. writing/ or /blog)
-	'use_path_prefix' => true,
-
-	// Path without end/start slashes
-	'path' => 'writing',
+	// Path of the blog, which can be
+	// (1) a string like 'writing' or 'journal' displays routes as yoursite.com/writing/post-slug
+	// (2) an empty string (i.e. '') displays routes as yoursite.com/post-slug
+	'path-prefix' => '',
 
 	// Template View for base layout
 	'template-view' => 'writing::layout',
@@ -17,8 +16,11 @@ return array(
 	// Special tags (add a class to articles containing them)
 	'special-tags' => ['highlight'],
 
-	// Middlewares to filter provided routes
-	'middlewares' => [],//['login']
+	// Middlewares to filter provided routes, e.g. 'auth'
+	'middlewares' => [],
+
+	// Middlewares to filter provided routes, e.g. 'auth'
+	'middlewares-admin' => [],
 
 	// Initial amount of articles to show in archive
 	'published-show' => 5,

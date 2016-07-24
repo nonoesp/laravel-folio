@@ -21,7 +21,7 @@
   <div class="[ o-band ]  [ u-border-bottom  u-no-padding-bottom ]">
     <div class="[ o-wrap  o-wrap--standard  o-wrap--portable-tiny ]">
 	
-	{!! Html::link("/".Config::get("writing.path"), "Home") !!}
+	{!! Html::link("/".Config::get("writing.path-prefix"), "Home") !!}
 </div></div>
 
 @yield('content')

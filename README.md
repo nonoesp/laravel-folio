@@ -4,6 +4,8 @@ A blogging system for Laravel 5.
 
 This branch supports 5.2.
 
+In this development versions, the authentication is not needed, everything is publicly exposed.
+
 ## Installation
 
 Begin by installing this package through Composer. Edit your project’s `composer.json` file to require `nonoesp/writing`.
@@ -126,6 +128,7 @@ The package provides HTML structure but, for the moment being, it is CSS agnosti
 
 ## To-dos
 
+* Add path-admin to config and set admin routes accordingly.
 * Add explicit slugs.
 * Add migrations to create database tables.
 * Test Disqus implementation for comments.
