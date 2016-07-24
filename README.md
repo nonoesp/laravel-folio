@@ -74,7 +74,7 @@ Even though you can publish the whole bundle of assets, I recommend to start by 
 
 First, run this command, and you will get a customizable config file under `config/writing.php`.
 
-`php artisan vendor:publish --provider=“Nonoesp\Writing\WritingServiceProvider” --tag=config`
+`php artisan vendor:publish --provider="Nonoesp\Writing\WritingServiceProvider" --tag=config
 
 On the config/writing.php file you can customize:
 

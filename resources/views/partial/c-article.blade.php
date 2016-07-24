@@ -7,6 +7,7 @@
 	/
 	/	 DEFAULT_ARTICLE_TYPE
 	/    SUMMARY_ARTICLE_TYPE
+	/    LISTING_ARTICLE_TYPE (TODO)	
 	/    EXPECTED_ARTICLE_TYPE (TODO)
 	/    RECOMMENDED_ARTICLE_TYPE (TODO)
 	/	
@@ -36,9 +37,9 @@
 
 	  {{-- Title --}}
 	  @if (isset($isTitleLinked))
-	    <h1>{{ Html::link(Writing::path().$article->slug, Thinker::title($article->title)) }}</h1>
+	    <h1>{!! Html::link(Writing::path().$article->slug, Thinker::title($article->title)) !!}</h1>
 	  @else
-	    <h1>{{ Thinker::title($article->title) }}</h1>
+	    <h1>{!! Thinker::title($article->title) !!}</h1>
 	  @endif
 
 	  {{-- Meta --}}
@@ -80,7 +81,7 @@
 
 			{{-- Cover Video --}}
 			@if ($article->video)
-				{{ Thinker::videoWithURL($article->video, 'c-article__cover-media') }}
+				{!! Thinker::videoWithURL($article->video, 'c-article__cover-media') !!}
 			@endif
 		@endif
 
@@ -88,7 +89,7 @@
 			@if ($article_type == 'DEFAULT_ARTICLE_TYPE')
 
 				@if ($article->isPublic())
-					{{ Markdown::string($article->text) }}
+					{!! Markdown::string($article->text) !!}
 				@else
 					@if($twitter_handle = Authenticate::isUserLoggedInTwitter())
 						<?php /*@if($article->visibleFor($twitter_handle) OR Auth::user()->is_admin)*/ ?>
@@ -114,8 +115,8 @@
 
 			@if ($article_type == 'SUMMARY_ARTICLE_TYPE')
 				<p>
-					{{-- Thinker::limitMarkdownText(Markdown::string($article->text), 275, array('figcaption')) --}}
-					{{ Html::link(Writing::path().$article->slug, trans('writing::base.continue-reading')) }}
+					{!! Thinker::limitMarkdownText(Markdown::string($article->text), 275, array('figcaption')) !!}
+					{!! Html::link(Writing::path().$article->slug, trans('writing::base.continue-reading')) !!}
 				</p>
 			@endif
 		

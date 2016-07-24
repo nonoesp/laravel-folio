@@ -24,7 +24,7 @@ return array(
 	'published-show' => 5,
 
 	// Initial amount of articles to show in archive
-	'expected-show' => 3,	
+	'expected-show' => 1,	
 
 	// Admin path prefix
 	'admin_path' => 'admin',
