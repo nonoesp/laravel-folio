@@ -20,10 +20,10 @@ return array(
 	'special-tags' => ['highlight'],
 
 	// Middlewares to filter provided routes, e.g. 'auth'
-	'middlewares' => [],
+	'middlewares' => ['web'],
 
 	// Middlewares to filter provided routes, e.g. 'auth'
-	'middlewares-admin' => [],
+	'middlewares-admin' => ['login', 'web'],
 
 	// Initial amount of articles to show in archive
 	'published-show' => 5,

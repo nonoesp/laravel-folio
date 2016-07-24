@@ -57,11 +57,11 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
     'Form' => Collective\Html\FormFacade::class,
     'Html' => Collective\Html\HtmlFacade::class,   
         'Input' => Illuminate\Support\Facades\Input::class,     
+
+        'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
 		// ...
 	],
 ```
-
-As this package requires an `Article` and a `User` model created on the main app, which were already added to the `config/app.php` file but you need to provide in the `app` folder. (This are intended to be included with the package in a future version.)
 
 Finally, follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/5.2)
 
