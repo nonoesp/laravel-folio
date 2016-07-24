@@ -2,7 +2,7 @@
 
 A blogging system for Laravel 5.
 
-This branch supports 5.1.
+This branch supports 5.2.
 
 ## Installation
 
@@ -30,18 +30,18 @@ This branch supports 5.1.
 
 		[…]
 
-    // nonoesp/writing - Models
-    'Writing' => Nonoesp\Writing\Facades\Writing::class,
-    'User' => 'App\User',
-    'Article' => 'App\Article',    
-    'Recipient' => Nonoesp\Writing\Models\Recipient::class,
-
-    // nonoesp/writing - Dependencies
-    'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
-    'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
-    'Date' => Jenssegers\Date\Date::class,
-    'Feed' => Roumen\Feed\Facades\Feed::class,
-    'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
+		// nonoesp/writing - Models
+		'Writing' => Nonoesp\Writing\Facades\Writing::class,
+		'User' => 'App\User',
+		'Article' => 'App\Article',    
+		'Recipient' => Nonoesp\Writing\Models\Recipient::class,
+		
+		// nonoesp/writing - Dependencies
+		'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
+		'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
+		'Date' => Jenssegers\Date\Date::class,
+		'Feed' => Roumen\Feed\Facades\Feed::class,
+		'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
     
 ]
 ```
