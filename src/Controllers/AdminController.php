@@ -98,21 +98,21 @@ class AdminController extends Controller
 			}		    	
 	    }		
 
-		return Redirect::to('/admin/article/edit/'.$article->id);
+		return Redirect::to(Writing::adminPath().'article/edit/'.$article->id);
 	}
 
 	public function getArticleDelete($id) {
 		$article = Article::find($id);
 		$article->delete();
 
-		return Redirect::to('/admin/articles');
+		return Redirect::to(Writing::adminPath().'articles');
 	}
 
 	public function getArticleRestore($id) {
 		$article = Article::withTrashed()->find($id);
 		$article->restore();
 
-		return Redirect::to('/admin/articles');
+		return Redirect::to(Writing::adminPath().'articles');
 	}	
 
 	/*

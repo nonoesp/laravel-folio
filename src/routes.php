@@ -18,10 +18,9 @@ use Recipient;
 
 Route::group(['middleware' => Config::get("writing.middlewares")], function () {
 
-$path = Writing::path();
-//TODO: $path_admin = Writing::pathAdmin();
-
 if(Writing::isAvailableURI()) {
+
+	$path = Writing::path();
 
 	Route::get('/@{user_twitter}', function($user_twitter) {
 		$user = User::where('twitter', '=', $user_twitter)->first();
@@ -44,21 +43,26 @@ if(Writing::isAvailableURI()) {
 /* AdminController
 /*----------------------------------------------------------------*/
 
-Route::group(['middleware' => Config::get("writing.middlewares-admin")], function(){ // todo: get middleware back to 'login'
+Route::group(['middleware' => Config::get("writing.middlewares-admin")], function() { // todo: get middleware back to 'login'
 
-  Route::get('/admin', 'Nonoesp\Writing\Controllers\AdminController@getDashboard');
+  $admin_path = Writing::adminPath();
+
+  Route::get($admin_path, 'Nonoesp\Writing\Controllers\AdminController@getDashboard');
 
   // Articles
-  Route::get('/admin/articles', 'Nonoesp\Writing\Controllers\AdminController@getArticleList');
-  Route::any('/admin/article/edit/{id}', array('as' => 'article.edit', 'uses' => 'Nonoesp\Writing\Controllers\AdminController@ArticleEdit'));
-  Route::get('/admin/article/add', 'Nonoesp\Writing\Controllers\AdminController@getArticleCreate');
-  Route::post('/admin/article/add', 'Nonoesp\Writing\Controllers\AdminController@postArticleCreate');
-  Route::get('/admin/article/delete/{id}', 'Nonoesp\Writing\Controllers\AdminController@getArticleDelete');
-  Route::get('/admin/article/restore/{id}', 'Nonoesp\Writing\Controllers\AdminController@getArticleRestore');
+  Route::get($admin_path.'articles', 'Nonoesp\Writing\Controllers\AdminController@getArticleList');
+  Route::any($admin_path.'article/edit/{id}', array('as' => 'article.edit', 'uses' => 'Nonoesp\Writing\Controllers\AdminController@ArticleEdit'));
+  Route::get($admin_path.'article/add', 'Nonoesp\Writing\Controllers\AdminController@getArticleCreate');
+  Route::post($admin_path.'article/add', 'Nonoesp\Writing\Controllers\AdminController@postArticleCreate');
+  Route::get($admin_path.'article/delete/{id}', 'Nonoesp\Writing\Controllers\AdminController@getArticleDelete');
+  Route::get($admin_path.'article/restore/{id}', 'Nonoesp\Writing\Controllers\AdminController@getArticleRestore');
 
   // Visits
-  Route::get('/admin/visits', 'Nonoesp\Writing\Controllers\AdminController@getVisits');
+  Route::get($admin_path.'visits', 'Nonoesp\Writing\Controllers\AdminController@getVisits');
 
+  Route::get($admin_path, function() use ($admin_path) {
+  	return redirect()->to($admin_path.'articles');
+  });
 });
 
 //TODO: Archive

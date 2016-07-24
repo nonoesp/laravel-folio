@@ -41,20 +41,11 @@ class Writing {
 		return '/@'.$user->twitter;
 	}
 
-/*
-	public static function path() {
-		if(Config::get('writing.use_path_prefix')) {
-			return Config::get('writing.path').'/';
-		} else {
-			return '';
-		}
-	}*/
-
-   /*
- 	* Returns
- 	* - path string if existing, e.g. "writing"
- 	* - false if non-existing
- 	*/
+    /*
+ 	 * Returns
+ 	 * - path string if existing, e.g. "writing"
+ 	 * - false if non-existing
+ 	 */
 
 	public static function pathOrFalse() {
 		if($path = Config::get('writing.path-prefix')) {
@@ -75,6 +66,14 @@ class Writing {
 		} else {
 			return '';
 		}
+	}
+
+	/*
+	 * Returns a string with the admin path.
+	 */
+
+	public static function adminPath() {
+		return Config::get('writing.admin-path-prefix').'/';
 	}
 
 	public static function isAvailableURI() {

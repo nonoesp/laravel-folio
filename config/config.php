@@ -5,7 +5,10 @@ return array(
 	// Path of the blog, which can be
 	// (1) a string like 'writing' or 'journal' displays routes as yoursite.com/writing/post-slug
 	// (2) an empty string (i.e. '') displays routes as yoursite.com/post-slug
-	'path-prefix' => '',
+	'path-prefix' => 'writing',
+
+	// Admin path prefix, e.g. 'admin', 'writing-admin', 'admin/writing'
+	'admin-path-prefix' => 'admin',
 
 	// Template View for base layout
 	'template-view' => 'writing::layout',
@@ -27,9 +30,6 @@ return array(
 
 	// Initial amount of articles to show in archive
 	'expected-show' => 1,	
-
-	// Admin path prefix
-	'admin_path' => 'admin',
 
 	// RSS Feed configuration
 	'feed' => array(

@@ -10,7 +10,7 @@
 
 	<div class="admin-form">
 
-		{{ Form::open(['url' => '/admin/article/add', 'method' => 'post']) }}
+		{{ Form::open(['url' => Writing::adminPath().'article/add', 'method' => 'post']) }}
 
 			<p>{{ Form::text('title', '', ['placeholder' => 'Title']) }}</p>
 
