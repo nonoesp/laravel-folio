@@ -2,6 +2,8 @@
 
 A blogging system for Laravel 5.
 
+This branch supports 5.1.
+
 ## Installation
 
 Run `composer require nonoesp/writing:*` on the Terminal (or add the dependency manually to your `composer.json` as `"nonoesp/writing": "*"`, then run `composer update` on the Terminal).
