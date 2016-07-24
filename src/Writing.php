@@ -3,7 +3,7 @@
  use Lang;
  use Config;
  use Request;
- use HTML;
+ use Html;
  use DB;
  use Article; // Must be defined in your aliases
 
@@ -34,7 +34,7 @@ class Writing {
 	}
 
 	public static function tagWithClass($tag, $class) {
-		return HTML::link(Writing::path().'tag/'.$tag->slug, $tag->name, array('class' => $class));
+		return Html::link(Writing::path().'tag/'.$tag->slug, $tag->name, array('class' => $class));
 	}
 
 	public static function userURL($user) {

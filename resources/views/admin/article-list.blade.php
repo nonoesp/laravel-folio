@@ -25,12 +25,12 @@
 
 		echo '<p class="admin-list-item '.$css.'">';
 			
-		echo HTML::link('/admin/article/edit/'.$article->id, $article->title, array('class' => 'admin-list-itemLink'));
+		echo Html::link('/admin/article/edit/'.$article->id, $article->title, array('class' => 'admin-list-itemLink'));
 		
 		if($article->trashed()) {
-			echo ' '.HTML::link('/admin/article/restore/'.$article->id, 'O', array('class' => 'admin-list-optionLink is-invisible'));
+			echo ' '.Html::link('/admin/article/restore/'.$article->id, 'O', array('class' => 'admin-list-optionLink is-invisible'));
 		} else {
-			echo ' '.HTML::link('/admin/article/delete/'.$article->id, 'X', array('class' => 'admin-list-optionLink is-invisible'));
+			echo ' '.Html::link('/admin/article/delete/'.$article->id, 'X', array('class' => 'admin-list-optionLink is-invisible'));
 		}
 
 		echo "</p>";

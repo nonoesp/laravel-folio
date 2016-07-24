@@ -1,4 +1,6 @@
+
 @extends('writing::admin.layout')
+
 
 <?php
 	$site_title = 'Article Edit — '. Config::get('settings.title');
@@ -37,9 +39,5 @@
 	{{ Form::close() }}
 
 </div>
-
-<br>
-
-{{-- View::make('blog.partials.article')->with(array('article' => $article, 'isTitleLinked' => true)) --}}
 
 @endsection
