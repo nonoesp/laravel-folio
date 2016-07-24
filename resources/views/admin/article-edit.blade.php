@@ -28,6 +28,8 @@
 
 		<p>{{ Form::text('video', null, array('placeholder' => 'Video')) }}</p>
 
+		<p>{{ Form::text('slug_title', null, array('placeholder' => 'Explicit Slug Title')) }}</p>
+
 		<p>{{ Form::text('tags_str', null, array('placeholder' => 'Tags')) }}</p>
 		
 		<p>{{ Form::text('recipients_str', null, array('placeholder' => '@recipients')) }}</p>

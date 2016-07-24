@@ -22,6 +22,8 @@
     <div class="[ o-wrap  o-wrap--standard  o-wrap--portable-tiny ]">
 	
 	{!! Html::link("/".Config::get("writing.path-prefix"), "Home") !!}
+	&nbsp;&nbsp;
+	{!! Html::link("/".Config::get("writing.admin-path-prefix"), "Admin") !!}
 </div></div>
 
 @yield('content')

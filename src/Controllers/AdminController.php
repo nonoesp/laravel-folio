@@ -29,10 +29,28 @@ class AdminController extends Controller
 		$article = Article::withTrashed()->find($id);
 
 		if ($request->isMethod('post')) {
-		  	if($article->title != Input::get('title')) {
-				$article->title = Input::get('title');
-		    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->title);
-		  	}
+
+			if(Input::get('slug_title') == null) {
+				if($article->slug_title != null) {
+					// Slug has been removed, not empty before
+					$article->slug_title = null;
+					$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', Input::get('title'));
+				} else {
+					// Slug is empty, and was empty before
+					if($article->title != Input::get('title')) {
+						$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', Input::get('title'));
+					}
+				}
+			} else {
+				if($article->slug_title != Input::get('slug_title')) {
+					// Slug has been edited
+					$article->slug_title = Input::get('slug_title');
+					$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->slug_title);
+					echo "has been edited";
+				}
+			}
+
+			$article->title = Input::get('title');
 		  	$article->published_at = Input::get('published_at');
 		  	$article->image = Input::get('image');
 		  	$article->video = Input::get('video');
@@ -73,7 +91,12 @@ class AdminController extends Controller
 		$article->tags_str = Input::get('tags_str');	
 	    $article->recipients_str = Input::get('recipients_str');	
 	    $article->rss = (Input::get('rss') ? true : false);
-		$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->title);
+	    $article->slug_title = Input::get('slug_title');
+	    if($article->slug_title == "") {
+	    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->title);	
+	    } else {
+	    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->slug_title);	
+	    }
 
 		// Publishing Date
 		$article->published_at = Input::get('published_at');

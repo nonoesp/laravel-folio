@@ -22,6 +22,8 @@
 			
 			<p>{{ Form::text('published_at', '', ['placeholder' => 'Publishing Date']) }}</p>
 
+			<p>{{ Form::text('slug_title', '', ['placeholder' => 'Explicit Slug Title']) }}</p>			
+
 			<p>{{ Form::text('tags_str', '', ['placeholder' => 'Tags']) }}</p>			
 
 			<p>{{ Form::text('recipients_str', '', ['placeholder' => '@recipients']) }}</p>

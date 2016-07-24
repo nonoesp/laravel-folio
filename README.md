@@ -1,10 +1,6 @@
-# Laravel Writing Package
+# A Simple Blogging Package for Laravel
 
-A blogging system for Laravel 5.
-
-This branch supports 5.2.
-
-In this development versions, the authentication is not needed, everything is publicly exposed.
+Hi! This branch supports 5.2. Beware that on the first updates to 5.2 the administration is publicly exposed. (This version is not inteded for production yet.)
 
 ## Installation
 
