@@ -24,7 +24,7 @@
         "nonoesp/thinker": "*",
         "jenssegers/date": "^3.0",
         "roumen/feed": "^2.9",
-        "vtalbot/markdown": "2.0",
+        "vtalbot/markdown": "2.*",
         "laravelcollective/html": "*"
     }
 }
