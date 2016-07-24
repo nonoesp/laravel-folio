@@ -8,16 +8,47 @@ This branch supports 5.1.
 
 Run `composer require nonoesp/writing:*` on the Terminal (or add the dependency manually to your `composer.json` as `"nonoesp/writing": "*"`, then run `composer update` on the Terminal).
 
-Add `'Nonoesp/Writing/WritingServiceProvider',` to `providers` in `/app/config/app.php`
+Add the following to `providers` and `aliases` in your `/app/config/app.php`
 
-Add `'Writing' => Nonoesp\Writing\Facades\Writing::class,` to your `aliases`.
+```php
+'providers' => [
+	
+		[…]
+
+		// nonoesp/writing
+		Nonoesp\Writing\WritingServiceProvider::class,        
+		Nonoesp\Thinker\ThinkerServiceProvider::class,  
+		Nonoesp\Authenticate\AuthenticateServiceProvider::class,          
+		VTalbot\Markdown\MarkdownServiceProvider::class,
+		Conner\Tagging\Providers\TaggingServiceProvider::class,
+		Jenssegers\Date\DateServiceProvider::class,
+		Roumen\Feed\FeedServiceProvider::class,
+		Thujohn\Twitter\TwitterServiceProvider::class,
+],
+
+'aliases' => [
+
+		[…]
+
+    // nonoesp/writing - Models
+    'Writing' => Nonoesp\Writing\Facades\Writing::class,
+    'User' => 'App\User',
+    'Article' => 'App\Article',    
+    'Recipient' => Nonoesp\Writing\Models\Recipient::class,
+
+    // nonoesp/writing - Dependencies
+    'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
+    'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
+    'Date' => Jenssegers\Date\Date::class,
+    'Feed' => Roumen\Feed\Facades\Feed::class,
+    'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
+    
+]
+```
 
 The package requires an Article and a User model created on the main app. To avoid setup on the package part, you will have to add both aliases in your config/app.php `aliases` array, as follows.
 
-```
-'User' => 'App\User',
-'Article' => 'App\Article',
-```
+Follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/5.2)
 
 ## Config
 
