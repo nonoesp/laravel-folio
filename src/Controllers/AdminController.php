@@ -46,7 +46,6 @@ class AdminController extends Controller
 					// Slug has been edited
 					$article->slug_title = Input::get('slug_title');
 					$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->slug_title);
-					echo "has been edited";
 				}
 			}
 
