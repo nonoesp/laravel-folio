@@ -17,34 +17,30 @@ class WritingController extends Controller
 		// Get user's Twitter handle (or visitor)
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
+		// Config variables
+		$published_show = Config::get("writing.published-show");
+		$expected_show = Config::get("writing.expected-show");
+
 		// Get Articles + Articles ids
-		$show = Config::get("writing.archive-show");
 
-		//$left = Article::published()->count();
-  		//$articles = Article::published()->orderBy('published_at', 'DESC')->skip(0)->take($show)->get();
-		//$ids = Article::published()->select('id','published_at')->orderBy('published_at', 'DESC')->skip($show)->take($left)->get();
-		
-		$left = Article::published()
-		               ->public()
-		               ->visibleFor($twitter_handle)
-		               ->count();
+    	$left = Article::published()
+    				   ->visibleFor($twitter_handle)
+    				   ->count();
 
-  		$articles = Article::published()
-  		                   ->public()
-  		                   ->visibleFor($twitter_handle)
-  		                   ->orderBy('published_at', 'DESC')
-  		                   ->skip(0)
-  		                   ->take($show)
-  		                   ->get();
+    	$articles = Article::published()
+    					   ->visibleFor($twitter_handle)
+    					   ->orderBy('published_at', 'DESC')
+    					   ->skip(0)
+    					   ->take($published_show)
+    					   ->get();
 
 		$ids = Article::published()
-		              ->public()
-		              ->visibleFor($twitter_handle)
-		              ->select('id','published_at')
-		              ->orderBy('published_at', 'DESC')
-		              ->skip($show)
-		              ->take($left)
-		              ->get();	
+    				  ->visibleFor($twitter_handle)
+		              ->select('id','published_at')    				  
+    				  ->orderBy('published_at', 'DESC')
+    				  ->skip($published_show)
+    				  ->take($left)
+    				  ->get();
 
 		$ids_array = array();
 
@@ -54,14 +50,28 @@ class WritingController extends Controller
 		}
 
 		// Get Expected Articles
-		$show_expected = 3;
-
 		$articles_expected = Article::expected()
-								    ->public()
-									->orderBy('published_at', 'ASC')
-									->take($show_expected)
-									->get()
-									->reverse();
+									->visibleFor($twitter_handle)
+									->orderBy('published_at', 'DESC')
+									->take($expected_show)
+									->get();
+
+		if(false) {
+	    	foreach($articles as $article) {
+	    		echo $article->id." - ".$article->title;
+	    		echo '<br><br>';
+	    	}
+
+	    	echo '<br><br>ids';echo '<br><br>';
+	    	foreach($ids as $id) {
+	    		echo $id->id;
+	    		echo '<br>';
+	    	}
+
+		return;
+		}
+
+		//return view('writing::base');
 
 		return view('writing::base')->with(array('articles' => $articles,
 													  'ids' => $ids_array,

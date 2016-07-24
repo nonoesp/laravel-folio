@@ -47,7 +47,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
     // nonoesp/writing - Models
     'Writing' => Nonoesp\Writing\Facades\Writing::class,
     'User' => 'App\User',
-    'Article' => 'App\Article',    
+    'Article' => Nonoesp\Writing\Models\Article::class,    
     'Recipient' => Nonoesp\Writing\Models\Recipient::class,
 
     // nonoesp/writing - Dependencies

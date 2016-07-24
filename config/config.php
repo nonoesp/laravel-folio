@@ -8,17 +8,23 @@ return array(
 	// Path without end/start slashes
 	'path' => 'writing',
 
+	// Template View for base layout
+	'template-view' => 'writing::layout',
+
 	// URIs protected from Writing routes
 	'protected_uris' => ['example', 'profile', 'about', 'magic'],
 
 	// Special tags (add a class to articles containing them)
-	'special-tags' => ['case-study'],
+	'special-tags' => ['highlight'],
 
 	// Middlewares to filter provided routes
 	'middlewares' => [],//['login']
 
 	// Initial amount of articles to show in archive
-	'archive-show' => 5,
+	'published-show' => 5,
+
+	// Initial amount of articles to show in archive
+	'expected-show' => 3,	
 
 	// Admin path prefix
 	'admin_path' => 'admin',

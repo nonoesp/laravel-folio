@@ -1,4 +1,5 @@
 
+@extends(Config::get("writing.template-view"))
 
 <?php
   //{{-- @extends('layout.main') --}}
@@ -29,6 +30,8 @@
       $writing_type = 'MULTIPLE_WRITING_TYPE';
     } else if(isset($article)) {
       $writing_type = 'SINGLE_WRITING_TYPE';
+    } else {
+      $writing_type = 'EMPTY_TYPE';
     }
 
     // 4. Single Article Settings
@@ -111,16 +114,16 @@
           
           @foreach($articles as $article)
 
-            {{ View::make('writing::partial.c-article')->
+            {!! View::make('writing::partial.c-article')->
                      with(['article' => $article,
                            'article_type' => 'SUMMARY_ARTICLE_TYPE',
-                           'isTitleLinked' => 'true']) }}
+                           'isTitleLinked' => 'true']) !!}
 
           @endforeach
 
           @if(isset($ids) and count($ids) > 0)
-              {{ View::make('writing::partial.c-load-more')->
-                       with('ids', $ids) }}
+              {!! View::make('writing::partial.c-load-more')->
+                       with('ids', $ids) !!}
           @endif
 
       @endif
@@ -130,9 +133,9 @@
 
       @if($writing_type == 'SINGLE_WRITING_TYPE')
           
-            {{ View::make('writing::partial.c-article')->
+            {!! View::make('writing::partial.c-article')->
                      with(['article' => $article,
-                           'class' => '-u-no-margin-bottom  -u-no-border-bottom']) }}
+                           'class' => '-u-no-margin-bottom  -u-no-border-bottom']) !!}
 
       @section('metadata')
         <!-- Article -->

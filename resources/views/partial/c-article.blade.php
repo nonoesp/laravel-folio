@@ -26,17 +26,17 @@
  	   $user = User::find($article->user_id);
  	   $user_thumbnail = View::make('partial.c-user-picture')->with(["user" => $user,
 	  										     		   			 "size" => 36]);
-	}
+	}	
 ?>
 
-<article class="[ grid ]  [ c-article @if(isset($class)) {{ $class }} @endif{{ Writing::articleCategoryClass($article->tagNames(), 'c-article') }}{{ (count($article->tagNames()) > 0) ? 'is-tagged' : '' }} ]"><!--
+<article class="[ grid ] [ c-article @if(isset($class)){{ $class }}@endif{{ Writing::articleCategoryClass($article->tagNames(), 'c-article') }}{{ (count($article->tagNames()) > 0) ? 'is-tagged' : '' }}]"><!--
 
  --><div class="[ grid__item  one-quarter  portable--one-whole ]  [ c-article__header ]  [ -u-border ]">
 
 
 	  {{-- Title --}}
 	  @if (isset($isTitleLinked))
-	    <h1>{{ HTML::link(Writing::path().$article->slug, Thinker::title($article->title)) }}</h1>
+	    <h1>{{ Html::link(Writing::path().$article->slug, Thinker::title($article->title)) }}</h1>
 	  @else
 	    <h1>{{ Thinker::title($article->title) }}</h1>
 	  @endif
@@ -114,20 +114,20 @@
 
 			@if ($article_type == 'SUMMARY_ARTICLE_TYPE')
 				<p>
-					{{ Thinker::limitMarkdownText(Markdown::string($article->text), 275, array('figcaption')) }}
-					{{ HTML::link(Writing::path().$article->slug, trans('writing::base.continue-reading')) }}
+					{{-- Thinker::limitMarkdownText(Markdown::string($article->text), 275, array('figcaption')) --}}
+					{{ Html::link(Writing::path().$article->slug, trans('writing::base.continue-reading')) }}
 				</p>
 			@endif
 		
 		{{-- Tags --}}
 			@if (count($article->tagNames()) > 0)
-				<p class="c-article__tags">{{ Writing::tagListWithArticleAndClass($article, 'c-article__tag u-case-upper') }}</p>
+				<p class="c-article__tags">{!! Writing::tagListWithArticleAndClass($article, 'c-article__tag u-case-upper') !!}</p>
 			@endif
 
     </div><!--
 
  -->{{--<div class="[ grid__item  one-quarter  lap--one-whole ]  [ -u-border ]">
- 	<div class="-u-border">a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f a b c d e f </div>
+ 	<div class="-u-border">Text</div>
     </div>--}}
 
 </article>
