@@ -44,7 +44,7 @@ if(Writing::isAvailableURI()) {
 /* AdminController
 /*----------------------------------------------------------------*/
 
-Route::group(array('middleware' => []), function(){ // todo: get middleware back to 'login'
+Route::group(array('middleware' => 'login'), function(){ // todo: get middleware back to 'login'
 
   Route::get('/admin', 'Nonoesp\Writing\Controllers\AdminController@getDashboard');
 

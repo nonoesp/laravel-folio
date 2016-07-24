@@ -82,12 +82,38 @@ On the config/writing.php file you can customize:
 * `path` — A string that defines your prefix path (only used if use_path_prefix is set to `true`).
 * `protected_uris` — An array to avoid the Writing package to override other existing routes (specially when you set use_path_prefix to false).
 
-## Dependencies
+## Gulp (And Elixir)
 
-* `nonoesp/thinker` package.
-* `rtconner/laravel-tagging` package.
-* `Article` model, which needs to be added to your config/app.php file (as mentioned before).
-* `layout.main` view with a @section(‘content’), which this package will use.
+For dependencies on JavaScript, SCSS, and others, I’ve been working with gulp and elixir.
+
+```
+npm install gulp
+```
+
+Then to install it’s dependencies:
+
+```
+npm install
+```
+
+## Bower
+
+To set the packages installed with bower to another directory, let’s add a `.bowerrc` file to the root directory with the following content:
+
+```
+{"directory" : "resources/assets/bower"}
+```
+
+Now we can run `bower install jquery` for instance.
+
+To automate the movement of the files to the public folder let’s use a simple elixir script, add the following to your `gulpfile.js`:
+
+```
+elixir(function(mix) {
+    mix.copy('resources/assets/bower/validatejs/validate.min.js', 'public/js/vendor/validate.min.js')
+       .copy('resources/assets/bower/jquery/dist/jquery.min.js', 'public/js/vendor/jquery.min.js');
+});
+```
 
 ## Stylesheets
 

@@ -4,7 +4,7 @@
 		  {{ trans('writing::base.load-more') }}
 		</span>
 		<span class="[ c-load-more__item  c-load-more__item--loading-wheel ]">
-		  <img src="/img/loader.gif">
+		  <img src="/img/loader.gif"> (Loading..)
 		</span>
 	@endif
 </div>
