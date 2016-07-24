@@ -6,9 +6,9 @@ This branch supports 5.1.
 
 ## Installation
 
-Run `composer require nonoesp/writing:*` on the Terminal (or add the dependency manually to your `composer.json` as `"nonoesp/writing": "*"`, then run `composer update` on the Terminal).
+(1) Add the dependency to your project either by (a) running `composer require nonoesp/writing:*` or (b) adding it manually to `composer.json` as `"nonoesp/writing": "*"` and running  `composer update`.
 
-Add the following to `providers` and `aliases` in your `/app/config/app.php`
+(2) Add the following to `providers` and `aliases` in your `/app/config/app.php`
 
 ```php
 'providers' => [
@@ -46,9 +46,9 @@ Add the following to `providers` and `aliases` in your `/app/config/app.php`
 ]
 ```
 
-The package requires an Article and a User model created on the main app. To avoid setup on the package part, you will have to add both aliases in your config/app.php `aliases` array, as follows.
+(3) This package requires an `Article` and a `User` model created on the main app, which were already added to the `config/app.php` file but you need to provide in the `app` folder. (This are intended to be included with the package in a future version.)
 
-Follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/5.2)
+(4) Follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/5.2)
 
 ## Config
 
