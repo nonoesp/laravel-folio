@@ -21,6 +21,8 @@
         "illuminate/support": "~5",
         "rtconner/laravel-tagging": "~2.0",
         "nonoesp/authenticate": "*",
-        "nonoesp/thinker": "*"
+        "nonoesp/thinker": "*",
+        "jenssegers/date": "^3.0",
+        "roumen/feed": "^2.9"
     }
 }

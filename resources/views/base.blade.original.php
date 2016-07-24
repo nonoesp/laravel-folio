@@ -1,7 +1,7 @@
-
+@extends('layout.main')
 
 <?php
-  //{{-- @extends('layout.main') --}}
+
     /*
     / [ writing ]
     /
@@ -18,7 +18,7 @@
     $is_header_static = true;
 
     // 2. Defaults Cover
-    $cover_subtitle = Thinker::array_rand_value(['Subtitle 01', 'Subtitle 02']);
+    $cover_subtitle = Thinker::array_rand_value(trans('base.slogan'));
     $cover_classes_title_b = '';
     $cover_image = '';
     $cover_classes = '';
@@ -84,13 +84,13 @@
 
   @if($cover_active)
 
-      {{-- View::make('partial.c-cover')
+      {{ View::make('partial.c-cover')
              ->with(array('title' => '<div class="[ o-icon-container  o-icon-container--small  o-icon--white ]">'.Config::get('svg.logo-arma').'</div>',
                           'subtitle' => $cover_subtitle,
                           'classes_title_b' => $cover_classes_title_b,
                           'image' => $cover_image,
                           'description' => trans('base.description'),
-                          'class' => 'is-header u-background-grey '.$cover_classes)) --}}
+                          'class' => 'is-header u-background-grey '.$cover_classes)) }}
 
   @endif
 
@@ -165,6 +165,6 @@
 @section('footer')
 
 {{-- Footer --}}
-{{-- View::make('partial.c-footer') --}}
+{{ View::make('partial.c-footer') }}
 
 @stop
