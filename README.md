@@ -60,6 +60,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
     'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
     'Form' => Collective\Html\FormFacade::class,
     'Html' => Collective\Html\HtmlFacade::class,   
+        'Input' => Illuminate\Support\Facades\Input::class,     
 		// ...
 	],
 ```
@@ -76,7 +77,9 @@ Even though you can publish the whole bundle of assets, I recommend to start by 
 
 First, run this command, and you will get a customizable config file under `config/writing.php`.
 
-`php artisan vendor:publish --provider="Nonoesp\Writing\WritingServiceProvider" --tag=config
+```php
+php artisan vendor:publish --provider="Nonoesp\Writing\WritingServiceProvider" --tag=config
+```
 
 On the config/writing.php file you can customize:
 
