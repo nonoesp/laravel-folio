@@ -6,49 +6,65 @@ This branch supports 5.2.
 
 ## Installation
 
-(1) Add the dependency to your project either by (a) running `composer require nonoesp/writing:*` or (b) adding it manually to `composer.json` as `"nonoesp/writing": "*"` and running  `composer update`.
+Begin by installing this package through Composer. Edit your project’s `composer.json` file to require `nonoesp/writing`.
 
-(2) Add the following to `providers` and `aliases` in your `/app/config/app.php`
-
-```php
-'providers' => [
-	
-		[…]
-
-		// nonoesp/writing
-		Nonoesp\Writing\WritingServiceProvider::class,        
-		Nonoesp\Thinker\ThinkerServiceProvider::class,  
-		Nonoesp\Authenticate\AuthenticateServiceProvider::class,          
-		VTalbot\Markdown\MarkdownServiceProvider::class,
-		Conner\Tagging\Providers\TaggingServiceProvider::class,
-		Jenssegers\Date\DateServiceProvider::class,
-		Roumen\Feed\FeedServiceProvider::class,
-		Thujohn\Twitter\TwitterServiceProvider::class,
-],
-
-'aliases' => [
-
-		[…]
-
-		// nonoesp/writing - Models
-		'Writing' => Nonoesp\Writing\Facades\Writing::class,
-		'User' => 'App\User',
-		'Article' => 'App\Article',    
-		'Recipient' => Nonoesp\Writing\Models\Recipient::class,
-		
-		// nonoesp/writing - Dependencies
-		'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
-		'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
-		'Date' => Jenssegers\Date\Date::class,
-		'Feed' => Roumen\Feed\Facades\Feed::class,
-		'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
-    
-]
+```
+"require": {
+	"nonoesp/writing": "5.2.*"
+}
 ```
 
-(3) This package requires an `Article` and a `User` model created on the main app, which were already added to the `config/app.php` file but you need to provide in the `app` folder. (This are intended to be included with the package in a future version.)
+Next, update Composer from the Terminal:
 
-(4) Follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/5.2)
+```
+composer update
+```
+
+Next, add the new providers to the `providers` array of `config/app.php`:
+
+```
+	'providers' => [
+		// ...
+    // nonoesp/writing
+    Nonoesp\Writing\WritingServiceProvider::class,        
+    Nonoesp\Thinker\ThinkerServiceProvider::class,  
+    Nonoesp\Authenticate\AuthenticateServiceProvider::class,          
+    VTalbot\Markdown\MarkdownServiceProvider::class,
+    Conner\Tagging\Providers\TaggingServiceProvider::class,
+    Jenssegers\Date\DateServiceProvider::class,
+    Roumen\Feed\FeedServiceProvider::class,
+    Thujohn\Twitter\TwitterServiceProvider::class,
+    Collective\Html\HtmlServiceProvider::class,
+		// ...
+	],
+```
+
+Then, add the class aliases to the `aliases` array of `config/app.php`:
+
+```
+	'aliases' => [
+		// ...
+    // nonoesp/writing - Models
+    'Writing' => Nonoesp\Writing\Facades\Writing::class,
+    'User' => 'App\User',
+    'Article' => 'App\Article',    
+    'Recipient' => Nonoesp\Writing\Models\Recipient::class,
+
+    // nonoesp/writing - Dependencies
+    'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
+    'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
+    'Date' => Jenssegers\Date\Date::class,
+    'Feed' => Roumen\Feed\Facades\Feed::class,
+    'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
+    'Form' => Collective\Html\FormFacade::class,
+    'Html' => Collective\Html\HtmlFacade::class,   
+		// ...
+	],
+```
+
+As this package requires an `Article` and a `User` model created on the main app, which were already added to the `config/app.php` file but you need to provide in the `app` folder. (This are intended to be included with the package in a future version.)
+
+Finally, follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/5.2)
 
 ## Config
 
