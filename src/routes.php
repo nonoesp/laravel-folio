@@ -74,10 +74,4 @@ Route::group(['middleware' => Config::get("writing.middlewares-admin")], functio
   });
 });
 
-//TODO: Archive
-
-Route::get($path.'archive', function() {
-	return 'Blog archive.';
-});
-
 });

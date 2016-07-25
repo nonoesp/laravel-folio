@@ -23,16 +23,16 @@ Next, add the new providers to the `providers` array of `config/app.php`:
 ```
 	'providers' => [
 		// ...
-    // nonoesp/writing
-    Nonoesp\Writing\WritingServiceProvider::class,        
-    Nonoesp\Thinker\ThinkerServiceProvider::class,  
-    Nonoesp\Authenticate\AuthenticateServiceProvider::class,          
-    VTalbot\Markdown\MarkdownServiceProvider::class,
-    Conner\Tagging\Providers\TaggingServiceProvider::class,
-    Jenssegers\Date\DateServiceProvider::class,
-    Roumen\Feed\FeedServiceProvider::class,
-    Thujohn\Twitter\TwitterServiceProvider::class,
-    Collective\Html\HtmlServiceProvider::class,
+        // nonoesp/writing
+        Nonoesp\Writing\WritingServiceProvider::class,        
+        Nonoesp\Thinker\ThinkerServiceProvider::class,  
+        Nonoesp\Authenticate\AuthenticateServiceProvider::class,          
+        VTalbot\Markdown\MarkdownServiceProvider::class,
+        Conner\Tagging\Providers\TaggingServiceProvider::class,
+        Jenssegers\Date\DateServiceProvider::class,
+        Roumen\Feed\FeedServiceProvider::class,
+        Thujohn\Twitter\TwitterServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 		// ...
 	],
 ```
@@ -42,22 +42,21 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 ```
 	'aliases' => [
 		// ...
-    // nonoesp/writing - Models
-    'Writing' => Nonoesp\Writing\Facades\Writing::class,
-    'User' => 'App\User',
-    'Article' => Nonoesp\Writing\Models\Article::class,    
-    'Recipient' => Nonoesp\Writing\Models\Recipient::class,
+        // nonoesp/writing - Models
+        'Writing' => Nonoesp\Writing\Facades\Writing::class,
+        'User' => 'App\User',
+        'Article' => Nonoesp\Writing\Models\Article::class,    
+        'Recipient' => Nonoesp\Writing\Models\Recipient::class,
 
-    // nonoesp/writing - Dependencies
-    'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
-    'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
-    'Date' => Jenssegers\Date\Date::class,
-    'Feed' => Roumen\Feed\Feed::class,
-    'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
-    'Form' => Collective\Html\FormFacade::class,
-    'Html' => Collective\Html\HtmlFacade::class,   
-        'Input' => Illuminate\Support\Facades\Input::class,     
-
+        // nonoesp/writing - Dependencies
+        'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
+        'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
+        'Date' => Jenssegers\Date\Date::class,
+        'Feed' => Roumen\Feed\Feed::class,
+        'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,   
+        'Input' => Illuminate\Support\Facades\Input::class,
         'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
 		// ...
 	],
@@ -118,7 +117,8 @@ elixir(function(mix) {
 
 ## To-dos
 
-* Put user route inside controller.
+* Move Subscriber model and route to package.
+* Move user route inside controller.
 * Add migrations to create database tables.
 * Test Disqus implementation for comments.
 
