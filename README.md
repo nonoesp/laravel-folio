@@ -116,6 +116,20 @@ elixir(function(mix) {
 });
 ```
 
+## To-dos
+
+* Fix routes:
+    * Tag
+    * @user
+    * RSS Feed
+* Put user route inside controller.
+* Add migrations to create database tables.
+* Test Disqus implementation for comments.
+
+## Features
+
+* **Article recipients**. Make articles only visible to certain Twitter handles.
+
 ## Stylesheets
 
 The package provides HTML structure but, for the moment being, it is CSS agnostic.
@@ -124,21 +138,6 @@ The package provides HTML structure but, for the moment being, it is CSS agnosti
 * c-load-more
 * o-wrap
 * o-video-thumb
-
-## To-dos
-
-* Fix feed.xml
-* Fix routes:
-    * Tag
-    * @user
-    * 
-* Put user route inside controller.
-* Add migrations to create database tables.
-* Test Disqus implementation for comments.
-
-## Features
-
-* **Article recipients**. Make articles only visible to certain Twitter handles.
 
 ## Release Notes
 
