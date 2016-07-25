@@ -1,6 +1,6 @@
 # A Simple Blogging Package for Laravel
 
-Hi! This branch supports 5.2. Beware that on the first updates to 5.2 the administration is publicly exposed. (This version is not inteded for production yet.)
+Hi! This branch supports 5.2.
 
 ## Installation
 
@@ -52,7 +52,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
     'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
     'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
     'Date' => Jenssegers\Date\Date::class,
-    'Feed' => Roumen\Feed\Facades\Feed::class,
+    'Feed' => Roumen\Feed\Feed::class,
     'Markdown'  => VTalbot\Markdown\Facades\Markdown::class,
     'Form' => Collective\Html\FormFacade::class,
     'Html' => Collective\Html\HtmlFacade::class,   
@@ -118,10 +118,6 @@ elixir(function(mix) {
 
 ## To-dos
 
-* Fix routes:
-    * Tag
-    * @user
-    * RSS Feed
 * Put user route inside controller.
 * Add migrations to create database tables.
 * Test Disqus implementation for comments.
@@ -146,6 +142,7 @@ The package provides HTML structure but, for the moment being, it is CSS agnosti
 * Added path-admin to config and set admin routes accordingly.
 * Added explicit slugs.
 * Embedded Article model inside package (fixed issue with rtconner/tagging not working when the model was hosted inside the package).
+* Fixed routes: Tag, @user, RSS Feed
 
 
 ### v0.8.0
