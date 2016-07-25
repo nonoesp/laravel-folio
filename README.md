@@ -127,18 +127,27 @@ The package provides HTML structure but, for the moment being, it is CSS agnosti
 
 ## To-dos
 
-* Add path-admin to config and set admin routes accordingly.
-* Add explicit slugs.
+* Fix feed.xml
+* Fix routes:
+    * Tag
+    * @user
+    * 
+* Put user route inside controller.
 * Add migrations to create database tables.
 * Test Disqus implementation for comments.
-* Put user route inside controller.
-* Embed Article model inside package — there is a issue with rtconner/tagging not working when the model is owned by the package.
 
 ## Features
 
 * **Article recipients**. Make articles only visible to certain Twitter handles.
 
 ## Release Notes
+
+### 5.2.*
+
+* Added path-admin to config and set admin routes accordingly.
+* Added explicit slugs.
+* Embedded Article model inside package (fixed issue with rtconner/tagging not working when the model was hosted inside the package).
+
 
 ### v0.8.0
 
