@@ -95,7 +95,7 @@
 						<?php /*@if($article->visibleFor($twitter_handle) OR Auth::user()->is_admin)*/ ?>
 						@if($article->visibleFor($twitter_handle))
 							{{--Visible for @twitter_handle--}}
-							{{ Markdown::string($article->text) }}
+							{!! Markdown::string($article->text) !!}
 						@else
 							{{--Not visible for this @twitter_handle--}}
 							<p>Oh, this content doesn't seem to be visible for {{ "@".$twitter_handle }}.</p>
