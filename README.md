@@ -20,7 +20,7 @@ composer update
 
 Next, add the new providers to the `providers` array of `config/app.php`:
 
-```
+```php
 	'providers' => [
 		// ...
         // nonoesp/writing
@@ -39,7 +39,7 @@ Next, add the new providers to the `providers` array of `config/app.php`:
 
 Then, add the class aliases to the `aliases` array of `config/app.php`:
 
-```
+```php
 	'aliases' => [
 		// ...
         // nonoesp/writing - Models
