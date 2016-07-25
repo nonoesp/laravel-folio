@@ -6,7 +6,7 @@ Hi! This branch supports 5.2.
 
 Begin by installing this package through Composer. Edit your project’s `composer.json` file to require `nonoesp/writing`.
 
-```
+```json
 "require": {
 	"nonoesp/writing": "5.2.*"
 }
