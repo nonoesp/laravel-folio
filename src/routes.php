@@ -12,6 +12,15 @@ use Markdown;
 use Authenticate; // nonoesp/authenticate
 use Recipient;
 
+// Experimental
+
+foreach(Config::get("writing.layers") as $layer) {
+	Route::get($layer['path'], function() use ($layer) {
+		$items = Article::withAnyTag($layer['tags'])->orderBy('published_at', 'DESC')->get();
+		return view($layer['view'])->withItems($items);
+	});
+}
+
 /*----------------------------------------------------------------*/
 /* WritingController
 /*----------------------------------------------------------------*/

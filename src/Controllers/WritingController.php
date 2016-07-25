@@ -21,11 +21,29 @@ class WritingController extends Controller
 		$published_show = Config::get("writing.published-show");
 		$expected_show = Config::get("writing.expected-show");
 
+		$published_existing = Article::published()
+    				   		->visibleFor($twitter_handle)
+    				   		->count();
+
+		$expected_existing = Article::expected()
+    				   	   ->visibleFor($twitter_handle)
+    				       ->count();
+
+		if($published_show > $published_existing) {
+			$published_show = $published_existing;
+		}
+		if($expected_show > $expected_existing) {
+			$expected_show = $expected_existing;
+		}
+
+    	$published_left = $published_existing - $published_show;
+    	$expected_left = $expected_existing - $expected_show;
+
 		// Get Articles + Articles ids
 
     	$left = Article::published()
     				   ->visibleFor($twitter_handle)
-    				   ->count();
+    				   ->count() - $published_show;
 
     	$articles = Article::published()
     					   ->visibleFor($twitter_handle)
@@ -34,20 +52,23 @@ class WritingController extends Controller
     					   ->take($published_show)
     					   ->get();
 
-		$ids = Article::published()
-    				  ->visibleFor($twitter_handle)
-		              ->select('id','published_at')    				  
-    				  ->orderBy('published_at', 'DESC')
-    				  ->skip($published_show)
-    				  ->take($left)
-    				  ->get();
-
 		$ids_array = array();
 
-		foreach($ids as $id)
-		{
-			array_push($ids_array, $id->id);
-		}
+  		  if ($left > 0)
+  		  {
+			$ids = Article::published()
+	    				  ->visibleFor($twitter_handle)
+			              ->select('id','published_at')    				  
+	    				  ->orderBy('published_at', 'DESC')
+	    				  ->skip($published_show)
+	    				  ->take($left)
+	    				  ->get();
+
+			foreach($ids as $id)
+			{
+				array_push($ids_array, $id->id);
+			}	    				  
+	    }
 
 		// Get Expected Articles
 		$articles_expected = Article::expected()
@@ -55,23 +76,6 @@ class WritingController extends Controller
 									->orderBy('published_at', 'DESC')
 									->take($expected_show)
 									->get();
-
-		if(false) {
-	    	foreach($articles as $article) {
-	    		echo $article->id." - ".$article->title;
-	    		echo '<br><br>';
-	    	}
-
-	    	echo '<br><br>ids';echo '<br><br>';
-	    	foreach($ids as $id) {
-	    		echo $id->id;
-	    		echo '<br>';
-	    	}
-
-		return;
-		}
-
-		//return view('writing::base');
 
 		return view('writing::base')->with(array('articles' => $articles,
 													  'ids' => $ids_array,
@@ -84,35 +88,52 @@ class WritingController extends Controller
 		// Get user's Twitter handle (or visitor)
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
-		$show = Config::get("writing.archive-show");
-		$left = Article::withAnyTag($tag)
-		               ->published()
-		               ->public()
-		               ->visibleFor($twitter_handle)
-		               ->count() - $show;
+		// Config variables
+		$published_show = Config::get("writing.published-show");
+		$expected_show = Config::get("writing.expected-show");
 
-  		$articles = Article::withAnyTag($tag)  		
-  		                   ->published()
-  		                   ->public()
-  		                   ->visibleFor($twitter_handle)  		                   
-  		                   ->orderBy('published_at', 'DESC')
-  		                   ->skip(0)
-  		                   ->take($show)
-  		                   ->get();
+		$published_existing = Article::withAnyTag($tag)
+    					    ->published()
+    				   		->visibleFor($twitter_handle)
+    				   		->count();
+
+		$expected_existing = Article::withAnyTag($tag)
+						   ->expected()
+    				   	   ->visibleFor($twitter_handle)
+    				       ->count();
+
+		if($published_show > $published_existing) {
+			$published_show = $published_existing;
+		}
+		if($expected_show > $expected_existing) {
+			$expected_show = $expected_existing;
+		}
+
+    	$published_left = $published_existing - $published_show;
+    	$expected_left = $expected_existing - $expected_show;
+
+    	// Get content
+
+    	$articles = Article::withAnyTag($tag) 
+    					   ->published()
+    					   ->visibleFor($twitter_handle)
+    					   ->orderBy('published_at', 'DESC')
+    					   ->take($published_show)
+    					   ->get();
 
 		$ids_array = array();
 
-  		if ($left > 0)
+  		if ($published_left > 0)
   		{
+
 			$ids = Article::withAnyTag($tag)
 						  ->published()
-  		                  ->public()
-  		                  ->visibleFor($twitter_handle)						  
-						  ->select('id','published_at')
-						  ->orderBy('published_at', 'DESC')
-						  ->skip($show)
-						  ->take($left)
-						  ->get();
+	    				  ->visibleFor($twitter_handle)
+			              ->select('id','published_at')    				  
+	    				  ->orderBy('published_at', 'DESC')
+	    				  ->skip($published_show)
+	    				  ->take($published_left)
+	    				  ->get();
 
 			foreach($ids as $id)
 			{
@@ -120,11 +141,21 @@ class WritingController extends Controller
 			}
 		}
 
-		return view('writing::base')->
-		             with(array(
-		             	  'articles' => $articles,
-		             	  'ids' => $ids_array, 
-		             	  'tag' => $tag));
+		// Get Expected Articles
+		$articles_expected = Article::withAnyTag($tag)
+								    ->expected()
+									->visibleFor($twitter_handle)
+									->orderBy('published_at', 'DESC')
+									->take($expected_show)
+									->get();
+
+		return view('writing::base')->with(
+								[
+		             	  			'articles' => $articles,
+		             	  			'ids' => $ids_array, 
+		             	  			'tag' => $tag,
+		             	  			'articles_expected' => $articles_expected
+		             	  		]);
 	}	
 
 	public function showArticle($slug) {
@@ -170,14 +201,14 @@ class WritingController extends Controller
 	    	$default_author = 'Nono Martínez Alonso';
 
 	       // creating rss feed with our most recent articles
-		   $show = Config::get('writing.feed.show');
+		   $feed_show = Config::get('writing.feed.show');
 	  	   
-			$articles = Article::published()
-			                   ->public()
-			                   ->rss()
-			                   ->orderBy('published_at', 'DESC')
-			                   ->take($show)
-			                   ->get();
+	       $articles = Article::published()
+					          ->public()
+					          ->orderBy('published_at', 'DESC')
+					          ->rss()
+					          ->take($feed_show)
+					          ->get();
 
 	       // set your feed's title, description, link, pubdate and language
 	       $feed->title = Config::get('writing.feed.title');

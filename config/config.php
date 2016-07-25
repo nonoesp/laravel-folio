@@ -29,14 +29,42 @@ return array(
 	'published-show' => 5,
 
 	// Initial amount of articles to show in archive
-	'expected-show' => 1,	
+	'expected-show' => 100,	
 
 	// RSS Feed configuration
-	'feed' => array(
+	'feed' =>
+	[
 		'route' => 'feed.xml',
 		'title' => 'My Untitled Feed',
 		'description' => 'A description here would come handy.',
-		'show' => '30', // maximum amount of articles to display
+		'show' => '2', // maximum amount of articles to display
 		'logo' => '', // (optional) URL to your feed's logo
-		)
+	],
+
+	// Experimental
+	'layers' => 
+	[
+		'photos' =>
+		[
+			'path' => 'photos',
+			'tags' => ['photos'],
+			'view' => 'writing::layer.photos'
+		],
+		'sketches' =>
+		[
+			'path' => 'sketches',
+			'tags' => ['make'],
+			'view' => 'writing::layer.sketches'
+		],
+		'notes' =>
+		[
+			'path' => 'notes',
+			'tags' => ['simplify', 'highlight'],
+			'view' => 'writing::layer.notes'
+		]
+	]
 );
+
+
+
+

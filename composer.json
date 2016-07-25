@@ -23,7 +23,7 @@
         "nonoesp/authenticate": "*",
         "nonoesp/thinker": "*",
         "jenssegers/date": "^3.0",
-        "roumen/feed": "^2.9",
+        "roumen/feed": "~2.10",
         "vtalbot/markdown": "2.*",
         "laravelcollective/html": "*"
     }

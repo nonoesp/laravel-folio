@@ -25,8 +25,8 @@
     $user = NULL;
     if($article->user_id) {
  	   $user = User::find($article->user_id);
- 	   $user_thumbnail = View::make('partial.c-user-picture')->with(["user" => $user,
-	  										     		   			 "size" => 36]);
+ 	//   $user_thumbnail = View::make('partial.c-user-picture')->with(["user" => $user,
+	//										     		   			 "size" => 36]);
 	}	
 ?>
 
