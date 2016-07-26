@@ -20,8 +20,8 @@
     "require": {
         "illuminate/support": "~5",
         "rtconner/laravel-tagging": "~2.0",
-        "nonoesp/authenticate": "*",
-        "nonoesp/thinker": "*",
+        "nonoesp/authenticate": "5.2.*",
+        "nonoesp/thinker": "5.2.*",
         "jenssegers/date": "^3.0",
         "roumen/feed": "2.10.*",
         "vtalbot/markdown": "2.*",
