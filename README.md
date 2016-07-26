@@ -1,6 +1,6 @@
 # A Simple Blogging Package for Laravel
 
-Hi! This branch supports 5.2.
+Hi there! `nonoesp/writing` is a content management system package for Laravel. This branch supports 5.2.
 
 ## Installation
 
@@ -163,4 +163,4 @@ Writing is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Me
 
-I tweet at [@nonoesp](http://www.twitter.com/nonoesp) and blog at [nono.ma/says](http://nono.ma/says). If you use this package, I would love to hear about it. Thanks!
+I'm [Nono Martínez Alonso](http://nono.ma), an computational designer with a penchant for design, code, and simplicity. I tweet at [@nonoesp](http://www.twitter.com/nonoesp) and write at [Getting Simple](http://gettingsimple.com/). If you use this package, I would love to hear about it. Thanks!
