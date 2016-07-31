@@ -1,7 +1,8 @@
-
-
 @extends('writing::layout')
 
+<?php
+	$site_title = $layer['title'].' — '.Config::get('settings.title');
+?>
 
 @section('content')
 

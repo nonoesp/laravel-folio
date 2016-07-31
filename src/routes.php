@@ -12,15 +12,6 @@ use Markdown;
 use Authenticate; // nonoesp/authenticate
 use Recipient;
 
-// Experimental
-
-foreach(Config::get("writing.layers") as $layer) {
-	Route::get($layer['path'], function() use ($layer) {
-		$items = Article::withAnyTag($layer['tags'])->orderBy('published_at', 'DESC')->get();
-		return view($layer['view'])->withItems($items);
-	});
-}
-
 /*----------------------------------------------------------------*/
 /* WritingController
 /*----------------------------------------------------------------*/
@@ -46,6 +37,21 @@ if(Writing::isAvailableURI()) {
 
 	// Feed
 	Route::get(Config::get('writing.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Writing\Controllers\WritingController@getFeed'));	
+
+
+	// Experimental - layer routes from config file
+
+	foreach(Config::get("writing.layers") as $layer) {
+
+		Route::get($layer['path'], function() use ($layer) {
+			$items = Article::withAnyTag($layer['tags'])->orderBy('published_at', 'DESC')->get();
+			return view($layer['view'])->with(
+				[
+				'items' => $items,
+				'layer' => $layer
+				]);
+		});
+	}	
 }
 
 /*----------------------------------------------------------------*/
