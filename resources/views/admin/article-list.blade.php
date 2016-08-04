@@ -33,6 +33,19 @@
 			echo ' '.Html::link(Writing::adminPath().'article/delete/'.$article->id, 'X', array('class' => 'admin-list-optionLink is-invisible'));
 		}
 
+		if(count($article->tagNames())) {
+			echo "— (";
+		$i = 0;
+		foreach($article->tagNames() as $tag) {
+			if($i > 0) { echo ", "; }
+			echo strtolower($tag);
+			$i++;
+		}
+		echo ")";
+	
+		}
+
+		
 		echo "</p>";
 
 		if ($article->published_at > Date::now()) {

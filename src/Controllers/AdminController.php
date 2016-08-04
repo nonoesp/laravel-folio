@@ -134,6 +134,12 @@ class AdminController extends Controller
 		$article = Article::withTrashed()->find($id);
 		$article->restore();
 
+		// laravel-tagging
+		if($article->tags_str != '') {
+		  $tags = explode(",", $article->tags_str);
+		  $article->tag($tags);
+		}		
+
 		return Redirect::to(Writing::adminPath().'articles');
 	}	
 
