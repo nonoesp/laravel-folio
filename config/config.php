@@ -10,8 +10,11 @@ return array(
 	// Admin path prefix, e.g. 'admin', 'writing-admin', 'admin/writing'
 	'admin-path-prefix' => 'admin',
 
-	// Template View for base layout
+	// View Template for base layout
 	'template-view' => 'writing::layout',
+
+	// View admin menu
+	'view-admin-menu' => 'writing::admin.c-menu',
 
 	// URIs protected from Writing routes
 	'protected_uris' => ['example', 'profile', 'about', 'magic'],
