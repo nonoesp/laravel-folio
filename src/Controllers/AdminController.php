@@ -52,6 +52,7 @@ class AdminController extends Controller
 			$article->title = Input::get('title');
 		  	$article->published_at = Input::get('published_at');
 		  	$article->image = Input::get('image');
+		  	$article->image_src = Input::get('image_src');
 			if(Thinker::IsInstagramPostURL($article->image)) {
 				$article->image = Thinker::InstagramImageURL($article->image);
 			}		  	
@@ -89,6 +90,7 @@ class AdminController extends Controller
 		$article->title = Input::get('title');
 		$article->text = Input::get('text');
 		$article->image = Input::get('image');
+		$article->image_src = Input::get('image_src');
 		if(Thinker::IsInstagramPostURL($article->image)) {
 			$article->image = Thinker::InstagramImageURL($article->image);
 		}

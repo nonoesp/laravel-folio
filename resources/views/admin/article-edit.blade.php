@@ -26,6 +26,8 @@
 
 		<p>{{ Form::text('image', null, array('placeholder' => 'Image')) }}</p>
 
+		<p>{{ Form::text('image_src', null, array('placeholder' => 'Image (Thumbnail)')) }}</p>
+
 		<p>{{ Form::text('video', null, array('placeholder' => 'Video')) }}</p>
 
 		<p>{{ Form::text('slug_title', null, array('placeholder' => 'Explicit Slug Title')) }}</p>

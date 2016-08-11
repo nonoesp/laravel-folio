@@ -16,6 +16,8 @@
 
 			<p>{{ Form::text('image', '', ['placeholder' => 'Image']) }}</p>
 
+			<p>{{ Form::text('image_str', '', ['placeholder' => 'Image (Thumbnail)']) }}</p>
+
 			<p>{{ Form::text('video', '', ['placeholder' => 'Video']) }}</p>
 
 			<p>{{ Form::textarea('text', '', ['placeholder' => 'Text']) }}</p>
@@ -23,7 +25,6 @@
 			<p>{{ Form::text('published_at', '', ['placeholder' => 'Publishing Date']) }}</p>
 
 			<p>{{ Form::text('slug_title', '', ['placeholder' => 'Explicit Slug Title']) }}</p>			
-
 			<p>{{ Form::text('tags_str', '', ['placeholder' => 'Tags']) }}</p>			
 
 			<p>{{ Form::text('recipients_str', '', ['placeholder' => '@recipients']) }}</p>
