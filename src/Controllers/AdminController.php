@@ -55,7 +55,10 @@ class AdminController extends Controller
 		  	$article->image_src = Input::get('image_src');
 			if(Thinker::IsInstagramPostURL($article->image)) {
 				$article->image = Thinker::InstagramImageURL($article->image);
-			}		  	
+			}
+			if(Thinker::IsInstagramPostURL($article->image_src)) {
+				$article->image_src = Thinker::InstagramImageURL($article->image_src);
+			}
 		  	$article->video = Input::get('video');
 		  	$article->tags_str = Input::get('tags_str');
 		  	if ($article->tags_str != '') {
@@ -94,6 +97,9 @@ class AdminController extends Controller
 		if(Thinker::IsInstagramPostURL($article->image)) {
 			$article->image = Thinker::InstagramImageURL($article->image);
 		}
+		if(Thinker::IsInstagramPostURL($article->image_src)) {
+			$article->image_src = Thinker::InstagramImageURL($article->image_src);
+		}		
 		$article->video = Input::get('video');
 		$article->tags_str = Input::get('tags_str');	
 	    $article->recipients_str = Input::get('recipients_str');	
