@@ -42,6 +42,7 @@ return array(
 		'description' => 'A description here would come handy.',
 		'show' => '30', // maximum amount of articles to display
 		'logo' => '', // (optional) URL to your feed's logo
+		'default-image-src' => 'http://your-default.com/image.jpg'
 	],
 
 	// Experimental

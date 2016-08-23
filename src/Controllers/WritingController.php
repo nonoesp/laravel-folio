@@ -226,7 +226,7 @@ class WritingController extends Controller
 	       {
 	           // set item's title, author, url, pubdate, description and content
 	       	   $imageURL = '';
-	       	   $image = '';
+	       	   $image = Config::get('writing.feed.default-image-src');
 	       	   if ($article->image) {
 	       	     $image = '<p><img src="'.$article->image.'" alt="'.$article->title.'"></p>';
 	       	   }
@@ -241,7 +241,14 @@ class WritingController extends Controller
 	       	   	 $image = '<p><img src="'.$imageURL.'" alt="'.$article->title.'"></p>';
 	       	   }
 
-	           $feed->add($article->title, $default_author, \URL::to(Writing::path().$article->slug), $article->published_at, '', str_replace('<img', '<img width="100%"', $image.\Markdown::string($article->text)));
+	           $feed->add(
+	           	$article->title,
+	           	$default_author,
+	           	\URL::to(Writing::path().$article->slug),
+	           	$article->published_at,
+	           	\Thinker::limitMarkdownText($article->text, 159),
+	           	str_replace('<img', '<img width="100%"', $image.\Markdown::string($article->text)),
+	           	['url'=>'http://lourdesalonsocarrion.com/img/u/sketch-nacho.jpg','type'=>'image/jpeg']);
 	       }
 
 	    }
