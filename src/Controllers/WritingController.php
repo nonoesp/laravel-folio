@@ -225,20 +225,21 @@ class WritingController extends Controller
 	       foreach ($articles as $article)
 	       {
 	           // set item's title, author, url, pubdate, description and content
-	       	   $imageURL = '';
-	       	   $image = Config::get('writing.feed.default-image-src');
-	       	   if ($article->image) {
+	       	   $image_src = Config::get('writing.feed.default-image-src');
+	       	   $image = '';
+
+			   if ($article->video) {
+	       	     $image = '<p><a href="'.$request->root().'/'.Writing::path().$article->slug.'">'
+	       	   	         .'<img src="'.\Thinker::getVideoThumb($article->video)
+	       	   	         .'" alt="'.$article->title.'"></a></p>';
+	       	   } else if ($article->image) {
 	       	     $image = '<p><img src="'.$article->image.'" alt="'.$article->title.'"></p>';
 	       	   }
 
-	       	   if ($article->video) {
-	       	   	 $image = '<p><a href="'.$request->root().'/'.Writing::path().$article->slug.'">'
-	       	   	         .'<img src="'.\Thinker::getVideoThumb($article->video)
-	       	   	         .'" alt="'.$article->title.'"></a></p>';
-	       	   }
-
-	       	   if ($imageURL != '') {
-	       	   	 $image = '<p><img src="'.$imageURL.'" alt="'.$article->title.'"></p>';
+	       	   if ($article->image_src != '') {
+	       	   	$image_src = $article->image_src;
+	       	   } else if ($article->image != '') {
+	       	   	$image_src = $article->image;
 	       	   }
 
 	           $feed->add(
@@ -248,7 +249,7 @@ class WritingController extends Controller
 	           	$article->published_at,
 	           	\Thinker::limitMarkdownText($article->text, 159),
 	           	str_replace('<img', '<img width="100%"', $image.\Markdown::string($article->text)),
-	           	['url'=>'http://lourdesalonsocarrion.com/img/u/sketch-nacho.jpg','type'=>'image/jpeg']);
+	           	['url'=>$image_src,'type'=>'image/jpeg']);
 	       }
 
 	    }
