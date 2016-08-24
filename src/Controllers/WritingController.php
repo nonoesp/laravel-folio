@@ -9,6 +9,7 @@ use View;
 use Config;
 use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
 use App;
+use Markdown;
 
 class WritingController extends Controller
 {
@@ -247,7 +248,7 @@ class WritingController extends Controller
 	           	$default_author,
 	           	\URL::to(Writing::path().$article->slug),
 	           	$article->published_at,
-	           	\Thinker::limitMarkdownText($article->text, 159),
+	           	\Thinker::limitMarkdownText(Markdown::string($article->text), 159, ['sup']),
 	           	str_replace('<img', '<img width="100%"', $image.\Markdown::string($article->text)),
 	           	['url'=>$image_src,'type'=>'image/jpeg']);
 	       }
