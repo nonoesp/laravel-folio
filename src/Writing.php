@@ -1,11 +1,12 @@
 <?php namespace Nonoesp\Writing;
- 
+
  use Lang;
  use Config;
  use Request;
  use Html;
  use DB;
- use Article; // Must be defined in your aliases
+ use Article, Property; // Must be defined in your aliases
+ use Form;
 
 class Writing {
 
@@ -21,7 +22,7 @@ class Writing {
 			}
 		}
 		return;
-	}	
+	}
 
 	public static function tagListWithArticleAndClass($article, $class) {
 		$result = '';
@@ -107,7 +108,7 @@ class Writing {
 				return true;
 			} else {
 				return false;
-			}			
+			}
 
 		} else {
 
@@ -116,10 +117,40 @@ class Writing {
 				return true;
 			} else {
 				return false;
-			}		
+			}
 		}
 
 		return false;
 	}
+
+  public static function articlePropertyArray($article) {
+    $properties = config('writing.properties');
+    $article_properties = [];
+    foreach($article->tags as $tag) {
+      if(array_key_exists ( $tag->slug, $properties )) {
+        $article_properties += $properties[$tag->slug];
+      }
+    }
+    return $article_properties;
+  }
+
+  public static function articlePropertyFields($article) {
+    foreach(Writing::articlePropertyArray($article) as $key=>$value) {
+      $placeholder = $key;
+      if(is_string($value)) {
+        $placeholder = $value;
+      } else if (is_array($value)) {
+        if(array_key_exists('placeholder', $value)) {
+          $placeholder = $value['placeholder'];
+        }
+      }
+      $property = Property::where(['article_id' => $article->id, 'name' => $key])->first();
+      $value = "";
+      if($property && $property->value) {
+        $value = $property->value;
+      }
+      echo '<p>'.Form::text($key, $value, array('placeholder' => $placeholder)).'</p>';
+    }
+  }
 
 }

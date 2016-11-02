@@ -31,6 +31,11 @@ class Article extends Model
 		return $this->hasMany('Recipient');
 	}
 
+	public function properties()
+	{
+		return $this->hasMany('Property');
+	}
+
 	public function scopePublic($query)
 	{
 		return $query->has('recipients', '=', 0);
@@ -73,7 +78,7 @@ class Article extends Model
 
 	public function recipientsArray() {
 		return explode(",", strtolower(str_replace([" ", "@"], "", $this->recipients_str)));
-	}	
+	}
 
 	public function isPublic() {
 		return !count($this->recipients()->get());

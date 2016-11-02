@@ -62,7 +62,7 @@
               $cover_classes_title_b = 'c-cover__title-b--small';
             }
             $cover_image = $article->image;
-            $cover_classes .= 'is-faded is-fullscreen';    
+            $cover_classes .= 'is-faded is-fullscreen';
         }
     }
 
@@ -77,7 +77,7 @@
     }
 
     // 1. Defaults
-    $og_title = $site_title;    
+    $og_title = $site_title;
 
 ?>
 
@@ -111,7 +111,7 @@
               </div>
             @endforeach
           @endif
-          
+
           @foreach($articles as $article)
 
             {!! View::make('writing::partial.c-article')->
@@ -132,7 +132,7 @@
       {{-- Article --}}
 
       @if($writing_type == 'SINGLE_WRITING_TYPE')
-          
+
             {!! View::make('writing::partial.c-article')->
                      with(['article' => $article,
                            'class' => '-u-no-margin-bottom  -u-no-border-bottom']) !!}
@@ -147,7 +147,7 @@
 
     </div>
   </div>
-  
+
 
 @stop
 

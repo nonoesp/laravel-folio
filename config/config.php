@@ -32,7 +32,7 @@ return array(
 	'published-show' => 5,
 
 	// Initial amount of articles to show in archive
-	'expected-show' => 100,	
+	'expected-show' => 100,
 
 	// RSS Feed configuration
 	'feed' =>
@@ -46,7 +46,25 @@ return array(
 	],
 
 	// Experimental
-	'layers' => 
+	'properties' =>
+	[
+		'project' =>
+		[
+			'architect' => 'Architect (e.g. FJMT Studio)',
+			'contractor' => 'Contractor (e.g. Mirvac)',
+			'client' => 'Client (e.g. Empire Glass and Aluminium)',
+			'completion_date' => ['type' => 'varchar', 'placeholder' => 'Date of Completion (e.g. August, 2016)'],
+			'location' => 'Location (e.g. 200 George Street, Sydney)'
+			],
+		'case-study' =>
+			[
+				'builder' => 'varchar',
+				'location' => true
+				]
+	],
+
+	// Experimental
+	'layers' =>
 	[
 		'photos' =>
 		[
@@ -71,7 +89,3 @@ return array(
 		]
 	]
 );
-
-
-
-

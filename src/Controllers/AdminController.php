@@ -3,7 +3,7 @@
 namespace Nonoesp\Writing\Controllers;
 
 use Illuminate\Http\Request;
-use Article, User, Thinker, Recipient; // Must be defined in your aliases
+use Article, User, Thinker, Recipient, Property; // Must be defined in your aliases
 use Nonoesp\Writing\Writing;
 use View;
 use Config;
@@ -60,12 +60,23 @@ class AdminController extends Controller
 				$article->image_src = Thinker::InstagramImageURL($article->image_src);
 			}
 		  	$article->video = Input::get('video');
+
+				// Update Properties (before tags)
+				foreach(Writing::articlePropertyArray($article) as $key=>$value) {
+					$property = Property::updateOrCreate(
+						['article_id' => $article->id, 'name' => $key],
+						['value' => Input::get($key)]
+					);
+				}
+
+				// Tags
 		  	$article->tags_str = Input::get('tags_str');
 		  	if ($article->tags_str != '') {
-		    	$article->retag(explode(",", $article->tags_str));		  	
+		    	$article->retag(explode(",", $article->tags_str));
 		    } else {
 		    	$article->untag();
 		    }
+
 		    $article->recipients_str = Input::get('recipients_str');
 		    $article->rss = (Input::get('rss') ? true : false);
 		    $article->recipients()->delete();
@@ -74,7 +85,7 @@ class AdminController extends Controller
 				foreach($article->recipientsArray() as $recipient)
 				{
 				$article->recipients()->save(new Recipient(["twitter" => $recipient]));
-				}		    	
+				}
 		    }
 		 	$article->text = Input::get('text');
 			$article->save();
@@ -99,24 +110,24 @@ class AdminController extends Controller
 		}
 		if(Thinker::IsInstagramPostURL($article->image_src)) {
 			$article->image_src = Thinker::InstagramImageURL($article->image_src);
-		}		
+		}
 		$article->video = Input::get('video');
-		$article->tags_str = Input::get('tags_str');	
-	    $article->recipients_str = Input::get('recipients_str');	
+		$article->tags_str = Input::get('tags_str');
+	    $article->recipients_str = Input::get('recipients_str');
 	    $article->rss = (Input::get('rss') ? true : false);
 	    $article->slug_title = Input::get('slug_title');
 	    if($article->slug_title == "") {
-	    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->title);	
+	    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->title);
 	    } else {
-	    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->slug_title);	
+	    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->slug_title);
 	    }
 
 		// Publishing Date
 		$article->published_at = Input::get('published_at');
-		if(!$article->published_at) {		
+		if(!$article->published_at) {
 			$article->published_at = Date::now();
 		}
-		
+
 	    // Save
 		$article->save();
 
@@ -131,8 +142,8 @@ class AdminController extends Controller
 			foreach($article->recipientsArray() as $recipient)
 			{
 			$article->recipients()->save(new Recipient(["twitter" => $recipient]));
-			}		    	
-	    }		
+			}
+	    }
 
 		return Redirect::to(Writing::adminPath().'article/edit/'.$article->id);
 	}
@@ -152,10 +163,10 @@ class AdminController extends Controller
 		if($article->tags_str != '') {
 		  $tags = explode(",", $article->tags_str);
 		  $article->tag($tags);
-		}		
+		}
 
 		return Redirect::to(Writing::adminPath().'articles');
-	}	
+	}
 
 	/*
 	public function getVisits() {

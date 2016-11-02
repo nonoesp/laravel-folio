@@ -11,8 +11,8 @@
 
 	<!--TypeKit-->
 	<script type="text/javascript" src="//use.typekit.net/{{{ $services_typekit or Config::get('services.typekit.main') }}}.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>	
-		
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
 </head>
 
 <body>

@@ -11,15 +11,15 @@
 
 	<!--TypeKit-->
 	<script type="text/javascript" src="//use.typekit.net/fgm7qov.js"></script>
-	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>	
-		
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
 </head>
 
 <body>
 
   <div class="[ o-band ]  [ u-border-bottom  u-no-padding-bottom ]">
     <div class="[ o-wrap  o-wrap--standard  o-wrap--portable-tiny ]">
-	
+
 	{!! Html::link("/".Config::get("writing.path-prefix"), "Home") !!}
 	&nbsp;&nbsp;
 	{!! Html::link("/".Config::get("writing.admin-path-prefix"), "Admin") !!}
