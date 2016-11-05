@@ -36,6 +36,20 @@ class Article extends Model
 		return $this->hasMany('Property');
 	}
 
+	public function property($key) {
+		if($property = $this->properties()->where('name', $key)->first()) {
+				if($value = $property->value) {
+					// property exists and has value
+					return $value;
+				} else {
+					// property exists, but has no value
+				}
+		} else {
+			// property with $key does not exist in database
+		}
+		return NULL;
+	}
+
 	public function scopePublic($query)
 	{
 		return $query->has('recipients', '=', 0);
