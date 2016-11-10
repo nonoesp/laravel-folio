@@ -18,10 +18,9 @@ class AdminController extends Controller
 		return View::make('admin.dashboard');
 	}
 
-	public function getArticleList() {
-		$articles = Article::withTrashed()->orderBy('published_at', 'DESC')->get();
-
-		return View::make('writing::admin.article-list')->withArticles($articles);
+	public function getArticleList($tag = null) {
+		$items = Article::withTrashed()->orderBy('published_at', 'DESC')->get();
+		return View::make('writing::admin.article-list')->with(['items' => $items, 'tag' => $tag]);
 	}
 
 	public function ArticleEdit(Request $request, $id) {

@@ -29,14 +29,14 @@ if(Writing::isAvailableURI()) {
 	Route::post('articles', 'Nonoesp\Writing\Controllers\WritingController@getArticlesWithIds');
 	Route::get($path, array('as' => 'blog', 'uses' => 'Nonoesp\Writing\Controllers\WritingController@showHome'));
 	Route::get($path.'tag/{tag}', 'Nonoesp\Writing\Controllers\WritingController@showArticleTag');
-	Route::get($path.'{id}', 'Nonoesp\Writing\Controllers\WritingController@showArticleWithId')->where('id', '[0-9]+');	
+	Route::get($path.'{id}', 'Nonoesp\Writing\Controllers\WritingController@showArticleWithId')->where('id', '[0-9]+');
 
 	if(Writing::isWritingURI()) { // Check this is an actual article route
-		Route::get($path.'{slug}', 'Nonoesp\Writing\Controllers\WritingController@showArticle');		
+		Route::get($path.'{slug}', 'Nonoesp\Writing\Controllers\WritingController@showArticle');
 	}
 
 	// Feed
-	Route::get(Config::get('writing.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Writing\Controllers\WritingController@getFeed'));	
+	Route::get(Config::get('writing.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Writing\Controllers\WritingController@getFeed'));
 
 
 	// Experimental - layer routes from config file
@@ -51,7 +51,7 @@ if(Writing::isAvailableURI()) {
 				'layer' => $layer
 				]);
 		});
-	}	
+	}
 }
 
 /*----------------------------------------------------------------*/
@@ -66,6 +66,7 @@ Route::group(['middleware' => Config::get("writing.middlewares-admin")], functio
 
   // Articles
   Route::get($admin_path.'articles', 'Nonoesp\Writing\Controllers\AdminController@getArticleList');
+	Route::get($admin_path.'articles/{tag}', 'Nonoesp\Writing\Controllers\AdminController@getArticleList');
   Route::any($admin_path.'article/edit/{id}', array('as' => 'article.edit', 'uses' => 'Nonoesp\Writing\Controllers\AdminController@ArticleEdit'));
   Route::get($admin_path.'article/add', 'Nonoesp\Writing\Controllers\AdminController@getArticleCreate');
   Route::post($admin_path.'article/add', 'Nonoesp\Writing\Controllers\AdminController@postArticleCreate');
