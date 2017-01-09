@@ -1,6 +1,8 @@
 # A Simple Blogging Package for Laravel
 
-Hi there! `nonoesp/writing` is a content management system package for Laravel. This branch supports 5.2.
+Hi there! `nonoesp/writing` is a content management system package for Laravel.
+
+This branch supports 5.3.
 
 ## Installation
 
@@ -8,7 +10,7 @@ Begin by installing this package through Composer. Edit your project’s `compos
 
 ```json
 "require": {
-	"nonoesp/writing": "5.2.*"
+	"nonoesp/writing": "5.3.*"
 }
 ```
 
@@ -46,7 +48,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
         'Writing' => Nonoesp\Writing\Facades\Writing::class,
         'User' => 'App\User',
         'Article' => Nonoesp\Writing\Models\Article::class,    
-				'Property' => Nonoesp\Writing\Models\Property::class,
+        'Property' => Nonoesp\Writing\Models\Property::class,
         'Recipient' => Nonoesp\Writing\Models\Recipient::class,
 
         // nonoesp/writing - Dependencies
@@ -138,12 +140,16 @@ The package provides HTML structure but, for the moment being, it is CSS agnosti
 
 ## Release Notes
 
+### 5.3.*
+
+*
+
 ### 5.2.*
 
 * Added path-admin to config and set admin routes accordingly.
 * Added explicit slugs.
 * Embedded Article model inside package (fixed issue with rtconner/tagging not working when the model was hosted inside the package).
-* Fixed routes: Tag, @user, RSS Feed
+* Fixed routes: Tag, @user, RSS Feed.
 
 
 ### v0.8.0
