@@ -14,6 +14,8 @@ Begin by installing this package through Composer. Edit your project’s `compos
 }
 ```
 
+Test edit.
+
 Next, update Composer from the Terminal:
 
 ```
