@@ -1,16 +1,16 @@
 @extends('writing::admin.layout')
 
 <?php
-	$site_title = 'Add Article — '.Config::get('settings.title');
+	$site_title = 'Add Item — '.Config::get('settings.title');
 ?>
 
-@section('title', 'Create Article')
+@section('title', 'Create Item')
 
 @section('content')
 
 	<div class="admin-form">
 
-		{{ Form::open(['url' => Writing::adminPath().'article/add', 'method' => 'post']) }}
+		{{ Form::open(['url' => Writing::adminPath().'item/add', 'method' => 'post']) }}
 
 			<p>{{ Form::text('title', '', ['placeholder' => 'Title']) }}</p>
 

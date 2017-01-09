@@ -5,11 +5,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Recipient extends Model
 {
-	protected $table = 'articles_recipients';
-	protected $fillable = array('id', 'article_id', 'twitter');
+	protected $table = 'items_recipients';
+	protected $fillable = array('id', 'item_id', 'twitter');
 
-	public function article()
+	public function item()
 	{
-		return $this->hasOne('Article');
+		return $this->hasOne('Item');
 	}
 }

@@ -20,7 +20,7 @@ return array(
 	'protected_uris' => ['example', 'profile', 'about', 'magic'],
 
 	// Special tags (add a class to articles containing them)
-	// 'special-tags' => ['highlight'],
+	'special-tags' => ['highlight'],
 
 	// Middlewares to filter provided routes, e.g. 'auth'
 	'middlewares' => ['web'],
@@ -46,26 +46,26 @@ return array(
 	],
 
 	// Experimental
-	'properties' =>
-	[
-		'project' =>
-		[
-			'architect' => 'Architect (e.g. FJMT Studio)',
-			'contractor' => 'Contractor (e.g. Mirvac)',
-			'client' => 'Client (e.g. Empire Glass and Aluminium)',
-			'completion_date' => ['type' => 'varchar', 'placeholder' => 'Date of Completion (e.g. August, 2016)'],
-			'location' => 'Location (e.g. 200 George Street, Sydney)',
-			'fabrication' => 'Fabrication (e.g. Terry Tisdale, OX Engineering)',
-			'structure' => 'Structure (e.g. ARUP)',
-			'lighting' => 'Lighting (e.g. ARUP)',
-			'photo_credits' => 'Photo Credits (e.g. Brett Boardman)'
-			],
-		'case-study' =>
-			[
-				'technology' => 'Technology',
-				'price' => 'Price'
-			]
-	],
+	// 'properties' =>
+	// [
+	// 	'project' =>
+	// 	[
+	// 		'architect' => 'Architect (e.g. FJMT Studio)',
+	// 		'contractor' => 'Contractor (e.g. Mirvac)',
+	// 		'client' => 'Client (e.g. Empire Glass and Aluminium)',
+	// 		'completion_date' => ['type' => 'varchar', 'placeholder' => 'Date of Completion (e.g. August, 2016)'],
+	// 		'location' => 'Location (e.g. 200 George Street, Sydney)',
+	// 		'fabrication' => 'Fabrication (e.g. Terry Tisdale, OX Engineering)',
+	// 		'structure' => 'Structure (e.g. ARUP)',
+	// 		'lighting' => 'Lighting (e.g. ARUP)',
+	// 		'photo_credits' => 'Photo Credits (e.g. Brett Boardman)'
+	// 		],
+	// 	'case-study' =>
+	// 		[
+	// 			'technology' => 'Technology',
+	// 			'price' => 'Price'
+	// 		]
+	// ],
 
 	// Experimental
 	// 'layers' =>

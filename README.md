@@ -150,7 +150,7 @@ The package provides HTML structure but, for the moment being, it is CSS agnosti
 
 ### 5.3.*
 
-*
+* Customizable short-URLs included in package routes.
 
 ### 5.2.*
 

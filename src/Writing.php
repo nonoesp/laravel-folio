@@ -5,12 +5,12 @@
  use Request;
  use Html;
  use DB;
- use Article, Property; // Must be defined in your aliases
+ use Item, Property; // Must be defined in your aliases
  use Form;
 
 class Writing {
 
-	public static function articleCategoryClass($tags, $class) {
+	public static function itemCategoryClass($tags, $class) {
 
 		$categories = Config::get('writing.special-tags'); //TODO: lang in package
 
@@ -24,10 +24,10 @@ class Writing {
 		return;
 	}
 
-	public static function tagListWithArticleAndClass($article, $class) {
+	public static function tagListWithItemAndClass($item, $class) {
 		$result = '';
 		$idx = 0;
-		foreach($article->tags as $tag) {
+		foreach($item->tags as $tag) {
 			$result .= Writing::tagWithClass($tag, $class);
 			$idx++;
 		}
@@ -104,7 +104,7 @@ class Writing {
 				return false;
 			}
 
-			if($article = DB::table('articles')->whereSlug($slug)->first()) {
+			if($item = DB::table('items')->whereSlug($slug)->first()) {
 				return true;
 			} else {
 				return false;
@@ -113,7 +113,7 @@ class Writing {
 		} else {
 
 			// Config doesn't have path-prefix
-			if($article = DB::table('articles')->whereSlug($slug)->first()) {
+			if($item = DB::table('items')->whereSlug($slug)->first()) {
 				return true;
 			} else {
 				return false;
@@ -123,19 +123,19 @@ class Writing {
 		return false;
 	}
 
-  public static function articlePropertyArray($article) {
+  public static function itemPropertyArray($item) {
     $properties = config('writing.properties');
-    $article_properties = [];
-    foreach($article->tags as $tag) {
+    $item_properties = [];
+    foreach($item->tags as $tag) {
       if(array_key_exists ( $tag->slug, $properties )) {
-        $article_properties += $properties[$tag->slug];
+        $item_properties += $properties[$tag->slug];
       }
     }
-    return $article_properties;
+    return $item_properties;
   }
 
-  public static function articlePropertyFields($article) {
-    foreach(Writing::articlePropertyArray($article) as $key=>$value) {
+  public static function itemPropertyFields($item) {
+    foreach(Writing::itemPropertyArray($item) as $key=>$value) {
       $placeholder = $key;
       if(is_string($value)) {
         $placeholder = $value;
@@ -144,7 +144,7 @@ class Writing {
           $placeholder = $value['placeholder'];
         }
       }
-      $property = Property::where(['article_id' => $article->id, 'name' => $key])->first();
+      $property = Property::where(['item_id' => $item->id, 'name' => $key])->first();
       $value = "";
       if($property && $property->value) {
         $value = $property->value;

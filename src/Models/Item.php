@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Conner\Tagging\Taggable;
 
-class Article extends Model
+class Item extends Model
 {
 	use SoftDeletes;
 	use Taggable;

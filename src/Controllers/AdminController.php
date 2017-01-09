@@ -3,7 +3,7 @@
 namespace Nonoesp\Writing\Controllers;
 
 use Illuminate\Http\Request;
-use Article, User, Thinker, Recipient, Property; // Must be defined in your aliases
+use Item, User, Thinker, Recipient, Property; // Must be defined in your aliases
 use Nonoesp\Writing\Writing;
 use View;
 use Config;
@@ -18,153 +18,153 @@ class AdminController extends Controller
 		return View::make('admin.dashboard');
 	}
 
-	public function getArticleList($tag = null) {
-		$items = Article::withTrashed()->orderBy('published_at', 'DESC')->get();
-		return View::make('writing::admin.article-list')->with(['items' => $items, 'tag' => $tag]);
+	public function getItemList($tag = null) {
+		$items = Item::withTrashed()->orderBy('published_at', 'DESC')->get();
+		return View::make('writing::admin.item-list')->with(['items' => $items, 'tag' => $tag]);
 	}
 
-	public function ArticleEdit(Request $request, $id) {
+	public function ItemEdit(Request $request, $id) {
 
-		$article = Article::withTrashed()->find($id);
+		$item = Item::withTrashed()->find($id);
 
 		if ($request->isMethod('post')) {
 
 			if(Input::get('slug_title') == null) {
-				if($article->slug_title != null) {
+				if($item->slug_title != null) {
 					// Slug has been removed, not empty before
-					$article->slug_title = null;
-					$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', Input::get('title'));
+					$item->slug_title = null;
+					$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', Input::get('title'));
 				} else {
 					// Slug is empty, and was empty before
-					if($article->title != Input::get('title')) {
-						$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', Input::get('title'));
+					if($item->title != Input::get('title')) {
+						$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', Input::get('title'));
 					}
 				}
 			} else {
-				if($article->slug_title != Input::get('slug_title')) {
+				if($item->slug_title != Input::get('slug_title')) {
 					// Slug has been edited
-					$article->slug_title = Input::get('slug_title');
-					$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->slug_title);
+					$item->slug_title = Input::get('slug_title');
+					$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', $item->slug_title);
 				}
 			}
 
-			$article->title = Input::get('title');
-		  	$article->published_at = Input::get('published_at');
-		  	$article->image = Input::get('image');
-		  	$article->image_src = Input::get('image_src');
-			if(Thinker::IsInstagramPostURL($article->image)) {
-				$article->image = Thinker::InstagramImageURL($article->image);
+			$item->title = Input::get('title');
+		  	$item->published_at = Input::get('published_at');
+		  	$item->image = Input::get('image');
+		  	$item->image_src = Input::get('image_src');
+			if(Thinker::IsInstagramPostURL($item->image)) {
+				$item->image = Thinker::InstagramImageURL($item->image);
 			}
-			if(Thinker::IsInstagramPostURL($article->image_src)) {
-				$article->image_src = Thinker::InstagramImageURL($article->image_src);
+			if(Thinker::IsInstagramPostURL($item->image_src)) {
+				$item->image_src = Thinker::InstagramImageURL($item->image_src);
 			}
-		  	$article->video = Input::get('video');
+		  	$item->video = Input::get('video');
 
 				// Update Properties (before tags)
-				foreach(Writing::articlePropertyArray($article) as $key=>$value) {
+				foreach(Writing::itemPropertyArray($item) as $key=>$value) {
 					$property = Property::updateOrCreate(
-						['article_id' => $article->id, 'name' => $key],
+						['item_id' => $item->id, 'name' => $key],
 						['value' => Input::get($key)]
 					);
 				}
 
 				// Tags
-		  	$article->tags_str = Input::get('tags_str');
-		  	if ($article->tags_str != '') {
-		    	$article->retag(explode(",", $article->tags_str));
+		  	$item->tags_str = Input::get('tags_str');
+		  	if ($item->tags_str != '') {
+		    	$item->retag(explode(",", $item->tags_str));
 		    } else {
-		    	$article->untag();
+		    	$item->untag();
 		    }
 
-		    $article->recipients_str = Input::get('recipients_str');
-		    $article->rss = (Input::get('rss') ? true : false);
-		    $article->recipients()->delete();
-		    if($article->recipients_str != NULL)
+		    $item->recipients_str = Input::get('recipients_str');
+		    $item->rss = (Input::get('rss') ? true : false);
+		    $item->recipients()->delete();
+		    if($item->recipients_str != NULL)
 		    {
-				foreach($article->recipientsArray() as $recipient)
+				foreach($item->recipientsArray() as $recipient)
 				{
-				$article->recipients()->save(new Recipient(["twitter" => $recipient]));
+				$item->recipients()->save(new Recipient(["twitter" => $recipient]));
 				}
 		    }
-		 	$article->text = Input::get('text');
-			$article->save();
+		 	$item->text = Input::get('text');
+			$item->save();
 		}
 
-		return View::make('writing::admin.article-edit')->withArticle($article);
+		return View::make('writing::admin.item-edit')->withItem($item);
 	}
 
-	public function getArticleCreate() {
-		return View::make('writing::admin.article-add');
+	public function getItemCreate() {
+		return View::make('writing::admin.item-add');
 	}
 
-	public function postArticleCreate() {
+	public function postItemCreate() {
 
-		$article = new Article();
-		$article->title = Input::get('title');
-		$article->text = Input::get('text');
-		$article->image = Input::get('image');
-		$article->image_src = Input::get('image_src');
-		if(Thinker::IsInstagramPostURL($article->image)) {
-			$article->image = Thinker::InstagramImageURL($article->image);
+		$item = new Item();
+		$item->title = Input::get('title');
+		$item->text = Input::get('text');
+		$item->image = Input::get('image');
+		$item->image_src = Input::get('image_src');
+		if(Thinker::IsInstagramPostURL($item->image)) {
+			$item->image = Thinker::InstagramImageURL($item->image);
 		}
-		if(Thinker::IsInstagramPostURL($article->image_src)) {
-			$article->image_src = Thinker::InstagramImageURL($article->image_src);
+		if(Thinker::IsInstagramPostURL($item->image_src)) {
+			$item->image_src = Thinker::InstagramImageURL($item->image_src);
 		}
-		$article->video = Input::get('video');
-		$article->tags_str = Input::get('tags_str');
-	    $article->recipients_str = Input::get('recipients_str');
-	    $article->rss = (Input::get('rss') ? true : false);
-	    $article->slug_title = Input::get('slug_title');
-	    if($article->slug_title == "") {
-	    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->title);
+		$item->video = Input::get('video');
+		$item->tags_str = Input::get('tags_str');
+	    $item->recipients_str = Input::get('recipients_str');
+	    $item->rss = (Input::get('rss') ? true : false);
+	    $item->slug_title = Input::get('slug_title');
+	    if($item->slug_title == "") {
+	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', $item->title);
 	    } else {
-	    	$article->slug = Thinker::uniqueSlugWithTableAndTitle('articles', $article->slug_title);
+	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', $item->slug_title);
 	    }
 
 		// Publishing Date
-		$article->published_at = Input::get('published_at');
-		if(!$article->published_at) {
-			$article->published_at = Date::now();
+		$item->published_at = Input::get('published_at');
+		if(!$item->published_at) {
+			$item->published_at = Date::now();
 		}
 
 	    // Save
-		$article->save();
+		$item->save();
 
 		// laravel-tagging
-		if($article->tags_str != '') {
-		  $tags = explode(",", $article->tags_str);
-		  $article->tag($tags);
+		if($item->tags_str != '') {
+		  $tags = explode(",", $item->tags_str);
+		  $item->tag($tags);
 		}
 
-	    if($article->recipients_str != NULL)
+	    if($item->recipients_str != NULL)
 	    {
-			foreach($article->recipientsArray() as $recipient)
+			foreach($item->recipientsArray() as $recipient)
 			{
-			$article->recipients()->save(new Recipient(["twitter" => $recipient]));
+			$item->recipients()->save(new Recipient(["twitter" => $recipient]));
 			}
 	    }
 
-		return Redirect::to(Writing::adminPath().'article/edit/'.$article->id);
+		return Redirect::to(Writing::adminPath().'item/edit/'.$item->id);
 	}
 
-	public function getArticleDelete($id) {
-		$article = Article::find($id);
-		$article->delete();
+	public function getItemDelete($id) {
+		$item = Item::find($id);
+		$item->delete();
 
-		return Redirect::to(Writing::adminPath().'articles');
+		return Redirect::to(Writing::adminPath().'items');
 	}
 
-	public function getArticleRestore($id) {
-		$article = Article::withTrashed()->find($id);
-		$article->restore();
+	public function getItemRestore($id) {
+		$item = Item::withTrashed()->find($id);
+		$item->restore();
 
 		// laravel-tagging
-		if($article->tags_str != '') {
-		  $tags = explode(",", $article->tags_str);
-		  $article->tag($tags);
+		if($item->tags_str != '') {
+		  $tags = explode(",", $item->tags_str);
+		  $item->tag($tags);
 		}
 
-		return Redirect::to(Writing::adminPath().'articles');
+		return Redirect::to(Writing::adminPath().'items');
 	}
 
 	/*

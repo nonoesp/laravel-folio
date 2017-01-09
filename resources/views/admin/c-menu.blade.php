@@ -3,9 +3,9 @@
 
 	{{-- Html::link('/admin/', 'Dashboard', array('class' => 'admin-menu-item')) --}}
 
-	{{-- Html::link('/admin/articles', 'Articles', array('class' => 'admin-menu-item'))--}}
+	{{-- Html::link('/admin/items', 'Articles', array('class' => 'admin-menu-item'))--}}
 
-	{{-- Html::link('/admin/article/add', 'Add Article', array('class' => 'admin-menu-item')) --}}
+	{{-- Html::link('/admin/item/add', 'Add Article', array('class' => 'admin-menu-item')) --}}
 
 	{{-- Html::link(URL::route('blog'), 'Writing', array('class' => 'admin-menu-item')) --}}
 
@@ -13,11 +13,11 @@
 
 	<div class="[ m-fa  m-fa--black-static ]">
 
-    	<a href="/admin/articles">
+    	<a href="/admin/items">
       		<i class="[ fa fa-align-justify fa--social ]"></i>
     	</a>
 
-      <a href="/admin/article/add">
+      <a href="/admin/item/add">
           <i class="[ fa fa-file-o fa--social ]"></i>
       </a>
 

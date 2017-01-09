@@ -3,25 +3,25 @@
 
 
 <?php
-	$site_title = 'Article Edit — '. Config::get('settings.title');
+	$site_title = 'Item Edit — '. Config::get('settings.title');
 ?>
 
-@section('title', 'Articles')
+@section('title', 'Items')
 
 @section('content')
 
 <div class="admin-form">
 
 	<p>
-		Editing Article {{ $article->id }}
-		<a href="/e/{{ Hashids::encode($article->id) }}">
+		Editing Item {{ $item->id }}
+		<a href="/e/{{ Hashids::encode($item->id) }}">
 		<i class="[ fa fa-link fa--social ]"></i></a>
-		<a href="{{ '/'.Writing::path().$article->slug }}">Preview</a>
+		<a href="{{ '/'.Writing::path().$item->slug }}">Preview</a>
 	</p>
 
 	<?php if( Request::isMethod('post') ) { echo '<p>Changes saved.</p>'; } ?>
 
-	{{ Form::model($article, array('route' => array('article.edit', $article->id))) }}
+	{{ Form::model($item, array('route' => array('item.edit', $item->id))) }}
 
 		<p>{{ Form::text('title', null, array('placeholder' => 'Title')) }}</p>
 

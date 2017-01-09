@@ -3,7 +3,7 @@
 namespace Nonoesp\Writing\Controllers;
 
 use Illuminate\Http\Request;
-use Article, User; // Must be defined in your aliases
+use Item, User; // Must be defined in your aliases
 use Nonoesp\Writing\Writing;
 use View;
 use Config;
@@ -22,11 +22,11 @@ class WritingController extends Controller
 		$published_show = Config::get("writing.published-show");
 		$expected_show = Config::get("writing.expected-show");
 
-		$published_existing = Article::published()
+		$published_existing = Item::published()
     				   		->visibleFor($twitter_handle)
     				   		->count();
 
-		$expected_existing = Article::expected()
+		$expected_existing = Item::expected()
     				   	   ->visibleFor($twitter_handle)
     				       ->count();
 
@@ -40,13 +40,13 @@ class WritingController extends Controller
     	$published_left = $published_existing - $published_show;
     	$expected_left = $expected_existing - $expected_show;
 
-		// Get Articles + Articles ids
+		// Get Items + Items ids
 
-    	$left = Article::published()
+    	$left = Item::published()
     				   ->visibleFor($twitter_handle)
     				   ->count() - $published_show;
 
-    	$articles = Article::published()
+    	$items = Item::published()
     					   ->visibleFor($twitter_handle)
     					   ->orderBy('published_at', 'DESC')
     					   ->skip(0)
@@ -57,9 +57,9 @@ class WritingController extends Controller
 
   		  if ($left > 0)
   		  {
-			$ids = Article::published()
+			$ids = Item::published()
 	    				  ->visibleFor($twitter_handle)
-			              ->select('id','published_at')    				  
+			              ->select('id','published_at')
 	    				  ->orderBy('published_at', 'DESC')
 	    				  ->skip($published_show)
 	    				  ->take($left)
@@ -68,23 +68,23 @@ class WritingController extends Controller
 			foreach($ids as $id)
 			{
 				array_push($ids_array, $id->id);
-			}	    				  
+			}
 	    }
 
-		// Get Expected Articles
-		$articles_expected = Article::expected()
+		// Get Expected Items
+		$items_expected = Item::expected()
 									->visibleFor($twitter_handle)
 									->orderBy('published_at', 'DESC')
 									->take($expected_show)
 									->get();
 
-		return view('writing::base')->with(array('articles' => $articles,
+		return view('writing::base')->with(array('items' => $items,
 													  'ids' => $ids_array,
-													  'articles_expected' => $articles_expected));
+													  'items_expected' => $items_expected));
 	}
 
 	// Simplify making showHome a generic function, then call it directly from route or from Controller function
-	public function showArticleTag($tag) {
+	public function showItemTag($tag) {
 
 		// Get user's Twitter handle (or visitor)
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
@@ -93,12 +93,12 @@ class WritingController extends Controller
 		$published_show = Config::get("writing.published-show");
 		$expected_show = Config::get("writing.expected-show");
 
-		$published_existing = Article::withAnyTag($tag)
+		$published_existing = Item::withAnyTag($tag)
     					    ->published()
     				   		->visibleFor($twitter_handle)
     				   		->count();
 
-		$expected_existing = Article::withAnyTag($tag)
+		$expected_existing = Item::withAnyTag($tag)
 						   ->expected()
     				   	   ->visibleFor($twitter_handle)
     				       ->count();
@@ -115,7 +115,7 @@ class WritingController extends Controller
 
     	// Get content
 
-    	$articles = Article::withAnyTag($tag) 
+    	$items = Item::withAnyTag($tag)
     					   ->published()
     					   ->visibleFor($twitter_handle)
     					   ->orderBy('published_at', 'DESC')
@@ -127,10 +127,10 @@ class WritingController extends Controller
   		if ($published_left > 0)
   		{
 
-			$ids = Article::withAnyTag($tag)
+			$ids = Item::withAnyTag($tag)
 						  ->published()
 	    				  ->visibleFor($twitter_handle)
-			              ->select('id','published_at')    				  
+			              ->select('id','published_at')
 	    				  ->orderBy('published_at', 'DESC')
 	    				  ->skip($published_show)
 	    				  ->take($published_left)
@@ -142,8 +142,8 @@ class WritingController extends Controller
 			}
 		}
 
-		// Get Expected Articles
-		$articles_expected = Article::withAnyTag($tag)
+		// Get Expected Items
+		$items_expected = Item::withAnyTag($tag)
 								    ->expected()
 									->visibleFor($twitter_handle)
 									->orderBy('published_at', 'DESC')
@@ -152,44 +152,44 @@ class WritingController extends Controller
 
 		return view('writing::base')->with(
 								[
-		             	  			'articles' => $articles,
-		             	  			'ids' => $ids_array, 
+		             	  			'items' => $items,
+		             	  			'ids' => $ids_array,
 		             	  			'tag' => $tag,
-		             	  			'articles_expected' => $articles_expected
+		             	  			'items_expected' => $items_expected
 		             	  		]);
-	}	
+	}
 
-	public function showArticle($slug) {
+	public function showItem($slug) {
 
-		if($article = Article::whereSlug($slug)->first()) {
-			$article->visits++;
-			$article->save();
-			return view('writing::base')->with('article', $article);			
+		if($item = Item::whereSlug($slug)->first()) {
+			$item->visits++;
+			$item->save();
+			return view('writing::base')->with('item', $item);
 		}
 
 	}
 
-	public function showArticleWithId($id) {
-		$article = Article::withTrashed()->find($id);
-		return \Redirect::to(Writing::path().$article->slug);
+	public function showItemWithId($id) {
+		$item = Item::withTrashed()->find($id);
+		return \Redirect::to(Writing::path().$item->slug);
 	}
 
-	public function getArticlesWithIds() {
+	public function getItemsWithIds() {
 
-		// Set Article Type
-		\Input::get('article_type') ? $article_type = \Input::get('article_type') : $article_type = 'DEFAULT_ARTICLE_TYPE';
+		// Set Item Type
+		\Input::get('item_type') ? $item_type = \Input::get('item_type') : $item_type = 'DEFAULT_ARTICLE_TYPE';
 
-		// Echo Articles
+		// Echo Items
 		foreach(\Input::get('ids') as $id) {
-			echo view('writing::partial.c-article')->
-			           with(array('article' => Article::find($id),
-			           	  		  'article_type' => $article_type,
+			echo view('writing::partial.c-item')->
+			           with(array('item' => Item::find($id),
+			           	  		  'item_type' => $item_type,
 			           	  		  'isTitleLinked' => true));
 		}
 	}
 
 	public function getFeed(Request $request) {
-		
+
 		// create new feed
 	    $feed = App::make("feed");
 
@@ -201,10 +201,10 @@ class WritingController extends Controller
 	    {
 	    	$default_author = 'Nono Martínez Alonso';
 
-	       // creating rss feed with our most recent articles
+	       // creating rss feed with our most recent items
 		   $feed_show = Config::get('writing.feed.show');
-	  	   
-	       $articles = Article::published()
+
+	       $items = Item::published()
 					          ->public()
 					          ->orderBy('published_at', 'DESC')
 					          ->rss()
@@ -217,39 +217,39 @@ class WritingController extends Controller
 	       $feed->logo = Config::get('writing.feed.logo');
 	       $feed->link = \URL::to('/'.Writing::path());
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
-	       $feed->pubdate = $articles[0]->published_at;
+	       $feed->pubdate = $items[0]->published_at;
 	       $feed->lang = 'en';
 	       $feed->setShortening(false); // true or false
 	       $feed->setTextLimit(159); // maximum length of description text
 	       $feed->setView("writing::feed.rss");
 
-	       foreach ($articles as $article)
+	       foreach ($items as $item)
 	       {
 	           // set item's title, author, url, pubdate, description and content
 	       	   $image_src = Config::get('writing.feed.default-image-src');
 	       	   $image = '';
 
-			   if ($article->video) {
-	       	     $image = '<p><a href="'.$request->root().'/'.Writing::path().$article->slug.'">'
-	       	   	         .'<img src="'.\Thinker::getVideoThumb($article->video)
-	       	   	         .'" alt="'.$article->title.'"></a></p>';
-	       	   } else if ($article->image) {
-	       	     $image = '<p><img src="'.$article->image.'" alt="'.$article->title.'"></p>';
+			   if ($item->video) {
+	       	     $image = '<p><a href="'.$request->root().'/'.Writing::path().$item->slug.'">'
+	       	   	         .'<img src="'.\Thinker::getVideoThumb($item->video)
+	       	   	         .'" alt="'.$item->title.'"></a></p>';
+	       	   } else if ($item->image) {
+	       	     $image = '<p><img src="'.$item->image.'" alt="'.$item->title.'"></p>';
 	       	   }
 
-	       	   if ($article->image_src != '') {
-	       	   	$image_src = $article->image_src;
-	       	   } else if ($article->image != '') {
-	       	   	$image_src = $article->image;
+	       	   if ($item->image_src != '') {
+	       	   	$image_src = $item->image_src;
+						} else if ($item->image != '') {
+	       	   	$image_src = $item->image;
 	       	   }
 
 	           $feed->add(
-	           	$article->title,
+	           	$item->title,
 	           	$default_author,
-	           	\URL::to(Writing::path().$article->slug),
-	           	$article->published_at,
-	           	\Thinker::limitMarkdownText(Markdown::string($article->text), 159, ['sup']),
-	           	str_replace('<img', '<img width="100%"', $image.\Markdown::string($article->text)),
+	           	\URL::to(Writing::path().$item->slug),
+	           	$item->published_at,
+	           	\Thinker::limitMarkdownText(Markdown::string($item->text), 159, ['sup']),
+	           	str_replace('<img', '<img width="100%"', $image.\Markdown::string($item->text)),
 	           	['url'=>$image_src,'type'=>'image/jpeg']);
 	       }
 
