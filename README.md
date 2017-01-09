@@ -35,6 +35,7 @@ Next, add the new providers to the `providers` array of `config/app.php`:
         Roumen\Feed\FeedServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Vinkla\Hashids\HashidsServiceProvider::class,				
 		// ...
 	],
 ```
@@ -61,6 +62,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
         'Html' => Collective\Html\HtmlFacade::class,   
         'Input' => Illuminate\Support\Facades\Input::class,
         'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
+        'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,				
 		// ...
 	],
 ```
@@ -84,6 +86,10 @@ On the config/writing.php file you can customize:
 * `use_path_prefix` — A boolean to toggle between using a path prefix for all the routes created by the package or deactivating it. Just set it to `true` or `false`.
 * `path` — A string that defines your prefix path (only used if use_path_prefix is set to `true`).
 * `protected_uris` — An array to avoid the Writing package to override other existing routes (specially when you set use_path_prefix to false).
+
+## Requirements
+
+* Font Awesome (in `/fonts`).
 
 ## Gulp (And Elixir)
 
@@ -117,6 +123,8 @@ elixir(function(mix) {
        .copy('resources/assets/bower/jquery/dist/jquery.min.js', 'public/js/vendor/jquery.min.js');
 });
 ```
+
+
 
 ## To-dos
 

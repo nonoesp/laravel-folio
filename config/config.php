@@ -20,7 +20,7 @@ return array(
 	'protected_uris' => ['example', 'profile', 'about', 'magic'],
 
 	// Special tags (add a class to articles containing them)
-	'special-tags' => ['highlight'],
+	// 'special-tags' => ['highlight'],
 
 	// Middlewares to filter provided routes, e.g. 'auth'
 	'middlewares' => ['web'],
@@ -68,28 +68,28 @@ return array(
 	],
 
 	// Experimental
-	'layers' =>
-	[
-		'photos' =>
-		[
-			'path' => 'photos',
-			'tags' => ['photos'],
-			'title'=> 'Photos',
-			'view' => 'writing::layer.photos'
-		],
-		'sketches' =>
-		[
-			'path' => 'sketches',
-			'tags' => ['make'],
-			'title'=> 'Sketches',
-			'view' => 'writing::layer.sketches'
-		],
-		'notes' =>
-		[
-			'path' => 'notes',
-			'tags' => ['simplify', 'highlight'],
-			'title'=> 'Notes',
-			'view' => 'writing::layer.notes'
-		]
-	]
+	// 'layers' =>
+	// [
+	// 	'photos' =>
+	// 	[
+	// 		'path' => 'photos',
+	// 		'tags' => ['photos'],
+	// 		'title'=> 'Photos',
+	// 		'view' => 'writing::layer.photos'
+	// 	],
+	// 	'sketches' =>
+	// 	[
+	// 		'path' => 'sketches',
+	// 		'tags' => ['make'],
+	// 		'title'=> 'Sketches',
+	// 		'view' => 'writing::layer.sketches'
+	// 	],
+	// 	'notes' =>
+	// 	[
+	// 		'path' => 'notes',
+	// 		'tags' => ['simplify', 'highlight'],
+	// 		'title'=> 'Notes',
+	// 		'view' => 'writing::layer.notes'
+	// 	]
+	// ]
 );

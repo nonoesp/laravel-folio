@@ -1,14 +1,34 @@
 
-<div class="admin-menu u-case-upper">
-{{-- --}}
-	{{-- Html::link(Writing::adminPath(), 'Dashboard', array('class' => 'admin-menu-item')) --}}
+<div class="admin-menu u-case-upper u-text-align--center">
 
-	{!! Html::link(Writing::adminPath().'articles', 'Articles', array('class' => 'admin-menu-item')) !!}
+	{{-- Html::link('/admin/', 'Dashboard', array('class' => 'admin-menu-item')) --}}
 
-	{!! Html::link(Writing::adminPath().'article/add', 'Add Article', array('class' => 'admin-menu-item')) !!}
+	{{-- Html::link('/admin/articles', 'Articles', array('class' => 'admin-menu-item'))--}}
 
-	{!! Html::link(URL::route('blog'), 'Writing', array('class' => 'admin-menu-item')) !!}
-	
-	{!! Html::link('/logout', 'Exit', array('class' => 'admin-menu-item')) !!}
+	{{-- Html::link('/admin/article/add', 'Add Article', array('class' => 'admin-menu-item')) --}}
+
+	{{-- Html::link(URL::route('blog'), 'Writing', array('class' => 'admin-menu-item')) --}}
+
+	{{-- Html::link('/logout', 'Exit', array('class' => 'admin-menu-item')) --}}
+
+	<div class="[ m-fa  m-fa--black-static ]">
+
+    	<a href="/admin/articles">
+      		<i class="[ fa fa-align-justify fa--social ]"></i>
+    	</a>
+
+      <a href="/admin/article/add">
+          <i class="[ fa fa-file-o fa--social ]"></i>
+      </a>
+
+      <a href="/subscribers">
+          <i class="[ fa fa-envelope-o fa--social ]"></i>
+      </a>
+
+    	<a href="/logout">
+      		<i class="[ fa fa-close fa--social ]"></i>
+    	</a>
+
+    </div>
 
 </div>

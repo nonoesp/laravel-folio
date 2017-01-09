@@ -25,6 +25,7 @@
         "jenssegers/date": "^3.0",
         "roumen/feed": "2.10.*",
         "vtalbot/markdown": "2.*",
-        "laravelcollective/html": "*"
+        "laravelcollective/html": "*",
+        "vinkla/hashids": "^2.2"
     }
 }

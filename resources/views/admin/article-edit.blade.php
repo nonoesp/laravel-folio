@@ -12,7 +12,12 @@
 
 <div class="admin-form">
 
-	<p>Editing Article {{ $article->id }} <a href="{{ '/'.Writing::path().$article->slug }}">Preview</a></p>
+	<p>
+		Editing Article {{ $article->id }}
+		<a href="/e/{{ Hashids::encode($article->id) }}">
+		<i class="[ fa fa-link fa--social ]"></i></a>
+		<a href="{{ '/'.Writing::path().$article->slug }}">Preview</a>
+	</p>
 
 	<?php if( Request::isMethod('post') ) { echo '<p>Changes saved.</p>'; } ?>
 
@@ -35,8 +40,6 @@
 		<p>{{ Form::text('tags_str', null, array('placeholder' => 'Tags')) }}</p>
 
 		<p>{{ Form::text('recipients_str', null, array('placeholder' => '@recipients')) }}</p>
-
-		{!! Writing::articlePropertyFields($article) !!}
 
 		<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS</label></p>
 
