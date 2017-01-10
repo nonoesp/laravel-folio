@@ -2,7 +2,11 @@
 @extends('writing::admin.layout')
 
 <?php
-	$site_title = 'Items — '. Config::get('settings.title');
+	$settings_title = Config::get('settings.title');
+	if($settings_title == '') {
+		$settings_title = "Space";
+	}
+	$site_title = 'Items — '. $settings_title;
 ?>
 
 @section('title', 'Items')
