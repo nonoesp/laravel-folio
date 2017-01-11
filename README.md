@@ -81,13 +81,13 @@ php artisan vendor:publish --provider="Nonoesp\Writing\WritingServiceProvider" -
 
 Set bower's installation path in `.bowerrc` file, at your app's root:
 
-```
+```json
 {"directory" : "resources/assets/bower"}
 ```
 
 Now, add the following dependencies to your `bower.json`:
 
-```
+```json
 "dependencies": {
 	"core-scss": "git@github.com:nonoesp/core-scss.git",
 	"jquery": "^3.1.1",
@@ -102,19 +102,19 @@ Now, add the following dependencies to your `bower.json`:
 
 For dependencies on JavaScript, SCSS, and others, I’ve been working with gulp and elixir.
 
-```
+```terminal
 npm install gulp
 ```
 
 Then to install it’s dependencies:
 
-```
+```terminal
 npm install
 ```
 
 Now, we automate the copying of the files to the public folder let’s use a simple elixir script, add the following to your `gulpfile.js`:
 
-```
+```php
 elixir(function(mix) {
     mix.copy('resources/assets/bower/validatejs/validate.min.js', 'public/js/vendor/validate.min.js')
        .copy('resources/assets/bower/jquery/dist/jquery.min.js', 'public/js/vendor/jquery.min.js')
