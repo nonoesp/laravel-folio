@@ -40,7 +40,7 @@ class Item extends Model
 		if($property = $this->properties()->where('name', $key)->first()) {
 				if($value = $property->value) {
 					// property exists and has value
-					return $value;
+					return $property;
 				} else {
 					// property exists, but has no value
 				}

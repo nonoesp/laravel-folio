@@ -5,11 +5,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Property extends Model
 {
-	protected $table = 'articles_properties';
-	protected $fillable = array('id', 'article_id', 'name', 'value');
+	protected $table = 'items_properties';
+	protected $fillable = array('id', 'item_id', 'label', 'name', 'value');
 
-	public function article()
+	public function item()
 	{
-		return $this->hasOne('Article');
+		return $this->hasOne('Item');
 	}
 }

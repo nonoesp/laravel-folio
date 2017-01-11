@@ -7,9 +7,21 @@ if($settings_title == '') {
 	$settings_title = "Space";
 }
 	$site_title = 'Edit Item '.$item->id.' — '. $settings_title;
+	$services_typekit = 'fgm7qov';
 ?>
 
 @section('title', 'Items')
+
+@section('scripts')
+    <script type="text/javascript" src="/js/vendor/vue.js"></script>
+    <script type="text/javascript" src="/js/vendor/vue-resource.js"></script>
+    <script type="text/javascript" src="/js/helpers.min.js"></script>
+    <script type="text/javascript" src="/js/space.admin.js"></script>
+    <script>
+      app.item = {!! $item !!};
+      app.properties = {!! $item->properties !!};
+    </script>
+@stop
 
 @section('content')
 
