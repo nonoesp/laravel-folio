@@ -9,6 +9,9 @@
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
 
+	<!-- CSRF Token -->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+
 	<!--TypeKit-->
 	<script type="text/javascript" src="//use.typekit.net/{{{ $services_typekit or Config::get('services.typekit.main') }}}.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
