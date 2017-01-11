@@ -71,38 +71,10 @@ Finally, follow the [Instructions to Install `nonoesp/authenticate`](https://git
 
 ## Config
 
-There are some settings to customize the way you use the **Writing** package.
-
-Even though you can publish the whole bundle of assets, I recommend to start by only publishing the config file and the required JavaScript assets.
-
-First, run this command, and you will get a customizable config file under `config/writing.php`.
+Publish configuration file to `config/writing.php`.
 
 ```php
 php artisan vendor:publish --provider="Nonoesp\Writing\WritingServiceProvider" --tag=config
-```
-
-On the config/writing.php file you can customize:
-
-* `use_path_prefix` — A boolean to toggle between using a path prefix for all the routes created by the package or deactivating it. Just set it to `true` or `false`.
-* `path` — A string that defines your prefix path (only used if use_path_prefix is set to `true`).
-* `protected_uris` — An array to avoid the Writing package to override other existing routes (specially when you set use_path_prefix to false).
-
-## Requirements
-
-* Font Awesome (in `/fonts`).
-
-## Gulp (And Elixir)
-
-For dependencies on JavaScript, SCSS, and others, I’ve been working with gulp and elixir.
-
-```
-npm install gulp
-```
-
-Then to install it’s dependencies:
-
-```
-npm install
 ```
 
 ## Bower
@@ -124,6 +96,20 @@ Now, add the following dependencies to your `bower.json`:
 	"vue-resource": "^1.0.3",
 	"font-awesome": "^4.7.0"
 }
+```
+
+## Gulp (And Elixir)
+
+For dependencies on JavaScript, SCSS, and others, I’ve been working with gulp and elixir.
+
+```
+npm install gulp
+```
+
+Then to install it’s dependencies:
+
+```
+npm install
 ```
 
 Now, we automate the copying of the files to the public folder let’s use a simple elixir script, add the following to your `gulpfile.js`:
