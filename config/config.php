@@ -10,8 +10,11 @@ return array(
 	// Admin path prefix, e.g. 'admin', 'writing-admin', 'admin/writing'
 	'admin-path-prefix' => 'admin',
 
-	// View Template for base layout
+	// View of Main Template for base layout
 	'template-view' => 'writing::layout',
+
+	// Directory of Item Templates
+	//'template-paths' => ['writing::templates'],
 
 	// View admin menu
 	'view-admin-menu' => 'writing::admin.c-menu',

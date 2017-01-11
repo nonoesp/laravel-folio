@@ -107,70 +107,36 @@ npm install
 
 ## Bower
 
-To set the packages installed with bower to another directory, let’s add a `.bowerrc` file to the root directory with the following content:
+Set bower's installation path in `.bowerrc` file, at your app's root:
 
 ```
 {"directory" : "resources/assets/bower"}
 ```
 
-Now we can run `bower install jquery` for instance.
+Now, add the following dependencies to your `bower.json`:
 
-To automate the movement of the files to the public folder let’s use a simple elixir script, add the following to your `gulpfile.js`:
+```
+"dependencies": {
+	"core-scss": "git@github.com:nonoesp/core-scss.git",
+	"jquery": "^3.1.1",
+	"validatejs": "^1.5.1",
+	"vue": "^2.1.8",
+	"vue-resource": "^1.0.3",
+	"font-awesome": "^4.7.0"
+}
+```
+
+Now, we automate the copying of the files to the public folder let’s use a simple elixir script, add the following to your `gulpfile.js`:
 
 ```
 elixir(function(mix) {
     mix.copy('resources/assets/bower/validatejs/validate.min.js', 'public/js/vendor/validate.min.js')
-       .copy('resources/assets/bower/jquery/dist/jquery.min.js', 'public/js/vendor/jquery.min.js');
+       .copy('resources/assets/bower/jquery/dist/jquery.min.js', 'public/js/vendor/jquery.min.js')
+			 .copy('resources/assets/bower/vue/dist/vue.js', 'public/js/vendor/vue.js')
+       .copy('resources/assets/bower/vue-resource/dist/vue-resource.js', 'public/js/vendor/vue-resource.js')
+       .copy('resources/assets/bower/font-awesome/fonts', 'public/fonts/');			 
 });
 ```
-
-
-
-## To-dos
-
-* Move Subscriber model and route to package.
-* Move user route inside controller.
-* Add migrations to create database tables.
-* Test Disqus implementation for comments.
-
-## Features
-
-* **Article recipients**. Make articles only visible to certain Twitter handles.
-
-## Stylesheets
-
-The package provides HTML structure but, for the moment being, it is CSS agnostic.
-
-* c-article
-* c-load-more
-* o-wrap
-* o-video-thumb
-
-## Release Notes
-
-### 5.3.*
-
-* Customizable short-URLs included in package routes.
-
-### 5.2.*
-
-* Added path-admin to config and set admin routes accordingly.
-* Added explicit slugs.
-* Embedded Article model inside package (fixed issue with rtconner/tagging not working when the model was hosted inside the package).
-* Fixed routes: Tag, @user, RSS Feed.
-
-
-### v0.8.0
-
-* Added article recipients. Add a list of Twitter handles to your article to restrict their visibility to those users when they are logged in. Otherwise, the site just shows visitor posts with no recipients.
-
-### v0.7.2
-
-* Introduced special tag CSS class names. A class like c-article-tagName will be added to a series of special tags or categories when a post contains them. This allows to create custom CSS for posts tagged with an specific tag.
-
-### v0.7.1
-
-* Selective routes only if slug exists.
 
 ## License
 
