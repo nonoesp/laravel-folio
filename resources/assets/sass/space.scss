@@ -1,39 +1,41 @@
 
-
-// Components and Variables
-//@import 'base-main'; // Settings, colors, breakpoints, modules
-
-$thin: 100;
-$light: 300;
-$regular: 400;
-$bold: 600;
-$extra-bold: 700;
-
-// [ 3. CSSWizardry-grids ]
-
-  $gutter: 17px;
-  $use-markup-fix: false;
-
-  $breakpoints: (
-    'palm' '(max-width: 530px)',
-    'lap' '(min-width: 531px) and (max-width: 1023px)',
-    'portable' '(max-width: 1023px)',
-    'desk' '(min-width: 1024px)',
-    'wide' '(min-width: 1500px)'
-  );
-
-  $media-palm: nth(nth($breakpoints, 1), 2);
-  $media-lap: nth(nth($breakpoints, 2), 2);
-  $media-portable: nth(nth($breakpoints, 3), 2);
-  $media-desk: nth(nth($breakpoints, 4), 2);
-  $media-wide: nth(nth($breakpoints, 5), 2);
-
-
 // Vendors
 @import '../bower/bourbon/app/assets/stylesheets/bourbon';
 
-// All
-@import '../bower/core-scss/modules/colors';
+// Components and Variables
+@import 'base-space'; // Settings, colors, breakpoints, modules
 
-// Space
+// Configurable Vendors
+@import 'vendor/csswizardry-grids'; // Margin reset, grids
+@import 'vendor/typecsset'; // Type setting
+@import '../bower/font-awesome/scss/font-awesome';
+
+// space-scss
+@import 'space/c-admin';
+@import 'space/m-fa'; // Font Awesome
+
+// core-scss - Main
+@import '../bower/core-scss/partials/a-reset';
+@import '../bower/core-scss/partials/a-type';
+@import '../bower/core-scss/partials/a-inputs';
+@import '../bower/core-scss/partials/a-mixins';
+@import '../bower/core-scss/partials/a-selection';
+
+// core-scss - objects
+@import '../bower/core-scss/partials/o-wrap';
+@import '../bower/core-scss/partials/o-band';
+@import '../bower/core-scss/partials/o-icon';
+@import '../bower/core-scss/partials/o-video-thumb';
+@import '../bower/core-scss/partials/o-thumb';
+@import '../bower/core-scss/partials/grid';
+
+// core-scss - Components
 @import '../bower/core-scss/partials/c-item';
+
+// core-scss - Utilities
+@import '../bower/core-scss/partials/u-base';
+@import '../bower/core-scss/partials/u-visibility';
+@import '../bower/core-scss/partials/u-color';
+@import '../bower/core-scss/partials/u-padding';
+
+//@import '../bower/core-scss/partials/o-icon';

@@ -1,0 +1,76 @@
+
+// Font-Awesome wrapper
+
+.m-fa {
+  font-size: 18px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+// Font Awesome modifiers
+
+.m-fa .fa--social {
+  margin: 0 6px 0 0;
+}
+
+.fa-facebook.fa--social {
+  font-size:85%;
+  font-weight:400!important;
+}
+
+.fa-linkedin.fa--social {
+  font-size:90%;
+  font-weight:400!important;
+}
+
+// m-fa model
+
+.m-fa a,
+.m-fa a:visited {
+  @include transition(none);
+  text-decoration: none;
+  color: rgba(0, 0, 0, 0.25);
+}
+
+.m-fa a:hover {
+  color: rgba(0, 0, 0, 0.80);
+}
+
+// Modifiers
+
+.m-fa--white-fade a,
+.m-fa--white-fade a:visited {
+  color: rgba(255, 255, 255, 0.80);
+}
+
+.m-fa--white-fade a:hover {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.m-fa--black-static a,
+.m-fa--black-static a:visited,
+.m-fa--black-static a:hover {
+  color: #222;
+}
+
+.m-fa--grey-static a,
+.m-fa--grey-static a:visited,
+.m-fa--grey-static a:hover {
+  color: $color-grey;
+}
+
+.m-fa--cover {
+  position: absolute;
+  z-index: 200;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+}
+
+.m-fa--small {
+  font-size: 17px;
+}
+
+.m-fa__link.is-faded {
+  opacity: 0.3;
+}
