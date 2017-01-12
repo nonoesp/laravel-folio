@@ -116,11 +116,18 @@ Now, we automate the copying of the files to the public folder let’s use a sim
 
 ```php
 elixir(function(mix) {
-    mix.copy('resources/assets/bower/validatejs/validate.min.js', 'public/js/vendor/validate.min.js')
-       .copy('resources/assets/bower/jquery/dist/jquery.min.js', 'public/js/vendor/jquery.min.js')
-			 .copy('resources/assets/bower/vue/dist/vue.js', 'public/js/vendor/vue.js')
-       .copy('resources/assets/bower/vue-resource/dist/vue-resource.js', 'public/js/vendor/vue-resource.js')
-       .copy('resources/assets/bower/font-awesome/fonts', 'public/fonts/');			 
+	mix.copy('resources/assets/bower/validatejs/validate.min.js', 'public/js/vendor/validate.min.js')
+     .copy('resources/assets/bower/jquery/dist/jquery.min.js', 'public/js/vendor/jquery.min.js')
+		 .copy('resources/assets/bower/vue/dist/vue.js', 'public/js/vendor/vue.js')
+     .copy('resources/assets/bower/vue-resource/dist/vue-resource.js', 'public/js/vendor/vue-resource.js')
+     .copy('resources/assets/bower/lodash/dist/lodash.min.js', 'public/js/vendor/lodash.min.js');
+
+  mix.copy('resources/assets/bower/font-awesome/fonts', 'public/fonts/');
+
+  mix.copy('vendor/nonoesp/writing/resources/assets/js/space.main.js',  'public/js/space.main.js')
+     .copy('vendor/nonoesp/writing/resources/assets/js/space.admin.js', 'public/js/space.admin.js');
+
+  mix.sass('./vendor/nonoesp/writing/resources/assets/sass/space.scss', 'public/css/space.css');
 });
 ```
 

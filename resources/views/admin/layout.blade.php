@@ -7,7 +7,7 @@
 	<title>{{ $site_title or 'Admin' }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<link rel="stylesheet" type="text/css" href="/css/space.css">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">

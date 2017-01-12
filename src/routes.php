@@ -83,6 +83,11 @@ Route::group(['middleware' => Config::get("writing.middlewares-admin")], functio
   Route::get($admin_path, function() use ($admin_path) {
   	return redirect()->to($admin_path.'items');
   });
-});
 
-});
+
+
+
+
+}); // close writing admin
+
+}); // close writing general

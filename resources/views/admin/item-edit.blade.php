@@ -15,13 +15,27 @@ if($settings_title == '') {
 @section('scripts')
     <script type="text/javascript" src="/js/vendor/vue.js"></script>
     <script type="text/javascript" src="/js/vendor/vue-resource.js"></script>
-    <script type="text/javascript" src="/js/helpers.min.js"></script>
+		<script type="text/javascript" src="/js/vendor/lodash.min.js"></script>
+    {{--<script type="text/javascript" src="/js/helpers.min.js"></script>--}}
+		<script type="text/javascript" src="/js/space.main.js"></script>
     <script type="text/javascript" src="/js/space.admin.js"></script>
     <script>
       app.item = {!! $item !!};
       app.properties = {!! $item->properties !!};
     </script>
 @stop
+
+<?php
+	$inputs = [
+		['name' => 'published_at', 'placeholder' => 'Publishing Date (yyyy-mm-dd hh:mm:ss)', 'label' => 'Date'],
+		['name' => 'image', 'placeholder' => 'Image', 'label' => 'Image'],
+		['name' => 'image_src', 'placeholder' => 'Thumbnail', 'label' => 'Thumbnail'],
+		['name' => 'video', 'placeholder' => 'Video', 'label' => 'Video URL'],
+		['name' => 'slug_title', 'placeholder' => 'URL (defaults to /'.Writing::path().$item->slug.')', 'label' => 'URL Slug'],
+		['name' => 'tags_str', 'placeholder' => 'Tags (e.g. writing, project)', 'label' => 'Tags'],
+		['name' => 'recipients_str', 'placeholder' => 'Recipients (Twitter handles)', 'label' => 'Recipients'],
+	];
+?>
 
 @section('content')
 
@@ -46,23 +60,13 @@ if($settings_title == '') {
 
 		{{ Form::model($item, array('route' => array('item.edit', $item->id))) }}
 
+		<div class="[ grid__item ] [ one-whole ]">
 			<p>{{ Form::text('title', null, array('placeholder' => 'Title')) }}</p>
+		</div>
 
+		<div class="[ grid__item ] [ one-whole ]">
 			<p>{{ Form::textarea('text', null, array('placeholder' => 'Text')) }}</p>
-
-			<?php
-
-			$inputs = [
-				['name' => 'published_at', 'placeholder' => 'Publishing Date (yyyy-mm-dd hh:mm:ss)', 'label' => 'Date'],
-				['name' => 'image', 'placeholder' => 'Image', 'label' => 'Image'],
-				['name' => 'image_src', 'placeholder' => 'Thumbnail', 'label' => 'Thumbnail'],
-				['name' => 'video', 'placeholder' => 'Video', 'label' => 'Video URL'],
-				['name' => 'slug_title', 'placeholder' => 'URL (defaults to /'.Writing::path().$item->slug.')', 'label' => 'URL Slug'],
-				['name' => 'tags_str', 'placeholder' => 'Tags (e.g. writing, project)', 'label' => 'Tags'],
-				['name' => 'recipients_str', 'placeholder' => 'Recipients (Twitter handles)', 'label' => 'Recipients'],
-			];
-
-			?>
+		</div>
 
 			@foreach($inputs as $input)
 				<div v-if="item.{{ $input['name'] }}" class="[ grid__item ]
@@ -75,45 +79,52 @@ if($settings_title == '') {
 				</div>
 			@endforeach
 
-			<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS</label></p>
-
-			<div>
-				<div @click="add_property">Add Property</div>
+			<div class="[ grid__item ] [ one-whole ]">
+				<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS</label></p>
 			</div>
 
-			<div class="[ grid ]">
+
+			<div class="[ grid__item ]">
+				<div @click="add_property" class="[ u-cursor-pointer ]">Add Property</div>
+			</div>
+
+
 				<div v-for="property in properties" class="[ grid__item one-whole ]">
 					<div class="[ grid ]"><!--
 					--><div class="[ grid__item two-sixths ] [ u-text-align--right ]">
 							<input type="text"
 							v-model="property.label"
-							@focus="update" @keyup="sync_properties(property)"
+							@keyup="sync_properties(property)"
 							v-bind:data-id="property.id" data-field="label"
 							class="u-text-align--right">
 						</div><!--
 						--><div class="[ grid__item one-sixth ]">
 							<input type="text"
 							v-model="property.name"
-							@focus="update" @keyup="sync_properties(property)"
+							@keyup="sync_properties(property)"
 							v-bind:data-id="property.id" data-field="name"
 							class="u-text-align--right">
 								{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
 						</div><!--
 						--><div class="[ grid__item two-sixths ]">
 								<input type="text" v-model="property.value"
-								@focus="update" @keyup="sync_properties(property)"
+								@keyup="sync_properties(property)"
 								v-bind:data-id="property.id" data-field="value">
 						</div><!--
 						--><div @click="delete_property(property)"
 						v-bind:data-id="property.id"
 						class="[ grid__item one-sixth ] [ u-text-align--left ]">
-							(@{{ property.id }}) <span class="[ u-cursor-pointer ]">X</span>
+							(@{{ property.id }})
+							<span class="[ u-cursor-pointer ]">X</span>
+							<span v-if="property.is_updating">...</span>
 						</div><!--
 			 --></div>
-				</div>
+
 			</div>
 
-			<p>{{ Form::submit('Save') }}</p>
+			<div class="[ grid__item ] [ one-whole ]">
+				<p>{{ Form::submit('Save') }}</p>
+			</div>
 
 		{{ Form::close() }}
 

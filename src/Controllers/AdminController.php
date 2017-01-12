@@ -61,12 +61,12 @@ class AdminController extends Controller
 		  	$item->video = Input::get('video');
 
 				// Update Properties (before tags)
-				foreach(Writing::itemPropertyArray($item) as $key=>$value) {
-					$property = Property::updateOrCreate(
-						['item_id' => $item->id, 'name' => $key],
-						['value' => Input::get($key)]
-					);
-				}
+				// foreach(Writing::itemPropertyArray($item) as $key=>$value) {
+				// 	$property = Property::updateOrCreate(
+				// 		['item_id' => $item->id, 'name' => $key],
+				// 		['value' => Input::get($key)]
+				// 	);
+				// }
 
 				// Tags
 		  	$item->tags_str = Input::get('tags_str');
