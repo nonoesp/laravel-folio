@@ -29,6 +29,6 @@
       		<i class="[ fa fa-close fa--social ]"></i>
     	</a>
 
-    </div>
+  </div>
 
 </div>

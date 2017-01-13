@@ -32,7 +32,16 @@
 
 <item class="[ grid ] [ c-item @if(isset($class)){{ $class }}@endif{{ Writing::itemCategoryClass($item->tagNames(), 'c-item') }}{{ (count($item->tagNames()) > 0) ? 'is-tagged' : '' }}]"><!--
 
---><div class="[ grid__item  one-quarter  portable--one-whole ]  [ c-item__header ]">
+--><div class="grid__item">
+	@if($property = $item->property('location'))
+
+	<div class="[ m-fa  m-fa--black-static ]">
+		<i class="[ fa fa-map-marker fa--social ]">s</i>
+	</div>
+
+		<p>{{ $property['label'].': '.$property['value'] }}</p>
+	@endif
+</div><!--  --><div class="[ grid__item  one-quarter  portable--one-whole ]  [ c-item__header ]">
 
 
 	  {{-- Title --}}
