@@ -67,7 +67,8 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 	],
 ```
 
-Finally, follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/5.2)
+To authenticate, `Space` uses `nonoesp/authenticate` (which should be already installed as a dependency).
+But you need to follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/5.2)
 
 ## Config
 
