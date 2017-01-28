@@ -2,7 +2,7 @@
 
 Hi there! `nonoesp/space` is a content management system package for Laravel.
 
-This branch supports 5.3.
+**Space** supports Laravel 5.4.
 
 ## Installation
 
