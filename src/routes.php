@@ -84,7 +84,49 @@ Route::group(['middleware' => Config::get("space.middlewares-admin")], function(
   	return redirect()->to($admin_path.'items');
   });
 
+	// TODO: Pack inside property api controller or admin Controllers
 
+	Route::post('/api/property/update', function() {
+	  $property = \Property::find(Input::get('id'));
+	  $key = Input::get('name');
+	  $value = Input::get('value');
+	  $label = Input::get('label');
+	  if($key) $property->name = $key;
+	  if($value) $property->value = $value;
+	  if($label) $property->label = $label;
+	  $property->save();
+	  return response()->json([
+	      'success' => true,
+	      'property' => $property
+	  ]);
+	});
+
+	Route::post('/api/property/delete', function() {
+	  $property_id = Input::get('id');
+	  $property = \Property::find($property_id);
+	  $property->delete();
+
+	  return response()->json([
+	      'success' => true,
+	      'property_id' => $property->id,
+	  ]);
+	});
+
+	Route::post('/api/property/create', function() {
+	  $key = Input::get('name');
+	  $value = Input::get('value');
+	  $label = Input::get('label');
+	  $item_id = Input::get('item_id');
+	  $property = new \Property();
+	  $property->item_id = $item_id;
+	  $property->save();
+
+	  return response()->json([
+	      'success' => true,
+	      'property_id' => $property->id,
+	      'item_id' => $item_id
+	  ]);
+	});	
 
 
 
