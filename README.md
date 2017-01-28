@@ -48,7 +48,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
         // nonoesp/space - Models
         'Space' => Nonoesp\Space\Facades\Space::class,
         'User' => 'App\User',
-        'Article' => Nonoesp\Space\Models\Article::class,    
+        'Item' => Nonoesp\Space\Models\Item::class,    
         'Property' => Nonoesp\Space\Models\Property::class,
         'Recipient' => Nonoesp\Space\Models\Recipient::class,
 

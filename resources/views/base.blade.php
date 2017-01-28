@@ -39,7 +39,7 @@
 
         // 4.1. General
         $site_title = $item->title.' — '.Config::get('settings.title');
-        $og_description = Thinker::limitMarkdownText(Markdown::string($item->text), 159, ['sup']);
+        $og_description = Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']);
         $og_type = 'item';
         if ($item->image) {
           $og_image = $item->image;

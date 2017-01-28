@@ -48,7 +48,7 @@
 	     		@endif
 
 	   			@if($user->bio)
-	   				{!! Markdown::string($user->bio) !!}
+	   				{!! Markdown::convertToHtml($user->bio) !!}
 	   				<br>
 	   			@endif
 

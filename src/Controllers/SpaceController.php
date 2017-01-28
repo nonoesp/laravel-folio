@@ -248,8 +248,8 @@ class SpaceController extends Controller
 	           	$default_author,
 	           	\URL::to(Space::path().$item->slug),
 	           	$item->published_at,
-	           	\Thinker::limitMarkdownText(Markdown::string($item->text), 159, ['sup']),
-	           	str_replace('<img', '<img width="100%"', $image.\Markdown::string($item->text)),
+	           	\Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']),
+	           	str_replace('<img', '<img width="100%"', $image.\Markdown::convertToHtml($item->text)),
 	           	['url'=>$image_src,'type'=>'image/jpeg']);
 	       }
 

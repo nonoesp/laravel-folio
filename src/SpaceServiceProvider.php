@@ -1,6 +1,7 @@
 <?php namespace Nonoesp\Space;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Container\Container;
 
 class SpaceServiceProvider extends ServiceProvider
 {

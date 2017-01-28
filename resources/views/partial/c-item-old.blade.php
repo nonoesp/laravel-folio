@@ -25,7 +25,7 @@
 		@endif
 
 		{{-- Text --}}
-			<?php echo Markdown::string( $item->text ); ?>
+			<?php echo Markdown::convertToHtml( $item->text ); ?>
 
 		{{-- Tags --}}
 			<p class="c-item__tags">{{ Thinker::displayItemTags($item->tagNames(), 'c-item__tag u-case-upper') }}</p>
