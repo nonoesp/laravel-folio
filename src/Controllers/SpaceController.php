@@ -13,6 +13,11 @@ use Markdown;
 
 class SpaceController extends Controller
 {
+	// This is an informal test of some dependencies and features.
+  public function helloSpace() {
+		return view('space::debug.c-hello')->with(['amount' => 3]);
+	}
+
 	public function showHome() {
 
 		// Get user's Twitter handle (or visitor)
