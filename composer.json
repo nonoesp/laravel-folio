@@ -26,6 +26,6 @@
         "roumen/feed": "2.10.*",
         "vtalbot/markdown": "2.*",
         "laravelcollective/html": "*",
-        "vinkla/hashids": "^2.2"
+        "vinkla/hashids": "*"
     }
 }
