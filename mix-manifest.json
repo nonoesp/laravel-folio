@@ -1,3 +1,4 @@
 {
-  "mix.js": "mix.js"
+  "mix.js": "mix.js",
+  "resources/assets/css/space.css": "resources/assets/css/space.css"
 }

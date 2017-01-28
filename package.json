@@ -21,6 +21,7 @@
   "homepage": "https://github.com/nonoesp/laravel-writing#readme",
   "dependencies": {
     "bourbon": "4.2.7",
+    "core-scss": "github:nonoesp/core-scss",
     "font-awesome": "4.7.0",
     "laravel-mix": "0.5.16"
   }
