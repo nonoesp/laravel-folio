@@ -72,14 +72,10 @@ class SpaceServiceProvider extends ServiceProvider
           $loader->alias('Space', 'Nonoesp\Space\Facades\Space');
         });
 
-        $container->singleton('space', function () {
-            return 'space';
-        });
-/*
-        // Return alias
-        $this->app['space'] = $this->app->share(function($app)
-        {
-        return new Space;
-      });*/
+        $this->app->singleton('space', function (Container $app) {
+             return new Space();
+         });
+        $this->app->alias('space', Space::class);
+
     }
 }
