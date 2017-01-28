@@ -14,7 +14,7 @@ return array(
 	'template-view' => 'space::layout',
 
   // CSS stylesheet
-	'css' => '/nonoesp/space/css/space.css',
+	'css' => '', // defaults to /nonoesp/space/css/space.css
 
 	// Typekit token (ignored if empty string, i.e. '')
 	'typekit' => '',
