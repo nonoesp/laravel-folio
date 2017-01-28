@@ -13,6 +13,12 @@ return array(
 	// View of Main Template for base layout
 	'template-view' => 'space::layout',
 
+  // CSS stylesheet
+	'css' => '/nonoesp/space/css/space.css',
+
+	// Typekit token (ignored if empty string, i.e. '')
+	'typekit' => '',
+
 	// Directory of Item Templates
 	//'template-paths' => ['space::templates'],
 
@@ -23,7 +29,7 @@ return array(
 	'protected_uris' => ['example', 'profile', 'about', 'magic'],
 
 	// Special tags (add a class to articles containing them)
-	'special-tags' => ['highlight'],
+	//'special-tags' => ['highlight'],
 
 	// Middlewares to filter provided routes, e.g. 'auth'
 	'middlewares' => ['web'],
@@ -41,7 +47,7 @@ return array(
 	'feed' =>
 	[
 		'route' => 'feed.xml',
-		'title' => 'My Untitled Feed',
+		'title' => 'My Space Feed',
 		'description' => 'A description here would come handy.',
 		'show' => '30', // maximum amount of articles to display
 		'logo' => '', // (optional) URL to your feed's logo

@@ -1,3 +1,10 @@
+<?php
+	$space_typekit = Config::get('space.typekit');
+	$space_css = Config::get('space.css');
+	if($space_typekit == '') $space_typekit = null;
+	if($space_css == '') $space_css = null;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,11 +14,13 @@
 	<title>{{ $site_title or Config::get('settings.title') }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="/css/main.css">
+	<link rel="stylesheet" type="text/css" href="{{ $space_css or '/nonoesp/space/css/space.css?default' }}">
 
+	@if($space_typekit)
 	<!--TypeKit-->
-	<script type="text/javascript" src="//use.typekit.net/fgm7qov.js"></script>
+	<script type="text/javascript" src="//use.typekit.net/{{ $space_typekit }}.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+	@endif
 
 </head>
 

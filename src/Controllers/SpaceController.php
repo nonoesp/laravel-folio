@@ -15,7 +15,7 @@ class SpaceController extends Controller
 {
 	// This is an informal test of some dependencies and features.
   public function helloSpace() {
-		return view('space::debug.c-hello')->with(['amount' => 3]);
+		return view('space::debug.test')->with(['amount' => 2]);
 	}
 
 	public function showHome() {
