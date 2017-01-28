@@ -30,7 +30,7 @@
 	}
 ?>
 
-<item class="[ grid ] [ c-item @if(isset($class)){{ $class }}@endif{{ Writing::itemCategoryClass($item->tagNames(), 'c-item') }}{{ (count($item->tagNames()) > 0) ? 'is-tagged' : '' }}]"><!--
+<item class="[ grid ] [ c-item @if(isset($class)){{ $class }}@endif{{ Space::itemCategoryClass($item->tagNames(), 'c-item') }}{{ (count($item->tagNames()) > 0) ? 'is-tagged' : '' }}]"><!--
 
 --><div class="grid__item">
 	@if($property = $item->property('location'))
@@ -46,7 +46,7 @@
 
 	  {{-- Title --}}
 	  @if (isset($isTitleLinked))
-	    <h1>{!! Html::link(Writing::path().$item->slug, Thinker::title($item->title)) !!}</h1>
+	    <h1>{!! Html::link(Space::path().$item->slug, Thinker::title($item->title)) !!}</h1>
 	  @else
 	    <h1>{!! Thinker::title($item->title) !!}</h1>
 	  @endif
@@ -59,7 +59,7 @@
 			  {{ $user_thumbnail }}
 			  <div class="[ c-item__inline-container ]">
 			  	<div class="[ c-item__inline-detail  c-item__inline-detail--user ]">
-			  		<a href="{{ Writing::userURL($user) }}" class="c-item__link--accent">@if($user){{ $user->name }}@endif</a>
+			  		<a href="{{ Space::userURL($user) }}" class="c-item__link--accent">@if($user){{ $user->name }}@endif</a>
 			  	</div>
 			  	<br>
 			  	<div class="[ c-item__inline-detail ]">
@@ -125,13 +125,13 @@
 			@if ($item_type == 'SUMMARY_ITEM_TYPE')
 				<p>
 					{!! Thinker::limitMarkdownText(Markdown::string($item->text), 275, array('figcaption')) !!}
-					{!! Html::link(Writing::path().$item->slug, trans('writing::base.continue-reading')) !!}
+					{!! Html::link(Space::path().$item->slug, trans('space::base.continue-reading')) !!}
 				</p>
 			@endif
 
 		{{-- Tags --}}
 			@if (count($item->tagNames()) > 0)
-				<p class="c-item__tags">{!! Writing::tagListWithItemAndClass($item, 'c-item__tag u-case-upper') !!}</p>
+				<p class="c-item__tags">{!! Space::tagListWithItemAndClass($item, 'c-item__tag u-case-upper') !!}</p>
 			@endif
 
     </div><!--

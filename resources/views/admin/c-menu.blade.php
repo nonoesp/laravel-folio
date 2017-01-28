@@ -7,7 +7,7 @@
 
 	{{-- Html::link('/admin/item/add', 'Add Article', array('class' => 'admin-menu-item')) --}}
 
-	{{-- Html::link(URL::route('blog'), 'Writing', array('class' => 'admin-menu-item')) --}}
+	{{-- Html::link(URL::route('blog'), 'Space', array('class' => 'admin-menu-item')) --}}
 
 	{{-- Html::link('/logout', 'Exit', array('class' => 'admin-menu-item')) --}}
 

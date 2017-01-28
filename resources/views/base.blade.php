@@ -1,20 +1,20 @@
 
-@extends(Config::get("writing.template-view"))
+@extends(Config::get("space.template-view"))
 
 <?php
   //{{-- @extends('layout.main') --}}
     /*
-    / [ writing ]
+    / [ space ]
     /
-    / $writing_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
+    / $space_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
     / $tag
     /
     */
 
     // 1. Defaults
-    $site_title = 'Writing — '.Config::get('settings.title');
+    $site_title = 'Space — '.Config::get('settings.title');
     $og_description = 'Description of the blog.';
-    $services_typekit = Config::get('services.typekit.writing');
+    $services_typekit = Config::get('services.typekit.space');
     $header_classes = 'c-header--white';
     $is_header_static = true;
 
@@ -27,15 +27,15 @@
 
     // 3. Define Item Type
     if(isset($items)) {
-      $writing_type = 'MULTIPLE_WRITING_TYPE';
+      $space_type = 'MULTIPLE_WRITING_TYPE';
     } else if(isset($item)) {
-      $writing_type = 'SINGLE_WRITING_TYPE';
+      $space_type = 'SINGLE_WRITING_TYPE';
     } else {
-      $writing_type = 'EMPTY_TYPE';
+      $space_type = 'EMPTY_TYPE';
     }
 
     // 4. Single Item Settings
-    if ($writing_type == 'SINGLE_WRITING_TYPE') {
+    if ($space_type == 'SINGLE_WRITING_TYPE') {
 
         // 4.1. General
         $site_title = $item->title.' — '.Config::get('settings.title');
@@ -67,7 +67,7 @@
     }
 
     // 5. Multiple Item Settings
-    if ($writing_type == 'MULTIPLE_WRITING_TYPE') {
+    if ($space_type == 'MULTIPLE_WRITING_TYPE') {
 
         // Tags
         if (isset($tag)) {
@@ -101,7 +101,7 @@
 
       {{-- Items --}}
 
-      @if($writing_type == 'MULTIPLE_WRITING_TYPE')
+      @if($space_type == 'MULTIPLE_WRITING_TYPE')
 
           @if(isset($items_expected))
             @foreach($items_expected as $item)
@@ -113,7 +113,7 @@
 
           @foreach($items as $item)
 
-            {!! View::make('writing::partial.c-item')->
+            {!! View::make('space::partial.c-item')->
                      with(['item' => $item,
                            'item_type' => 'SUMMARY_ITEM_TYPE',
                            'isTitleLinked' => 'true']) !!}
@@ -121,7 +121,7 @@
           @endforeach
 
           @if(isset($ids) and count($ids) > 0)
-              {!! View::make('writing::partial.c-load-more')->
+              {!! View::make('space::partial.c-load-more')->
                        with('ids', $ids) !!}
           @endif
 
@@ -130,9 +130,9 @@
 
       {{-- Item --}}
 
-      @if($writing_type == 'SINGLE_WRITING_TYPE')
+      @if($space_type == 'SINGLE_WRITING_TYPE')
 
-            {!! View::make('writing::partial.c-item')->
+            {!! View::make('space::partial.c-item')->
                      with(['item' => $item,
                            'class' => '-u-no-margin-bottom  -u-no-border-bottom']) !!}
 
@@ -160,7 +160,7 @@
         </script>
     @endif
 
-    <script type="text/javascript" src="/nonoesp/writing/js/writing.js"></script>
+    <script type="text/javascript" src="/nonoesp/space/js/space.js"></script>
 
 @stop
 

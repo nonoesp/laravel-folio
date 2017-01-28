@@ -3,21 +3,21 @@
 return array(
 
 	// Path of the blog, which can be
-	// (1) a string like 'writing' or 'journal' displays routes as yoursite.com/writing/post-slug
+	// (1) a string like 'space' or 'journal' displays routes as yoursite.com/space/post-slug
 	// (2) an empty string (i.e. '') displays routes as yoursite.com/post-slug
-	'path-prefix' => 'writing',
+	'path-prefix' => 'space',
 
-	// Admin path prefix, e.g. 'admin', 'writing-admin', 'admin/writing'
+	// Admin path prefix, e.g. 'admin', 'space-admin', 'admin/space'
 	'admin-path-prefix' => 'admin',
 
 	// View of Main Template for base layout
-	'template-view' => 'writing::layout',
+	'template-view' => 'space::layout',
 
 	// Directory of Item Templates
-	//'template-paths' => ['writing::templates'],
+	//'template-paths' => ['space::templates'],
 
 	// View admin menu
-	'view-admin-menu' => 'writing::admin.c-menu',
+	'view-admin-menu' => 'space::admin.c-menu',
 
 	// URIs protected from Writing routes
 	'protected_uris' => ['example', 'profile', 'about', 'magic'],
@@ -48,51 +48,4 @@ return array(
 		'default-image-src' => 'http://your-default.com/image.jpg'
 	],
 
-	// Experimental
-	// 'properties' =>
-	// [
-	// 	'project' =>
-	// 	[
-	// 		'architect' => 'Architect (e.g. FJMT Studio)',
-	// 		'contractor' => 'Contractor (e.g. Mirvac)',
-	// 		'client' => 'Client (e.g. Empire Glass and Aluminium)',
-	// 		'completion_date' => ['type' => 'varchar', 'placeholder' => 'Date of Completion (e.g. August, 2016)'],
-	// 		'location' => 'Location (e.g. 200 George Street, Sydney)',
-	// 		'fabrication' => 'Fabrication (e.g. Terry Tisdale, OX Engineering)',
-	// 		'structure' => 'Structure (e.g. ARUP)',
-	// 		'lighting' => 'Lighting (e.g. ARUP)',
-	// 		'photo_credits' => 'Photo Credits (e.g. Brett Boardman)'
-	// 		],
-	// 	'case-study' =>
-	// 		[
-	// 			'technology' => 'Technology',
-	// 			'price' => 'Price'
-	// 		]
-	// ],
-
-	// Experimental
-	// 'layers' =>
-	// [
-	// 	'photos' =>
-	// 	[
-	// 		'path' => 'photos',
-	// 		'tags' => ['photos'],
-	// 		'title'=> 'Photos',
-	// 		'view' => 'writing::layer.photos'
-	// 	],
-	// 	'sketches' =>
-	// 	[
-	// 		'path' => 'sketches',
-	// 		'tags' => ['make'],
-	// 		'title'=> 'Sketches',
-	// 		'view' => 'writing::layer.sketches'
-	// 	],
-	// 	'notes' =>
-	// 	[
-	// 		'path' => 'notes',
-	// 		'tags' => ['simplify', 'highlight'],
-	// 		'title'=> 'Notes',
-	// 		'view' => 'writing::layer.notes'
-	// 	]
-	// ]
 );

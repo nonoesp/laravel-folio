@@ -1,5 +1,5 @@
 
-@extends('writing::admin.layout')
+@extends('space::admin.layout')
 
 <?php
 $settings_title = Config::get('settings.title');
@@ -31,7 +31,7 @@ if($settings_title == '') {
 		['name' => 'image', 'placeholder' => 'Image', 'label' => 'Image'],
 		['name' => 'image_src', 'placeholder' => 'Thumbnail', 'label' => 'Thumbnail'],
 		['name' => 'video', 'placeholder' => 'Video', 'label' => 'Video URL'],
-		['name' => 'slug_title', 'placeholder' => 'URL (defaults to /'.Writing::path().$item->slug.')', 'label' => 'URL Slug'],
+		['name' => 'slug_title', 'placeholder' => 'URL (defaults to /'.Space::path().$item->slug.')', 'label' => 'URL Slug'],
 		['name' => 'tags_str', 'placeholder' => 'Tags (e.g. writing, project)', 'label' => 'Tags'],
 		['name' => 'recipients_str', 'placeholder' => 'Recipients (Twitter handles)', 'label' => 'Recipients'],
 	];
@@ -51,7 +51,7 @@ if($settings_title == '') {
 		Editing Item {{ $item->id }}
 		<a href="/e/{{ Hashids::encode($item->id) }}">
 		<i class="[ fa fa-link fa--social ]"></i></a>
-		<a href="{{ '/'.Writing::path().$item->slug }}">Preview</a>
+		<a href="{{ '/'.Space::path().$item->slug }}">Preview</a>
 	</p>
 
 	<div class="[ c-admin__form ] [ grid ]">

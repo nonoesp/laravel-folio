@@ -8,6 +8,10 @@
 
 ## Release Notes
 
+### 5.4.*
+
+* Renamed package to `nonoesp/space`.
+
 ### 5.3.*
 
 * Customizable short-URLs included in package routes.

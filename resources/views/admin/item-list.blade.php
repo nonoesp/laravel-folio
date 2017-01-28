@@ -1,5 +1,5 @@
 
-@extends('writing::admin.layout')
+@extends('space::admin.layout')
 
 <?php
 	$settings_title = Config::get('settings.title');
@@ -29,12 +29,12 @@
 
 		echo '<p class="admin-list-item '.$css.'">';
 
-		echo Html::link(Writing::adminPath().'item/edit/'.$item->id, $item->title, array('class' => 'admin-list-itemLink'));
+		echo Html::link(Space::adminPath().'item/edit/'.$item->id, $item->title, array('class' => 'admin-list-itemLink'));
 
 		if($item->trashed()) {
-			echo ' '.Html::link(Writing::adminPath().'item/restore/'.$item->id, 'O', array('class' => 'admin-list-optionLink is-invisible'));
+			echo ' '.Html::link(Space::adminPath().'item/restore/'.$item->id, 'O', array('class' => 'admin-list-optionLink is-invisible'));
 		} else {
-			echo ' '.Html::link(Writing::adminPath().'item/delete/'.$item->id, 'X', array('class' => 'admin-list-optionLink is-invisible'));
+			echo ' '.Html::link(Space::adminPath().'item/delete/'.$item->id, 'X', array('class' => 'admin-list-optionLink is-invisible'));
 		}
 
 		if(count($item->tagNames())) {

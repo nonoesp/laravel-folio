@@ -1,4 +1,4 @@
-@extends('writing::admin.layout')
+@extends('space::admin.layout')
 
 <?php
 	$settings_title = Config::get('settings.title');
@@ -14,7 +14,7 @@
 
 	<div class="admin-form">
 
-		{{ Form::open(['url' => Writing::adminPath().'item/add', 'method' => 'post']) }}
+		{{ Form::open(['url' => Space::adminPath().'item/add', 'method' => 'post']) }}
 
 			<p>{{ Form::text('title', '', ['placeholder' => 'Title']) }}</p>
 

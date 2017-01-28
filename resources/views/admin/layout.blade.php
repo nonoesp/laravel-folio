@@ -24,7 +24,7 @@
     <div class="[ o-wrap  o-wrap--tiny ]">
 
 	@if(!isset($shouldHideMenu))
-		{!! View::make(Config::get('writing.view-admin-menu')) !!}
+		{!! View::make(Config::get('space.view-admin-menu')) !!}
 	@endif
 	<div class="admin-title u-borderBottom">@yield('title', 'Admin')</div>
 

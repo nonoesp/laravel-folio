@@ -1,4 +1,4 @@
-<?php namespace Nonoesp\Writing\Models;
+<?php namespace Nonoesp\Space\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

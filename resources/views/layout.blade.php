@@ -20,9 +20,9 @@
   <div class="[ o-band ]  [ u-border-bottom  u-no-padding-bottom ]">
     <div class="[ o-wrap  o-wrap--standard  o-wrap--portable-tiny ]">
 
-	{!! Html::link("/".Config::get("writing.path-prefix"), "Home") !!}
+	{!! Html::link("/".Config::get("space.path-prefix"), "Home") !!}
 	&nbsp;&nbsp;
-	{!! Html::link("/".Config::get("writing.admin-path-prefix"), "Admin") !!}
+	{!! Html::link("/".Config::get("space.admin-path-prefix"), "Admin") !!}
 </div></div>
 
 @yield('content')

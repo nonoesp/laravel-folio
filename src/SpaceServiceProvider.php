@@ -1,8 +1,8 @@
-<?php namespace Nonoesp\Writing;
+<?php namespace Nonoesp\Space;
 
 use Illuminate\Support\ServiceProvider;
 
-class WritingServiceProvider extends ServiceProvider
+class SpaceServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -18,11 +18,11 @@ class WritingServiceProvider extends ServiceProvider
         $path_assets = __DIR__.'/../resources/assets';
 
         // Publish Paths
-        $publish_path_views = base_path('resources/views/nonoesp/writing');
-        $publish_path_lang = base_path('resources/lang/nonoesp/writing');
+        $publish_path_views = base_path('resources/views/nonoesp/space');
+        $publish_path_lang = base_path('resources/lang/nonoesp/space');
         $publish_path_middleware = base_path('app/Http/Middleware');
-        $publish_path_assets = base_path('public/nonoesp/writing');
-        $publish_path_config = config_path('writing.php');
+        $publish_path_assets = base_path('public/nonoesp/space');
+        $publish_path_config = config_path('space.php');
 
         // Publish Stuff
         $this->publishes([$path_views => $publish_path_views,], 'views');
@@ -31,22 +31,22 @@ class WritingServiceProvider extends ServiceProvider
         $this->publishes([$path_assets => $publish_path_assets,], 'assets');
         $this->publishes([__DIR__.'/../config/config.php' => $publish_path_config,], 'config');
 
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'writing');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'space');
 
 
         // Views
         if (is_dir($publish_path_views)) {
-            $this->loadViewsFrom($publish_path_views, 'writing'); // Load published views
+            $this->loadViewsFrom($publish_path_views, 'space'); // Load published views
         } else {
-            $this->loadViewsFrom($path_views, 'writing');
+            $this->loadViewsFrom($path_views, 'space');
         }
 
         // Translations
         if (is_dir($publish_path_lang)) {
-            $this->loadTranslationsFrom($publish_path_lang, 'writing'); // Load published lang
+            $this->loadTranslationsFrom($publish_path_lang, 'space'); // Load published lang
         } else {
-            $this->loadTranslationsFrom($path_lang, 'writing');
-        }  
+            $this->loadTranslationsFrom($path_lang, 'space');
+        }
     }
 
     /**
@@ -57,11 +57,11 @@ class WritingServiceProvider extends ServiceProvider
     public function register()
     {
         // Register Controllers
-        //$this->app->make('Nonoesp\Writing\Controllers\Controller');
-        //$this->app->make('Nonoesp\Writing\Controllers\WritingController');
+        //$this->app->make('Nonoesp\Space\Controllers\Controller');
+        //$this->app->make('Nonoesp\Space\Controllers\SpaceController');
 
         // Merge Config
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'writing');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'space');
 
         include __DIR__.'/routes.php';
 
@@ -69,13 +69,13 @@ class WritingServiceProvider extends ServiceProvider
         $this->app->booting(function()
         {
           $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-          $loader->alias('Writing', 'Nonoesp\Writing\Facades\Writing');
+          $loader->alias('Space', 'Nonoesp\Space\Facades\Space');
         });
 
         // Return alias
-        $this->app['writing'] = $this->app->share(function($app)
+        $this->app['space'] = $this->app->share(function($app)
         {
-        return new Writing;
+        return new Space;
         });
     }
 }

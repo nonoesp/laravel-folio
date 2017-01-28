@@ -1,16 +1,16 @@
 # A Simple Blogging Package for Laravel
 
-Hi there! `nonoesp/writing` is a content management system package for Laravel.
+Hi there! `nonoesp/space` is a content management system package for Laravel.
 
 This branch supports 5.3.
 
 ## Installation
 
-Begin by installing this package through Composer. Edit your project’s `composer.json` file to require `nonoesp/writing`.
+Begin by installing this package through Composer. Edit your project’s `composer.json` file to require `nonoesp/space`.
 
 ```json
 "require": {
-	"nonoesp/writing": "5.3.*"
+	"nonoesp/space": "5.4.*"
 }
 ```
 
@@ -25,8 +25,8 @@ Next, add the new providers to the `providers` array of `config/app.php`:
 ```php
 	'providers' => [
 		// ...
-        // nonoesp/writing
-        Nonoesp\Writing\WritingServiceProvider::class,        
+        // nonoesp/space
+        Nonoesp\Space\SpaceServiceProvider::class,        
         Nonoesp\Thinker\ThinkerServiceProvider::class,  
         Nonoesp\Authenticate\AuthenticateServiceProvider::class,          
         VTalbot\Markdown\MarkdownServiceProvider::class,
@@ -45,14 +45,14 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 ```php
 	'aliases' => [
 		// ...
-        // nonoesp/writing - Models
-        'Writing' => Nonoesp\Writing\Facades\Writing::class,
+        // nonoesp/space - Models
+        'Space' => Nonoesp\Space\Facades\Space::class,
         'User' => 'App\User',
-        'Article' => Nonoesp\Writing\Models\Article::class,    
-        'Property' => Nonoesp\Writing\Models\Property::class,
-        'Recipient' => Nonoesp\Writing\Models\Recipient::class,
+        'Article' => Nonoesp\Space\Models\Article::class,    
+        'Property' => Nonoesp\Space\Models\Property::class,
+        'Recipient' => Nonoesp\Space\Models\Recipient::class,
 
-        // nonoesp/writing - Dependencies
+        // nonoesp/space - Dependencies
         'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
         'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
         'Date' => Jenssegers\Date\Date::class,
@@ -71,10 +71,10 @@ Finally, follow the [Instructions to Install `nonoesp/authenticate`](https://git
 
 ## Config
 
-Publish configuration file to `config/writing.php`.
+Publish configuration file to `config/space.php`.
 
 ```php
-php artisan vendor:publish --provider="Nonoesp\Writing\WritingServiceProvider" --tag=config
+php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=config
 ```
 
 ## Bower
@@ -124,19 +124,19 @@ elixir(mix => {
 
   mix.copy('resources/assets/bower/font-awesome/fonts', 'public/fonts/');
 
-  mix.copy('vendor/nonoesp/writing/resources/assets/js/space.main.js',  'public/js/space.main.js')
-     .copy('vendor/nonoesp/writing/resources/assets/js/space.admin.js', 'public/js/space.admin.js');
+  mix.copy('vendor/nonoesp/space/resources/assets/js/space.main.js',  'public/js/space.main.js')
+     .copy('vendor/nonoesp/space/resources/assets/js/space.admin.js', 'public/js/space.admin.js');
 
-  //mix.sass('./vendor/nonoesp/writing/resources/assets/sass/space.scss', 'public/css/space.css');
+  //mix.sass('./vendor/nonoesp/space/resources/assets/sass/space.scss', 'public/css/space.css');
 
-  mix.copy('./vendor/nonoesp/writing/resources/assets/sass/', 'resources/assets/sass/');
+  mix.copy('./vendor/nonoesp/space/resources/assets/sass/', 'resources/assets/sass/');
   mix.sass('space.scss');
 });
 ```
 
 ## License
 
-Writing is licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Space is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Me
 

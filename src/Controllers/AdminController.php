@@ -1,10 +1,10 @@
 <?php
 
-namespace Nonoesp\Writing\Controllers;
+namespace Nonoesp\Space\Controllers;
 
 use Illuminate\Http\Request;
 use Item, User, Thinker, Recipient, Property; // Must be defined in your aliases
-use Nonoesp\Writing\Writing;
+use Nonoesp\Space\Space;
 use View;
 use Config;
 use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
@@ -20,7 +20,7 @@ class AdminController extends Controller
 
 	public function getItemList($tag = null) {
 		$items = Item::withTrashed()->orderBy('published_at', 'DESC')->get();
-		return View::make('writing::admin.item-list')->with(['items' => $items, 'tag' => $tag]);
+		return View::make('space::admin.item-list')->with(['items' => $items, 'tag' => $tag]);
 	}
 
 	public function ItemEdit(Request $request, $id) {
@@ -61,7 +61,7 @@ class AdminController extends Controller
 		  	$item->video = Input::get('video');
 
 				// Update Properties (before tags)
-				// foreach(Writing::itemPropertyArray($item) as $key=>$value) {
+				// foreach(Space::itemPropertyArray($item) as $key=>$value) {
 				// 	$property = Property::updateOrCreate(
 				// 		['item_id' => $item->id, 'name' => $key],
 				// 		['value' => Input::get($key)]
@@ -90,11 +90,11 @@ class AdminController extends Controller
 			$item->save();
 		}
 
-		return View::make('writing::admin.item-edit')->withItem($item);
+		return View::make('space::admin.item-edit')->withItem($item);
 	}
 
 	public function getItemCreate() {
-		return View::make('writing::admin.item-add');
+		return View::make('space::admin.item-add');
 	}
 
 	public function postItemCreate() {
@@ -144,14 +144,14 @@ class AdminController extends Controller
 			}
 	    }
 
-		return Redirect::to(Writing::adminPath().'item/edit/'.$item->id);
+		return Redirect::to(Space::adminPath().'item/edit/'.$item->id);
 	}
 
 	public function getItemDelete($id) {
 		$item = Item::find($id);
 		$item->delete();
 
-		return Redirect::to(Writing::adminPath().'items');
+		return Redirect::to(Space::adminPath().'items');
 	}
 
 	public function getItemRestore($id) {
@@ -164,13 +164,8 @@ class AdminController extends Controller
 		  $item->tag($tags);
 		}
 
-		return Redirect::to(Writing::adminPath().'items');
+		return Redirect::to(Space::adminPath().'items');
 	}
-
-	/*
-	public function getVisits() {
-		return View::make('admin.visits');
-	}*/
 
 
 }

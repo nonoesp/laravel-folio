@@ -1,4 +1,4 @@
-<?php namespace Nonoesp\Writing;
+<?php namespace Nonoesp\Space;
 
  use Lang;
  use Config;
@@ -8,11 +8,11 @@
  use Item, Property; // Must be defined in your aliases
  use Form;
 
-class Writing {
+class Space {
 
 	public static function itemCategoryClass($tags, $class) {
 
-		$categories = Config::get('writing.special-tags'); //TODO: lang in package
+		$categories = Config::get('space.special-tags'); //TODO: lang in package
 
 		foreach($tags as $tag) {
 			$tag = strtolower($tag);
@@ -28,14 +28,14 @@ class Writing {
 		$result = '';
 		$idx = 0;
 		foreach($item->tags as $tag) {
-			$result .= Writing::tagWithClass($tag, $class);
+			$result .= Space::tagWithClass($tag, $class);
 			$idx++;
 		}
 		return $result;
 	}
 
 	public static function tagWithClass($tag, $class) {
-		return Html::link(Writing::path().'tag/'.$tag->slug, $tag->name, array('class' => $class));
+		return Html::link(Space::path().'tag/'.$tag->slug, $tag->name, array('class' => $class));
 	}
 
 	public static function userURL($user) {
@@ -44,12 +44,12 @@ class Writing {
 
     /*
  	 * Returns
- 	 * - path string if existing, e.g. "writing"
+ 	 * - path string if existing, e.g. "space"
  	 * - false if non-existing
  	 */
 
 	public static function pathOrFalse() {
-		if($path = Config::get('writing.path-prefix')) {
+		if($path = Config::get('space.path-prefix')) {
 			return $path;
 		} else {
 			return false;
@@ -58,11 +58,11 @@ class Writing {
 
 	/*
 	 * Returns a string either with:
-	 * - path and a slash, e.g. "writing/"
+	 * - path and a slash, e.g. "space/"
 	 * - empty string, i.e. ""
 	 */
 	public static function path() {
-		if($path = Writing::pathOrFalse()) {
+		if($path = Space::pathOrFalse()) {
 			return $path.'/';
 		} else {
 			return '';
@@ -74,11 +74,11 @@ class Writing {
 	 */
 
 	public static function adminPath() {
-		return Config::get('writing.admin-path-prefix').'/';
+		return Config::get('space.admin-path-prefix').'/';
 	}
 
 	public static function isAvailableURI() {
-		if(!in_array(Request::path(), Config::get('writing.protected_uris'))) {
+		if(!in_array(Request::path(), Config::get('space.protected_uris'))) {
 			return true;
 		} else {
 			return false;
@@ -89,17 +89,17 @@ class Writing {
 	 * Returns true when the current URI belongs to the package or not.
 	 */
 
-	public static function isWritingURI() {
+	public static function isSpaceURI() {
 
 		$path = Request::path();
 		$slug = $path;
 
-		if($writing_path = Writing::path()) {
+		if($space_path = Space::path()) {
 
 			// Config has path-prefix
-			$URIContainsWritingPathPrefix = count(explode($writing_path, $path)) - 1;
-			if($URIContainsWritingPathPrefix) {
-				$slug = str_replace($writing_path, "", $path);
+			$URIContainsSpacePathPrefix = count(explode($space_path, $path)) - 1;
+			if($URIContainsSpacePathPrefix) {
+				$slug = str_replace($space_path, "", $path);
 			} else {
 				return false;
 			}
@@ -124,7 +124,7 @@ class Writing {
 	}
 
   public static function itemPropertyArray($item) {
-    $properties = config('writing.properties');
+    $properties = config('space.properties');
     $item_properties = [];
     foreach($item->tags as $tag) {
       if(array_key_exists ( $tag->slug, $properties )) {
@@ -135,7 +135,7 @@ class Writing {
   }
 
   public static function itemPropertyFields($item) {
-    foreach(Writing::itemPropertyArray($item) as $key=>$value) {
+    foreach(Space::itemPropertyArray($item) as $key=>$value) {
       $placeholder = $key;
       if(is_string($value)) {
         $placeholder = $value;

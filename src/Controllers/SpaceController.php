@@ -1,17 +1,17 @@
 <?php
 
-namespace Nonoesp\Writing\Controllers;
+namespace Nonoesp\Space\Controllers;
 
 use Illuminate\Http\Request;
 use Item, User; // Must be defined in your aliases
-use Nonoesp\Writing\Writing;
+use Nonoesp\Space\Space;
 use View;
 use Config;
 use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
 use App;
 use Markdown;
 
-class WritingController extends Controller
+class SpaceController extends Controller
 {
 	public function showHome() {
 
@@ -19,8 +19,8 @@ class WritingController extends Controller
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
 		// Config variables
-		$published_show = Config::get("writing.published-show");
-		$expected_show = Config::get("writing.expected-show");
+		$published_show = Config::get("space.published-show");
+		$expected_show = Config::get("space.expected-show");
 
 		$published_existing = Item::published()
     				   		->visibleFor($twitter_handle)
@@ -78,7 +78,7 @@ class WritingController extends Controller
 									->take($expected_show)
 									->get();
 
-		return view('writing::base')->with(array('items' => $items,
+		return view('space::base')->with(array('items' => $items,
 													  'ids' => $ids_array,
 													  'items_expected' => $items_expected));
 	}
@@ -90,8 +90,8 @@ class WritingController extends Controller
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
 		// Config variables
-		$published_show = Config::get("writing.published-show");
-		$expected_show = Config::get("writing.expected-show");
+		$published_show = Config::get("space.published-show");
+		$expected_show = Config::get("space.expected-show");
 
 		$published_existing = Item::withAnyTag($tag)
     					    ->published()
@@ -150,7 +150,7 @@ class WritingController extends Controller
 									->take($expected_show)
 									->get();
 
-		return view('writing::base')->with(
+		return view('space::base')->with(
 								[
 		             	  			'items' => $items,
 		             	  			'ids' => $ids_array,
@@ -164,14 +164,14 @@ class WritingController extends Controller
 		if($item = Item::whereSlug($slug)->first()) {
 			$item->visits++;
 			$item->save();
-			return view('writing::base')->with('item', $item);
+			return view('space::base')->with('item', $item);
 		}
 
 	}
 
 	public function showItemWithId($id) {
 		$item = Item::withTrashed()->find($id);
-		return \Redirect::to(Writing::path().$item->slug);
+		return \Redirect::to(Space::path().$item->slug);
 	}
 
 	public function getItemsWithIds() {
@@ -181,7 +181,7 @@ class WritingController extends Controller
 
 		// Echo Items
 		foreach(\Input::get('ids') as $id) {
-			echo view('writing::partial.c-item')->
+			echo view('space::partial.c-item')->
 			           with(array('item' => Item::find($id),
 			           	  		  'item_type' => $item_type,
 			           	  		  'isTitleLinked' => true));
@@ -202,7 +202,7 @@ class WritingController extends Controller
 	    	$default_author = 'Nono Martínez Alonso';
 
 	       // creating rss feed with our most recent items
-		   $feed_show = Config::get('writing.feed.show');
+		   $feed_show = Config::get('space.feed.show');
 
 	       $items = Item::published()
 					          ->public()
@@ -212,25 +212,25 @@ class WritingController extends Controller
 					          ->get();
 
 	       // set your feed's title, description, link, pubdate and language
-	       $feed->title = Config::get('writing.feed.title');
-	       $feed->description = Config::get('writing.feed.description');
-	       $feed->logo = Config::get('writing.feed.logo');
-	       $feed->link = \URL::to('/'.Writing::path());
+	       $feed->title = Config::get('space.feed.title');
+	       $feed->description = Config::get('space.feed.description');
+	       $feed->logo = Config::get('space.feed.logo');
+	       $feed->link = \URL::to('/'.Space::path());
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
 	       $feed->pubdate = $items[0]->published_at;
 	       $feed->lang = 'en';
 	       $feed->setShortening(false); // true or false
 	       $feed->setTextLimit(159); // maximum length of description text
-	       $feed->setView("writing::feed.rss");
+	       $feed->setView("space::feed.rss");
 
 	       foreach ($items as $item)
 	       {
 	           // set item's title, author, url, pubdate, description and content
-	       	   $image_src = Config::get('writing.feed.default-image-src');
+	       	   $image_src = Config::get('space.feed.default-image-src');
 	       	   $image = '';
 
 			   if ($item->video) {
-	       	     $image = '<p><a href="'.$request->root().'/'.Writing::path().$item->slug.'">'
+	       	     $image = '<p><a href="'.$request->root().'/'.Space::path().$item->slug.'">'
 	       	   	         .'<img src="'.\Thinker::getVideoThumb($item->video)
 	       	   	         .'" alt="'.$item->title.'"></a></p>';
 	       	   } else if ($item->image) {
@@ -246,7 +246,7 @@ class WritingController extends Controller
 	           $feed->add(
 	           	$item->title,
 	           	$default_author,
-	           	\URL::to(Writing::path().$item->slug),
+	           	\URL::to(Space::path().$item->slug),
 	           	$item->published_at,
 	           	\Thinker::limitMarkdownText(Markdown::string($item->text), 159, ['sup']),
 	           	str_replace('<img', '<img width="100%"', $image.\Markdown::string($item->text)),

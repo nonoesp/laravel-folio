@@ -1,4 +1,4 @@
-@extends(Config::get("writing.template-view"))
+@extends(Config::get("space.template-view"))
 
 <?php
 
@@ -8,7 +8,7 @@
 	// User Articles
 	$articles = Article::where('user_id', '=', $user->id)->orderBy('id', 'DESC')->take(5)->get();
 
-	$user_thumbnail = view('writing::partial.c-user-picture')->with(["user" => $user,
+	$user_thumbnail = view('space::partial.c-user-picture')->with(["user" => $user,
 	         													  	 "size" => 75,
 	         													  	 "margin_top" => "-15",
 	         													  	 "margin_bottom" => "15",
@@ -24,11 +24,11 @@
     	<article class="[ grid ]  [ c-article ]"><!--
 
     	--><div class="[ grid__item  one-whole ]  [ -u-border  u-text-align--center ]">
-	   		
+
 	   		</div><!--
 
     	--><div class="[ grid__item  one-quarter  portable--one-whole ]  [ -u-border  u-text-align--desk-right ]">
-	   		
+
 	   			{!! $user_thumbnail !!}
 
 	   		</div><!--
@@ -62,7 +62,7 @@
 							$date = ucWords(substr($date->format('F'), 0, 3).$date->format(' j, Y'));
 						?>
 
-	   					{!! Html::link(Writing::path().$article->slug, $article->title, ['class' => 'u-font-size--b']) !!}
+	   					{!! Html::link(Space::path().$article->slug, $article->title, ['class' => 'u-font-size--b']) !!}
 
    						<div class="c-article__inline-container">
    							<div class="c-article__inline-detail">
@@ -78,8 +78,8 @@
 	   		</div><!--
 
     	--><div class="[ grid__item  one-quarter  portable--one-whole ]  [ -u-border ]">
-	   		
-	   			
+
+
 
 	   		</div><!--
 
