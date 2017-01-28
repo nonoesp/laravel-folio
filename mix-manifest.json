@@ -1,4 +1,6 @@
 {
   "resources/assets/js/space.js": "resources/assets/js/space.js",
-  "resources/assets/css/space.css": "resources/assets/css/space.css"
+  "resources/assets/css/space.css": "resources/assets/css/space.css",
+  "resources/assets/js/space.js.map": "resources/assets/js/space.js.map",
+  "resources/assets/css/space.css.map": "resources/assets/css/space.css.map"
 }
