@@ -3,11 +3,11 @@
 @import '../bower/bourbon/app/assets/stylesheets/bourbon';
 
 // Components and Variables
-@import 'base-space'; // Settings, colors, breakpoints, modules
+@import 'variables-space'; // Settings, colors, breakpoints, modules
 
 // Configurable Vendors
-@import 'vendor/csswizardry-grids'; // Margin reset, grids
-@import 'vendor/typecsset'; // Type setting
+@import 'dependencies/csswizardry-grids'; // Margin reset, grids
+@import 'dependencies/typecsset'; // Type setting
 @import '../bower/font-awesome/scss/font-awesome';
 
 // space-scss

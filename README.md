@@ -1,4 +1,4 @@
-# A Simple Blogging Package for Laravel
+# A Simple CMS for Laravel
 
 Hi there! `nonoesp/space` is a content management system package for Laravel.
 
@@ -83,7 +83,15 @@ php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag
 Let's install all our asset dependencies by running:
 
 ```bash
-npm install nonoesp/core-scss font-awesome jquery validate-js vue vue-resource lodash
+npm install nonoesp/core-scss bourbon font-awesome jquery validate-js vue vue-resource lodash
+```
+
+(The first three are SCSS dependencies and the rest are JavaScript libraries.)
+
+Add the following line to your `/resources/assets/bootstrap.js`:
+
+```js
+window.validatejs = require('validate-js');
 ```
 
 ## Laravel Mix

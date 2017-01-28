@@ -1,0 +1,352 @@
+/**
+ * Typecsset
+ *
+ * Typecsset is a small, unopinionated library for creating beautifully set type
+ * on the web. Typecsset gives perfect vertical rhythm at any configurable font
+ * size, as well as many other typographical niceties.
+ */
+
+
+
+
+
+//------------------------------------\\
+    // SETTINGS
+//------------------------------------\\
+// Typecsset needs some variables setting before it can get started. Some of
+// these variables can be overriden by developers, others need to remain
+// untouched because Typecsset will assign them automatically based on what
+// you’ve told it.
+
+// What would you like your base font-size to be? Define in pixels; the library
+// will convert measurements to the most appropriate units (rems or unitless).
+$typecsset-base-font-size:      16px !default;
+$typecsset-base-line-height:    24px !default;
+
+// Heading sizes
+$typecsset-h1-size:             48px !default;
+$typecsset-h2-size:             36px !default;
+$typecsset-h3-size:             30px !default;
+$typecsset-h4-size:             24px !default;
+$typecsset-h5-size:             20px !default;
+$typecsset-h6-size:             18px !default;
+
+// Would you like indented (rather than spaced) paragraph delimiting?
+$typecsset-indented-paragraphs: false !default;
+
+// Would you like to show a baseline grid? This is handy during development.
+$typecsset-show-baseline:       false !default;
+
+// Do not modify these variables; they are internal settings upon which the
+// library depends.
+$typecsset-magic-number:        $typecsset-base-line-height;
+$typecsset-magic-ratio:         $typecsset-base-line-height / $typecsset-base-font-size;
+
+
+
+
+
+//------------------------------------\\
+    // TOOLS
+//------------------------------------\\
+// Typecsset has a number of its own tools which it uses to generate its CSS
+// more efficiently.
+
+// Quickly generate a font-size in rems, with a pixel fallback, based on the
+// value we pass into the mixin, e.g.:
+//
+// h1 {
+//     @include typecsset-font-size(24px);
+// }
+//
+@mixin typecsset-font-size($font-size, $line-height: true) {
+    font-size: $font-size;
+    font-size: ($font-size / $typecsset-base-font-size) * 1rem;
+
+    @if $line-height == true {
+        line-height: ceil($font-size / $typecsset-base-line-height) * ($typecsset-base-line-height / $font-size);
+    }
+
+}
+
+// Space elements by an amount based on your magic number. Pass in the property
+// to be indented as a paramater, e.g.:
+//
+// pre {
+//     @include typecsset-space(padding-left);
+// }
+//
+@mixin typecsset-space($property) {
+    #{$property}: 2 * $typecsset-magic-number;
+    #{$property}: 2 * $typecsset-magic-ratio + rem;
+}
+
+// A small, internally-used function to remove the units from a given value.
+@function typecsset-strip-units($number) {
+    @return $number / ($number * 0 + 1);
+}
+
+
+
+
+
+/*------------------------------------*\
+    #SHARED
+\*------------------------------------*/
+/**
+ * A lot of elements in Typecsset need to share some declarations (mainly for
+ * vertical rhythm), so we `@extend` some silent classes.
+ */
+%typecsset-reset {
+    margin:  0;
+    padding: 0;
+}
+
+%typecsset-vertical-rhythm {
+    @extend %typecsset-reset;
+    margin-bottom: $typecsset-magic-number;
+    margin-bottom: $typecsset-magic-ratio + rem;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #BASE
+\*------------------------------------*/
+/**
+ * 1. Set the base element’s `font-size` to the value of your choosing. Set in
+ *    ems, assuming a browser default of 16px.
+ * 2. Work out the unitless `line-height` for your project based around your
+ *    desired `line-height` (defined previously in pixels), and your project’s
+ *    base font size.
+ */
+
+@if $typecsset-show-baseline == true {
+/**
+ * 3. If you have chosen to display a baseline grid, we turn it on here.
+ */
+}
+
+html {
+    font-size: $typecsset-base-font-size / 16px + em; /* [1] */
+    line-height: $typecsset-base-line-height / $typecsset-base-font-size; /* [2] */
+
+    // If you have chosen to display a baseline grid, we turn it on here.
+    @if $typecsset-show-baseline == true {
+
+        $typecsset-baseline-size: typecsset-strip-units($typecsset-magic-number);
+
+        background-image: url(http://basehold.it/i/#{$typecsset-baseline-size}); /* [3] */
+    }
+
+}
+
+body {
+    margin: 0;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #HEADINGS
+\*------------------------------------*/
+h1 {
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h1-size);
+}
+
+h2 {
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h2-size);
+}
+
+h3 {
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h3-size);
+}
+
+h4 {
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h4-size);
+}
+
+h5 {
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h5-size);
+}
+
+h6 {
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-font-size($typecsset-h6-size);
+}
+
+
+
+
+
+/*------------------------------------*\
+    #LISTS
+\*------------------------------------*/
+ul, ol, dd {
+    @extend %typecsset-vertical-rhythm;
+    @include typecsset-space(margin-left);
+}
+
+li > ul,
+li > ol {
+    margin-bottom: 0;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #PARAGRAPHS
+\*------------------------------------*/
+p {
+    @extend %typecsset-vertical-rhythm;
+
+    @if $typecsset-indented-paragraphs == true {
+
+        + p {
+            @include typecsset-space(text-indent);
+            margin-top: -$typecsset-magic-number;
+            margin-top: -$typecsset-magic-ratio + rem;
+        }
+
+    }
+
+}
+
+/**
+ * Not strictly a paragraph, but probably doesn’t need its own section.
+ */
+address {
+    @extend %typecsset-vertical-rhythm;
+}
+
+
+
+
+
+/*------------------------------------*\
+    #CODE
+\*------------------------------------*/
+pre {
+    @extend %typecsset-vertical-rhythm;
+}
+
+/**
+ * 1. Fix an odd quirk whereby, without this, code blocks are rendered at a
+ *    font-size smaller than 1em.
+ */
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, monospace; /* [1] */
+}
+
+
+
+
+
+/*------------------------------------*\
+    #QUOTES
+\*------------------------------------*/
+/**
+ * 1. Hang the opening quote of the blockquote.
+ */
+blockquote {
+    text-indent: -0.41em; /* [1] */
+}
+
+/**
+ * Set up quote marks on quoting elements. This is very English-based, so we are
+ * using “, ”, ‘, and ’ quotes.
+ */
+blockquote {
+    @extend %typecsset-vertical-rhythm;
+    quotes: "“" "”";
+    @include typecsset-space(margin-left);
+
+    p {
+
+        &:before {
+            content: "“";
+            content: open-quote;
+        }
+
+        &:after {
+            content: "";
+            content: no-close-quote;
+        }
+
+        &:last-of-type:after {
+            content: "”";
+            content: close-quote;
+        }
+
+    }
+
+}
+
+q   {
+    quotes: "‘" "’" "“" "”";
+
+    &:before {
+        content: "‘";
+        content: open-quote;
+    }
+
+    &:after {
+        content: "’";
+        content: close-quote;
+    }
+
+    q:before {
+        content: "“";
+        content: open-quote;
+    }
+
+    q:after{
+        content: "”";
+        content: close-quote;
+    }
+
+    /**
+     * If an element opens with an inline quote, let’s hang that.
+     */
+    &:first-child {
+        display: inline-block;
+        text-indent: -0.22em;
+    }
+
+}
+
+
+
+
+
+/*------------------------------------*\
+    #TABLES
+\*------------------------------------*/
+/**
+ * Crude table styles; tables are very difficult to keep on the baseline.
+ */
+table {
+    @extend %typecsset-vertical-rhythm;
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+th,
+td {
+    padding: $typecsset-base-line-height / 2;
+}
