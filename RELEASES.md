@@ -12,6 +12,7 @@
 
 * Renamed package to `nonoesp/space`.
 * Abandoned `vtalbot/markdown` and switched to `graham-campbell/markdown`.
+* Transferred development to `master` branch.
 
 ### 5.3.*
 
