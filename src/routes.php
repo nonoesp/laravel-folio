@@ -43,6 +43,9 @@ if(Space::isAvailableURI()) {
 	// Feed
 	Route::get(Config::get('space.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Space\Controllers\SpaceController@getFeed'));
 
+	// Debug
+	Route::get('debug/space', 'Nonoesp\Space\Controllers\SpaceController@helloSpace');
+
 	// Experimental - layer routes from config file
 
 	// foreach(Config::get("space.layers") as $layer) {
@@ -126,7 +129,7 @@ Route::group(['middleware' => Config::get("space.middlewares-admin")], function(
 	      'property_id' => $property->id,
 	      'item_id' => $item_id
 	  ]);
-	});	
+	});
 
 
 
