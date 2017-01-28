@@ -78,28 +78,15 @@ Publish configuration file to `config/space.php`.
 php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=config
 ```
 
-## Bower
+## npm
 
-Set bower's installation path in `.bowerrc` file, at your app's root:
+Let's install all our asset dependencies by running:
 
-```json
-{"directory" : "resources/assets/bower"}
+```bash
+npm install nonoesp/core-scss font-awesome jquery validate-js vue vue-resource lodash
 ```
 
-Now, add the following dependencies to your `bower.json`:
-
-```json
-"dependencies": {
-	"core-scss": "git@github.com:nonoesp/core-scss.git",
-	"jquery": "^3.1.1",
-	"validatejs": "^1.5.1",
-	"vue": "^2.1.8",
-	"vue-resource": "^1.0.3",
-	"font-awesome": "^4.7.0"
-}
-```
-
-## Gulp (And Elixir)
+## Laravel Mix
 
 For dependencies on JavaScript, SCSS, and others, I’ve been working with gulp and elixir.
 
