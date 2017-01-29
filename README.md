@@ -68,7 +68,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 ```
 
 To authenticate, `Space` uses `nonoesp/authenticate` (which should be already installed as a dependency).
-But you need to follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/5.2)
+But you need to follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/master)
 
 ## Config
 
@@ -92,6 +92,13 @@ First, let's install all our asset dependencies by running:
 ```bash
 npm install nonoesp/core-scss bourbon font-awesome
 ```
+
+And make sure your Laravel Mix package is installed with:
+
+```bash
+npm install
+```
+
 If you haven't done so, publish `nonoesp/space` development assets.
 
 ```php
