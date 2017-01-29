@@ -11,7 +11,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui"/>
-	<title>{{ $site_title or Config::get('settings.title') }}</title>
+	<title>{{ $site_title or Config::get('space.title') }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
 	<link rel="stylesheet" type="text/css" href="{{ $space_css or '/nonoesp/space/css/space.css?default' }}">

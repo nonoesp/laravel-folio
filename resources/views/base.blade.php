@@ -12,7 +12,7 @@
     */
 
     // 1. Defaults
-    $site_title = 'Space — '.Config::get('settings.title');
+    $site_title = Config::get('space.title');
     $og_description = 'Description of the blog.';
     $services_typekit = Config::get('services.typekit.space');
     $header_classes = 'c-header--white -c-header--relative';
@@ -38,7 +38,7 @@
     if ($space_type == 'SINGLE_WRITING_TYPE') {
 
         // 4.1. General
-        $site_title = $item->title.' — '.Config::get('settings.title');
+        $site_title = $item->title.' — '.Config::get('space.title');
         $og_description = Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']);
         $og_type = 'item';
         if ($item->image) {
@@ -71,7 +71,7 @@
 
         // Tags
         if (isset($tag)) {
-          $site_title = ucwords($tag).' — '.Config::get('settings.title');
+          $site_title = ucwords($tag).' — '.Config::get('space.title');
           $og_description = 'Items tagged with the category '.ucwords($tag);
         }
     }

@@ -70,6 +70,16 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 To authenticate, `Space` uses `nonoesp/authenticate` (which should be already installed as a dependency).
 But you need to follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/master)
 
+## Migrations
+
+Make sure your database connection is setup properly in you `.env` file.
+
+Then, run the migrations:
+
+```php
+php artisan migrate
+```
+
 ## Config
 
 Publish configuration file to `config/space.php`.

@@ -11,7 +11,9 @@
 		<nav class="[ navigation ] [ u-mar-t-0x ]">
 			<ul>
 				<li><a href="{!! route('space') !!}" class="navigation-link work">home</a></li>
+        @if(Auth::check())
 				<li><a href="/{!! Config::get('space.admin-path-prefix') !!}" class="navigation-link approach">admin</a></li>
+        @endif
 			</ul>
 		</nav>
 		@endif
