@@ -32,7 +32,7 @@ if(Space::isAvailableURI()) {
 		return view('space::profile')->withUser($user);
 	});
 	Route::post('items', 'Nonoesp\Space\Controllers\SpaceController@getItemsWithIds');
-	Route::get($path, array('as' => 'blog', 'uses' => 'Nonoesp\Space\Controllers\SpaceController@showHome'));
+	Route::get($path, array('as' => 'space', 'uses' => 'Nonoesp\Space\Controllers\SpaceController@showHome'));
 	Route::get($path.'tag/{tag}', 'Nonoesp\Space\Controllers\SpaceController@showItemTag');
 	Route::get($path.'{id}', 'Nonoesp\Space\Controllers\SpaceController@showItemWithId')->where('id', '[0-9]+');
 
