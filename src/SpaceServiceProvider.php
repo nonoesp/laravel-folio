@@ -34,8 +34,8 @@ class SpaceServiceProvider extends ServiceProvider
         $this->publishes([$path_lang => $publish_path_lang,], 'lang');
         //$this->publishes([$path_middleware => $publish_path_middleware,], 'middleware');
         $this->publishes([$path_assets => $publish_path_assets,], 'assets');
-        $this->publishes([$path_sass => $publish_path_sass,], 'assets');//'sass');
-        $this->publishes([$path_js => $publish_path_js,], 'assets');//'js');
+        $this->publishes([$path_sass => $publish_path_sass,], 'dev-assets');//'sass');
+        $this->publishes([$path_js => $publish_path_js,], 'dev-assets');//'js');
         $this->publishes([__DIR__.'/../config/config.php' => $publish_path_config,], 'config');
 
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'space');
