@@ -6,13 +6,9 @@
 @import 'variables-space'; // Settings, colors, breakpoints, modules
 
 // Configurable Vendors
-@import 'dependencies/csswizardry-grids'; // Margin reset, grids
-@import 'dependencies/typecsset'; // Type setting
+@import '../../../node_modules/core-scss/vendor/csswizardry-grids'; // Margin reset, grids
+@import '../../../node_modules/core-scss/vendor/typecsset'; // Type setting
 @import '../../../node_modules/font-awesome/scss/font-awesome';
-
-// space-scss
-@import 'space/c-admin';
-@import 'space/m-fa'; // Font Awesome
 
 // core-scss - Main
 @import '../../../node_modules/core-scss/partials/a-reset';
@@ -30,7 +26,12 @@
 @import '../../../node_modules/core-scss/partials/grid';
 
 // core-scss - Components
+@import '../../../node_modules/core-scss/partials/c-cover';
 @import '../../../node_modules/core-scss/partials/c-item';
+@import '../../../node_modules/core-scss/partials/c-admin';
+
+// core-scss - Modifiers
+@import '../../../node_modules/core-scss/partials/m-fa'; // Font Awesome
 
 // core-scss - Utilities
 @import '../../../node_modules/core-scss/partials/u-base';
