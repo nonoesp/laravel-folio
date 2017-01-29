@@ -18,7 +18,14 @@
     // Date
     $date = new Date($item->published_at);
     $date = ucWords($date->format('F').' '.$date->format('j, Y'));
-    //$date = ucWords(substr($date->format('F'), 0, 3).$date->format(' j, Y'));
+
+		// Class
+		$class_specified = '';
+		if(isset($class) && $class != '') $class_specified = '[ '.$class.' ]';
+		$class_is_tagged = '';
+		if($item->tagNames()) $class_is_tagged = '[ is-tagged ]';
+		$class_categories = '';
+		if($categories = Space::itemCategoryClass($item, 'c-item')) $class_categories = '[ '.$categories.']';
 
     // Author
     $user_thumbnail = NULL;
@@ -30,7 +37,7 @@
 	}
 ?>
 
-<article class="[ grid ]  [ c-item @if(isset($class)) {{ $class }} @endif{{ Space::itemCategoryClass($item->tagNames(), 'c-item') }}{{ (count($item->tagNames()) > 0) ? 'is-tagged' : '' }} ]"><!--
+<article class="[ grid ] [ c-item ] {{ $class_is_tagged }} {{ $class_specified }} {{ $class_categories }}"><!--
 
 --><div class="[ grid__item  one-whole ]  [ c-item__header ]  [ u-text-align--center ]">
 
@@ -101,7 +108,7 @@
 
 		{{-- Tags --}}
 			@if (count($item->tagNames()) > 0)
-				<p class="c-item__tags">{{ Space::tagListWithArticleAndClass($item, 'c-item__tag u-case-upper') }}</p>
+				<p class="c-item__tags">{!! Space::tagListWithItemAndClass($item, 'c-item__tag u-case-upper') !!}</p>
 			@endif
 
     </div><!--

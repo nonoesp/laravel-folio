@@ -10,11 +10,12 @@
 
 class Space {
 
-	public static function itemCategoryClass($tags, $class) {
+	public static function itemCategoryClass($item, $class) {
 
 		$categories = Config::get('space.special-tags'); //TODO: lang in package
+    if($categories == '') return;
 
-		foreach($tags as $tag) {
+		foreach($item->tagNames() as $tag) {
 			$tag = strtolower($tag);
 			if (in_array($tag, $categories)) {
 				echo "";

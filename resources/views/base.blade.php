@@ -97,15 +97,18 @@
 
   @endif
 
-  <div class="[ o-band ]  [ u-border-bottom  u-no-padding-bottom ]">
+  <div class="[ o-band ]
+              [ u-pad-t-5x u-pad-b-1x ]">
 
       {{-- Items --}}
 
       @if($space_type == 'MULTIPLE_WRITING_TYPE')
 
+          <div class="[ o-wrap ]" style="max-width: 640px">
+
           @if(isset($items_expected))
             @foreach($items_expected as $item)
-              <div class="c-item">
+              <div class="[ c-item ] [ u-pad-t-0x u-pad-b-0x ]">
                 <p>Expected — {{ $item->title }}</p>
               </div>
             @endforeach
@@ -113,17 +116,20 @@
 
           @foreach($items as $item)
 
-            {!! View::make('space::partial.c-item')->
+            {!! view('space::partial.c-item')->
                      with(['item' => $item,
                            'item_type' => 'SUMMARY_ITEM_TYPE',
-                           'isTitleLinked' => 'true']) !!}
+                           'isTitleLinked' => 'true',
+                           'class' => '']) !!}
 
           @endforeach
 
           @if(isset($ids) and count($ids) > 0)
-              {!! View::make('space::partial.c-load-more')->
+              {!! view('space::partial.c-load-more')->
                        with('ids', $ids) !!}
           @endif
+
+          </div>
 
       @endif
 
@@ -135,7 +141,7 @@
           <div class="[ o-wrap ]" style="max-width: 640px">
               {!! View::make('space::partial.c-item')->
                       with(['item' => $item,
-                            'class' => '-u-no-margin-bottom  -u-no-border-bottom']) !!}
+                            'class' => '']) !!}
           </div>
 
       @section('metadata')
