@@ -18,6 +18,7 @@ class SpaceServiceProvider extends ServiceProvider
         $path_middleware = __DIR__.'/Middleware';
         $path_assets = __DIR__.'/../resources/assets';
         $path_sass = __DIR__.'/../resources/assets-dev/sass';
+        $path_js = __DIR__.'/../resources/assets-dev/js';
 
         // Publish Paths
         $publish_path_views = base_path('resources/views/nonoesp/space');
@@ -25,6 +26,7 @@ class SpaceServiceProvider extends ServiceProvider
         $publish_path_middleware = base_path('app/Http/Middleware');
         $publish_path_assets = base_path('public/nonoesp/space');
         $publish_path_sass = base_path('resources/assets/sass');
+        $publish_path_js = base_path('resources/assets/js');
         $publish_path_config = config_path('space.php');
 
         // Publish Stuff
@@ -32,7 +34,8 @@ class SpaceServiceProvider extends ServiceProvider
         $this->publishes([$path_lang => $publish_path_lang,], 'lang');
         //$this->publishes([$path_middleware => $publish_path_middleware,], 'middleware');
         $this->publishes([$path_assets => $publish_path_assets,], 'assets');
-        $this->publishes([$path_sass => $publish_path_sass,], 'sass');
+        $this->publishes([$path_sass => $publish_path_sass,], 'assets');//'sass');
+        $this->publishes([$path_js => $publish_path_js,], 'assets');//'js');
         $this->publishes([__DIR__.'/../config/config.php' => $publish_path_config,], 'config');
 
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'space');
