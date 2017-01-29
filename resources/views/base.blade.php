@@ -15,7 +15,7 @@
     $site_title = 'Space — '.Config::get('settings.title');
     $og_description = 'Description of the blog.';
     $services_typekit = Config::get('services.typekit.space');
-    $header_classes = 'c-header--white';
+    $header_classes = 'c-header--white -c-header--relative';
     $is_header_static = true;
 
     // 2. Defaults Cover

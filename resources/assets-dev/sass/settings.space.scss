@@ -11,6 +11,8 @@
  — 4. Z-Index Scale
 */
 
+
+
 // [ 1. Typecsset ]
 
   // $typecsset-base-font-size: 16px;
@@ -21,7 +23,16 @@
 
   $type-font-family: BlinkMacSystemFont, sans-serif;//"aktiv-grotesk", sans-serif;//"proxima-nova", sans-serif;
   $padding-vertical: 27px;
-  $o-band-padding-vertical: 40px;
+
+  $c-header-height: 40px;
+
+  // core-scss.utilities.padding ($slug, $amount, $unit-vertical, $unit-horizontal)
+  @include padding("u-pad", 20, 10px, 5px);
+  @include margin("u-mar", 20, 10px, 5px);
+
+  // $utilities-padding-slug: "u-pad";
+  // $utilities-padding-unit: 10px;
+  // $utilities-padding-amount: 30;
 
   // c-item
 
@@ -54,21 +65,21 @@
 
   // Font Weights
 
-  $thin: 100;
-  $light: 300;
-  $regular: 400;
-  $bold: 600;
-  $extra-bold: 700;
+  // $thin: 100;
+  // $light: 300;
+  // $regular: 400;
+  // $bold: 600;
+  // $extra-bold: 700;
 
 // [ 3. CSSWizardry-grids ]
 
-  $gutter: 17px;
-  $use-markup-fix: false;
-
-  $breakpoints: (
-    'palm' '(max-width: 530px)',
-    'lap' '(min-width: 531px) and (max-width: 1023px)',
-    'portable' '(max-width: 1023px)',
-    'desk' '(min-width: 1024px)',
-    'wide' '(min-width: 1500px)'
-  );
+  // $gutter: 17px;
+  // $use-markup-fix: false;
+  //
+  // $breakpoints: (
+  //   'palm' '(max-width: 530px)',
+  //   'lap' '(min-width: 531px) and (max-width: 1023px)',
+  //   'portable' '(max-width: 1023px)',
+  //   'desk' '(min-width: 1024px)',
+  //   'wide' '(min-width: 1500px)'
+  // );

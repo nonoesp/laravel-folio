@@ -30,6 +30,7 @@
 
 // core-scss - components
 @import '../../../node_modules/core-scss/components/c-cover';
+@import '../../../node_modules/core-scss/components/c-header';
 @import '../../../node_modules/core-scss/components/c-item';
 @import '../../../node_modules/core-scss/components/c-admin';
 
@@ -40,6 +41,5 @@
 // core-scss - utilities
 @import '../../../node_modules/core-scss/utilities/utilities.color.background';
 @import '../../../node_modules/core-scss/utilities/utilities.color.font';
-@import '../../../node_modules/core-scss/utilities/utilities.padding';
 @import '../../../node_modules/core-scss/utilities/utilities.various';
 @import '../../../node_modules/core-scss/utilities/utilities.visibility';

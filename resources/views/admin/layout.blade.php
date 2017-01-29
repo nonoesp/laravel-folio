@@ -29,6 +29,18 @@
 
 <body>
 
+	{{-- Header --}}
+		<?php if(!isset($header_hidden)){ $header_hidden = false; } ?>
+		<?php if(!isset($header_classes)){ $header_classes = 'c-header--relative'; } ?>
+		<?php if(!isset($header_view)){ $header_view = 'space::partial.c-header'; } ?>
+		<?php if(!isset($header_color)){ $header_color = null; } ?>
+		<?php if(!isset($header_is_navigation_hidden)){ $header_is_navigation_hidden = false; } ?>
+		@if(!$header_hidden)
+		{!! View::make($header_view)->with(['classes' => $header_classes,
+																			 'color' => $header_color,
+																			 'is_navigation_hidden' => $header_is_navigation_hidden]) !!}
+	  @endif
+
   <div class="[ o-band ]  [ u-border-bottom  -u-no-padding-bottom ]">
     <div class="[ o-wrap  o-wrap--tiny ]">
 
