@@ -96,6 +96,14 @@ You just need to install a dependencies with `npm`,
 publish the development assets,
 and generate CSS and JavaScript with Laravel Mix.
 
+Publish the development assets with:
+
+If you haven't done so, publish `nonoesp/space` development assets.
+
+```php
+php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=dev-assets
+```
+
 ### Install Dependencies (with npm)
 
 First, let's install all our asset dependencies.
@@ -110,14 +118,6 @@ And the following for JavaScript development.
 
 ```bash
 npm install vue vue-resource lodash jquery validate-js
-```
-
-And make sure your Laravel Mix package is installed with:
-
-If you haven't done so, publish `nonoesp/space` development assets.
-
-```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=dev-assets
 ```
 
 ### Compile Assets (with Laravel Mix)
