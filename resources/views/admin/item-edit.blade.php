@@ -13,12 +13,7 @@ if($settings_title == '') {
 @section('title', 'Items')
 
 @section('scripts')
-    <script type="text/javascript" src="/js/vendor/vue.js"></script>
-    <script type="text/javascript" src="/js/vendor/vue-resource.js"></script>
-		<script type="text/javascript" src="/js/vendor/lodash.min.js"></script>
-    {{--<script type="text/javascript" src="/js/helpers.min.js"></script>--}}
-		<script type="text/javascript" src="/js/space.main.js"></script>
-    <script type="text/javascript" src="/js/space.admin.js"></script>
+    <script type="text/javascript" src="/nonoesp/space/js/space.js"></script>
     <script>
       app.item = {!! $item !!};
       app.properties = {!! $item->properties !!};

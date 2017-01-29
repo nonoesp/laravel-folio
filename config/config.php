@@ -13,6 +13,12 @@ return array(
 	// View of Main Template for base layout
 	'template-view' => 'space::layout',
 
+  // Title
+	'title' => 'Space',
+
+	// Slogan, description
+	'slogan' => 'A simple web.',
+
   // CSS stylesheet
 	'css' => '', // defaults to /nonoesp/space/css/space.css
 
