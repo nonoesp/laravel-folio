@@ -105,7 +105,7 @@ class Space {
 				return false;
 			}
 
-			if($item = DB::table('items')->whereSlug($slug)->first()) {
+			if($item = DB::table('space_items')->whereSlug($slug)->first()) {
 				return true;
 			} else {
 				return false;
@@ -114,7 +114,7 @@ class Space {
 		} else {
 
 			// Config doesn't have path-prefix
-			if($item = DB::table('items')->whereSlug($slug)->first()) {
+			if($item = DB::table('space_items')->whereSlug($slug)->first()) {
 				return true;
 			} else {
 				return false;

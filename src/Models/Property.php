@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Property extends Model
 {
-	protected $table = 'items_properties';
+	protected $table = 'space_item_properties';
 	protected $fillable = array('id', 'item_id', 'label', 'name', 'value');
 
 	public function item()

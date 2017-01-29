@@ -9,6 +9,7 @@ class Item extends Model
 	use SoftDeletes;
 	use Taggable;
 
+	protected $table = "space_items";
 	protected $dates = ['deleted_at'];
 	protected $softDelete = true;
 
