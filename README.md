@@ -78,7 +78,7 @@ Publish configuration file to `config/space.php`.
 php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=config
 ```
 
-## Pre-compiled assets
+## Publish Assets
 
 **Space** ships with compiled CSS and JS assets, in case you want to use it as is,
 they can be published as follows:
@@ -87,7 +87,7 @@ they can be published as follows:
 php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=assets
 ```
 
-## Customizable Stylesheets
+## Publish Development Assets
 
 If you want to customize and compile your own stylesheets,
 **Space** also contains SCSS files with numerous variables
@@ -96,7 +96,7 @@ You just need to install a dependencies with `npm`,
 publish the development assets,
 and generate CSS and JavaScript with Laravel Mix.
 
-## npm
+### Install Dependencies (with npm)
 
 First, let's install all our asset dependencies.
 
@@ -117,10 +117,10 @@ And make sure your Laravel Mix package is installed with:
 If you haven't done so, publish `nonoesp/space` development assets.
 
 ```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=assets
+php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=dev-assets
 ```
 
-## Laravel Mix
+### Compile Assets (with Laravel Mix)
 
 Run `npm install` to make sure Laravel Mix is setup properly.
 
@@ -132,7 +132,8 @@ const { mix } = require('laravel-mix');
 
 // ...
 
-mix.sass('resources/assets/sass/space.scss', 'public/css');
+mix.sass('resources/assets/sass/space.scss', 'public/nonoesp/space/css');
+mix.js('resources/assets/js/space.js', 'public/nonoesp/space/js');
 
 ```
 
