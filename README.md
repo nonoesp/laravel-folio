@@ -117,7 +117,7 @@ And make sure your Laravel Mix package is installed with:
 If you haven't done so, publish `nonoesp/space` development assets.
 
 ```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=dev-assets
+php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=assets
 ```
 
 ## Laravel Mix
