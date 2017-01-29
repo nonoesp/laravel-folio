@@ -15,10 +15,11 @@ class SpaceServiceProvider extends ServiceProvider
         // Paths
         $path_views = __DIR__.'/../resources/views';
         $path_lang = __DIR__.'/../resources/lang';
-        $path_middleware = __DIR__.'/Middleware';
+        //$path_middleware = __DIR__.'/Middleware';
         $path_assets = __DIR__.'/../resources/assets';
         $path_sass = __DIR__.'/../resources/assets-dev/sass';
         $path_js = __DIR__.'/../resources/assets-dev/js';
+        $path_migrations = __DIR__.'/../migrations';
 
         // Publish Paths
         $publish_path_views = base_path('resources/views/nonoesp/space');
@@ -54,6 +55,8 @@ class SpaceServiceProvider extends ServiceProvider
         } else {
             $this->loadTranslationsFrom($path_lang, 'space');
         }
+
+        $this->loadMigrationsFrom($path_migrations);
     }
 
     /**

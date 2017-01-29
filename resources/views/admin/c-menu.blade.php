@@ -1,31 +1,26 @@
 
+<?php
+	$admin_path = Space::adminPath();
+	$exit = config('authenticate.exit');
+?>
+
 <div class="admin-menu u-case-upper u-text-align--center">
-
-	{{-- Html::link('/admin/', 'Dashboard', array('class' => 'admin-menu-item')) --}}
-
-	{{-- Html::link('/admin/items', 'Articles', array('class' => 'admin-menu-item'))--}}
-
-	{{-- Html::link('/admin/item/add', 'Add Article', array('class' => 'admin-menu-item')) --}}
-
-	{{-- Html::link(URL::route('blog'), 'Space', array('class' => 'admin-menu-item')) --}}
-
-	{{-- Html::link('/logout', 'Exit', array('class' => 'admin-menu-item')) --}}
 
 	<div class="[ m-fa  m-fa--black-static ]">
 
-    	<a href="/admin/items">
+    	<a href="/{{ $admin_path }}items">
       		<i class="[ fa fa-align-justify fa--social ]"></i>
     	</a>
 
-      <a href="/admin/item/add">
+      <a href="/{{ $admin_path }}item/add">
           <i class="[ fa fa-file-o fa--social ]"></i>
       </a>
 
-      <a href="/subscribers">
+      <a href="/{{ $admin_path }}subscribers">
           <i class="[ fa fa-envelope-o fa--social ]"></i>
       </a>
 
-    	<a href="/logout">
+    	<a href="/{{ $exit }}">
       		<i class="[ fa fa-close fa--social ]"></i>
     	</a>
 

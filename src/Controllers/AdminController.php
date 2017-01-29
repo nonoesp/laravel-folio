@@ -3,7 +3,7 @@
 namespace Nonoesp\Space\Controllers;
 
 use Illuminate\Http\Request;
-use Item, User, Thinker, Recipient, Property; // Must be defined in your aliases
+use Item, User, Thinker, Recipient, Property, Subscriber; // Must be defined in your aliases
 use Nonoesp\Space\Space;
 use View;
 use Config;
@@ -33,18 +33,18 @@ class AdminController extends Controller
 				if($item->slug_title != null) {
 					// Slug has been removed, not empty before
 					$item->slug_title = null;
-					$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', Input::get('title'));
+					$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', Input::get('title'));
 				} else {
 					// Slug is empty, and was empty before
 					if($item->title != Input::get('title')) {
-						$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', Input::get('title'));
+						$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', Input::get('title'));
 					}
 				}
 			} else {
 				if($item->slug_title != Input::get('slug_title')) {
 					// Slug has been edited
 					$item->slug_title = Input::get('slug_title');
-					$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', $item->slug_title);
+					$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', $item->slug_title);
 				}
 			}
 
@@ -116,9 +116,9 @@ class AdminController extends Controller
 	    $item->rss = (Input::get('rss') ? true : false);
 	    $item->slug_title = Input::get('slug_title');
 	    if($item->slug_title == "") {
-	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', $item->title);
+	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', $item->title);
 	    } else {
-	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle('items', $item->slug_title);
+	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', $item->slug_title);
 	    }
 
 		// Publishing Date
@@ -165,6 +165,11 @@ class AdminController extends Controller
 		}
 
 		return Redirect::to(Space::adminPath().'items');
+	}
+
+	public function getSubscribers() {
+		$subscribers = Subscriber::orderBy('id', 'DESC')->get();
+		return view('space::admin.subscribers')->withSubscribers($subscribers);
 	}
 
 

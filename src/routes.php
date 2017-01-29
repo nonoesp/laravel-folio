@@ -80,6 +80,8 @@ Route::group(['middleware' => Config::get("space.middlewares-admin")], function(
   Route::get($admin_path.'item/delete/{id}', 'Nonoesp\Space\Controllers\AdminController@getItemDelete');
   Route::get($admin_path.'item/restore/{id}', 'Nonoesp\Space\Controllers\AdminController@getItemRestore');
 
+	Route::get($admin_path.'subscribers', 'Nonoesp\Space\Controllers\AdminController@getSubscribers');
+
   // Visits
   Route::get($admin_path.'visits', 'Nonoesp\Space\Controllers\AdminController@getVisits');
 

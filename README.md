@@ -51,6 +51,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
         'Item' => Nonoesp\Space\Models\Item::class,    
         'Property' => Nonoesp\Space\Models\Property::class,
         'Recipient' => Nonoesp\Space\Models\Recipient::class,
+				'Subscriber' => Nonoesp\Space\Models\Subscriber::class,
 
         // nonoesp/space - Dependencies
         'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
