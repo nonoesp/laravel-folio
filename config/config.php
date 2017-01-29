@@ -17,7 +17,7 @@ return array(
 	'title' => 'Space',
 
 	// Slogan, description
-	'slogan' => 'A simple web.',
+	'description' => 'A simple web.',
 
   // CSS stylesheet
 	'css' => '', // defaults to /nonoesp/space/css/space.css

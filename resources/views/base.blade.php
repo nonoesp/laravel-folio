@@ -87,17 +87,17 @@
 
   @if($cover_active)
 
-      {{-- View::make('partial.c-cover')
-             ->with(array('title' => '<div class="[ o-icon-container  o-icon-container--small  o-icon--white ]">'.Config::get('svg.logo-arma').'</div>',
+      {!! View::make('space::partial.c-cover')
+              ->with(array('title' => Config::get('space.title'),//$item->title,
                           'subtitle' => $cover_subtitle,
                           'classes_title_b' => $cover_classes_title_b,
                           'image' => $cover_image,
-                          'description' => trans('base.description'),
-                          'class' => 'is-header u-background-grey '.$cover_classes)) --}}
+                          'description' => Config::get('space.description'),//trans('base.description'),
+                          'class' => 'is-header u-background-grey '.$cover_classes)) !!}
+
   @endif
 
   <div class="[ o-band ]  [ u-border-bottom  u-no-padding-bottom ]">
-    <div class="[ o-wrap  o-wrap--standard  o-wrap--portable-tiny ]">
 
       {{-- Items --}}
 
@@ -132,19 +132,20 @@
 
       @if($space_type == 'SINGLE_WRITING_TYPE')
 
-            {!! View::make('space::partial.c-item')->
-                     with(['item' => $item,
-                           'class' => '-u-no-margin-bottom  -u-no-border-bottom']) !!}
+          <div class="[ o-wrap ]" style="max-width: 40rem">
+              {!! View::make('space::partial.c-item')->
+                      with(['item' => $item,
+                            'class' => '-u-no-margin-bottom  -u-no-border-bottom']) !!}
+          </div>
 
       @section('metadata')
-        <!-- Item -->
-        <meta property="item:published_time" content="{{ $item->published_at }}"/>
-        <meta property="item:modified_time" content="{{ $item->modified_at }}"/>
+        <!-- Article -->
+        <meta property="article:published_time" content="{{ $item->published_at }}"/>
+        <meta property="article:modified_time" content="{{ $item->modified_at }}"/>
       @stop
 
       @endif
 
-    </div>
   </div>
 
 

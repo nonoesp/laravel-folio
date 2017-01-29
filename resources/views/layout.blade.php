@@ -26,7 +26,7 @@
 
 <body>
 
-  <div class="[ o-band ]  [ u-border-bottom  u-no-padding-bottom ]">
+  <div class="[ o-band o-band--padding-top-0x ]  [ u-border-bottom  u-no-padding-bottom ]">
     <div class="[ o-wrap  o-wrap--standard  o-wrap--portable-tiny ]">
 
 	{!! Html::link("/".Config::get("space.path-prefix"), "Home") !!}
