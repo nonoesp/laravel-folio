@@ -78,56 +78,37 @@ Publish configuration file to `config/space.php`.
 php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=config
 ```
 
+## Customizable Stylesheets
+
+If you want to customize and compile your own stylesheets,
+**Space** ships with SCSS files with numerous variables
+you can tweak. You just need to install a dependencies with `npm`
+and generate CSS with Laravel Mix.
+
 ## npm
 
-Let's install all our asset dependencies by running:
+First, let's install all our asset dependencies by running:
 
 ```bash
-npm install nonoesp/core-scss bourbon font-awesome jquery validate-js vue vue-resource lodash
+npm install nonoesp/core-scss bourbon font-awesome
 ```
+If you haven't done so, publish `nonoesp/space` development assets.
 
-(The first three are SCSS dependencies and the rest are JavaScript libraries.)
-
-Add the following line to your `/resources/assets/bootstrap.js`:
-
-```js
-window.validatejs = require('validate-js');
+```php
+php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=scss
 ```
 
 ## Laravel Mix
 
-For dependencies on JavaScript, SCSS, and others, I’ve been working with gulp and elixir.
-
-```terminal
-npm install gulp
-```
-
-Then to install it’s dependencies:
-
-```terminal
-npm install
-```
-
-Now, we automate the copying of the files to the public folder let’s use a simple elixir script, add the following to your `gulpfile.js`:
+Your `webpack.mix.js` file should look like this.
 
 ```php
-elixir(mix => {
-  mix.copy('resources/assets/bower/validatejs/validate.min.js', 'public/js/vendor/validate.min.js')
-     .copy('resources/assets/bower/jquery/dist/jquery.min.js', 'public/js/vendor/jquery.min.js')
-		 .copy('resources/assets/bower/vue/dist/vue.js', 'public/js/vendor/vue.js')
-     .copy('resources/assets/bower/vue-resource/dist/vue-resource.js', 'public/js/vendor/vue-resource.js')
-     .copy('resources/assets/bower/lodash/dist/lodash.min.js', 'public/js/vendor/lodash.min.js');
+const { mix } = require('laravel-mix');
 
-  mix.copy('resources/assets/bower/font-awesome/fonts', 'public/fonts/');
+// ...
 
-  mix.copy('vendor/nonoesp/space/resources/assets/js/space.main.js',  'public/js/space.main.js')
-     .copy('vendor/nonoesp/space/resources/assets/js/space.admin.js', 'public/js/space.admin.js');
+mix.sass('resources/assets/sass/space.scss', 'public/css');
 
-  //mix.sass('./vendor/nonoesp/space/resources/assets/sass/space.scss', 'public/css/space.css');
-
-  mix.copy('./vendor/nonoesp/space/resources/assets/sass/', 'resources/assets/sass/');
-  mix.sass('space.scss');
-});
 ```
 
 ## License
