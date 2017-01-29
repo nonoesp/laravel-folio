@@ -1,0 +1,74 @@
+
+/*
+
+ [ main/base ]
+
+ Settings and variables.
+
+ — 1. Typecsset
+ — 2. Custom Variables    (base, c-item, a-inputs, font weights)
+ — 3. CSSWizardry-grids
+ — 4. Z-Index Scale
+*/
+
+// [ 1. Typecsset ]
+
+  // $typecsset-base-font-size: 16px;
+  // $typecsset-base-line-height: 27px;
+  // $typecsset-show-baseline: false;
+
+// [ 2. Custom Variables ]
+
+  $type-font-family: BlinkMacSystemFont, sans-serif;//"aktiv-grotesk", sans-serif;//"proxima-nova", sans-serif;
+  $padding-vertical: 27px;
+  $o-band-padding-vertical: 40px;
+
+  // c-item
+
+  // $c-item-font-size: 20px; //$typecsset-base-font-size;
+  // $c-item-font-color: $color-black;
+  // $c-item-line-height: 1.33 !important;
+  //
+  // $c-item-link-color: $color-black;//$color-red;
+  // $c-item-link-color-hover: $c-item-link-color;
+  // $c-item-quote-color: $color-grey-dark;
+  //
+  // $c-item-font-a: "minion-pro", serif;
+  // $c-item-font-b: $type-font-family;
+  // $c-item-font-c: $type-font-family;
+  //
+  // $c-item-font-date: $c-item-font-b;
+  // $c-item-font-header: $c-item-font-b;
+  // $c-item-font-tag: $c-item-font-b;
+  //
+  // $c-item-header-resize: true;
+  // $c-item-link-monochrone: true;
+  // $c-item-cover-media-negative-margin: false;
+
+  // Inputs
+
+  // $input-font-family: $type-font-family;
+  // $input-font-size: 14px;
+  // $type-link-color: #000;
+  // $type-link-text-decoration: underline;
+
+  // Font Weights
+
+  $thin: 100;
+  $light: 300;
+  $regular: 400;
+  $bold: 600;
+  $extra-bold: 700;
+
+// [ 3. CSSWizardry-grids ]
+
+  $gutter: 17px;
+  $use-markup-fix: false;
+
+  $breakpoints: (
+    'palm' '(max-width: 530px)',
+    'lap' '(min-width: 531px) and (max-width: 1023px)',
+    'portable' '(max-width: 1023px)',
+    'desk' '(min-width: 1024px)',
+    'wide' '(min-width: 1500px)'
+  );

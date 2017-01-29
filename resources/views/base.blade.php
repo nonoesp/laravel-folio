@@ -132,7 +132,7 @@
 
       @if($space_type == 'SINGLE_WRITING_TYPE')
 
-          <div class="[ o-wrap ]" style="max-width: 40rem">
+          <div class="[ o-wrap ]" style="max-width: 640px">
               {!! View::make('space::partial.c-item')->
                       with(['item' => $item,
                             'class' => '-u-no-margin-bottom  -u-no-border-bottom']) !!}

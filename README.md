@@ -95,7 +95,7 @@ npm install nonoesp/core-scss bourbon font-awesome
 If you haven't done so, publish `nonoesp/space` development assets.
 
 ```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=scss
+php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=sass
 ```
 
 ## Laravel Mix

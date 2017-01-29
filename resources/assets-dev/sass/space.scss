@@ -1,42 +1,45 @@
 
-// Vendors
+
+// core-scss - settings
+@import '../../../node_modules/core-scss/settings/settings.core'; // Settings, colors, breakpoints, modules
+@import 'settings.space';
+
+// vendor
 @import '../../../node_modules/bourbon/app/assets/stylesheets/bourbon';
-
-// Components and Variables
-@import 'variables-space'; // Settings, colors, breakpoints, modules
-
-// Configurable Vendors
 @import '../../../node_modules/core-scss/vendor/csswizardry-grids'; // Margin reset, grids
 @import '../../../node_modules/core-scss/vendor/typecsset'; // Type setting
 @import '../../../node_modules/font-awesome/scss/font-awesome';
 
-// core-scss - Main
-@import '../../../node_modules/core-scss/partials/a-reset';
-@import '../../../node_modules/core-scss/partials/a-type';
-@import '../../../node_modules/core-scss/partials/a-inputs';
-@import '../../../node_modules/core-scss/partials/a-mixins';
-@import '../../../node_modules/core-scss/partials/a-selection';
+// core-scss - generic
+@import '../../../node_modules/core-scss/generic/generic.reset';
+@import '../../../node_modules/core-scss/generic/generic.type';
+@import '../../../node_modules/core-scss/generic/generic.selection';
+
+// core-scss - tools
+@import '../../../node_modules/core-scss/tools/tools.retina';
+
+// core-scss - elements
+@import '../../../node_modules/core-scss/elements/elements.inputs';
 
 // core-scss - objects
-@import '../../../node_modules/core-scss/partials/o-wrap';
-@import '../../../node_modules/core-scss/partials/o-band';
-@import '../../../node_modules/core-scss/partials/o-icon';
-@import '../../../node_modules/core-scss/partials/o-video-thumb';
-@import '../../../node_modules/core-scss/partials/o-thumb';
-@import '../../../node_modules/core-scss/partials/grid';
+@import '../../../node_modules/core-scss/objects/o-wrap';
+@import '../../../node_modules/core-scss/objects/o-band';
+@import '../../../node_modules/core-scss/objects/o-icon';
+@import '../../../node_modules/core-scss/objects/o-video-thumb';
+@import '../../../node_modules/core-scss/objects/o-thumb';
 
-// core-scss - Components
-@import '../../../node_modules/core-scss/partials/c-cover';
-@import '../../../node_modules/core-scss/partials/c-item';
-@import '../../../node_modules/core-scss/partials/c-admin';
+// core-scss - components
+@import '../../../node_modules/core-scss/components/c-cover';
+@import '../../../node_modules/core-scss/components/c-item';
+@import '../../../node_modules/core-scss/components/c-admin';
 
-// core-scss - Modifiers
-@import '../../../node_modules/core-scss/partials/m-fa'; // Font Awesome
+// core-scss - modifiers
+@import '../../../node_modules/core-scss/modifiers/m-fa'; // Font Awesome
+@import '../../../node_modules/core-scss/modifiers/m-grid';
 
-// core-scss - Utilities
-@import '../../../node_modules/core-scss/partials/u-base';
-@import '../../../node_modules/core-scss/partials/u-visibility';
-@import '../../../node_modules/core-scss/partials/u-color';
-@import '../../../node_modules/core-scss/partials/u-padding';
-
-//@import '../../../node_modules/core-scss/partials/o-icon';
+// core-scss - utilities
+@import '../../../node_modules/core-scss/utilities/utilities.color.background';
+@import '../../../node_modules/core-scss/utilities/utilities.color.font';
+@import '../../../node_modules/core-scss/utilities/utilities.padding';
+@import '../../../node_modules/core-scss/utilities/utilities.various';
+@import '../../../node_modules/core-scss/utilities/utilities.visibility';

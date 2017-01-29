@@ -1,0 +1,49 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/7.2.0/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'dev' ]
+2 info using npm@3.10.9
+3 info using node@v7.2.0
+4 verbose run-script [ 'predev', 'dev', 'postdev' ]
+5 info lifecycle laravel-space@5.4.0~predev: laravel-space@5.4.0
+6 silly lifecycle laravel-space@5.4.0~predev: no script for predev, continuing
+7 info lifecycle laravel-space@5.4.0~dev: laravel-space@5.4.0
+8 verbose lifecycle laravel-space@5.4.0~dev: unsafe-perm in lifecycle true
+9 verbose lifecycle laravel-space@5.4.0~dev: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/nono/Dropbox/1_Projects/web-libraries/laravel-space/node_modules/.bin:/usr/local/Cellar/node/7.2.0/bin:/Users/nono/anaconda2/bin:/usr/local/Cellar/php56/5.6.29_5/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/usr/local/MacGPG2/bin:/Library/TeX/texbin
+10 verbose lifecycle laravel-space@5.4.0~dev: CWD: /Users/nono/Dropbox/1_Projects/web-libraries/laravel-space
+11 silly lifecycle laravel-space@5.4.0~dev: Args: [ '-c',
+11 silly lifecycle   'node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js' ]
+12 silly lifecycle laravel-space@5.4.0~dev: Returned: code: 2  signal: null
+13 info lifecycle laravel-space@5.4.0~dev: Failed to exec dev script
+14 verbose stack Error: laravel-space@5.4.0 dev: `node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js`
+14 verbose stack Exit status 2
+14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
+14 verbose stack     at emitTwo (events.js:106:13)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:885:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
+15 verbose pkgid laravel-space@5.4.0
+16 verbose cwd /Users/nono/Dropbox/1_Projects/web-libraries/laravel-space
+17 error Darwin 16.4.0
+18 error argv "/usr/local/Cellar/node/7.2.0/bin/node" "/usr/local/bin/npm" "run" "dev"
+19 error node v7.2.0
+20 error npm  v3.10.9
+21 error code ELIFECYCLE
+22 error laravel-space@5.4.0 dev: `node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js`
+22 error Exit status 2
+23 error Failed at the laravel-space@5.4.0 dev script 'node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the laravel-space package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs laravel-space
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls laravel-space
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
