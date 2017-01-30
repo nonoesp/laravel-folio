@@ -1,9 +1,7 @@
 
 ## To-dos
 
-* Move Subscriber model and route to package.
 * Move user route inside controller.
-* Add migrations to create database tables.
 * Test Disqus implementation for comments.
 
 ## Release Notes
@@ -13,6 +11,15 @@
 * Renamed package to `nonoesp/space`.
 * Abandoned `vtalbot/markdown` and switched to `graham-campbell/markdown`.
 * Transferred development to `master` branch.
+* Added migrations for database tables.
+* Added complete installation instructions.
+* Moved `Subscriber` model and route to package.
+* Added Vue interactions to admin.
+* Renamed `Article` class to `Item` to make it more generic.
+* Implemented `core-scss` as the main style for Sass.
+* Added compiled resources for direct publishing.
+* Added un-compiled Sass and JavaScript resources with compiling workflow for customization.
+* Now you can add custom properties to an `Item`.
 
 ### 5.3.*
 
