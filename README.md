@@ -155,7 +155,8 @@ const { mix } = require('laravel-mix');
 // ...
 
 mix.sass('resources/assets/sass/space.scss', 'public/nonoesp/space/css');
-mix.js('resources/assets/js/space.js', 'public/nonoesp/space/js');
+mix.js('resources/assets/js/space.js', 'public/nonoesp/space/js')
+   .extract(['vue', 'vue-resource', 'jquery', 'validate-js', 'lodash', 'axios']);;
 
 ```
 

@@ -167,6 +167,52 @@ class AdminController extends Controller
 		return Redirect::to(Space::adminPath().'items');
 	}
 
+	// Properties (API)
+
+	function postPropertyUpdate() {
+		$property = Property::find(Input::get('id'));
+		$key = Input::get('name');
+		$value = Input::get('value');
+		$label = Input::get('label');
+		if($key) $property->name = $key;
+		if($value) $property->value = $value;
+		if($label) $property->label = $label;
+		$property->save();
+		return response()->json([
+				'success' => true,
+				'property' => $property
+		]);
+	}
+
+	function postPropertyDelete() {
+		$property_id = Input::get('id');
+		$property = Property::find($property_id);
+		$property->delete();
+
+		return response()->json([
+				'success' => true,
+				'property_id' => $property->id,
+		]);
+	}
+
+	function postPropertyCreate() {
+		$key = Input::get('name');
+		$value = Input::get('value');
+		$label = Input::get('label');
+		$item_id = Input::get('item_id');
+		$property = new Property();
+		$property->item_id = $item_id;
+		$property->save();
+
+		return response()->json([
+				'success' => true,
+				'property_id' => $property->id,
+				'item_id' => $item_id
+		]);
+	}
+
+	// Subscribers
+
 	public function getSubscribers() {
 		$subscribers = Subscriber::orderBy('id', 'DESC')->get();
 		return view('space::admin.subscribers')->withSubscribers($subscribers);

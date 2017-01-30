@@ -6,15 +6,18 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ Thinker::getLocaleDisplayed() }}">
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui"/>
-	<title>{{ $site_title or Config::get('space.title') }}</title>
+	<title>{{ $site_title or 'Admin' }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
 	<link rel="stylesheet" type="text/css" href="{{ $space_css or '/nonoesp/space/css/space.css?default' }}">
+
+	<!-- CSRF Token -->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 	@if($space_typekit)
 	<!--TypeKit-->
@@ -28,7 +31,7 @@
 
 	{{-- Header --}}
 		<?php if(!isset($header_hidden)){ $header_hidden = false; } ?>
-		<?php if(!isset($header_classes)){ $header_classes = ''; } ?>
+		<?php if(!isset($header_classes)){ $header_classes = 'c-header--relative'; } ?>
 		<?php if(!isset($header_view)){ $header_view = 'space::partial.c-header'; } ?>
 		<?php if(!isset($header_color)){ $header_color = null; } ?>
 		<?php if(!isset($header_is_navigation_hidden)){ $header_is_navigation_hidden = false; } ?>
@@ -38,7 +41,18 @@
 																			 'is_navigation_hidden' => $header_is_navigation_hidden]) !!}
 	  @endif
 
-@yield('content')
+  <div class="[ o-band ] [ u-pad-b-10x ]">
+    <div class="[ o-wrap  o-wrap--tiny ]">
+
+	@if(!isset($shouldHideMenu))
+		{!! View::make(Config::get('space.view-admin-menu')) !!}
+	@endif
+	<div class="admin-title u-borderBottom">@yield('title', 'Admin')</div>
+
+	@yield('content')
+
+	</div>
+</div>
 
 {{--<script type="text/javascript" src="/js/vendor/jquery.min.js"></script>--}}<!--
 -->@yield('scripts')<!--

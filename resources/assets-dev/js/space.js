@@ -5,6 +5,6 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
-require('./space.admin');
+require('./space.bootstrap');
+// require('./space.admin');
 require('./space.ui');

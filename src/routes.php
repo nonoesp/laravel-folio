@@ -2,7 +2,7 @@
 
 use User; // Must be defined in your aliases
 use Item; // Must be defined in your aliases
-use HTML;
+use Html;
 use Route;
 use Auth;
 use Redirect;
@@ -11,6 +11,8 @@ use Request;
 use Markdown;
 use Authenticate; // nonoesp/authenticate
 use Recipient;
+use Property;
+use Input;
 use Hashids;
 
 /*----------------------------------------------------------------*/
@@ -89,50 +91,10 @@ Route::group(['middleware' => Config::get("space.middlewares-admin")], function(
   	return redirect()->to($admin_path.'items');
   });
 
-	// TODO: Pack inside property api controller or admin Controllers
-
-	Route::post('/api/property/update', function() {
-	  $property = \Property::find(Input::get('id'));
-	  $key = Input::get('name');
-	  $value = Input::get('value');
-	  $label = Input::get('label');
-	  if($key) $property->name = $key;
-	  if($value) $property->value = $value;
-	  if($label) $property->label = $label;
-	  $property->save();
-	  return response()->json([
-	      'success' => true,
-	      'property' => $property
-	  ]);
-	});
-
-	Route::post('/api/property/delete', function() {
-	  $property_id = Input::get('id');
-	  $property = \Property::find($property_id);
-	  $property->delete();
-
-	  return response()->json([
-	      'success' => true,
-	      'property_id' => $property->id,
-	  ]);
-	});
-
-	Route::post('/api/property/create', function() {
-	  $key = Input::get('name');
-	  $value = Input::get('value');
-	  $label = Input::get('label');
-	  $item_id = Input::get('item_id');
-	  $property = new \Property();
-	  $property->item_id = $item_id;
-	  $property->save();
-
-	  return response()->json([
-	      'success' => true,
-	      'property_id' => $property->id,
-	      'item_id' => $item_id
-	  ]);
-	});
-
+	// Properties (API)
+	Route::post('/api/property/update', 'Nonoesp\Space\Controllers\AdminController@postPropertyUpdate');
+	Route::post('/api/property/delete', 'Nonoesp\Space\Controllers\AdminController@postPropertyDelete');
+	Route::post('/api/property/create', 'Nonoesp\Space\Controllers\AdminController@postPropertyCreate');
 
 
 }); // close space admin

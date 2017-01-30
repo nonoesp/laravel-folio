@@ -13,11 +13,76 @@ if($settings_title == '') {
 @section('title', 'Items')
 
 @section('scripts')
+
+    <script type="text/javascript" src="/nonoesp/space/js/manifest.js"></script>
+    <script type="text/javascript" src="/nonoesp/space/js/vendor.js"></script>
     <script type="text/javascript" src="/nonoesp/space/js/space.js"></script>
-    <script>
-      app.item = {!! $item !!};
-      app.properties = {!! $item->properties !!};
-    </script>
+
+<script type="text/javascript">
+Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+
+var admin = new Vue({
+el: '.c-admin',
+data: {
+	message: 'nono.ma',
+	item: '',
+	properties: '',
+	timers: {},
+	styleObject: {
+		color: 'red'
+	}
+},
+computed: {
+	reversedMessage: function () {
+		return this.message.split('').reverse().join('');
+	}
+},
+methods: {
+	set_updating: function(property) {
+		property.is_updating = true;
+	},
+	sync_properties: _.debounce(
+		function(property) {
+			console.log('sync_properties');
+			var data = property;
+			property.is_updating = true;
+			this.$forceUpdate();
+			this.$http.post('/api/property/update', data).then((response) => {
+					// success
+					property.is_updating = false;
+					this.$forceUpdate();
+				}, (response) => {
+					// error
+				});
+	}, 500),
+	delete_property: function(property) {
+		this.$http.post('/api/property/delete', {id: property.id}).then((response) => {
+				// success
+				this.properties.splice(this.properties.indexOf(property), 1);
+			}, (response) => {
+				// error
+			});
+	},
+	add_property: function(event) {
+		var data = { item_id: this.item.id }
+		this.$http.post('/api/property/create', data).then((response) => {
+				// success
+				console.log(response);
+				this.properties.push({id: response.body.property_id});
+			}, (response) => {
+				// error
+			});
+	}
+}
+});
+
+</script>
+
+		<script>
+			admin.item = {!! $item !!};
+			admin.properties = {!! $item->properties !!};
+			admin.message = "{!! $item->title !!}";
+		</script>
 @stop
 
 <?php
@@ -40,7 +105,13 @@ if($settings_title == '') {
 	}
 </style>
 
-<div id="app" class="c-admin">
+{{-- Vue Component --}}
+
+<div class="c-admin">
+
+	<input v-model="message"/>
+
+	<p>@{{ message }}</p>
 
 	<p>
 		Editing Item {{ $item->id }}
@@ -51,7 +122,11 @@ if($settings_title == '') {
 
 	<div class="[ c-admin__form ] [ grid ]">
 
-		<?php if( Request::isMethod('post') ) { echo '<p>Changes saved.</p>'; } ?>
+		@if( Request::isMethod('post') )
+			<div class="[ grid__item ] [ one-whole ]">
+				<p>Changes saved.</p>
+			</div>
+		@endif
 
 		{{ Form::model($item, array('route' => array('item.edit', $item->id))) }}
 
