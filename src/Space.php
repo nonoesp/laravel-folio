@@ -154,4 +154,14 @@ class Space {
     }
   }
 
+  public static function itemPropertiesWithPrefix($item, $prefix) {
+    $matching_properties = [];
+    foreach($item->properties()->get() as $property) {
+      if (substr($property->name, 0, strlen($prefix)) === $prefix) {
+        array_push($matching_properties, $property);
+      }
+    }
+    return $matching_properties;
+  }
+
 }

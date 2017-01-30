@@ -2,12 +2,11 @@
 @extends('space::admin.layout')
 
 <?php
-$settings_title = Config::get('settings.title');
+$settings_title = Config::get('space.title');
 if($settings_title == '') {
 	$settings_title = "Space";
 }
-	$site_title = 'Edit Item '.$item->id.' — '. $settings_title;
-	$services_typekit = 'fgm7qov';
+	$site_title = 'Editing Item '.$item->id.' — '. $settings_title;
 ?>
 
 @section('title', 'Items')
@@ -109,10 +108,6 @@ methods: {
 
 <div class="c-admin">
 
-	<input v-model="message"/>
-
-	<p>@{{ message }}</p>
-
 	<p>
 		Editing Item {{ $item->id }}
 		<a href="/e/{{ Hashids::encode($item->id) }}">
@@ -153,43 +148,54 @@ methods: {
 				<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS</label></p>
 			</div>
 
-
-			<div class="[ grid__item ]">
-				<div @click="add_property" class="[ u-cursor-pointer ]">Add Property</div>
+			<div v-if="properties.length" class="[ grid__item ] [ u-pad-b-1x ]">
+				<strong>Properties</strong>
 			</div>
 
+			<div v-for="property in properties" class="[ grid__item one-whole ]">
 
-				<div v-for="property in properties" class="[ grid__item one-whole ]">
-					<div class="[ grid ]"><!--
-					--><div class="[ grid__item two-sixths ] [ u-text-align--right ]">
+					<div class="[ grid grid--narrow ]">
+						<div class="[ grid__item ]
+						[ c-admin-form__label u-text-align--right ]
+						[ one-sixth portable--one-whole ]">
+							<p>@{{ property.id }}</p>
+						</div>
+						<!--
+					--><div class="[ grid__item four-twelfths  ] [ u-text-align--right ]">
 							<input type="text"
+							placeholder="Label"
 							v-model="property.label"
 							@keyup="sync_properties(property)"
 							v-bind:data-id="property.id" data-field="label"
 							class="u-text-align--right">
 						</div><!--
-						--><div class="[ grid__item one-sixth ]">
+						--><div class="[ grid__item three-twelfths ]">
 							<input type="text"
+							placeholder="identifier"
 							v-model="property.name"
 							@keyup="sync_properties(property)"
 							v-bind:data-id="property.id" data-field="name"
 							class="u-text-align--right">
 								{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
 						</div><!--
-						--><div class="[ grid__item two-sixths ]">
+						--><div class="[ grid__item four-twelfths ]">
 								<input type="text" v-model="property.value"
+								placeholder="Value"
 								@keyup="sync_properties(property)"
 								v-bind:data-id="property.id" data-field="value">
 						</div><!--
 						--><div @click="delete_property(property)"
 						v-bind:data-id="property.id"
-						class="[ grid__item one-sixth ] [ u-text-align--left ]">
-							(@{{ property.id }})
+						class="[ grid__item one-twelfth  ] [ u-text-align--right ]" style="-font-size:15px;-letter-spacing:-0.084em">
 							<span class="[ u-cursor-pointer ]">X</span>
 							<span v-if="property.is_updating">...</span>
 						</div><!--
 			 --></div>
 
+			</div>
+
+			<div class="[ grid__item ] [ u-pad-b-2x u-pad-t-0x ]">
+				<div @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</div>
 			</div>
 
 			<div class="[ grid__item ] [ one-whole ]">
