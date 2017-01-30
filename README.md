@@ -10,7 +10,7 @@ Begin by installing this package through Composer. Edit your project’s `compos
 
 ```json
 "require": {
-	"nonoesp/space": "5.4.*"
+	"nonoesp/space": "^5.4"
 }
 ```
 
@@ -51,7 +51,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
         'Item' => Nonoesp\Space\Models\Item::class,    
         'Property' => Nonoesp\Space\Models\Property::class,
         'Recipient' => Nonoesp\Space\Models\Recipient::class,
-				'Subscriber' => Nonoesp\Space\Models\Subscriber::class,
+        'Subscriber' => Nonoesp\Space\Models\Subscriber::class,
 
         // nonoesp/space - Dependencies
         'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
@@ -76,12 +76,6 @@ But you need to follow the [Instructions to Install `nonoesp/authenticate`](http
 Let's create the tables required by **Space** in your database.
 
 First, make sure your database connection is setup properly in you `.env` file.
-
-Publish `nonoesp/space` migrations:
-
-```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=migrations
-```
 
 Publish `rtconner/tagging` migrations:
 
