@@ -12,7 +12,7 @@
 
 @section('content')
 
-	<div class="admin-form">
+	<div class="[ c-admin ] [ u-pad-b-12x ]">
 
 		{{ Form::open(['url' => Space::adminPath().'item/add', 'method' => 'post']) }}
 

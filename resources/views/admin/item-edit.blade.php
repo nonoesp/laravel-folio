@@ -106,7 +106,7 @@ methods: {
 
 {{-- Vue Component --}}
 
-<div class="c-admin">
+<div class="[ c-admin ] [ u-pad-b-12x ]">
 
 	<p>
 		Editing Item {{ $item->id }}
