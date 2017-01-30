@@ -135,9 +135,9 @@ methods: {
 
 			@foreach($inputs as $input)
 				<div v-if="item.{{ $input['name'] }}" class="[ grid__item ]
-				[ c-admin-form__label u-text-align--right ]
-				[ one-sixth portable--one-whole ]">
-					<p>{{ $input['label'] }}</p>
+				[ c-admin-form__label u-text-align--right c-admin--font-light ]
+				[ one-half portable--one-whole ]">
+					<span>{{ $input['label'] }}</span>
 				</div><!--
 		 --><div class="[ grid__item ] [ one-whole ]">
 		 			<p>{{ Form::text($input['name'], null, array('v-model' => 'item.'.$input['name'],'placeholder' => $input['placeholder'])) }}</p>
@@ -156,9 +156,10 @@ methods: {
 
 					<div class="[ grid grid--narrow ]">
 						<div class="[ grid__item ]
-						[ c-admin-form__label u-text-align--right ]
-						[ one-sixth portable--one-whole ]">
-							<p>@{{ property.id }}</p>
+						[ c-admin-form__label u-text-align--right c-admin--font-light ]
+						[ one-half portable--one-whole ]
+						[ u-hidden-portable ]">
+							<span>@{{ property.id }}</span>
 						</div>
 						<!--
 					--><div class="[ grid__item four-twelfths  ] [ u-text-align--right ]">
@@ -194,9 +195,13 @@ methods: {
 
 			</div>
 
-			<div class="[ grid__item ] [ u-pad-b-2x u-pad-t-0x ]">
-				<div @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</div>
+
+
+			<div class="[ grid__item ] [ u-pad-b-2x u-pad-t-0x ] [ c-admin--font-light ] ">
+					{{--<span class="[ fa fa-plus fa--social ]"></span>--}}
+					<span @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</span>
 			</div>
+
 
 			<div class="[ grid__item ] [ one-whole ]">
 				<p>{{ Form::submit('Save') }}</p>
