@@ -73,13 +73,30 @@ But you need to follow the [Instructions to Install `nonoesp/authenticate`](http
 
 ## Migrations
 
-Make sure your database connection is setup properly in you `.env` file.
+Let's create the tables required by **Space** in your database.
+
+First, make sure your database connection is setup properly in you `.env` file.
+
+Publish `nonoesp/space` migrations:
+
+```php
+php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=migrations
+```
+
+Publish `rtconner/tagging` migrations:
+
+```php
+php artisan vendor:publish --provider="Conner\Tagging\Providers\TaggingServiceProvider"
+```
 
 Then, run the migrations:
 
 ```php
 php artisan migrate
 ```
+
+(You can always remove the tables by resetting: `php artisan migrate:reset`.
+	But be *careful* as it will remove the contents of your tables.)
 
 ## Config
 
