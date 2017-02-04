@@ -1,11 +1,17 @@
 <?php
 
-return array(
+return [
 
 	'expected' => 'Expected',
-	'subscribe' => 'Subscribe',
 	'to-be-notified' => 'to be notified.',
-	'receive-our-posts' => 'Receive our essays via e-mail.',
 	'load-more' => 'load more',
 	'continue-reading' => 'Continue&nbsp;reading',
-);
+	'receive-our-posts' => 'Receive our essays via e-mail.',
+
+	// space.subscribe.js
+	'subscribe' => 'Subscribe',
+  'to_receive_our_updates' => 'Receive our essays via email.',
+  'email_is_not_valid' => 'Something is not right with that email.',
+  'thanks_for_subscribing' => 'Thanks for subscribing!',
+
+];

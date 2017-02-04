@@ -42,6 +42,9 @@
 
 @yield('content')
 
+<script>
+	var trans = {!! json_encode(trans('space::base')) !!};
+</script>
 @yield('scripts')
 
 </body>
