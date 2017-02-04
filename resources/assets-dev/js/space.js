@@ -6,5 +6,6 @@
  */
 
 require('./space.bootstrap');
-// require('./space.admin');
+// require('./space.admin'); // Vue model currently implemented on item-edit.blade.php view
 require('./space.ui');
+require('./space.subscribe');

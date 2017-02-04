@@ -28,10 +28,10 @@ return array(
 	// Directory of Item Templates
 	//'template-paths' => ['space::templates'],
 
-	// View admin menu
+	// Views
 	'views' => [
-			'home' => 'space::base',
-			'admin-menu' => 'space::admin.c-menu',
+			'home' => 'space::base', // defaults to 'space::base'
+			'admin-menu' => 'space::admin.c-menu', // defaults to 'space::admin.c-menu'
 		],
 
 	// URIs protected from Writing routes

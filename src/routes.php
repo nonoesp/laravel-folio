@@ -45,22 +45,11 @@ if(Space::isAvailableURI()) {
 	// Feed
 	Route::get(Config::get('space.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Space\Controllers\SpaceController@getFeed'));
 
-	// Debug
+	// Debug: Hello, Space!
 	Route::get('debug/space', 'Nonoesp\Space\Controllers\SpaceController@helloSpace');
 
-	// Experimental - layer routes from config file
-
-	// foreach(Config::get("space.layers") as $layer) {
-	//
-	// 	Route::get($layer['path'], function() use ($layer) {
-	// 		$items = Item::withAnyTag($layer['tags'])->orderBy('published_at', 'DESC')->get();
-	// 		return view($layer['view'])->with(
-	// 			[
-	// 			'items' => $items,
-	// 			'layer' => $layer
-	// 			]);
-	// 	});
-	// }
+	// SubscriptionController
+	Route::post('subscriber/create', 'Nonoesp\Space\Controllers\SubscriptionController@postSubscriber');
 }
 
 /*----------------------------------------------------------------*/

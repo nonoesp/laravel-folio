@@ -16,6 +16,9 @@
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
 	<link rel="stylesheet" type="text/css" href="{{ $space_css or '/nonoesp/space/css/space.css?default' }}">
 
+	<!-- CSRF Token -->
+	<meta name="csrf-token" content="{{ csrf_token() }}">
+
 	@if($space_typekit)
 	<!--TypeKit-->
 	<script type="text/javascript" src="//use.typekit.net/{{ $space_typekit }}.js"></script>
@@ -28,19 +31,18 @@
 
 	{{-- Header --}}
 		<?php if(!isset($header_hidden)){ $header_hidden = false; } ?>
-		<?php if(!isset($header_classes)){ $header_classes = ''; } ?>
 		<?php if(!isset($header_view)){ $header_view = 'space::partial.c-header'; } ?>
-		<?php if(!isset($header_color)){ $header_color = null; } ?>
-		<?php if(!isset($header_is_navigation_hidden)){ $header_is_navigation_hidden = false; } ?>
+		<?php if(!isset($header_classes)){ $header_classes = ''; } ?>
+		<?php if(!isset($header_data)){ $header_data = null; } ?>
 		@if(!$header_hidden)
-		{!! View::make($header_view)->with(['classes' => $header_classes,
-																			 'color' => $header_color,
-																			 'is_navigation_hidden' => $header_is_navigation_hidden]) !!}
+		{!! view($header_view)->with(['classes' => $header_classes,
+																  'data' => $header_data
+																	]) !!}
 	  @endif
 
 @yield('content')
 
-{{--<script type="text/javascript" src="/js/vendor/jquery.min.js"></script>--}}<!--
--->@yield('scripts')<!--
---></body>
+@yield('scripts')
+
+</body>
 </html>

@@ -4,15 +4,26 @@
 
 /* Events */
 
-  $(document).on('click', '.js-video-thumb', function(){
-    $(this).html(videoInsert($(this).attr('data-url'), $(this).attr('data-service')));
-  });
+$(document).on('click', '.js-video-thumb', function(){
+  $(this).html(videoInsert($(this).attr('data-url'), $(this).attr('data-service')));
+});
 
-  $(document).on('click', '.js-c-load-more__load-more', function(){
-    $(".js-c-load-more").addClass('is-loading');
-    loadMore();
-  });
+$(document).on('click', '.js-c-load-more__load-more', function(){
+  $(".js-c-load-more").addClass('is-loading');
+  loadMore();
+});
 
+/* Header.js */
+
+$(document).ready(function()
+{
+	// Activate navigation-link for current page
+	var page = location.pathname.split('/')[1];
+	if (!page) {
+		page = 'me';
+	}
+	$(".navigation-link." + "js--navigation-link-"+page).addClass('navigation-link--active');
+});
 
 /* Helpers */
 

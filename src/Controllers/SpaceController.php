@@ -83,9 +83,12 @@ class SpaceController extends Controller
 									->take($expected_show)
 									->get();
 
-		return view('space::base')->with(array('items' => $items,
-													  'ids' => $ids_array,
-													  'items_expected' => $items_expected));
+		return view(Config::get('space.views.admin-menu'))
+         ->with([
+           'items' => $items,
+           'ids' => $ids_array,
+           'items_expected' => $items_expected
+         ]);
 	}
 
 	// Simplify making showHome a generic function, then call it directly from route or from Controller function
