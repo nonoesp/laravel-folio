@@ -149,14 +149,14 @@ class SpaceController extends Controller
 
 		// Get Expected Items
 		$items_expected = Item::withAnyTag($tag)
-								    ->expected()
-									->visibleFor($twitter_handle)
-									->orderBy('published_at', 'DESC')
-									->take($expected_show)
-									->get();
+                          ->expected()
+                          ->visibleFor($twitter_handle)
+                          ->orderBy('published_at', 'DESC')
+                          ->take($expected_show)
+                          ->get();
 
-		return view('space::base')->with(
-								[
+		return view(Config::get('space.views.admin-menu'))->with(
+								        [
 		             	  			'items' => $items,
 		             	  			'ids' => $ids_array,
 		             	  			'tag' => $tag,

@@ -29,7 +29,10 @@ return array(
 	//'template-paths' => ['space::templates'],
 
 	// View admin menu
-	'view-admin-menu' => 'space::admin.c-menu',
+	'views' => [
+			'home' => 'space::base',
+			'admin-menu' => 'space::admin.c-menu',
+		],
 
 	// URIs protected from Writing routes
 	'protected_uris' => ['example', 'profile', 'about', 'magic'],
