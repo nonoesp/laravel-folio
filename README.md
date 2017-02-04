@@ -100,6 +100,24 @@ Publish configuration file to `config/space.php`.
 php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=config
 ```
 
+## Publish Middleware
+
+For **Space** translations to work properly we need to publish our `SetLocales.php` middleware:
+
+```php
+php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=middleware
+```
+
+Then add it to `app/Html/Kernel.php` inside the `$middleware` array:
+
+```php
+protected $middleware = [
+		/// ...
+
+		\App\Http\Middleware\SetLocales::class,
+];
+```
+
 ## Publish Assets
 
 **Space** ships with compiled CSS and JS assets, in case you want to use it as is,

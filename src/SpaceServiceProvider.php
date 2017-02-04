@@ -20,6 +20,7 @@ class SpaceServiceProvider extends ServiceProvider
         $path_sass = __DIR__.'/../resources/assets-dev/sass';
         $path_js = __DIR__.'/../resources/assets-dev/js';
         $path_migrations = __DIR__.'/../migrations';
+        $path_config = __DIR__.'/../config/config.php';
 
         // Publish Paths
         $publish_path_views = base_path('resources/views/nonoesp/space');
@@ -37,10 +38,9 @@ class SpaceServiceProvider extends ServiceProvider
         $this->publishes([$path_assets => $publish_path_assets,], 'assets');
         $this->publishes([$path_sass => $publish_path_sass,], 'dev-assets');//'sass');
         $this->publishes([$path_js => $publish_path_js,], 'dev-assets');//'js');
-        $this->publishes([__DIR__.'/../config/config.php' => $publish_path_config,], 'config');
+        $this->publishes([$path_config => $publish_path_config,], 'config');
 
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'space');
-
 
         // Views
         if (is_dir($publish_path_views)) {
