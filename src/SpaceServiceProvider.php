@@ -15,7 +15,7 @@ class SpaceServiceProvider extends ServiceProvider
         // Paths
         $path_views = __DIR__.'/../resources/views';
         $path_lang = __DIR__.'/../resources/lang';
-        //$path_middleware = __DIR__.'/Middleware';
+        $path_middleware = __DIR__.'/Middleware';
         $path_assets = __DIR__.'/../resources/assets';
         $path_sass = __DIR__.'/../resources/assets-dev/sass';
         $path_js = __DIR__.'/../resources/assets-dev/js';
@@ -33,7 +33,7 @@ class SpaceServiceProvider extends ServiceProvider
         // Publish Stuff
         $this->publishes([$path_views => $publish_path_views,], 'views');
         $this->publishes([$path_lang => $publish_path_lang,], 'lang');
-        //$this->publishes([$path_middleware => $publish_path_middleware,], 'middleware');
+        $this->publishes([$path_middleware => $publish_path_middleware,], 'middleware');
         $this->publishes([$path_assets => $publish_path_assets,], 'assets');
         $this->publishes([$path_sass => $publish_path_sass,], 'dev-assets');//'sass');
         $this->publishes([$path_js => $publish_path_js,], 'dev-assets');//'js');

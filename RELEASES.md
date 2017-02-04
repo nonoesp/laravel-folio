@@ -1,9 +1,4 @@
 
-## To-dos
-
-* Move user route inside controller.
-* Test Disqus implementation for comments.
-
 ## Release Notes
 
 ### 5.4.*
