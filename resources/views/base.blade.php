@@ -15,9 +15,8 @@
     $site_title = Config::get('space.title');
     $og_description = 'Description of the blog.';
     $services_typekit = Config::get('services.typekit.space');
-    $header_view = 'space::partial.c-header-simple';
-    $header_classes = 'c-header--white -c-header--relative';
-    $is_header_static = true;
+    $header_view = Config::get('space.header.view');
+    $header_classes = Config::get('space.header.classes');
 
     // 2. Defaults Cover
     $cover_subtitle = Thinker::array_rand_value(['Subtitle 01', 'Subtitle 02']);
@@ -55,9 +54,8 @@
             $header_classes = ['relative', 'borderless'];
             $cover_active = false;
             $header_data = [
-              //'description' => trans('folio.slogan-writing')
                 'is_media_hidden' => true,
-                'is_navigation_hidden' => true
+                'is_navigation_hidden' => false
             ];
 
         } else {
@@ -69,7 +67,8 @@
             }
             $cover_image = $item->image;
             $cover_classes .= 'is-faded is-fullscreen';
-            $header_classes = ['absolute', 'borderless'];
+            $header_view = 'space::partial.c-header';
+            $header_classes = ['white'];
             $header_data = [
               'is_media_hidden' => true,
               'is_navigation_hidden' => true
