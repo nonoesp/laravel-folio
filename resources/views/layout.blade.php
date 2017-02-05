@@ -42,6 +42,8 @@
 
 @yield('content')
 
+@yield('footer')
+
 <script src="{{ mix('/nonoesp/space/js/manifest.js') }}"></script>
 <script src="{{ mix('/nonoesp/space/js/vendor.js') }}"></script>
 <script src="{{ mix('/nonoesp/space/js/space.js') }}"></script>

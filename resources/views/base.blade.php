@@ -163,12 +163,9 @@
       @endif
 
   </div>
-
-
 @stop
 
 @section('scripts')
-
     @if(isset($items))
         <script>
           @if ($ids)
@@ -176,14 +173,12 @@
           @endif
         </script>
     @endif
-
-    <script type="text/javascript" src="/nonoesp/space/js/space.js"></script>
-
 @stop
 
 @section('footer')
 
-{{-- Footer --}}
-{{-- View::make('partial.c-footer') --}}
+  <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule ] [ u-pad-b-4x ]">
+  	{!! view('space::partial.c-footer--subscribe') !!}
+  </div>
 
 @stop
