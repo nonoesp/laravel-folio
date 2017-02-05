@@ -25,6 +25,20 @@
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	@endif
 
+	<!--Icon-->
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+	<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+	<link rel="manifest" href="/manifest.json">
+	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+	<meta name="theme-color" content="#ffffff">
+
+	<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-ipad.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-@2x.png" />
+	<meta name="apple-mobile-web-app-title" content="{{ config('space.title-short') }}" />
+	<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon.png" />
+	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+
 </head>
 
 <body>
