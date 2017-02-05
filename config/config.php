@@ -28,6 +28,11 @@ return array(
 	// Typekit token (ignored if empty string, i.e. '')
 	'typekit' => '',
 
+	'footer-credits' => [
+		'hidden' => false,
+		'text' => ''
+		],
+
 	// Directory of Item Templates
 	//'template-paths' => ['space::templates'],
 

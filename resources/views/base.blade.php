@@ -14,9 +14,15 @@
     // 1. Defaults
     $site_title = Config::get('space.title');
     $og_description = 'Description of the blog.';
-    $services_typekit = Config::get('services.typekit.space');
     $header_view = Config::get('space.header.view');
     $header_classes = Config::get('space.header.classes');
+
+    // Footer credits
+    $footer_credits = Config::get('space.footer-credits');
+    $footer_hidden = false;
+    if(isset($footer_credits['hidden'])) {
+      $footer_hidden = $footer_credits['hidden'];
+    }
 
     // 2. Defaults Cover
     $cover_subtitle = Thinker::array_rand_value(['Subtitle 01', 'Subtitle 02']);
@@ -177,8 +183,18 @@
 
 @section('footer')
 
-  <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule ] [ u-pad-b-4x ]">
-  	{!! view('space::partial.c-footer--subscribe') !!}
+  <div class="[ u-pad-b-1x ]">
+
+    <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule u-pad-b-2x ]">
+    	{!! view('space::partial.c-footer--subscribe') !!}
+    </div>
+
+    @if(!$footer_hidden)
+    <div class="[ o-wrap o-wrap--size-medium ]">
+      {!! view('space::partial.c-footer--credits') !!}
+    </div>
+    @endif
+
   </div>
 
 @stop
