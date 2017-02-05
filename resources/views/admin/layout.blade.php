@@ -3,6 +3,7 @@
 	$space_css = Config::get('space.css');
 	if($space_typekit == '') $space_typekit = null;
 	if($space_css == '') $space_css = null;
+	$header_view = 'space::partial.c-header';
 	$header_classes = ['relative'];
 ?>
 
@@ -45,7 +46,7 @@
     <div class="[ o-wrap  o-wrap--tiny ]">
 
 	@if(!isset($shouldHideMenu))
-		{!! view(Config::get('space::admin.c-menu')) !!}
+		{!! view('space::admin.c-menu') !!}
 	@endif
 	<div class="admin-title u-borderBottom">@yield('title', 'Admin')</div>
 

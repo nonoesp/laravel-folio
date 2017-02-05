@@ -1,5 +1,5 @@
 
-@extends(Config::get("space.template-view"))
+@extends(Config::get("space.view.layout"))
 
 <?php
   //{{-- @extends('layout.main') --}}
@@ -184,18 +184,6 @@
 
 @section('footer')
 
-  <div class="[ u-pad-b-1x ]">
-
-    <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule u-pad-b-2x ]">
-    	{!! view('space::partial.c-footer--subscribe') !!}
-    </div>
-
-    @if(!$footer_hidden)
-    <div class="[ o-wrap o-wrap--size-medium ]">
-      {!! view('space::partial.c-footer--credits') !!}
-    </div>
-    @endif
-
-  </div>
+	{!! view('space::partial.c-footer') !!}
 
 @stop

@@ -6,20 +6,19 @@ return [
 	'admin-path-prefix' => 'admin',
 
 	'view' => [
-			'layout' => 'space::layout' 					// 'space::layout'
+			'layout' => 'space::layout', 					// 'space::layout'
 			'items' => 'space::base', 							// 'space::base'
 		],
 
-	// settings
 	'title' => 'Space',
 	'title-short' => 'Spc',
 	'description' => 'A simple web.',
 	'css' => '/nonoesp/space/css/space.css', //
 	'typekit' => '',
 
-	'footer-credits' => [
-		'hidden' => false,
-		'text' => ''
+	'footer' => [
+		'hide_credits' => false,
+		'credits_text' => ''
 		],
 
 	//'template-paths' => ['space::templates'],
