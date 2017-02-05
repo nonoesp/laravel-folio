@@ -42,6 +42,9 @@
 
 @yield('content')
 
+<script src="{{ mix('/nonoesp/space/js/manifest.js') }}"></script>
+<script src="{{ mix('/nonoesp/space/js/vendor.js') }}"></script>
+<script src="{{ mix('/nonoesp/space/js/space.js') }}"></script>
 <script>
 	var trans = {!! json_encode(trans('space::base')) !!};
 </script>
