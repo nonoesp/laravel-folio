@@ -57,11 +57,12 @@
         if ($item->image == '') {
 
             // 4.2.1. Item w/o cover
-            $header_classes = ['relative', 'borderless'];
+            $header_classes = ['borderless'];
             $cover_active = false;
             $header_data = [
-                'is_media_hidden' => true,
-                'is_navigation_hidden' => false
+              //'description' => trans('folio.slogan-writing')
+                'is_media_hidden' => false,
+                //'is_navigation_hidden' => false
             ];
 
         } else {
@@ -73,8 +74,8 @@
             }
             $cover_image = $item->image;
             $cover_classes .= 'is-faded is-fullscreen';
-            $header_view = 'space::partial.c-header';
-            $header_classes = ['white'];
+            //$header_view = 'space::partial.c-header';
+            $header_classes = ['absolute', 'borderless'];
             $header_data = [
               'is_media_hidden' => true,
               'is_navigation_hidden' => true
@@ -104,7 +105,7 @@
   @if($cover_active)
 
       {!! View::make('space::partial.c-cover')
-              ->with(array('title' => Config::get('space.title'),//$item->title,
+              ->with(array('title' => '',//Config::get('space.title'),//$item->title,
                           'subtitle' => $cover_subtitle,
                           'classes_title_b' => $cover_classes_title_b,
                           'image' => $cover_image,

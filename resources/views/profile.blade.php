@@ -1,4 +1,4 @@
-@extends(Config::get("space.template-view"))
+@extends(Config::get("space.view.layout"))
 
 <?php
 

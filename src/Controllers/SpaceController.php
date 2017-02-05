@@ -83,7 +83,7 @@ class SpaceController extends Controller
 									->take($expected_show)
 									->get();
 
-		return view(Config::get('space.views.home'))
+		return view(Config::get('space.view.items'))
          ->with([
            'items' => $items,
            'ids' => $ids_array,
@@ -158,7 +158,7 @@ class SpaceController extends Controller
                           ->take($expected_show)
                           ->get();
 
-		return view(Config::get('space.views.home'))->with(
+		return view(Config::get('space.view.items'))->with(
 								        [
 		             	  			'items' => $items,
 		             	  			'ids' => $ids_array,
