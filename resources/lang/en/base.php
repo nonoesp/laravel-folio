@@ -14,4 +14,6 @@ return [
   'email_is_not_valid' => 'Something is not right with that email.',
   'thanks_for_subscribing' => 'Thanks for subscribing!',
 
+	'writing' => 'Writing',
+	'about-me' => 'About',
 ];

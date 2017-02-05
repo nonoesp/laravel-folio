@@ -31,14 +31,20 @@
 
 		echo Html::link(Space::adminPath().'item/edit/'.$item->id, $item->title, array('class' => 'admin-list-itemLink'));
 
+		// if($item->trashed()) {
+		// 	echo ' '.Html::link(Space::adminPath().'item/restore/'.$item->id, 'O', array('class' => 'admin-list-optionLink is-invisible'));
+		// } else {
+		// 	echo ' '.Html::link(Space::adminPath().'item/delete/'.$item->id, 'X', array('class' => 'admin-list-optionLink is-invisible'));
+		// }
+
 		if($item->trashed()) {
-			echo ' '.Html::link(Space::adminPath().'item/restore/'.$item->id, 'O', array('class' => 'admin-list-optionLink is-invisible'));
+			echo '<a href="/admin/item/restore/'.$item->id.'"><i class="[ fa fa-toggle-off fa--social ] [ admin-list-optionLink is-invisible ]"></i></a>';
 		} else {
-			echo ' '.Html::link(Space::adminPath().'item/delete/'.$item->id, 'X', array('class' => 'admin-list-optionLink is-invisible'));
+			echo '<a href="/admin/item/delete/'.$item->id.'"><i class="[ fa fa-toggle-on fa--social ] [ admin-list-optionLink is-invisible ]"></i></a>';
 		}
 
 		if(count($item->tagNames())) {
-			echo "— (";
+			echo " — (";
 		$i = 0;
 		foreach($item->tagNames() as $tag) {
 			if($i > 0) { echo ", "; }

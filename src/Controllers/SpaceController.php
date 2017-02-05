@@ -207,10 +207,8 @@ class SpaceController extends Controller
 	    // check if there is cached feed and build new only if is not
 	    if (!$feed->isCached())
 	    {
-	    	$default_author = 'Nono Martínez Alonso';
-
-	       // creating rss feed with our most recent items
-		   $feed_show = Config::get('space.feed.show');
+	    	 $default_author = Config::get('space.feed.default-author');
+		     $feed_show = Config::get('space.feed.show');
 
 	       $items = Item::published()
 					          ->public()
@@ -225,7 +223,7 @@ class SpaceController extends Controller
 	       $feed->logo = Config::get('space.feed.logo');
 	       $feed->link = \URL::to('/'.Space::path());
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
-	       $feed->pubdate = $items[0]->published_at;
+         if(count($items)) $feed->pubdate = $items[0]->published_at;
 	       $feed->lang = 'en';
 	       $feed->setShortening(false); // true or false
 	       $feed->setTextLimit(159); // maximum length of description text
@@ -236,19 +234,25 @@ class SpaceController extends Controller
 	           // set item's title, author, url, pubdate, description and content
 	       	   $image_src = Config::get('space.feed.default-image-src');
 	       	   $image = '';
+             $item_image = '';
+
+             // Make sure $item->image is global (not local like /img/u/image.jpg)
+             if ($item->image && substr($item->image, 0, 1) == '/') {
+                 $item_image = $request->root().$item->image;
+             }
 
 			   if ($item->video) {
 	       	     $image = '<p><a href="'.$request->root().'/'.Space::path().$item->slug.'">'
 	       	   	         .'<img src="'.\Thinker::getVideoThumb($item->video)
 	       	   	         .'" alt="'.$item->title.'"></a></p>';
 	       	   } else if ($item->image) {
-	       	     $image = '<p><img src="'.$item->image.'" alt="'.$item->title.'"></p>';
+	       	     $image = '<p><img src="'.$item_image.'" alt="'.$item->title.'"></p>';
 	       	   }
 
 	       	   if ($item->image_src != '') {
 	       	   	$image_src = $item->image_src;
 						} else if ($item->image != '') {
-	       	   	$image_src = $item->image;
+	       	   	$image_src = $item_image;
 	       	   }
 
 	           $feed->add(

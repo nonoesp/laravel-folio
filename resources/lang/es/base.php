@@ -14,4 +14,6 @@ return [
   'email_is_not_valid' => 'Este email no parece ser válido.',
   'thanks_for_subscribing' => 'Gracias por suscribirte!',
 
+	'writing' => 'Escritos',
+	'about-me' => 'Acerca de',
 ];

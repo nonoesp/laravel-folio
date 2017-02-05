@@ -7,28 +7,33 @@
   if(isset($data['is_media_hidden'])) { $is_media_hidden = $data['is_media_hidden']; }
   if(isset($data['image'])) { $image = $data['image']; }
   if(isset($data['description'])) { $description = $data['description']; }
+  if(isset($data['navigation'])) { $navigation = $data['navigation']; } else {
+    $navigation = [
+			trans('space::base.writing') => ['/'.Config::get('space.path-prefix'), Config::get('space.path-prefix')],
+			trans('space::base.about-me') => ['/about', 'about']
+		];
+  }
 ?>
 
 <!-- c-header-simple 1.0: styling based on frankchimero.com -->
 
 <header class="[ c-header-simple ] {{ $class_specified }}">
-	<div class="[ o-wrap  o-wrap--full ]">
+	<div class="[ o-wrap o-wrap--size-full ]">
 		<a href="/" class="[ c-header-simple__name ]">
 			nono.ma
 		</a>
 		@if(!isset($is_navigation_hidden))
 		<nav role="navigation" class="[ c-header-simple__navigation ]">
 			<ul>
-				<li>
-					<a href="{{ Config::get('space.path-prefix') }}" class="[ navigation-link js--navigation-link-says ]">
-						{{ trans('folio.writing') }}
-					</a>
-				</li>
-				<li>
-					<a href="/about" class="[ navigation-link js--navigation-link-about ]">
-						{{ trans('folio.about-me') }}
-					</a>
-				</li>
+
+        @foreach($navigation as $title=>$href)
+          <li>
+  					<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} ]">
+  						{{ $title }}
+  					</a>
+  				</li>
+        @endforeach
+
 			</ul>
 		</nav>
     @endif
