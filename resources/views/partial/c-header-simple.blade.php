@@ -1,7 +1,14 @@
 <?php
+  $header_class = 'c-header-simple';
   // Class
   $class_specified = '';
-  if(isset($classes) && $classes != '') $class_specified = '[ '.$classes.' ]';
+  if(isset($classes) && $classes != '') {
+    $class_specified = '[ ';
+    foreach($classes as $class) {
+      $class_specified .= $header_class.'--'.$class.' ';
+    }
+    $class_specified .= ']';
+  }
   // Data
   if(isset($data['is_navigation_hidden'])) { $is_navigation_hidden = $data['is_navigation_hidden']; }
   if(isset($data['is_media_hidden'])) { $is_media_hidden = $data['is_media_hidden']; }

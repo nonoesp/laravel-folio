@@ -16,6 +16,9 @@ return array(
   // Title
 	'title' => 'Space',
 
+	// Title Cover
+	'title-cover' => 'Cover Title',
+
 	// Slogan, description
 	'description' => 'A simple web.',
 
