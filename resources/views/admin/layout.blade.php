@@ -41,7 +41,7 @@
 																	]) !!}
 	  @endif
 
-  <div class="[ o-band ]  [ u-border-bottom  -u-no-padding-bottom ]">
+  <div class="[ o-band ]">
     <div class="[ o-wrap  o-wrap--tiny ]">
 
 	@if(!isset($shouldHideMenu))

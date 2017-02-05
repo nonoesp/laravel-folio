@@ -73,7 +73,7 @@ function videoInsert(code, service) {
 console.log('the service is ' + service);
 
   if (service == 'youtube') {
-    return '<iframe width="480" height="268" style="max-width:100%"'+
+    return '<iframe width="100%" height="268" style="max-width:100%"'+
            'src="http://www.youtube.com/embed/'+code+
          '?autoplay=1" frameborder="0" allowfullscreen></iframe>';
   }
