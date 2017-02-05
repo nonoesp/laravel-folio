@@ -44,7 +44,7 @@
   clearTimeout(timer);
  	if(response.success == true) {
  		$(".js--subscribe__form").hide();
- 		$(".js--subscribe__label").html(trans.thanks_for_subscribing);
+ 		$(".js--subscribe__label").html(trans.thanks_for_subscribing).addClass('u-text-align--center');
     timer = setTimeout(function() { restoreSubscriptionForm() }, 5000);
  	}
  }
@@ -53,6 +53,7 @@
   console.log('restore subscription form');
   $(".js--subscribe__email").val('');
   $(".js--subscribe__form").show();
+  $(".js--subscribe__label").removeClass('u-text-align--center');
   clearTimeout(timer);
   timer = setTimeout(function() {
       $(".js--subscribe__label").html(trans.to_receive_our_updates);
