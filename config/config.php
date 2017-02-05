@@ -42,6 +42,11 @@ return array(
 			'admin-menu' => 'space::admin.c-menu', // defaults to 'space::admin.c-menu'
 		],
 
+	'header' => [
+			'view' => 'space::partial.c-header',
+			'classes' => ['white', 'absolute']
+		],
+
 	'media_links' => [
     'rss' => '/feed.xml',
     'facebook' => 'http://facebook.com/nonoesp',
