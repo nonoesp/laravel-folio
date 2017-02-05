@@ -43,7 +43,18 @@
  function handleSubscribeResponse(response) {
   clearTimeout(timer);
  	if(response.success == true) {
- 		$(".js--subscribe__form").remove();
+ 		$(".js--subscribe__form").hide();
  		$(".js--subscribe__label").html(trans.thanks_for_subscribing);
+    timer = setTimeout(function() { restoreSubscriptionForm() }, 5000);
  	}
+ }
+
+ function restoreSubscriptionForm() {
+  console.log('restore subscription form');
+  $(".js--subscribe__email").val('');
+  $(".js--subscribe__form").show();
+  clearTimeout(timer);
+  timer = setTimeout(function() {
+      $(".js--subscribe__label").html(trans.to_receive_our_updates);
+  }, 10000);
  }

@@ -34,6 +34,16 @@ return array(
 			'admin-menu' => 'space::admin.c-menu', // defaults to 'space::admin.c-menu'
 		],
 
+	'media_links' => [
+    'rss' => '/feed.xml',
+    'facebook' => 'http://facebook.com/nonoesp',
+    'twitter' => 'http://twitter.com/nonoesp',
+    'instagram' => 'http://instagram.com/nonoesp',
+    'dribbble' => 'http://dribbble.com/nonoesp',
+    'github' => 'http://github.com/nonoesp',
+    'star' => 'http://gettingsimple.com'
+	],
+
 	// URIs protected from Writing routes
 	'protected_uris' => ['example', 'profile', 'about', 'magic'],
 

@@ -31,8 +31,10 @@
 // core-scss - components
 @import '../../../node_modules/core-scss/components/c-cover';
 @import '../../../node_modules/core-scss/components/c-header';
+@import '../../../node_modules/core-scss/components/c-header-simple';
 @import '../../../node_modules/core-scss/components/c-item';
 @import '../../../node_modules/core-scss/components/c-admin';
+@import '../../../node_modules/core-scss/components/c-load-more';
 
 // core-scss - modifiers
 @import '../../../node_modules/core-scss/modifiers/m-fa'; // Font Awesome
@@ -44,3 +46,5 @@
 @import '../../../node_modules/core-scss/utilities/utilities.text.align';
 @import '../../../node_modules/core-scss/utilities/utilities.various';
 @import '../../../node_modules/core-scss/utilities/utilities.visibility';
+
+// custom
