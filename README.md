@@ -73,6 +73,9 @@ But you need to follow the [Instructions to Install `nonoesp/authenticate`](http
 
 ## Migrations
 
+First, make sure you remove Laravel's default migration files from `database/migrations` as they can collide
+with this package.
+
 Let's create the tables required by **Space** in your database.
 
 First, make sure your database connection is setup properly in you `.env` file.
@@ -176,6 +179,14 @@ mix.sass('resources/assets/sass/space.scss', 'public/nonoesp/space/css');
 mix.js('resources/assets/js/space.js', 'public/nonoesp/space/js')
    .extract(['vue', 'vue-resource', 'jquery', 'validate-js', 'lodash', 'axios']);;
 
+```
+
+## Customize Views
+
+You can publish **Space** views and customize them. (If you customize a few views and want to get updates from future version for others, you will need to remove the ones you haven't modify and re-publish the views of the package. This won't override your customized view, just the one you delete from your `resources/views/nonoesp/`.)
+
+```php
+php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=views
 ```
 
 ## License

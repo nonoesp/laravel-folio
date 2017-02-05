@@ -54,10 +54,10 @@ return array(
 	//'special-tags' => ['highlight'],
 
 	// Middlewares to filter provided routes, e.g. 'auth'
-	'middlewares' => ['web'],
+	'middlewares' => [],
 
 	// Middlewares to filter provided routes, e.g. 'auth'
-	'middlewares-admin' => ['login', 'web'],
+	'middlewares-admin' => ['login'],
 
 	// Initial amount of articles to show in archive
 	'published-show' => 5,
@@ -68,7 +68,7 @@ return array(
 	// RSS Feed configuration
 	'feed' =>
 	[
-		'route' => 'feed.xml',
+		'route' => 'feed', // (e.g. 'feed', or 'feed.xml')
 		'title' => 'My Space Feed',
 		'description' => 'A description here would come handy.',
 		'show' => '30', // maximum amount of articles to display
