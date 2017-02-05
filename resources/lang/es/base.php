@@ -2,6 +2,8 @@
 
 return [
 
+	// space
+	'by' => 'by',
 	'expected' => 'Previsto en',
 	'to-be-notified' => 'para ser notificado.',
 	'load-more' => 'cargar más',
@@ -16,4 +18,5 @@ return [
 
 	'writing' => 'Escritos',
 	'about-me' => 'Acerca de',
+	
 ];
