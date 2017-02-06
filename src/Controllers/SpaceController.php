@@ -185,14 +185,11 @@ class SpaceController extends Controller
 	public function getItemsWithIds() {
 
 		// Set Item Type
-		\Input::get('item_type') ? $item_type = \Input::get('item_type') : $item_type = 'DEFAULT_ARTICLE_TYPE';
+		\Input::get('item_type') ? $item_type = \Input::get('item_type') : $item_type = 'DEFAULT_ITEM_TYPE';
 
 		// Echo Items
 		foreach(\Input::get('ids') as $id) {
-			echo view('space::partial.c-item')->
-			           with(array('item' => Item::find($id),
-			           	  		  'item_type' => $item_type,
-			           	  		  'isTitleLinked' => true));
+      echo view('space::partial.c-item-li')->with(['item' => Item::find($id)]);
 		}
 	}
 

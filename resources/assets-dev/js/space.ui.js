@@ -31,7 +31,7 @@ function loadMore() {
   if (ids.length > 0) {
 
     var ids_load = [];
-    var step = 3;
+    var step = 40;
 
     for(i=0;i<step;i++) {
       if (ids[i] == undefined) break;
@@ -39,7 +39,7 @@ function loadMore() {
     }
 
     // Load artiles and remove ids
-    articlesWithIds(ids_load);
+    itemsWithIds(ids_load);
     ids.splice(0, step);
 
     if(ids.length == 0) {
@@ -48,16 +48,17 @@ function loadMore() {
   }
 }
 
-function articlesWithIds(ids) {
+function itemsWithIds(ids) {
 
   // To properly set the CSRF-TOKEN with Laravel,
   // make sure you have the following HTML meta tag in your view
   // <meta name="csrf-token" content="{{ csrf_token() }}" />
 
   $.ajax({
-        url: 'http://' + document.domain + '/articles',
+        url: 'http://' + document.domain + '/items',
         type: 'POST',
-        data: {ids: ids, article_type: 'SUMMARY_ARTICLE_TYPE'},
+        data: {ids: ids},
+        //data: {ids: ids, item_type: 'SUMMARY_ITEM_TYPE'},
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
