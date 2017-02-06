@@ -41,8 +41,8 @@ return [
 
 	'protected_uris' => ['example', 'profile', 'about', 'magic'], // are not overriden by space
 
-	'middlewares' => [], // space routes
-	'middlewares-admin' => ['login'], // space admin routes
+	'middlewares' => ['web'], // space routes
+	'middlewares-admin' => ['login', 'web'], // space admin routes
 
 	'published-show' => 5,
 	'expected-show' => 100,
