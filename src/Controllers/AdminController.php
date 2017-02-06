@@ -48,7 +48,7 @@ class AdminController extends Controller
 				}
 			}
 
-			$item->title = Input::get('title');
+				$item->title = Input::get('title');
 		  	$item->published_at = Input::get('published_at');
 		  	$item->image = Input::get('image');
 		  	$item->image_src = Input::get('image_src');
@@ -59,6 +59,7 @@ class AdminController extends Controller
 				$item->image_src = Thinker::InstagramImageURL($item->image_src);
 			}
 		  	$item->video = Input::get('video');
+				$item->link = Input::get('link');
 
 				// Update Properties (before tags)
 				// foreach(Space::itemPropertyArray($item) as $key=>$value) {
@@ -111,6 +112,7 @@ class AdminController extends Controller
 			$item->image_src = Thinker::InstagramImageURL($item->image_src);
 		}
 		$item->video = Input::get('video');
+		$item->link = Input::get('link');
 		$item->tags_str = Input::get('tags_str');
 	    $item->recipients_str = Input::get('recipients_str');
 	    $item->rss = (Input::get('rss') ? true : false);

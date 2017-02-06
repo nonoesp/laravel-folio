@@ -191,6 +191,7 @@ class SpaceController extends Controller
 		foreach(\Input::get('ids') as $id) {
       echo view('space::partial.c-item-li')->with(['item' => Item::find($id)]);
 		}
+
 	}
 
 	public function getFeed(Request $request) {
@@ -238,7 +239,7 @@ class SpaceController extends Controller
                  $item_image = $request->root().$item->image;
              }
 
-			   if ($item->video) {
+			       if ($item->video) {
 	       	     $image = '<p><a href="'.$request->root().'/'.Space::path().$item->slug.'">'
 	       	   	         .'<img src="'.\Thinker::getVideoThumb($item->video)
 	       	   	         .'" alt="'.$item->title.'"></a></p>';
@@ -252,10 +253,16 @@ class SpaceController extends Controller
 	       	   	$image_src = $item_image;
 	       	   }
 
+             // link
+             $URL = \URL::to(Space::path().$item->slug);
+             if($item->link) {
+               $URL = $item->link;
+             }
+
 	           $feed->add(
 	           	$item->title,
 	           	$default_author,
-	           	\URL::to(Space::path().$item->slug),
+	           	$URL,//\URL::to(Space::path().$item->slug),
 	           	$item->published_at,
 	           	\Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']),
 	           	str_replace('<img', '<img width="100%"', $image.\Markdown::convertToHtml($item->text)),

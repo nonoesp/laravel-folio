@@ -24,6 +24,8 @@
 
 			<p>{{ Form::text('video', '', ['placeholder' => 'Video']) }}</p>
 
+			<p>{{ Form::text('link', '', ['placeholder' => 'External Link']) }}</p>
+
 			<p>{{ Form::textarea('text', '', ['placeholder' => 'Text']) }}</p>
 
 			<p>{{ Form::text('published_at', '', ['placeholder' => 'Publishing Date']) }}</p>

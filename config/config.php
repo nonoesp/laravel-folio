@@ -15,6 +15,7 @@ return [
 	'description' => 'A simple web.',
 	'css' => '/nonoesp/space/css/space.css', //
 	'typekit' => '',
+	'google-analytics' => '',
 
 	'cover' => [
 		'title' => '',
