@@ -1,4 +1,3 @@
-
 <?php
 	$admin_path = Space::adminPath();
 	$exit = config('authenticate.exit');
