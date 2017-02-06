@@ -16,6 +16,12 @@ return [
 	'css' => '/nonoesp/space/css/space.css', //
 	'typekit' => '',
 
+	'cover' => [
+		'title' => '',
+		'subtitle' => 'subtitle',
+		'footline' => 'design. code. simplicity.'
+	],
+
 	'footer' => [
 		'hide_credits' => false,
 		'credits_text' => ''

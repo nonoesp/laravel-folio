@@ -1,8 +1,10 @@
 <?php
-	$space_typekit = Config::get('space.typekit');
-	$space_css = Config::get('space.css');
-	if($space_typekit == '') $space_typekit = null;
-	if($space_css == '') $space_css = null;
+	//$space_typekit = config('space.typekit');
+	//$space_css = config('space.css');
+	if(!isset($space_typekit)) { $space_typekit = config('space.typekit'); }
+	$og_title_default = config('space.title');
+	$og_description_default = config('space.description');
+	$og_image_default = config('space.image-src');
 ?>
 
 <!DOCTYPE html>
@@ -11,19 +13,19 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui"/>
-	<title>{{ $site_title or Config::get('space.title') }}</title>
+	<title>{{ $site_title or config('space.title') }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="{{ $space_css or '/nonoesp/space/css/space.css?default' }}">
+	<link rel="stylesheet" type="text/css" href="{{ $space_css or config('space.css') }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-	@if($space_typekit)
+@if($space_typekit)
 	<!--TypeKit-->
 	<script type="text/javascript" src="//use.typekit.net/{{ $space_typekit }}.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-	@endif
+@endif
 
 	<!--Icon-->
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -38,6 +40,32 @@
 	<meta name="apple-mobile-web-app-title" content="{{ config('space.title-short') }}" />
 	<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon.png" />
 	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+
+	<!--Tags-->
+	<meta name="description" content="{{ $og_description or $og_description_default }}" />
+	<link rel="image_src" href="{{ $og_image or $og_image_default }}" />
+
+	<!--Open Object-->
+	<meta property="og:image" content="{{ $og_image or $og_image_default }}" />
+	<meta property="og:title" content="{{ $og_title or $og_title_default }}" />
+	<meta property="og:description" content="{{ $og_description or $og_description_default }}" />
+	<meta property="og:type" content="{{ $og_type or 'profile' }}" />
+	@yield('open_object_metadata')
+
+	<!--RSS Feed-->
+	<link rel="alternate" type="application/atom+xml" href="/{{ config('space.feed.route') }}" />
+{{--
+	<!--Authorship-->
+	<link rel="author" href="https://plus.google.com/+NonoMartínezAlonso" />
+	<link rel="publisher" href="https://plus.google.com/+NonoMartínezAlonso" />
+	<span class="vcard author"><span class="u-hidden" itemprop="name"><a href="https://plus.google.com/+NonoMartínezAlonso?rel=author" rel="author">Nono Martínez Alonso</a></span></span>
+	<meta name="author" content="{{ Config::get('settings.description') }}">
+--}}
+@if(!Auth::check())
+	<!--Google Analytics-->
+	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{{ Config::get('services.analytics') }}', 'auto');ga('send', 'pageview');</script>
+@endif
+@yield('metadata')
 
 </head>
 
