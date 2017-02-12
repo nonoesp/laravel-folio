@@ -7,4 +7,5 @@ class Subscriber extends Model
 {
 	protected $table = 'space_subscribers';
 	protected $fillable = array('id', 'email', 'name', 'source');
+	protected $softDelete = true;
 }

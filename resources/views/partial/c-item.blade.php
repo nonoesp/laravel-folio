@@ -27,14 +27,13 @@
 		$class_categories = '';
 		if($categories = Space::itemCategoryClass($item, 'c-item')) $class_categories = '[ '.$categories.']';
 
-    // Author
-    $user_thumbnail = NULL;
-    $user = NULL;
-    if($item->user_id) {
- 	   $user = User::find($item->user_id);
- 	   $user_thumbnail = View::make('partial.c-user-picture')->with(["user" => $user,
-	  										     		   			 "size" => 36]);
-	}
+		// Author
+		// $user_thumbnail = NULL;
+		// $user = NULL;
+		// if($item->user_id) {
+		// 	$user = User::find($item->user_id);
+		// 	$user_thumbnail = view('partial.c-user-picture')->with(["user" => $user, "size" => 36]);
+		// }
 ?>
 
 <article class="[ grid ] [ c-item ] {{ $class_is_tagged }} {{ $class_specified }} {{ $class_categories }}"><!--
