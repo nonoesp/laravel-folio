@@ -8,7 +8,7 @@ return [
 	'to-be-notified' => 'to be notified.',
 	'load-more' => 'load more',
 	'continue-reading' => 'Continue&nbsp;reading',
-	'receive-our-posts' => 'Receive our essays via e-mail.',
+	'receive-our-posts' => 'Receive our updates via e-mail.',
 
 	// space.subscribe.js
 	'subscribe' => 'Subscribe',
@@ -18,5 +18,5 @@ return [
 
 	'writing' => 'Writing',
 	'about-me' => 'About',
-	
+
 ];

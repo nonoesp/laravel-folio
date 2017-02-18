@@ -8,7 +8,7 @@ return [
 	'to-be-notified' => 'para ser notificado.',
 	'load-more' => 'cargar más',
 	'continue-reading' => 'Continuar&nbsp;leyendo',
-	'receive-our-posts' => 'Recibe nuestras publicaciones.',
+	'receive-our-posts' => 'Recibe nuestras novedades.',
 
 	// space.subscribe.js
 	'subscribe' => 'Suscribirme',
@@ -18,5 +18,5 @@ return [
 
 	'writing' => 'Escritos',
 	'about-me' => 'Acerca de',
-	
+
 ];
