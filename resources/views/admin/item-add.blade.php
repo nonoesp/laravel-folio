@@ -5,7 +5,7 @@
 	if($settings_title == '') {
 		$settings_title = "Space";
 	}
-	$site_title = 'New Item — '.$settings_title;
+	$site_title = 'New Item | '.$settings_title;
 ?>
 
 @section('title', 'New Item')

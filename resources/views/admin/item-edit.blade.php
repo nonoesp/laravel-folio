@@ -2,11 +2,11 @@
 @extends('space::admin.layout')
 
 <?php
-$settings_title = Config::get('space.title');
+$settings_title = config('space.title');
 if($settings_title == '') {
 	$settings_title = "Space";
 }
-	$site_title = 'Editing Item '.$item->id.' — '. $settings_title;
+	$site_title = 'Editing Item '.$item->id.' | '. $settings_title;
 ?>
 
 @section('title', 'Items')

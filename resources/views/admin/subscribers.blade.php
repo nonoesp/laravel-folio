@@ -6,7 +6,7 @@ $settings_title = Config::get('space.title');
 if($settings_title == '') {
 	$settings_title = "Space";
 }
-	$site_title = 'Subscribers — '. $settings_title;
+	$site_title = 'Subscribers | '. $settings_title;
 ?>
 
 @section('title', 'Subscribers')
@@ -34,7 +34,7 @@ if($settings_title == '') {
     @endif
 
     @foreach($subscribers as $subscriber)
-      <p>{{ Html::link('mailto:'.$subscriber->email, $subscriber->email) }}</p>
+      <p>{{ Html::link('mailto:'.$subscriber->email, strtolower($subscriber->email)) }}</p>
     @endforeach
 
   @else
