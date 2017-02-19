@@ -43,7 +43,7 @@
 	  @endif
 
   <div class="[ o-band ]">
-    <div class="[ o-wrap  o-wrap--tiny ]">
+    <div class="[ o-wrap  o-wrap--size-small ]">
 
 	@if(!isset($shouldHideMenu))
 		{!! view('space::admin.c-menu') !!}

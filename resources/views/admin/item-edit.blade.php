@@ -153,7 +153,7 @@ methods: {
 				<strong>Properties</strong>
 			</div>
 
-			<div v-for="property in properties" class="[ grid__item one-whole ]">
+			<div v-for="property in properties" class="[ grid__item one-whole ] [ c-admin__property ]">
 
 					<div class="[ grid grid--narrow ]">
 						<div class="[ grid__item ]
@@ -188,9 +188,14 @@ methods: {
 						</div><!--
 						--><div @click="delete_property(property)"
 						v-bind:data-id="property.id"
-						class="[ grid__item one-twelfth  ] [ u-text-align--right ]" style="-font-size:15px;-letter-spacing:-0.084em">
-							<span class="[ u-cursor-pointer ]">X</span>
-							<span v-if="property.is_updating">...</span>
+						class="[ grid__item one-twelfth ] [ u-opacity--low ]">
+							<span class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+								<i class="fa fa-trash-o"></i>
+							</span>
+							<span v-if="property.is_updating">
+								<i class="fa fa-refresh fa-spin fa-fw"></i>
+								<span class="sr-only">Loading...</span>
+							</span>
 						</div><!--
 			 --></div>
 
