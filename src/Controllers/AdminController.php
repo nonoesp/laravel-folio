@@ -19,8 +19,19 @@ class AdminController extends Controller
 	}
 
 	public function getItemList($tag = null) {
-		$items = Item::withTrashed()->orderBy('published_at', 'DESC')->get();
-		return View::make('space::admin.item-list')->with(['items' => $items, 'tag' => $tag]);
+
+		$existing_tags = Item::existingTags();
+		if($tag) {
+			$items = Item::withTrashed()->withAnyTag([$tag])->orderBy('published_at', 'DESC')->get();
+		} else {
+			$items = Item::withTrashed()->orderBy('published_at', 'DESC')->get();
+		}
+
+		return View::make('space::admin.item-list')->with([
+			'items' => $items,
+			'tag' => $tag,
+			'existing_tags' => $existing_tags
+		]);
 	}
 
 	public function ItemEdit(Request $request, $id) {
