@@ -66,15 +66,16 @@
 <body>
 
 	{{-- Header --}}
-		<?php if(!isset($header_hidden)){ $header_hidden = false; } ?>
-		<?php if(!isset($header_view)){ $header_view = config('space.header.view'); } ?>
-		<?php if(!isset($header_classes)){ $header_classes = config('space.header.classes');; } ?>
-		<?php if(!isset($header_data)){ $header_data = []; } ?>
-		@if(!$header_hidden)
-		{!! view($header_view)->with(['classes' => $header_classes,
-																  'data' => $header_data
-																	]) !!}
-	  @endif
+	<?php if(!isset($header_hidden)){ $header_hidden = false; } ?>
+	<?php if(!isset($header_view)){ $header_view = config('space.header.view'); } ?>
+	<?php if(!isset($header_classes)){ $header_classes = config('space.header.classes');; } ?>
+	<?php if(!isset($header_data)){ $header_data = []; } ?>
+	@if(!$header_hidden)
+	{!! view($header_view)->with([
+		'classes' => $header_classes,
+		'data' => $header_data
+	]) !!}
+	@endif
 
 @yield('content')
 

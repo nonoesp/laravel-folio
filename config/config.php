@@ -36,7 +36,14 @@ return [
 
 	'header' => [
 			'view' => 'space::partial.c-header',
-			'classes' => ['white', 'absolute']
+			'classes' => ['white', 'absolute'],
+			'data' => []
+		],
+
+	'admin-header' => [
+			'view' => 'space::partial.c-header',
+			'classes' => ['white', 'absolute'],
+			'data' => []
 		],
 
 	'media_links' => [

@@ -1,10 +1,8 @@
 <?php
-	$space_typekit = Config::get('space.typekit');
-	$space_css = Config::get('space.css');
+	$space_typekit = config('space.typekit');
+	$space_css = config('space.css');
 	if($space_typekit == '') $space_typekit = null;
 	if($space_css == '') $space_css = null;
-	$header_view = 'space::partial.c-header';
-	$header_classes = ['relative'];
 ?>
 
 <!DOCTYPE html>
@@ -32,18 +30,19 @@
 <body>
 
 	{{-- Header --}}
-		<?php if(!isset($header_hidden)){ $header_hidden = false; } ?>
-		<?php if(!isset($header_view)){ $header_view = Config::get('space.header.view'); } ?>
-		<?php if(!isset($header_classes)){ $header_classes = Config::get('space.header.classes'); } ?>
-		<?php if(!isset($header_data)){ $header_data = []; } ?>
-		@if(!$header_hidden)
-		{!! view($header_view)->with(['classes' => $header_classes,
-																  'data' => $header_data
-																	]) !!}
-	  @endif
+	<?php if(!isset($header_hidden)){ $header_hidden = false; } ?>
+	<?php if(!isset($header_view)){ $header_view = config('space.admin-header.view'); } ?>
+	<?php if(!isset($header_classes)){ $header_classes = config('space.admin-header.classes');; } ?>
+	<?php if(!isset($header_data)){ $header_data = []; } ?>
+	@if(!$header_hidden)
+	{!! view($header_view)->with([
+		'classes' => $header_classes,
+		'data' => $header_data
+	]) !!}
+	@endif
 
-  <div class="[ o-band ]">
-    <div class="[ o-wrap  o-wrap--size-small ]">
+  <div class="[ o-band ] [ palm--u-pad-t-4x ]">
+    <div class="[ o-wrap o-wrap--size-small ]">
 
 	@if(!isset($shouldHideMenu))
 		{!! view('space::admin.c-menu') !!}

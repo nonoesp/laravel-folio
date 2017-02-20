@@ -16,6 +16,7 @@
     $og_description = config('space.description');
     $header_view = config('space.header.view');
     $header_classes = config('space.header.classes');
+    $header_data = config('space.header.data');
 
     // Footer credits
     $footer_credits = config('space.footer-credits');
