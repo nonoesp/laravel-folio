@@ -25,7 +25,7 @@
     }
 
     // 2. Defaults Cover
-    $cover_subtitle = Thinker::array_rand_value(['Subtitle 01', 'Subtitle 02']);
+    $cover_subtitle = Thinker::array_rand_value(config('space.cover.subtitles'));
     $cover_classes_title_b = '';
     $cover_image = '';
     $cover_classes = '';

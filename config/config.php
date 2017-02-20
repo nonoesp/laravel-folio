@@ -13,14 +13,17 @@ return [
 	'title' => 'Space',
 	'title-short' => 'Spc',
 	'description' => 'A simple web.',
+	'image_src' => 'http://domain.com/img/image_src.jpg',
+
 	'css' => '/nonoesp/space/css/space.css', //
+
 	'typekit' => '',
 	'google-analytics' => '',
 
 	'cover' => [
 		'title' => '',
-		'subtitle' => 'subtitle',
-		'footline' => 'design. code. simplicity.'
+		'subtitles' => ['subtitle 01','subtitle 02'],
+		'footline' => 'a simple web.'
 	],
 
 	'footer' => [

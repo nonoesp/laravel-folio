@@ -54,13 +54,7 @@
 
 	<!--RSS Feed-->
 	<link rel="alternate" type="application/atom+xml" href="/{{ config('space.feed.route') }}" />
-{{--
-	<!--Authorship-->
-	<link rel="author" href="https://plus.google.com/+NonoMartínezAlonso" />
-	<link rel="publisher" href="https://plus.google.com/+NonoMartínezAlonso" />
-	<span class="vcard author"><span class="u-hidden" itemprop="name"><a href="https://plus.google.com/+NonoMartínezAlonso?rel=author" rel="author">Nono Martínez Alonso</a></span></span>
-	<meta name="author" content="{{ Config::get('settings.description') }}">
---}}
+
 @if(!Auth::check() && config('space.google-analytics'))
 	<!--Google Analytics-->
 	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{{ config('space.google-analytics') }}', 'auto');ga('send', 'pageview');</script>
@@ -73,8 +67,8 @@
 
 	{{-- Header --}}
 		<?php if(!isset($header_hidden)){ $header_hidden = false; } ?>
-		<?php if(!isset($header_view)){ $header_view = Config::get('space.header.view'); } ?>
-		<?php if(!isset($header_classes)){ $header_classes = Config::get('space.header.classes');; } ?>
+		<?php if(!isset($header_view)){ $header_view = config('space.header.view'); } ?>
+		<?php if(!isset($header_classes)){ $header_classes = config('space.header.classes');; } ?>
 		<?php if(!isset($header_data)){ $header_data = []; } ?>
 		@if(!$header_hidden)
 		{!! view($header_view)->with(['classes' => $header_classes,

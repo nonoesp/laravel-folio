@@ -5,8 +5,8 @@
 	// Settings
 	$header_classes = 'c-header--relative';
 
-	// User Articles
-	$articles = Article::where('user_id', '=', $user->id)->orderBy('id', 'DESC')->take(5)->get();
+	// User Items
+	$items = Item::where('user_id', '=', $user->id)->orderBy('id', 'DESC')->take(5)->get();
 
 	$user_thumbnail = view('space::partial.c-user-picture')->with(["user" => $user,
 	         													  	 "size" => 75,
@@ -21,7 +21,7 @@
   <div class="[ o-band ]  [ u-border-bottom  -u-no-padding-bottom ]">
     <div class="[ o-wrap  o-wrap--standard  o-wrap--portable-tiny ]">
 
-    	<article class="[ grid ]  [ c-article ]"><!--
+    	<article class="[ grid ]  [ c-item ]"><!--
 
     	--><div class="[ grid__item  one-whole ]  [ -u-border  u-text-align--center ]">
 
@@ -38,9 +38,9 @@
          		<h1>{!! $user->name !!}</h1>
 
          		@if($user->title)
-	         		<div class=" [ c-article__meta  c-article__meta--closer ]">
-	         			<div class="c-article__inline-container">
-	         				<div class="c-article__inline-detail--medium">
+	         		<div class=" [ c-item__meta  c-item__meta--closer ]">
+	         			<div class="c-item__inline-container">
+	         				<div class="c-item__inline-detail--medium">
 	         					{!! $user->title !!}
 	         				</div>
 	         			</div>
@@ -52,20 +52,20 @@
 	   				<br>
 	   			@endif
 
-	   			@if(count($articles))
+	   			@if(count($items))
 	   				<h2>Latest Writings</h2>
-	   				@foreach($articles as $article)
+	   				@foreach($items as $item)
 
    						<?php
    					    	// Date
-							$date = new Date($article->published_at);
+							$date = new Date($item->published_at);
 							$date = ucWords(substr($date->format('F'), 0, 3).$date->format(' j, Y'));
 						?>
 
-	   					{!! Html::link(Space::path().$article->slug, $article->title, ['class' => 'u-font-size--b']) !!}
+	   					{!! Html::link(Space::path().$item->slug, $item->title, ['class' => 'u-font-size--b']) !!}
 
-   						<div class="c-article__inline-container">
-   							<div class="c-article__inline-detail">
+   						<div class="c-item__inline-container">
+   							<div class="c-item__inline-detail">
    								{!! $date !!}
    							</div>
    						</div>
