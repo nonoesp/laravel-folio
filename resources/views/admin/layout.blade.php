@@ -30,10 +30,10 @@
 <body>
 
 	{{-- Header --}}
-	<?php if(!isset($header_hidden)){ $header_hidden = false; } ?>
+	<?php if(!isset($header_hidden)){ $header_hidden = config('space.admin-header.hidden'); } ?>
 	<?php if(!isset($header_view)){ $header_view = config('space.admin-header.view'); } ?>
-	<?php if(!isset($header_classes)){ $header_classes = config('space.admin-header.classes');; } ?>
-	<?php if(!isset($header_data)){ $header_data = []; } ?>
+	<?php if(!isset($header_classes)){ $header_classes = config('space.admin-header.classes'); } ?>
+	<?php if(!isset($header_data)){ $header_data = config('space.admin-header.data'); } ?>
 	@if(!$header_hidden)
 	{!! view($header_view)->with([
 		'classes' => $header_classes,
@@ -41,7 +41,7 @@
 	]) !!}
 	@endif
 
-  <div class="[ o-band ] [ palm--u-pad-t-4x ]">
+  <div class="[ o-band ] [ u-pad-t-4x u-pad-b-4x ]">
     <div class="[ o-wrap o-wrap--size-small ]">
 
 	@if(!isset($shouldHideMenu))
