@@ -22,7 +22,7 @@
        <p class="[ js--subscribe__label ]{{--
              --}}[ u-font-size--a u-opacity--half u-select-none ]{{--
              --}}[ u-text-align--portable-center ]">
-           {{ trans('space::base.to_receive_our_updates') }}
+           {{ trans('space::base.receive-our-posts') }}
        </p>
 
     </div>
