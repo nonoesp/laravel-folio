@@ -20,15 +20,42 @@ if($settings_title == '') {
 <script type="text/javascript">
 Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
+var debounced_property_sync = _.debounce(
+	function(property, model) {
+		console.log("ajax property " + property.id);
+		var data = property;
+		property.is_updating = true;
+		model.$forceUpdate();
+		model.$http.post('/api/property/update', data).then((response) => {
+				// success
+				property.is_updating = false;
+				model.$forceUpdate();
+			}, (response) => {
+				// error
+			});
+	}, 500);
+
+var editing_property = -1;
+
 var admin = new Vue({
 el: '.c-admin',
 data: {
-	message: 'nono.ma',
 	item: '',
 	properties: '',
 	timers: {},
+	properties_changed: false,
 	styleObject: {
 		color: 'red'
+	}
+},
+watch: {
+	properties: {
+		handler: function(value, old) {
+			if (old != "") {
+				this.properties_changed = true;
+			}
+		},
+		deep: true
 	}
 },
 computed: {
@@ -40,20 +67,17 @@ methods: {
 	set_updating: function(property) {
 		property.is_updating = true;
 	},
-	sync_properties: _.debounce(
-		function(property) {
-			console.log('sync_properties');
-			var data = property;
-			property.is_updating = true;
-			this.$forceUpdate();
-			this.$http.post('/api/property/update', data).then((response) => {
-					// success
-					property.is_updating = false;
-					this.$forceUpdate();
-				}, (response) => {
-					// error
-				});
-	}, 500),
+	sync_properties: function(property) {
+		if(this.properties_changed == false) {
+			return;
+		}
+		if(editing_property != -1 && property.id != editing_property) {
+			debounced_property_sync.flush();
+		}
+		editing_property = property.id;
+		debounced_property_sync(property, this);
+		this.properties_changed = false;
+	},
 	delete_property: function(property) {
 		this.$http.post('/api/property/delete', {id: property.id}).then((response) => {
 				// success
