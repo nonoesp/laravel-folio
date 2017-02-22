@@ -20,7 +20,10 @@ class AdminController extends Controller
 
 	public function getItemList($tag = null) {
 
-		$existing_tags = Item::existingTags();
+		$existing_tags = Item::existingTags()->sortBy(function($item) {
+			return -$item->count;
+		});
+		
 		if($tag) {
 			$items = Item::withTrashed()->withAnyTag([$tag])->orderBy('published_at', 'DESC')->get();
 		} else {
