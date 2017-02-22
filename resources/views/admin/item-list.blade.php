@@ -19,7 +19,7 @@
 		<ul>
 		@foreach($existing_tags as $tag)
 			<a href="/{{ config('space.admin-path-prefix')."/items/$tag->slug" }}">
-				<li>{{$tag->slug}} ({{$tag->count}})</li>
+				<li>{{$tag->slug}} · {{$tag->count}}</li>
 			</a>
 		@endforeach
 		<ul>
