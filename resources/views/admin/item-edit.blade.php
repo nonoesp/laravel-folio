@@ -22,7 +22,6 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('con
 
 var debounced_property_sync = _.debounce(
 	function(property, model) {
-		console.log("ajax property " + property.id);
 		var data = property;
 		property.is_updating = true;
 		model.$forceUpdate();
