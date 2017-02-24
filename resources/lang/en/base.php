@@ -12,7 +12,7 @@ return [
 
 	// space.subscribe.js
 	'subscribe' => 'Subscribe',
-  'to_receive_our_updates' => 'Receive our essays via email.',
+  'to_receive_our_updates' => 'Receive our updates via e-mail.',
   'email_is_not_valid' => 'Something is not right with that email.',
   'thanks_for_subscribing' => 'Thanks for subscribing!',
 
