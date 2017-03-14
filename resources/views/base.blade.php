@@ -93,10 +93,11 @@
             $cover_image = $item->image;
             $cover_classes .= 'is-faded is-fullscreen';
             //$header_view = 'space::partial.c-header';
-            $header_classes = ['absolute', 'borderless'];
+            $header_classes = ['absolute', 'borderless', 'white'];
             $header_data = [
               'is_media_hidden' => true,
-              'is_navigation_hidden' => true
+              'is_navigation_hidden' => true,
+              'color' => 'white'
             ];
         }
     }
