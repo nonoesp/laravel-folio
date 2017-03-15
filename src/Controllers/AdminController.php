@@ -108,7 +108,10 @@ class AdminController extends Controller
 			$item->save();
 		}
 
-		return View::make('space::admin.item-edit')->withItem($item);
+		return view('space::admin.item-edit', [
+			'item' => $item,
+			'templates' => Space::templates()
+		]);
 	}
 
 	public function getItemCreate() {

@@ -7,6 +7,7 @@
  use DB;
  use Item, Property; // Must be defined in your aliases
  use Form;
+ use Thinker;
 
 class Space {
 
@@ -162,6 +163,40 @@ class Space {
       }
     }
     return $matching_properties;
+  }
+
+  public static function templates() {
+
+    echo '<br><br>';
+
+    $templates = [];
+    $template_paths = [];
+
+    // Get template full paths
+    if($config_paths = config('space.template-paths')) {
+      foreach($config_paths as $name=>$dir) {
+        //$name.' · resources/views/'.$dir
+        $template_paths[$name] = resource_path().'/views/'.$dir;
+      }
+    }
+    //vendor/nonoesp/space/resources/views/template
+    $template_paths['Space'] = base_path().'/vendor/nonoesp/space/resources/views/template';
+
+    // Get template files from directories
+    foreach($template_paths as $name=>$path) {
+      $files = [];
+      foreach(Thinker::filesFrom($path) as $key=>$file) {
+        $template_name = str_replace('.blade.php','',$file);
+        $files[$template_name] = ucwords(strtolower(str_replace("-"," ",$template_name).' template'));
+      }
+      if(count($files)) {
+        $templates[$name] = $files;
+      }
+    }
+
+    $templates[null] = ucwords(strtolower('default template'));
+
+    return $templates;
   }
 
 }

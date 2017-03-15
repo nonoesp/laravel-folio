@@ -172,33 +172,6 @@ methods: {
 
 			{{-- Template Drop-down --}}
 
-			<?php
-			$templates_custom = Thinker::filesFrom(resource_path().'/views/templates');
-		  $templates_space = Thinker::filesFrom(base_path().'/vendor/nonoesp/space/resources/views/templates');
-
-			$templates = [];
-
-			if(count($templates_custom)) {
-				$array_custom = [];
-				foreach($templates_custom as $file){
-			    $name = str_replace('.blade.php','',$file);
-					$array_custom[$name] = ucwords(strtolower($name.' template'));
-			  }
-				$templates['Custom Templates'] = $array_custom;
-			}
-
-			if(count($templates_space)) {
-				$array_space = [];
-				foreach($templates_space as $file){
-			    $name = str_replace('.blade.php','',$file);
-					$array_space[$name] = ucwords(strtolower($name.' template'));
-			  }
-				$templates['Space Templates'] = $array_space;
-			}
-
-			$templates[null] = ucwords(strtolower('default template'));
-			?>
-
 			<div class="[ grid__item ] [ one-whole ]">
 				<p>
 					{{ Form::select('template', $templates, $item->template) }}
