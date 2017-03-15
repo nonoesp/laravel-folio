@@ -12,6 +12,11 @@
 @stop
 
 <?php
+    // keep pre-set from child views
+    if(isset($header_data)) {
+      $keep_header_data = $header_data;
+    }
+
     // $space_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
     // $tag
 
@@ -120,6 +125,12 @@
     }
 
     $og_title = $site_title;
+
+    if(isset($keep_header_data)) {
+      foreach($keep_header_data as $key=>$val) {
+        $header_data[$key] = $val;
+      }
+    }
 ?>
 
       {{----------------------------------------}}

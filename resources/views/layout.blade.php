@@ -77,6 +77,8 @@
 				]) !!}
 	@endif
 
+	<?php if(!isset($cover_active)){ $cover_active = true; }
+	 			if(!isset($cover_hidden)){ $cover_hidden = true; } ?>
 	{{-- Cover --}}
   @if($cover_active and $cover_hidden != true)
       	{!! view('space::partial.c-cover', $cover_data) !!}

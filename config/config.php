@@ -7,7 +7,7 @@ return [
 
 	'view' => [
 			'layout' => 'space::layout', 					// 'space::layout'
-			'items' => 'space::base', 							// 'space::base'
+			'items' => 'space::template._base',		// 'space::base'
 		],
 
 	'title' => 'Space',
