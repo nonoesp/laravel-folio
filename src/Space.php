@@ -199,6 +199,7 @@ class Space {
       $files = [];
       foreach(Thinker::filesFrom($dir['path']) as $key=>$file) {
         $template_name = str_replace('.blade.php','',$file);
+        if($template_name[0] == '_') continue;
         $template_id = $template_name;
         if($name == 'Space') $template_id = '/'.$template_id;
         $template_dir_name = $dir['folder'].'/'.$template_name;

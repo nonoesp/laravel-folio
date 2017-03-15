@@ -172,7 +172,10 @@ class SpaceController extends Controller
 		if($item = Item::whereSlug($slug)->first()) {
 			$item->visits++;
 			$item->save();
-			return view('space::base', ['item' => $item]);
+      if($view = $item->templateView()) {
+        return view($view, ['item' => $item]);
+      }
+			return view('space::template._standard', ['item' => $item]);
 		}
 
 	}

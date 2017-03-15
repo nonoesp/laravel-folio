@@ -1,15 +1,19 @@
 
 @extends(config("space.view.layout"))
 
+@section('scripts')
+    @if(isset($items))
+        <script>
+          @if ($ids)
+            {{ 'ids = '.json_encode($ids).';' }}
+          @endif
+        </script>
+    @endif
+@stop
+
 <?php
-  //{{-- @extends('layout.main') --}}
-    /*
-    / [ space ]
-    /
-    / $space_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
-    / $tag
-    /
-    */
+    // $space_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
+    // $tag
 
     // 1. Defaults
     $site_title = config('space.title');
@@ -26,11 +30,14 @@
     }
 
     // 2. Defaults Cover
-    $cover_subtitle = Thinker::array_rand_value(config('space.cover.subtitles'));
-    $cover_classes_title_b = '';
-    $cover_image = '';
+    $cover_data = config('space.cover.data');
+    $cover_data['title'] = config('space.cover.title');
+    $cover_data['description'] = config('space.cover.footline');
+    $cover_data['subtitle'] = Thinker::array_rand_value(config('space.cover.subtitles'));
+    $cover_data['class'] = 'is-header u-background-grey ';
     $cover_classes = '';
     $cover_active = true;
+    if(!isset($cover_hidden)) $cover_hidden = false;
 
     // 3. Define Item Type
     if(isset($items)) {
@@ -41,11 +48,12 @@
       $space_type = 'EMPTY_TYPE';
     }
 
-    // 4. Single Item Settings
+    // ------------------------------------------------------------------------
+    // (A) Single Item Settings
     if ($space_type == 'SINGLE_WRITING_TYPE') {
 
         // 4.1. General
-        $site_title = $item->title.' — '.config('space.title');
+        $site_title = $item->title.' | '.config('space.title');
         $og_description = Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']);
         $og_type = 'article';
         ?>
@@ -63,6 +71,7 @@
 
         <?php
 
+        // image_src
         if ($item->image_src) {
           $og_image = $item->image_src;
         } else if ($item->image) {
@@ -72,27 +81,23 @@
         }
 
         // 4.2. Cover or not
-        if ($item->image == '') {
+        if ($item->image == '' || $cover_hidden) {
 
             // 4.2.1. Item w/o cover
-            $header_classes = ['borderless'];
             $cover_active = false;
-            $header_data = [
-              //'description' => trans('folio.slogan-writing')
-                'is_media_hidden' => false,
-                //'is_navigation_hidden' => false
-            ];
+            $header_classes = ['borderless'];
+            $header_data['is_media_hidden'] = false;
 
         } else {
 
             // 4.2.2. Item w/ cover
-            $cover_subtitle = $item->title;
+            $cover_data['subtitle'] = $item->title;
+            $cover_data['image'] = $item->image;
+            $cover_data['class'] .= 'is-faded is-fullscreen';
             if(strlen($item->title) > 40) {
-              $cover_classes_title_b = 'c-cover__title-b--small';
+              $cover_data['classes_title_b'] = 'c-cover__title-b--small';
             }
-            $cover_image = $item->image;
-            $cover_classes .= 'is-faded is-fullscreen';
-            //$header_view = 'space::partial.c-header';
+
             $header_classes = ['absolute', 'borderless', 'white'];
             $header_data = [
               'is_media_hidden' => true,
@@ -102,46 +107,29 @@
         }
     }
 
-    // 5. Multiple Item Settings
-    if ($space_type == 'MULTIPLE_WRITING_TYPE') {
+    // ------------------------------------------------------------------------
+    // (B) Multiple Item Settings
+    else if ($space_type == 'MULTIPLE_WRITING_TYPE') {
 
         // Tags
         if (isset($tag)) {
-          $site_title = ucwords($tag).' — '.config('space.title');
+          $site_title = ucwords($tag).' | '.config('space.title');
           $og_description = 'Items tagged with the category '.ucwords($tag);
+          $cover_data['description'] = "Items tagged with $tag";
         }
     }
 
-    // 1. Defaults
     $og_title = $site_title;
-
 ?>
 
-@section('content')
-
-  {{-- Cover --}}
-
-  @if($cover_active)
-
-      {!! view('space::partial.c-cover')
-      ->with([
-        'title' => config('space.cover.title'),
-        'subtitle' => $cover_subtitle,
-        'description' => config('space.cover.footline'),
-        'image' => $cover_image,
-        'classes_title_b' => $cover_classes_title_b,
-        'class' => 'is-header u-background-grey '.$cover_classes
-        ]) !!}
-
-  @endif
-
-  <div class="[ o-band ]
-              [ u-pad-t-5x u-pad-b-1x ]">
-
-      {{-- Items --}}
+      {{----------------------------------------}}
+      {{-- (A) ITEMS  --}}
 
       @if($space_type == 'MULTIPLE_WRITING_TYPE')
 
+        @section('content')
+
+        <div class="[ o-band ] [ u-pad-t-5x u-pad-b-1x ]">
           <div class="[ o-wrap ]" style="max-width: 640px">
 
           @if(isset($items_expected))
@@ -163,40 +151,35 @@
           @endforeach
 
           @if(isset($ids) and count($ids) > 0)
-              {!! view('space::partial.c-load-more')->
-                       with('ids', $ids) !!}
+              {!! view('space::partial.c-load-more', ['ids' => $ids]) !!}
           @endif
 
           </div>
+        </div>
+
+        @stop
 
       @endif
 
-
-      {{-- Item --}}
+      {{--------------------------------}}
+      {{-- (B) ITEM --}}
 
       @if($space_type == 'SINGLE_WRITING_TYPE')
 
+        @section('content')
+
+        <div class="[ o-band ] [ u-pad-t-5x u-pad-b-1x ]">
           <div class="[ o-wrap ]" style="max-width: 640px">
-
-            @if($view = $item->templateView() and view()->exists($item->templateView()))
-
-              {!! view($view, [
-                'item' => $item,
-                'class' => ''
-              ]) !!}
-
-            @else
 
               {!! view('space::partial.c-item', [
                 'item' => $item,
                 'class' => ''
               ]) !!}
 
-            @endif
-
-
-
           </div>
+        </div>
+
+        @stop
 
 @section('metadata')
     <!-- Article -->
@@ -206,23 +189,9 @@
 @endif
 @stop
 
-      @endif
-
-  </div>
-@stop
-
-@section('scripts')
-    @if(isset($items))
-        <script>
-          @if ($ids)
-            {{ 'ids = '.json_encode($ids).';' }}
-          @endif
-        </script>
-    @endif
-@stop
+      @endif {{-- Item endif --}}
+      {{-----------------------------------}}
 
 @section('footer')
-
 	{!! view('space::partial.c-footer') !!}
-
 @stop
