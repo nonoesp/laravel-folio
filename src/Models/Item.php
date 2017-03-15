@@ -27,6 +27,51 @@ class Item extends Model
 	 */
 	//protected $hidden = array('is_', 'remember_token');
 
+
+	public function prev() {
+			if($prev = Item::where('published_at','<', $this->published_at)->
+											 orderBy('published_at', 'DESC')->
+											 first()) {
+				return $prev;
+			}
+			return Item::orderBy('published_at', 'DESC')->
+									 first();
+	}
+
+	public function next() {
+			if($next = Item::where('published_at','>', $this->published_at)->
+											 orderBy('published_at', 'ASC')->
+											 first()) {
+				return $next;
+			}
+			return Item::orderBy('published_at', 'ASC')->
+									 first();
+	}
+
+	public function prevWithAnyTag($tags) {
+			if($prev = Item::withAnyTag($tags)->
+											 where('published_at','<', $this->published_at)->
+											 orderBy('published_at', 'DESC')->
+											 first()) {
+				return $prev;
+			}
+			return Item::withAnyTag($tags)->
+									 orderBy('published_at', 'DESC')->
+									 first();
+	}
+
+	public function nextWithAnyTag($tags) {
+			if($next = Item::withAnyTag($tags)->
+											 where('published_at','>', $this->published_at)->
+											 orderBy('published_at', 'ASC')->
+											 first()) {
+				return $next;
+			}
+			return Item::withAnyTag($tags)->
+									 orderBy('published_at', 'ASC')->
+									 first();
+	}
+
 	public function recipients()
 	{
 		return $this->hasMany('Recipient');
