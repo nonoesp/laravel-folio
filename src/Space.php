@@ -202,7 +202,7 @@ class Space {
         $template_id = $template_name;
         if($name == 'Space') $template_id = '/'.$template_id;
         $template_dir_name = $dir['folder'].'/'.$template_name;
-        $files[$template_id] = ucwords(strtolower(str_replace("-"," ",$template_name).' template')).' · '.$template_id;
+        $files[$template_id] = ucwords(strtolower(str_replace("-"," ",$template_name).' template'));//.' · '.$template_id;
       }
       if(count($files)) {
         $templates[$name] = $files;

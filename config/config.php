@@ -20,6 +20,8 @@ return [
 	'typekit' => '',
 	'google-analytics' => '',
 
+	'templates-path' => 'template', // search for custom templates at /resources/views/{value}
+
 	'cover' => [
 		'title' => '',
 		'subtitles' => ['subtitle 01','subtitle 02'],
