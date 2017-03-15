@@ -3,21 +3,24 @@
   <div class="[ grid__item  one-whole ]  [ c-item__header ]  [ u-text-align--center ]">
 
 	  {{-- Title --}}
-	  @if (isset($isTitleLinked))
-	    <h1>{{ Html::link(Space::path().$item->slug, Thinker::title($item->title)) }}</h1>
-	  @else
-	    <h1>{{ Thinker::title($item->title) }}</h1>
-	  @endif
+    <h1>{{ Thinker::title($item->title) }}</h1>
+    <h1>{{ Thinker::title($item->title) }}</h1>
 
     </div>
 
     <div class="[ grid__item  one-whole ]  [ c-item__body ]">
 
- 		@if ($item_type == 'DEFAULT_ITEM_TYPE')
-			{{-- Cover Image --}}
-			@if ($item->image)
-				<p class="c-item__cover-media"><img src="{{ $item->image }}"></p>
-			@endif
+      @if ($item->image)
+        <p class="c-item__cover-media"><img src="{{ $item->image }}"></p>
+  		@endif
+
+      <p>
+        This dummy template repeats both title and image (if existing) to display that the system is working properly.
+      </p>
+
+      @if ($item->image)
+        <p><img src="{{ $item->image }}"></p>
+  		@endif
 
     </div>
 
