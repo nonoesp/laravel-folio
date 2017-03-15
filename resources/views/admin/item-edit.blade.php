@@ -194,8 +194,9 @@ methods: {
 					$array_space[$name] = ucwords(strtolower($name.' template'));
 			  }
 				$templates['Space Templates'] = $array_space;
-				$templates[null] = ucwords(strtolower('default template'));
 			}
+
+			$templates[null] = ucwords(strtolower('default template'));
 			?>
 
 			<div class="[ grid__item ] [ one-whole ]">
