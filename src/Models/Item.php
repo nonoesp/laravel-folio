@@ -26,7 +26,22 @@ class Item extends Model
 	 * @var array
 	 */
 	//protected $hidden = array('is_', 'remember_token');
+	public function templateView() {
 
+		if(!$this->template) return null;
+
+		$dir = config('space.templates-path');
+		$template_name = str_replace("/","",$this->template);
+		if($this->template[0] == '/') {
+			$dir = 'space::template';
+		}
+
+		$view = $dir.'.'.$template_name;
+
+		//if(view()->exists($view)) {
+			return $view;
+		//}
+	}
 
 	public function prev() {
 			if($prev = Item::where('published_at','<', $this->published_at)->

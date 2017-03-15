@@ -172,7 +172,7 @@ class SpaceController extends Controller
 		if($item = Item::whereSlug($slug)->first()) {
 			$item->visits++;
 			$item->save();
-			return view('space::base')->with('item', $item);
+			return view('space::base', ['item' => $item]);
 		}
 
 	}

@@ -169,18 +169,26 @@ methods: {
 			@endforeach
 
 
-
 			{{-- Template Drop-down --}}
 
 			<div class="[ grid__item ] [ one-whole ]">
 				<p>
 					{{ Form::select('template', $templates, $item->template) }}
 				</p>
+				@if($item->templateView() != null && !view()->exists($item->templateView()))
+					<p>View <i>{{$item->templateView()}}</i> is missing!</p>
+				@endif
 			</div>
+
+
+			{{-- RSS --}}
 
 			<div class="[ grid__item ] [ one-whole ]">
 				<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS</label></p>
 			</div>
+
+
+			{{-- Properties --}}
 
 			<div v-if="properties.length" class="[ grid__item ] [ u-pad-b-1x ]">
 				<strong>Properties</strong>

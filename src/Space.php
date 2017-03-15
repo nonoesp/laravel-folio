@@ -170,31 +170,44 @@ class Space {
     echo '<br><br>';
 
     $templates = [];
+    $templates[null] = ucwords(strtolower('default template'));
+
     $template_paths = [];
 
+    $custom_template_views_folder = ['Custom' => config('space.templates-path')];
+
     // Get template full paths
-    if($config_paths = config('space.template-paths')) {
-      foreach($config_paths as $name=>$dir) {
+    // if($config_paths = config('space.custom-template-views-foldername')) {
+    if($config_paths = $custom_template_views_folder) {
+      foreach($config_paths as $name=>$folder) {
         //$name.' · resources/views/'.$dir
-        $template_paths[$name] = resource_path().'/views/'.$dir;
+        $template_paths[$name] = [
+          'folder' => $folder,
+          'path' => resource_path().'/views/'.$folder,
+        ];
       }
     }
-    //vendor/nonoesp/space/resources/views/template
-    $template_paths['Space'] = base_path().'/vendor/nonoesp/space/resources/views/template';
 
-    // Get template files from directories
-    foreach($template_paths as $name=>$path) {
+    //vendor/nonoesp/space/resources/views/template
+    $template_paths['Space'] = [
+      'folder' => '/template',
+      'path' => base_path().'/vendor/nonoesp/space/resources/views/template',
+    ];
+
+    //Get template files from directories
+    foreach($template_paths as $name=>$dir) {
       $files = [];
-      foreach(Thinker::filesFrom($path) as $key=>$file) {
+      foreach(Thinker::filesFrom($dir['path']) as $key=>$file) {
         $template_name = str_replace('.blade.php','',$file);
-        $files[$template_name] = ucwords(strtolower(str_replace("-"," ",$template_name).' template'));
+        $template_id = $template_name;
+        if($name == 'Space') $template_id = '/'.$template_id;
+        $template_dir_name = $dir['folder'].'/'.$template_name;
+        $files[$template_id] = ucwords(strtolower(str_replace("-"," ",$template_name).' template')).' · '.$template_id;
       }
       if(count($files)) {
         $templates[$name] = $files;
       }
     }
-
-    $templates[null] = ucwords(strtolower('default template'));
 
     return $templates;
   }

@@ -177,9 +177,25 @@
       @if($space_type == 'SINGLE_WRITING_TYPE')
 
           <div class="[ o-wrap ]" style="max-width: 640px">
-              {!! View::make('space::partial.c-item')->
-                      with(['item' => $item,
-                            'class' => '']) !!}
+
+            @if($view = $item->templateView() and view()->exists($item->templateView()))
+
+              {!! view($view, [
+                'item' => $item,
+                'class' => ''
+              ]) !!}
+
+            @else
+
+              {!! view('space::partial.c-item', [
+                'item' => $item,
+                'class' => ''
+              ]) !!}
+
+            @endif
+
+
+
           </div>
 
 @section('metadata')
