@@ -23,7 +23,7 @@ class AdminController extends Controller
 		$existing_tags = Item::existingTags()->sortBy(function($item) {
 			return -$item->count;
 		});
-		
+
 		if($tag) {
 			$items = Item::withTrashed()->withAnyTag([$tag])->orderBy('published_at', 'DESC')->get();
 		} else {
@@ -82,6 +82,9 @@ class AdminController extends Controller
 				// 		['value' => Input::get($key)]
 				// 	);
 				// }
+
+				// Template
+				$item->template = Input::get('template');
 
 				// Tags
 		  	$item->tags_str = Input::get('tags_str');
@@ -233,8 +236,5 @@ class AdminController extends Controller
 		$subscribers = Subscriber::orderBy('id', 'DESC')->get();
 		return view('space::admin.subscribers')->withSubscribers($subscribers);
 	}
-
-
-
 
 }

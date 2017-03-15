@@ -27,7 +27,8 @@ class CreateItemsTable extends Migration
               $table->string('tags_str')->nullable();
               $table->string('slug')->nullable();
               $table->string('slug_title')->nullable();
-              $table->string('link')->nullable();              
+              $table->string('link')->nullable();
+              $table->string('template')->nullable();
               $table->integer('visits')->nullable();
               $table->string('recipients_str', 512)->nullable();
               $table->integer('rss')->nullable();
