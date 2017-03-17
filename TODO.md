@@ -15,3 +15,9 @@ foreach(Space::itemPropertiesWithPrefix($item, 'p') as $property) {
 ```
 
 (And the blade equivalent?)
+
+## Usability
+
+- Admin (better way to arrange and filter items)
+- Admin ajax functionality (e.g. activate-deactivate that can be also activate in templates)
+- Permalink more explicit (visible in all pages and admin)
