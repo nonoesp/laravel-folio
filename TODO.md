@@ -1,7 +1,8 @@
 
 ## TODO
 
-* Move user route inside controller.
+- Collections (maybe through custom proprties, 'collection-tags' : 'sketch')
+* Move user route inside controller. (Research how default Laravel model works.)
 * Test Disqus implementation for comments.
 * Config option to redirect from `/` to `Space::path()`.
 
@@ -21,3 +22,15 @@ foreach(Space::itemPropertiesWithPrefix($item, 'p') as $property) {
 - Admin (better way to arrange and filter items)
 - Admin ajax functionality (e.g. activate-deactivate that can be also activate in templates)
 - Permalink more explicit (visible in all pages and admin)
+
+## DONE
+
+[x] Template directories (search for templates in default and custom)
+[x] Properties callback check matches current state. One call for each field.
+[x] Space: Rename Article class to Item.
+[x] Space: Rename $property→value to $property→key (key, reserved SQL word)
+[x] Space: field name label
+[x] Space: Fix footnotes spacing.
+[x] Space: Expose admin header options in config. (Like normal header.)
+[x] Space: Upgrade to 5.4 (in-process)
+[x] Space: Properties. (Custom properties handled with Vue.js)
