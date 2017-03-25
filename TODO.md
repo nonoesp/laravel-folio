@@ -1,13 +1,17 @@
 
 ## TODO
 
+- [X] explicit slug
+  - relative `this-is-slug` produces `site.com/blog/this-is-slug` (useful for posts, essays, etc.)
+  - absolute `/this-is-slug` produces `site.com/this-is-slug` (useful for projects and collections), we could probably also use `/writing/this-is-slug` to produce `site.com/writing/this-is-slug`
+- [ ] adjust layouts for $item->path() support
+
+---
+
 - Collections (maybe through custom proprties, 'collection-tags' : 'sketch')
 * Move user route inside controller. (Research how default Laravel model works.)
 * Test Disqus implementation for comments.
 * Config option to redirect from `/` to `Space::path()`.
-- explicit slug
-  - relative `this-is-slug` produces `site.com/blog/this-is-slug` (useful for posts, essays, etc.)
-  - absolute `/this-is-slug` produces `site.com/this-is-slug` (useful for projects and collections), we could probably also use `/writing/this-is-slug` to produce `site.com/writing/this-is-slug`
 
 ## Add to README.md
 
