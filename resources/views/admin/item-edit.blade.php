@@ -136,7 +136,7 @@ methods: {
 		Editing Item {{ $item->id }}
 		<a href="/e/{{ Hashids::encode($item->id) }}">
 		<i class="[ fa fa-link fa--social ]"></i></a>
-		<a href="{{ '/'.Space::path().$item->slug }}">Preview</a>
+		<a href="{{ '/'.$item->path() }}">Preview</a>
 	</p>
 
 	<div class="[ c-admin__form ] [ grid ]">

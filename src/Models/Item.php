@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Conner\Tagging\Taggable;
+use Space;
 
 class Item extends Model
 {
@@ -41,6 +42,13 @@ class Item extends Model
 		//if(view()->exists($view)) {
 			return $view;
 		//}
+	}
+
+	public function path() {
+		if($this->slug[0] == "/") {
+			return substr($this->slug, 1, strlen($this->slug)-1);
+		}
+		return Space::path().$this->slug;
 	}
 
 	public function prev() {

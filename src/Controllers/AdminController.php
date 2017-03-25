@@ -47,22 +47,25 @@ class AdminController extends Controller
 				if($item->slug_title != null) {
 					// Slug has been removed, not empty before
 					$item->slug_title = null;
-					$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', Input::get('title'));
+					$item->title = Input::get('title');
+					$item->slug = Thinker::uniqueSlugWithTableAndItem('space_items', $item);
 				} else {
 					// Slug is empty, and was empty before
 					if($item->title != Input::get('title')) {
-						$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', Input::get('title'));
+						$item->title = Input::get('title');
+						$item->slug = Thinker::uniqueSlugWithTableAndItem('space_items', $item);
 					}
 				}
 			} else {
+				$item->slug = Input::get('slug_title');
+
 				if($item->slug_title != Input::get('slug_title')) {
 					// Slug has been edited
 					$item->slug_title = Input::get('slug_title');
-					$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', $item->slug_title);
+				// 	$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', $item->slug_title);
 				}
 			}
 
-				$item->title = Input::get('title');
 		  	$item->published_at = Input::get('published_at');
 		  	$item->image = Input::get('image');
 		  	$item->image_src = Input::get('image_src');
