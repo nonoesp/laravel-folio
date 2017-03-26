@@ -38,8 +38,11 @@ if(Space::isAvailableURI()) {
 	Route::get($path.'tag/{tag}', 'Nonoesp\Space\Controllers\SpaceController@showItemTag');
 	Route::get($path.'{id}', 'Nonoesp\Space\Controllers\SpaceController@showItemWithId')->where('id', '[0-9]+');
 
-	if(Space::isSpaceURI()) { // Check this is an actual item route
-		Route::get($path.'{slug}', 'Nonoesp\Space\Controllers\SpaceController@showItem');
+	if($path_type = Space::isSpaceURI()) { // Check this is an actual item route
+		Route::get($path.'{slug}', 'Nonoesp\Space\Controllers\SpaceController@showItem')->
+					 where('slug', '[A-Za-z\-\/]+');
+		Route::get('{slug}', 'Nonoesp\Space\Controllers\SpaceController@showItem')->
+					 where('slug', '[A-Za-z\-\/]+');
 	}
 
 	// Feed

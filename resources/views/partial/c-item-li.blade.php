@@ -1,6 +1,6 @@
 <?php
 	$date = new Date($item->published_at);
-	$href = '/'.Space::path().$item->slug;
+	$href = '/'.$item->path();
 	$target = "";
 	$class_is_external = '';
 	$source = "";

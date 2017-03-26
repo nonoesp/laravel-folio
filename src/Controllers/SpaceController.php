@@ -169,7 +169,7 @@ class SpaceController extends Controller
 
 	public function showItem($slug) {
 
-		if($item = Item::whereSlug($slug)->first()) {
+		if($item = Item::whereSlug($slug)->first() or $item = Item::whereSlug('/'.$slug)->first() ) {
 			$item->visits++;
 			$item->save();
       if($view = $item->templateView()) {

@@ -94,34 +94,24 @@ class Space {
 	public static function isSpaceURI() {
 
 		$path = Request::path();
-		$slug = $path;
 
 		if($space_path = Space::path()) {
-
-			// Config has path-prefix
-			$URIContainsSpacePathPrefix = count(explode($space_path, $path)) - 1;
-			if($URIContainsSpacePathPrefix) {
+      // path-prefix set in config
+			if(substr($path,0,strlen($space_path)) == $space_path) {
+        // {path-prefix}/{slug}
 				$slug = str_replace($space_path, "", $path);
-			} else {
-				return false;
+        if($item = DB::table('space_items')->whereSlug($slug)->first()) {
+  				return true;
+        }
 			}
-
-			if($item = DB::table('space_items')->whereSlug($slug)->first()) {
-				return true;
-			} else {
-				return false;
-			}
-
-		} else {
-
-			// Config doesn't have path-prefix
-			if($item = DB::table('space_items')->whereSlug($slug)->first()) {
-				return true;
-			} else {
-				return false;
-			}
+		} else if($item = DB::table('space_items')->whereSlug($path)->first()) {
+      // path-prefix = ''
+			return true;
 		}
-
+    if($item = DB::table('space_items')->whereSlug('/'.$path)->first()) {
+      // search for absolute explicit slug
+      return true;
+    }
 		return false;
 	}
 
