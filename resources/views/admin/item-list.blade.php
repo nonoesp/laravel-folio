@@ -147,10 +147,8 @@ methods: {
 			ordered_tags.push(this.tags[i]);
 		}
 		ordered_tags.sort(function(a,b){return parseInt(a.count) < parseInt(b.count);})
-		console.log(ordered_tags);
 		var ordered_tags_object = {};
 		for(var i in ordered_tags) {
-			console.log(ordered_tags[i].slug + ' ' + ordered_tags[i].count);
 			ordered_tags_object[i] = ordered_tags[i];
 		}
 		this.tags = ordered_tags_object;
