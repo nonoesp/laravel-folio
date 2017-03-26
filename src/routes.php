@@ -40,9 +40,9 @@ if(Space::isAvailableURI()) {
 
 	if($path_type = Space::isSpaceURI()) { // Check this is an actual item route
 		Route::get($path.'{slug}', 'Nonoesp\Space\Controllers\SpaceController@showItem')->
-					 where('slug', '[A-Za-z\-\/]+');
+					 where('slug', '[A-Za-z0-9\-\/]+');
 		Route::get('{slug}', 'Nonoesp\Space\Controllers\SpaceController@showItem')->
-					 where('slug', '[A-Za-z\-\/]+');
+					 where('slug', '[A-Za-z0-9\-\/]+');
 	}
 
 	// Feed

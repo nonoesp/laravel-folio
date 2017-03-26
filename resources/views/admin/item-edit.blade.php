@@ -114,7 +114,7 @@ methods: {
 		['name' => 'image_src', 'placeholder' => 'Thumbnail', 'label' => 'Thumbnail'],
 		['name' => 'video', 'placeholder' => 'Video', 'label' => 'Video URL'],
 		['name' => 'link', 'placeholder' => 'External Link', 'label' => 'External Link'],
-		['name' => 'slug_title', 'placeholder' => 'URL (defaults to /'.Space::path().$item->slug.')', 'label' => 'URL Slug'],
+		['name' => 'slug_title', 'placeholder' => 'Explicit URL slug (prefix with / to make absolute, i.e. \'/terms\')', 'label' => 'URL slug'],
 		['name' => 'tags_str', 'placeholder' => 'Tags (e.g. writing, project)', 'label' => 'Tags'],
 		['name' => 'recipients_str', 'placeholder' => 'Recipients (Twitter handles)', 'label' => 'Recipients'],
 	];

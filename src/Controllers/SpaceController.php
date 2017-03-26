@@ -169,7 +169,9 @@ class SpaceController extends Controller
 
 	public function showItem($slug) {
 
-		if($item = Item::whereSlug($slug)->first() or $item = Item::whereSlug('/'.$slug)->first() ) {
+		if($item = Item::whereSlug($slug)->first() or
+       $item = Item::whereSlug('/'.$slug)->first() or
+       $item = Item::whereSlug('/'.Space::path().$slug)->first() ) {
 			$item->visits++;
 			$item->save();
       if($view = $item->templateView()) {
@@ -182,7 +184,10 @@ class SpaceController extends Controller
 
 	public function showItemWithId($id) {
 		$item = Item::withTrashed()->find($id);
-		return \Redirect::to(Space::path().$item->slug);
+    if($item->slug[0] == '/') {
+      return redirect($item->slug);
+    }
+		return redirect(Space::path().$item->slug);
 	}
 
 	public function getItemsWithIds() {
