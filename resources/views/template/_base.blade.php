@@ -90,7 +90,7 @@
 
             // 4.2.1. Item w/o cover
             $cover_active = false;
-            $header_classes = ['borderless'];
+            $header_classes = ['borderless', 'tight'];
             $header_data['is_media_hidden'] = false;
 
         } else {
