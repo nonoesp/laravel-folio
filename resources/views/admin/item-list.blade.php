@@ -15,6 +15,16 @@
     <script type="text/javascript" src="/nonoesp/space/js/vendor.js"></script>
     <script type="text/javascript" src="/nonoesp/space/js/space.js"></script>
 
+		<?php
+		foreach($items as $item) {
+			$item->hidden = false;
+		}
+
+		foreach($existing_tags as $tag) {
+			$tag->selected = false;
+		}
+		?>
+
 <script type="text/javascript">
 Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
@@ -47,15 +57,6 @@ var months = [
 
 var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
-<?php
-foreach($items as $item) {
-	$item->hidden = false;
-}
-foreach($existing_tags as $tag) {
-	$tag->selected = false;
-}
- ?>
-
 var admin = new Vue({
 el: '.c-admin',
 data: {
@@ -74,7 +75,6 @@ watch: {
 				}
 			}
 			this.unfiltered = unfiltered;
-			console.log(this.unfiltered);
 		},
 		deep: true
 	}
@@ -141,18 +141,46 @@ methods: {
 			this.items[i].hidden = false;
 		}
 	},
+	sort_tags: function() {
+		var ordered_tags = [];
+		for(var i in this.tags) {
+			ordered_tags.push(this.tags[i]);
+		}
+		ordered_tags.sort(function(a,b){return parseInt(a.count) < parseInt(b.count);})
+		console.log(ordered_tags);
+		var ordered_tags_object = {};
+		for(var i in ordered_tags) {
+			console.log(ordered_tags[i].slug + ' ' + ordered_tags[i].count);
+			ordered_tags_object[i] = ordered_tags[i];
+		}
+		this.tags = ordered_tags_object;
+	},
 	filter_by_tag: function(tag) {
 		for(var i in this.tags) {
 			this.tags[i].selected = false;
 		}
 		tag.selected = true;
 		for(var i in this.items) {
+			// console.log('----');
 			var item = this.items[i];
 			var tags_str = item.tags_str;
-			var tags = "";
 			if(tags_str != null) {
-				var tags = item.tags_str.replace(" ", "").split(',');
-				item.hidden = !tags.includes(tag.slug);
+				var tags = item.tags_str.split(',');
+				var tags_clean = [];
+				for(var i in tags) {
+					var _tag = tags[i];
+					var loop = true;
+					while(loop) {
+						_original = _tag;
+						_tag = _tag.trim().replace(" ","-");
+						if(_original == _tag) loop = false;
+					}
+					tags_clean.push(_tag);
+					// console.log(_tag);
+				}
+				// console.log('tag.slug: ' + tag.slug);
+				item.hidden = !tags_clean.includes(tag.slug);
+				// console.log('item.hidden: ' + item.hidden);
 			} else {
 				item.hidden = true;
 			}
@@ -160,6 +188,10 @@ methods: {
 	}
 }
 });
+
+admin.sort_tags();
+// setTimeout(function() { admin.sort_tags(); }, 1000);
+
 
 </script>
 
