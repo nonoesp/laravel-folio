@@ -19,4 +19,6 @@ return [
 	'writing' => 'Escritos',
 	'about-me' => 'Acerca de',
 
+	'preview-notification' => 'Está previsualización es solo visible para ti.',
+
 ];

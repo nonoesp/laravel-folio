@@ -19,4 +19,6 @@ return [
 	'writing' => 'Writing',
 	'about-me' => 'About',
 
+	'preview-notification' => 'This preview is only visible to you.',
+
 ];

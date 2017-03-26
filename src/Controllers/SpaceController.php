@@ -10,6 +10,7 @@ use Config;
 use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
 use App;
 use Markdown;
+use Auth;
 
 class SpaceController extends Controller
 {
@@ -167,13 +168,26 @@ class SpaceController extends Controller
 		             	  		]);
 	}
 
-	public function showItem($slug) {
+	public function showItem(Request $request, $slug) {
 
-		if($item = Item::whereSlug($slug)->first() or
-       $item = Item::whereSlug('/'.$slug)->first() or
-       $item = Item::whereSlug('/'.Space::path().$slug)->first() ) {
+		if($item = Item::withTrashed()->whereSlug($slug)->first() or
+       $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
+       $item = Item::withTrashed()->whereSlug('/'.Space::path().$slug)->first() ) {
 			$item->visits++;
 			$item->save();
+
+      if($item->trashed()) {
+        if(Auth::check()) {
+          // private and visible (auth ok)
+          $request->session()->flash('notification', trans('space::base.preview-notification'));
+        } else {
+          // private and hidden (no auth)
+          return response()->view('errors.404', [], 404);
+        }
+      } else {
+        // public
+      }
+
       if($view = $item->templateView()) {
         return view($view, ['item' => $item]);
       }

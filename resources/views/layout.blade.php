@@ -65,6 +65,10 @@
 
 <body>
 
+	@if($notification = Request::session()->get('notification'))
+		{!! view('space::partial.o-notification', ['notification' => $notification]) !!}
+	@endif
+
 	{{-- Header --}}
 	<?php if(!isset($header_hidden)){ $header_hidden = false; }
 				if(!isset($header_view)){ $header_view = config('space.header.view'); }
@@ -77,9 +81,9 @@
 				]) !!}
 	@endif
 
+	{{-- Cover --}}
 	<?php if(!isset($cover_active)){ $cover_active = true; }
 	 			if(!isset($cover_hidden)){ $cover_hidden = true; } ?>
-	{{-- Cover --}}
   @if($cover_active and $cover_hidden != true)
       	{!! view('space::partial.c-cover', $cover_data) !!}
   @endif

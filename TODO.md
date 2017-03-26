@@ -7,7 +7,7 @@
 
 ---
 
-- Collections (maybe through custom proprties, 'collection-tags' : 'sketch')
+- Collections (maybe through custom properties, 'collection-tags' : 'sketch')
 * Move user route inside controller. (Research how default Laravel model works.)
 * Test Disqus implementation for comments.
 * Config option to redirect from `/` to `Space::path()`.
