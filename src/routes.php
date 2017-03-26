@@ -88,6 +88,9 @@ Route::group(['middleware' => Config::get("space.middlewares-admin")], function(
 	Route::post('/api/property/delete', 'Nonoesp\Space\Controllers\AdminController@postPropertyDelete');
 	Route::post('/api/property/create', 'Nonoesp\Space\Controllers\AdminController@postPropertyCreate');
 
+	Route::post('/api/item/update', 'Nonoesp\Space\Controllers\AdminController@postItemUpdate');
+	Route::post('/api/item/delete', 'Nonoesp\Space\Controllers\AdminController@postItemDelete');
+	Route::post('/api/item/restore', 'Nonoesp\Space\Controllers\AdminController@postItemRestore');
 
 }); // close space admin
 

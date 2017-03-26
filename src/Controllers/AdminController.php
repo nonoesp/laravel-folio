@@ -236,6 +236,41 @@ class AdminController extends Controller
 		]);
 	}
 
+	// Items API
+
+	function postItemUpdate() {
+		$item = Item::withTrashed()->find(Input::get('id'));
+		$update = Input::get('update');
+		foreach($update as $key=>$value) {
+			$item[$key] = $value;
+		}
+		$item->save();
+		return response()->json([
+				'success' => true,
+				'item' => $item,
+				'update'=>$update
+		]);
+	}
+
+	function postItemDelete() {
+		$item = Item::withTrashed()->find(Input::get('id'));
+		$item->delete();
+		// $item->save();
+		return response()->json([
+				'success' => true,
+				'item' => $item
+		]);
+	}
+
+	function postItemRestore() {
+		$item = Item::withTrashed()->find(Input::get('id'));
+		$item->restore();
+		return response()->json([
+				'success' => true,
+				'item' => $item
+		]);
+	}
+
 	// Subscribers
 
 	public function getSubscribers() {
