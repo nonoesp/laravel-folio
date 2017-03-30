@@ -24,7 +24,12 @@ Route::group(['middleware' => Config::get("space.middlewares")], function () {
 	$path = Space::path();
 
 	Route::get('/e/{hash}', function($hash) use ($path) {
-		return Redirect::to($path.Hashids::decode($hash)[0]);
+		$decode = Hashids::decode($hash);
+		if(count($decode)) {
+			session(['temporary-token'=>true]);
+			return Redirect::to($path.$decode[0]);
+		}
+		return response()->view('errors.404', [], 404);
 	});
 
 if(Space::isAvailableURI()) {

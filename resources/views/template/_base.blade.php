@@ -16,6 +16,9 @@
     if(isset($header_data)) {
       $keep_header_data = $header_data;
     }
+    if(isset($header_classes)) {
+      $keep_header_classes = $header_classes;
+    }
 
     // $space_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
     // $tag
@@ -130,6 +133,9 @@
       foreach($keep_header_data as $key=>$val) {
         $header_data[$key] = $val;
       }
+    }
+    if(isset($keep_header_classes)) {
+      $header_classes = $keep_header_classes;
     }
 ?>
 

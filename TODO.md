@@ -1,8 +1,8 @@
 
 ## TODO
 
-
-- [ ] Template for page without header (like about).
+- [ ] Add item translations in admin.
+- [ ] Add `info` template for page without header (like about) from `nono.ma`.
 - [ ] Select option for blog-or-not. (Pages and projects could be excluded from 'blog' feed.)
 
 ---

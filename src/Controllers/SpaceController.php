@@ -176,9 +176,10 @@ class SpaceController extends Controller
 			$item->visits++;
 			$item->save();
 
-      if($item->trashed()) {
-        if(Auth::check()) {
+      if($item->trashed() or \Date::now() < $item->published_at) {
+        if(($user = Auth::user() and $user->is_admin) or session('temporary-token')) {
           // private and visible (auth ok)
+          session(['temporary-token' => false]);
           $request->session()->flash('notification', trans('space::base.preview-notification'));
         } else {
           // private and hidden (no auth)

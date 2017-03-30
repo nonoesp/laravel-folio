@@ -157,8 +157,6 @@ class Space {
 
   public static function templates() {
 
-    echo '<br><br>';
-
     $templates = [];
     $templates[null] = ucwords(strtolower('default template'));
 
