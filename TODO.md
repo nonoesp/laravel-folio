@@ -3,7 +3,8 @@
 
 - [ ] Add item translations in admin.
 - [ ] Add `info` template for page without header (like about) from `nono.ma`.
-- [ ] Select option for blog-or-not. (Pages and projects could be excluded from 'blog' feed.)
+- [ ] Select option for blog-or-not. (Pages and projects could be excluded from 'blog' feed.) Maybe categories?
+- [ ] amazon set option, notification of new subscribers via e-mail
 
 ---
 
