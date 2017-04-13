@@ -1,3 +1,4 @@
+
 <footer class="[ c-footer ]">
 
 <div class="[ grid ]">
@@ -7,6 +8,14 @@
     {{ Form::open(array('class' => '[ s-form-subscribe ] [ js--subscribe__form ]', 'url' => Config::get('services.mailchimp.long'))) }}
 
     <div class="[ grid ] [ grid--narrow ]">
+
+           @if(isset($source))
+               {{ Form::hidden('source', $source, ['class' => 'js--subscribe__source']) }}
+           @endif
+
+           @if(isset($campaign))
+               {{ Form::hidden('campaign', $campaign, ['class' => 'js--subscribe__campaign']) }}
+           @endif
 
            <div class="[ grid__item desk--two-thirds ]">
                {{ Form::email('email', null, ['placeholder' => 'Email', 'class' => '[ js--subscribe__email ] [ u-case-input-lower ]', 'name' => 'EMAIL']) }}

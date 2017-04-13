@@ -12,18 +12,23 @@ class SubscriptionController extends Controller
   public function postSubscriber()
   {
     $email = \Input::get('email');
-    // $context = \Input::get('context');
-    // if($context != '') {
-    //   $email .= $context;
-    // }
+    $name = \Input::get('name');
+    $source = \Input::get('source');
+    $campaign = \Input::get('campaign');
 
     $subscriber = new Subscriber();
     $subscriber->email = $email;
+    $subscriber->name = $name;
+    $subscriber->source = $source;
+    $subscriber->campaign = $campaign;
     $subscriber->save();
 
       return response()->json([
           'success' => true,
-          'email' => $subscriber->email
+          'email' => $subscriber->email,
+          'source' => $subscriber->source,
+          'name' => $subscriber->name,
+          'campaign' => $subscriber->campaign
       ]);
   }
 }

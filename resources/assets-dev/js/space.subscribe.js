@@ -13,13 +13,19 @@
   event.preventDefault();
 
   var email = $(".js--subscribe__email").val();
+  var source = $(".js--subscribe__source").val();
+  var campaign = $(".js--subscribe__campaign").val();
 
   if (FormValidator.prototype._hooks.valid_email({value: email})) {
 
     $.ajax({
           url: '/subscriber/create',
           type: 'POST',
-          data: {email: $('.js--subscribe__email').val()},
+          data: {
+            email: email,
+            source: source,
+            campaign: campaign
+          },
           dataType: "json",
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

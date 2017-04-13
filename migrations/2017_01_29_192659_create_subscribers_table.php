@@ -20,12 +20,14 @@ class CreateSubscribersTable extends Migration
                $table->string('email')->nullable();
                $table->string('name')->nullable();
                $table->string('source')->nullable()->default('web');
+               $table->string('campaign')->nullable();
        });
 
        $subscriber = new Subscriber();
-       $subscriber->name = "Nono Martinez Alonso";
        $subscriber->email = "mail@domain.com";
-       $subscriber->source = "Teaser";
+       $subscriber->name = "Nono Martinez Alonso";
+       $subscriber->source = "suggestive-drawing";
+       $subscriber->campaign = "thesis";
        $subscriber->save();
 
      }
