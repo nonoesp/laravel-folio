@@ -13,7 +13,7 @@ class CreateSubscribersTable extends Migration
      */
      public function up() {
 
-       Schema::create('space_subscribers', function (Blueprint $table) {
+       Schema::create(Space::table('subscribers'), function (Blueprint $table) {
                $table->increments('id');
                $table->timestamps();
                $table->softDeletes();
@@ -37,6 +37,6 @@ class CreateSubscribersTable extends Migration
       */
      public function down()
      {
-         Schema::drop('space_subscribers');
+         Schema::drop(Space::table('subscribers'));
      }
  }

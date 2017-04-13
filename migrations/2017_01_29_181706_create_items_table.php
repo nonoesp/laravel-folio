@@ -13,7 +13,7 @@ class CreateItemsTable extends Migration
      */
     public function up() {
 
-      Schema::create('space_items', function (Blueprint $table) {
+      Schema::create(Space::table('items'), function (Blueprint $table) {
               $table->increments('id');
               $table->integer('user_id')->nullable();
               $table->timestamps();
@@ -45,6 +45,6 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('space_items');
+        Schema::drop(Space::table('items'));
     }
 }

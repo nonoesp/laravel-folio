@@ -5,8 +5,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Property extends Model
 {
-	protected $table = 'space_item_properties';
+	protected $table;
 	protected $fillable = array('id', 'item_id', 'label', 'name', 'value');
+
+	public function __construct() {
+	    parent::__construct();
+	    $this->table = config('space.db-prefix').'item_properties';
+	}
 
 	public function item()
 	{

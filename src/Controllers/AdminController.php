@@ -48,12 +48,12 @@ class AdminController extends Controller
 					// Slug has been removed, not empty before
 					$item->slug_title = null;
 					$item->title = Input::get('title');
-					$item->slug = Thinker::uniqueSlugWithTableAndItem('space_items', $item);
+					$item->slug = Thinker::uniqueSlugWithTableAndItem(Space::table('items'), $item);
 				} else {
 					// Slug is empty, and was empty before
 					if($item->title != Input::get('title')) {
 						$item->title = Input::get('title');
-						$item->slug = Thinker::uniqueSlugWithTableAndItem('space_items', $item);
+						$item->slug = Thinker::uniqueSlugWithTableAndItem(Space::table('items'), $item);
 					}
 				}
 			} else {
@@ -62,7 +62,7 @@ class AdminController extends Controller
 				if($item->slug_title != Input::get('slug_title')) {
 					// Slug has been edited
 					$item->slug_title = Input::get('slug_title');
-				// 	$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', $item->slug_title);
+				// 	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Space::table('items'), $item->slug_title);
 				}
 			}
 
@@ -141,9 +141,9 @@ class AdminController extends Controller
 	    $item->rss = (Input::get('rss') ? true : false);
 	    $item->slug_title = Input::get('slug_title');
 	    if($item->slug_title == "") {
-	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', $item->title);
+	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Space::table('items'), $item->title);
 	    } else {
-	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle('space_items', $item->slug_title);
+	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Space::table('items'), $item->slug_title);
 	    }
 
 		// Publishing Date

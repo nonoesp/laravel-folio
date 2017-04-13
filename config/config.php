@@ -10,6 +10,8 @@ return [
 			'items' => 'space::template._base',		// 'space::base'
 		],
 
+	'db-prefix' => 'folio_',
+
 	'title' => 'Space',
 	'title-short' => 'Spc',
 	'description' => 'A simple web.',

@@ -27,8 +27,8 @@
   $c-header-height: 40px;
 
   // core-scss.utilities.padding ($slug, $amount, $unit-vertical, $unit-horizontal)
-  @include padding("u-pad", 20, 10px, 5px);
-  @include margin("u-mar", 20, 10px, 5px);
+  @include core_padding("u-pad", 20, 10px, 5px);
+  @include core_margin("u-mar", 20, 10px, 5px);
 
   // $utilities-padding-slug: "u-pad";
   // $utilities-padding-unit: 10px;

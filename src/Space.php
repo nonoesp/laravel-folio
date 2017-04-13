@@ -13,7 +13,7 @@ class Space {
 
 	public static function itemCategoryClass($item, $class) {
 
-		$categories = Config::get('space.special-tags'); //TODO: lang in package
+		$categories = config('space.special-tags'); //TODO: lang in package
     if($categories == '') return;
 
 		foreach($item->tagNames() as $tag) {
@@ -80,7 +80,7 @@ class Space {
 	}
 
 	public static function isAvailableURI() {
-		if(!in_array(Request::path(), Config::get('space.protected_uris'))) {
+		if(!in_array(Request::path(), config('space.protected_uris'))) {
 			return true;
 		} else {
 			return false;
@@ -93,6 +93,10 @@ class Space {
 
 	public static function isSpaceURI() {
 
+    if (\Schema::hasTable(Space::table('items')) == false) {
+      return false;
+    }
+
 		$path = Request::path();
 
 		if($space_path = Space::path()) {
@@ -100,15 +104,15 @@ class Space {
 			if(substr($path,0,strlen($space_path)) == $space_path) {
         // {path-prefix}/{slug}
 				$slug = str_replace($space_path, "", $path);
-        if($item = DB::table('space_items')->whereSlug($slug)->first()) {
+        if($item = DB::table(Space::table('items'))->whereSlug($slug)->first()) {
   				return true;
         }
 			}
-		} else if($item = DB::table('space_items')->whereSlug($path)->first()) {
+		} else if($item = DB::table(Space::table('items'))->whereSlug($path)->first()) {
       // path-prefix = ''
 			return true;
 		}
-    if($item = DB::table('space_items')->whereSlug('/'.$path)->first()) {
+    if($item = DB::table(Space::table('items'))->whereSlug('/'.$path)->first()) {
       // search for absolute explicit slug
       return true;
     }
@@ -199,6 +203,10 @@ class Space {
     }
 
     return $templates;
+  }
+
+  public static function table($name) {
+    return config('space.db-prefix').$name;
   }
 
 }

@@ -10,9 +10,14 @@ class Item extends Model
 	use SoftDeletes;
 	use Taggable;
 
-	protected $table = "space_items";
+	protected $table;
 	protected $dates = ['deleted_at'];
 	protected $softDelete = true;
+
+	public function __construct() {
+	    parent::__construct();
+	    $this->table = config('space.db-prefix').'items';
+	}
 
 	/**
 	 * The database table used by the model.

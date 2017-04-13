@@ -5,8 +5,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Recipient extends Model
 {
-	protected $table = 'space_item_recipients';
+	protected $table;
 	protected $fillable = array('id', 'item_id', 'twitter');
+
+	public function __construct() {
+	    parent::__construct();
+	    $this->table = config('space.db-prefix').'item_recipients';
+	}
 
 	public function item()
 	{

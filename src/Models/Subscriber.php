@@ -5,7 +5,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subscriber extends Model
 {
-	protected $table = 'space_subscribers';
+	protected $table;
 	protected $fillable = array('id', 'email', 'name', 'source');
 	protected $softDelete = true;
+
+	public function __construct() {
+	    parent::__construct();
+	    $this->table = config('space.db-prefix').'subscribers';
+	}
 }
