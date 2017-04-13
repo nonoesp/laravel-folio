@@ -37,6 +37,13 @@
       $footer_hidden = $footer_credits['hidden'];
     }
 
+    if(!isset($subscribe_data)) {
+      $subscribe_data = [
+        'source' => 'default-source',
+        'campaign' => 'default-campaign'
+      ];
+    }
+
     // 2. Defaults Cover
     $cover_data = config('space.cover.data');
     $cover_data['title'] = config('space.cover.title');
@@ -210,5 +217,5 @@
       {{-----------------------------------}}
 
 @section('footer')
-	{!! view('space::partial.c-footer') !!}
+	{!! view('space::partial.c-footer', ['subscribe_data' => $subscribe_data]) !!}
 @stop

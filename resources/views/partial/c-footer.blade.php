@@ -7,12 +7,26 @@ if(!isset($hide_credits)) {
     $hide_credits = $footer_credits['hide_credits'];
   }
 }
+
+$source = '';
+$campaign = '';
+
+if(!isset($subscribe_data)) {
+  $subscribe_data = null;
+} else {
+  if(isset($subscribe_data['source'])) {
+    $source = $subscribe_data['source'];
+  }
+  if(isset($subscribe_data['campaign'])) {
+    $campaign = $subscribe_data['campaign'];
+  }
+}
 ?>
 
 <div class="[ u-pad-b-1x u-pad-t-1x ]">
 
   <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule u-pad-b-2x ]">
-    {!! view('space::partial.c-footer__subscribe') !!}
+    {!! view('space::partial.c-footer__subscribe', ['source' => $source, 'campaign' => $campaign]) !!}
   </div>
 
   @if(!$hide_credits)
