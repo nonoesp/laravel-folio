@@ -18,14 +18,14 @@ if($settings_title == '') {
     <script type="text/javascript" src="/nonoesp/space/js/space.js"></script>
 
 <script type="text/javascript">
-Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 var debounced_property_sync = _.debounce(
 	function(property, model) {
 		var data = property;
 		property.is_updating = true;
 		model.$forceUpdate();
-		model.$http.post('/api/property/update', data).then((response) => {
+		VueResource.Http.post('/api/property/update', data).then((response) => {
 				// success
 				property.is_updating = false;
 				model.$forceUpdate();
@@ -78,7 +78,7 @@ methods: {
 		this.properties_changed = false;
 	},
 	delete_property: function(property) {
-		this.$http.post('/api/property/delete', {id: property.id}).then((response) => {
+		VueResource.Http.post('/api/property/delete', {id: property.id}).then((response) => {
 				// success
 				this.properties.splice(this.properties.indexOf(property), 1);
 			}, (response) => {
@@ -87,7 +87,7 @@ methods: {
 	},
 	add_property: function(event) {
 		var data = { item_id: this.item.id }
-		this.$http.post('/api/property/create', data).then((response) => {
+		VueResource.Http.post('/api/property/create', data).then((response) => {
 				// success
 				console.log(response);
 				this.properties.push({id: response.body.property_id});

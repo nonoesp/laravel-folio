@@ -26,7 +26,7 @@
 		?>
 
 <script type="text/javascript">
-Vue.http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 var months = [
 	'january',
@@ -98,7 +98,7 @@ methods: {
 			url = '/api/item/restore';
 		}
 
-		this.$http.post(url, {id: item.id}).then((response) => {
+		VueResource.Http.post(url, {id: item.id}).then((response) => {
 				// success
 				item.deleted_at = response.body.item.deleted_at;
 		}, (response) => {
@@ -107,7 +107,7 @@ methods: {
 	},
 	update_item: function(item, update) {
 
-		this.$http.post('/api/item/update', {id: item.id, update: update}).then((response) => {
+		VueResource.Http.post('/api/item/update', {id: item.id, update: update}).then((response) => {
 				// success
 				console.log('updated item');
 				console.log(response.body.item);
