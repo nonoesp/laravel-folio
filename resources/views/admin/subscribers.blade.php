@@ -50,26 +50,38 @@ if($settings_title == '') {
 
 					<li>
 						<a href="mailto:{{ $subscriber->email }}" target="_blank">
+
 							<b class="c-archive__list__title">{{ $subscriber->email }}</b>
-							<em class="c-archive__list__date">{{ $date }}</em>
+
+							<em class="c-archive__list__date u-font-size--a">
+
+								<span class=" u-font-size--a u-opacity--half u-hidden-palm" style="margin-top:-0.8em">
+									@if($path = $subscriber->path)
+										{{ $path }}
+									@endif
+									@if($source = $subscriber->source)
+
+									@if($subscriber->path)
+									·
+									@endif
+										{{ $source }}
+									@endif
+									@if($campaign = $subscriber->campaign)
+										@if($subscriber->path or $subscriber->source)
+										·
+										@endif
+										{{ $campaign }}
+									@endif
+									@if($subscriber->path or $subscriber->source or $subscriber->campaign)
+										·
+									@endif
+								</span>
+
+								{{ $date }}
+
+							</em>
+
 						</a>
-						<p class="c-archive__list__date u-font-size--a u-opacity--half" style="margin-top:-0.8em">
-							@if($path = $subscriber->path)
-								{{ $path }}
-							@endif
-							@if($source = $subscriber->source)
-							@if($subscriber->path)
-							·
-							@endif
-								{{ $source }}
-							@endif
-							@if($campaign = $subscriber->campaign)
-								@if($subscriber->path or $subscriber->source)
-								·
-								@endif
-								{{ $campaign }}
-							@endif
-						</p>
 					</li>
 
 			@endforeach
