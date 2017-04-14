@@ -39,8 +39,8 @@
 
     if(!isset($subscribe_data)) {
       $subscribe_data = [
-        'source' => 'default-source',
-        'campaign' => 'default-campaign'
+        'source' => 'folio',
+        'campaign' => 'default'
       ];
     }
 
