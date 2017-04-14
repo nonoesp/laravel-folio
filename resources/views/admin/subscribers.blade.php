@@ -33,9 +33,41 @@ if($settings_title == '') {
       <p>There are {{ count($subscribers) }} subscribers.</p>
     @endif
 
-    @foreach($subscribers as $subscriber)
-      <p>{{ Html::link('mailto:'.$subscriber->email, strtolower($subscriber->email)) }}</p>
-    @endforeach
+		<ul class="c-archive__list">
+			@foreach($subscribers as $subscriber)
+
+				<?php
+					$date = new Date($subscriber->created_at);
+					//$date = ucWords(substr($date->format('F'), 0, 3).'&nbsp;'.$date->format('j').'&nbsp;'.$date->format('Y'));
+					$date = ucWords(substr($date->format('l'), 0, 3)
+							 .'&nbsp;'
+							 .$date->format('j')
+							 .',&nbsp;'
+							 .substr($date->format('F'), 0, 3)
+							 .'&nbsp;'
+							 .$date->format('Y'));
+					?>
+
+					<li>
+						<a href="mailto:{{ $subscriber->email }}" target="_blank">
+							<b class="c-archive__list__title">{{ $subscriber->email }}</b>
+							<em class="c-archive__list__date">{{ $date }}</em>
+						</a>
+						<p class="c-archive__list__date u-font-size--a u-opacity--half" style="margin-top:-0.8em">
+							@if($path = $subscriber->path)
+								{{ $path }}
+							@endif
+							@if($source = $subscriber->source)
+								· Source: {{ $source }}
+							@endif
+							@if($campaign = $subscriber->campaign)
+								· Campaign: {{ $campaign }}
+							@endif
+						</p>
+					</li>
+
+			@endforeach
+		</ul>
 
   @else
     <p>
