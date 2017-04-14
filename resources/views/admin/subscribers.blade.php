@@ -58,10 +58,16 @@ if($settings_title == '') {
 								{{ $path }}
 							@endif
 							@if($source = $subscriber->source)
-								· Source: {{ $source }}
+							@if($subscriber->path)
+							·
+							@endif
+								{{ $source }}
 							@endif
 							@if($campaign = $subscriber->campaign)
-								· Campaign: {{ $campaign }}
+								@if($subscriber->path or $subscriber->source)
+								·
+								@endif
+								{{ $campaign }}
 							@endif
 						</p>
 					</li>
