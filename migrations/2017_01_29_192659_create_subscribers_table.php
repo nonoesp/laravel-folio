@@ -21,6 +21,7 @@ class CreateSubscribersTable extends Migration
                $table->string('name')->nullable();
                $table->string('source')->nullable()->default('web');
                $table->string('campaign')->nullable();
+               $table->string('path')->nullable();
        });
 
        $subscriber = new Subscriber();

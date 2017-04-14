@@ -15,6 +15,7 @@
   var email = $(".js--subscribe__email").val();
   var source = $(".js--subscribe__source").val();
   var campaign = $(".js--subscribe__campaign").val();
+  var path = window.location.pathname;
 
   if (FormValidator.prototype._hooks.valid_email({value: email})) {
 
@@ -24,7 +25,8 @@
           data: {
             email: email,
             source: source,
-            campaign: campaign
+            campaign: campaign,
+            path: path
           },
           dataType: "json",
           headers: {

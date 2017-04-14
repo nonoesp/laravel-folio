@@ -15,12 +15,14 @@ class SubscriptionController extends Controller
     $name = \Input::get('name');
     $source = \Input::get('source');
     $campaign = \Input::get('campaign');
+    $path = \Input::get('path');
 
     $subscriber = new Subscriber();
     $subscriber->email = $email;
     $subscriber->name = $name;
     $subscriber->source = $source;
     $subscriber->campaign = $campaign;
+    $subscriber->path = $path;
     $subscriber->save();
 
       return response()->json([
@@ -28,7 +30,8 @@ class SubscriptionController extends Controller
           'email' => $subscriber->email,
           'source' => $subscriber->source,
           'name' => $subscriber->name,
-          'campaign' => $subscriber->campaign
+          'campaign' => $subscriber->campaign,
+          'path' => $subscriber->path
       ]);
   }
 }
