@@ -282,13 +282,18 @@ class SpaceController extends Controller
                $URL = $item->link;
              }
 
+			 // text
+			 $text = str_replace(['<img', 'src="/'],
+			 					 ['<img width="100%"', 'src="'.$request->root().'/'],
+			 					 $image.\Markdown::convertToHtml($item->text));
+
 	           $feed->add(
 	           	$item->title,
 	           	$default_author,
-	           	$URL,//\URL::to(Space::path().$item->slug),
+	           	$URL,
 	           	$item->published_at,
 	           	\Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']),
-	           	str_replace('<img', '<img width="100%"', $image.\Markdown::convertToHtml($item->text)),
+	           	$text,
 	           	['url'=>$image_src,'type'=>'image/jpeg']);
 	       }
 
