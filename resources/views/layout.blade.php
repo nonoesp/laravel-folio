@@ -10,6 +10,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- This site is built with github.com/nonoesp/laravel-space -->
+
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui"/>
@@ -22,12 +24,12 @@
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @if($space_typekit)
-	<!--TypeKit-->
+	<!-- TypeKit -->
 	<script type="text/javascript" src="//use.typekit.net/{{ $space_typekit }}.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 @endif
 
-	<!--Icon-->
+	<!-- Icon -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
 	<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
@@ -41,22 +43,22 @@
 	<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon.png" />
 	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
 
-	<!--Tags-->
+	<!-- Tags -->
 	<meta name="description" content="{{ $og_description or $og_description_default }}" />
 	<link rel="image_src" href="{{ $og_image or $og_image_default }}" />
 
-	<!--Open Object-->
+	<!-- Open Graph meta data -->
 	<meta property="og:image" content="{{ $og_image or $og_image_default }}" />
 	<meta property="og:title" content="{{ $og_title or $og_title_default }}" />
 	<meta property="og:description" content="{{ $og_description or $og_description_default }}" />
 	<meta property="og:type" content="{{ $og_type or 'profile' }}" />
 	@yield('open_object_metadata')
 
-	<!--RSS Feed-->
+	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" href="/{{ config('space.feed.route') }}" />
 
 @if(!Auth::check() && config('space.google-analytics'))
-	<!--Google Analytics-->
+	<!-- Google Analytics -->
 	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{{ config('space.google-analytics') }}', 'auto');ga('send', 'pageview');</script>
 @endif
 @yield('metadata')
