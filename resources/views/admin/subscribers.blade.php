@@ -55,9 +55,15 @@ if($settings_title == '') {
 
 							<em class="c-archive__list__date u-font-size--a">
 
-								<span class=" u-font-size--a u-opacity--half u-hidden-palm" style="margin-top:-0.8em">
+								{{ $date }}
+
+							</em>
+
+						</a>
+
+						<p class="u-font-size--a u-opacity--low -u-hidden-palm -u-text-align--right" style="margin-top:-0.8em">
 									@if($path = $subscriber->path)
-										{{ $path }}
+										{{$path}}
 									@endif
 									@if($source = $subscriber->source)
 
@@ -72,17 +78,15 @@ if($settings_title == '') {
 										@endif
 										{{ $campaign }}
 									@endif
+									{{--
 									@if($subscriber->path or $subscriber->source or $subscriber->campaign)
 										·
 									@endif
-								</span>
+									--}}
+						</p>
 
-								{{ $date }}
-
-							</em>
-
-						</a>
 					</li>
+
 
 			@endforeach
 		</ul>
