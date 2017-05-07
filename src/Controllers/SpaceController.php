@@ -262,8 +262,15 @@ class SpaceController extends Controller
                  $item_image = $request->root().$item->image;
              }
 
+             // link
+             $URL = \URL::to($request->root().'/'.$item->path());
+			 $itemURL = $URL;
+             if($item->link) {
+               $URL = $item->link;
+             }
+
 			       if ($item->video) {
-	       	     $image = '<p><a href="'.$request->root().'/'.Space::path().$item->slug.'">'
+	       	     $image = '<p><a href="'.$URL.'">'
 	       	   	         .'<img src="'.\Thinker::getVideoThumb($item->video)
 	       	   	         .'" alt="'.$item->title.'"></a></p>';
 	       	   } else if ($item->image) {
@@ -275,12 +282,6 @@ class SpaceController extends Controller
 						} else if ($item->image != '') {
 	       	   	$image_src = $item_image;
 	       	   }
-
-             // link
-             $URL = \URL::to(Space::path().$item->slug);
-             if($item->link) {
-               $URL = $item->link;
-             }
 
 			 // text
 			 $text = str_replace(['<img', 'src="/'],
