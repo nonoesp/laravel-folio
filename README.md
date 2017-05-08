@@ -9,8 +9,8 @@ Hi there! `nonoesp/space` is a content management system package for Laravel.
 - [nono.ma](http://nono.ma)
 - [gettingsimple.com](http://gettingsimple.com)
 - [lourdes.ac](http://lourdes.ac)
-- [ar-ma.net](http://ar-ma.net)
-- [gettingarchitecturedone.com](http://gettingarchitecturedone.com)
+- [ar-ma.net](http://ar-ma.net/blog)
+- [gettingarchitecturedone.com](http://gettingarchitecturedone.com/writing)
 
 ## Installation
 
