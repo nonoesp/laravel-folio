@@ -4,6 +4,8 @@ Hi there! `nonoesp/folio` is a content management system package for Laravel.
 
 **Folio** supports Laravel 5.4.
 
+[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/nonoesp)
+
 ## Live Examples
 
 - [nono.ma](http://nono.ma)
@@ -14,19 +16,13 @@ Hi there! `nonoesp/folio` is a content management system package for Laravel.
 
 ## Installation
 
-Begin by installing this package through Composer. Edit your project’s `composer.json` file to require `nonoesp/folio`.
-
-```json
-"require": {
-	"nonoesp/folio": "^5.4"
-}
-```
-
-Next, update Composer from the Terminal:
+Install using composer:
 
 ```
-composer update
+composer require nonoesp/folio
 ```
+
+## Laravel
 
 Next, add the new providers to the `providers` array of `config/app.php`:
 
