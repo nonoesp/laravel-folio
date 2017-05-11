@@ -2,9 +2,7 @@
 
 [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/nonoesp)
 
-Hi there! `nonoesp/folio` is a content management system package for Laravel.
-
-**Folio** supports Laravel 5.4.
+Deploy quick content management systems with custom templates.
 
 ## Live Examples
 
