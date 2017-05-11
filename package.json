@@ -1,7 +1,7 @@
 {
     "name": "laravel-folio",
     "version": "5.4.0",
-    "description": "Hi there! `nonoesp/folio` is a content management system package for Laravel.",
+    "description": "Create webs to publish your content with custom templates.",
     "main": "index.js",
     "scripts": {
         "dev": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",

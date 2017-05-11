@@ -2,7 +2,7 @@
 
 [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/nonoesp)
 
-Deploy quick content management systems with custom templates.
+Create webs to publish your content with custom templates.
 
 ## Live Examples
 

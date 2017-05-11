@@ -1,6 +1,6 @@
 {
     "name": "nonoesp/folio",
-    "description": "A Laravel content management system.",
+    "description": "Create webs to publish your content with custom templates.",
     "license": "MIT",
     "authors": [{
         "name": "Nono Martínez Alonso",
