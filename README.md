@@ -26,7 +26,7 @@ Next, add the new providers to the `providers` array of `config/app.php`:
 
 ```php
 	'providers' => [
-		// ...
+        // ...
         // nonoesp/folio
         Nonoesp\Folio\FolioServiceProvider::class,        
         Nonoesp\Thinker\ThinkerServiceProvider::class,  
@@ -38,7 +38,7 @@ Next, add the new providers to the `providers` array of `config/app.php`:
         Thujohn\Twitter\TwitterServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,				
-		// ...
+        // ...
 	],
 ```
 
@@ -46,7 +46,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 
 ```php
 	'aliases' => [
-		// ...
+        // ...
         // nonoesp/folio - Models
         'Folio' => Nonoesp\Folio\Facades\Folio::class,
         'User' => 'App\User',
@@ -66,7 +66,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
         'Input' => Illuminate\Support\Facades\Input::class,
         'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
         'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,				
-		// ...
+        // ...
 	],
 ```
 
