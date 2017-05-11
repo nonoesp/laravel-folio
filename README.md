@@ -96,9 +96,9 @@ protected $middleware = [
 ];
 
 protected $routeMiddleware = [
-		/// nonoesp/authenticate
-		'login' => \App\Http\Middleware\RequireLogin::class,
-		/// ...
+        /// nonoesp/authenticate
+        'login' => \App\Http\Middleware\RequireLogin::class,
+        /// ...
 ];
 ```
 
