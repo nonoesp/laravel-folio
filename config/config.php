@@ -6,9 +6,10 @@ return [
 	'admin-path-prefix' => 'admin',
 
 	'view' => [
-			'layout' => 'folio::layout', 					// 'folio::layout'
-			'items' => 'folio::template._base',		// 'folio::base'
-		],
+		'layout' => 'folio::layout', // 'folio::layout'
+		'items' => 'template._base', // 'folio::base'
+		'item' => 'template._standard', // 'folio::template._standard'
+	],
 
 	'db-prefix' => 'folio_',
 
@@ -39,6 +40,7 @@ return [
 	//'special-tags' => ['highlight'],
 
 	'header' => [
+			'title' => 'Folio',		
 			'view' => 'folio::partial.c-header',
 			'classes' => ['white', 'absolute'],
 			'data' => []

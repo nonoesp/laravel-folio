@@ -7,7 +7,7 @@ return [
 	'expected' => 'Expected',
 	'to-be-notified' => 'to be notified.',
 	'load-more' => 'load more',
-	'continue-reading' => 'Continue&nbsp;reading',
+	'continue-reading' => 'Read&nbsp;More…',
 	'receive-our-posts' => 'Receive our updates via e-mail.',
 
 	// space.subscribe.js

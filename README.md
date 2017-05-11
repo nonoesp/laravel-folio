@@ -17,7 +17,7 @@ Create webs to publish your content with custom templates.
 Install using composer:
 
 ```
-composer require nonoesp/folio
+composer require nonoesp/folio:dev-master
 ```
 
 ## Laravel

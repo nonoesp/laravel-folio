@@ -13,6 +13,7 @@
   if(isset($data['is_navigation_hidden'])) { $is_navigation_hidden = $data['is_navigation_hidden']; }
   if(isset($data['is_media_hidden'])) { $is_media_hidden = $data['is_media_hidden']; }
   if(isset($data['image'])) { $image = $data['image']; }
+	if(isset($data['title'])) { $title = $data['title']; }
   if(isset($data['description'])) { $description = $data['description']; }
   if(isset($data['navigation'])) { $navigation = $data['navigation']; } else {
     $navigation = [
@@ -27,16 +28,20 @@
 <header class="[ c-header-simple ] {{ $class_specified }}">
 	<div class="[ o-wrap o-wrap--size-full ]">
 		<a href="/" class="[ c-header-simple__name ]">
-			nono.ma
+			{{ $title or 'Folio' }}
 		</a>
 		@if(!isset($is_navigation_hidden))
 		<nav role="navigation" class="[ c-header-simple__navigation ]">
 			<ul>
 
         @foreach($navigation as $title=>$href)
+					<?php
+						$href[0] = str_replace('{path-prefix}',config('folio.path-prefix'), $href[0]);
+						$href[1] = str_replace('{path-prefix}',config('folio.path-prefix'), $href[1]);
+					?>
           <li>
   					<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} ]">
-  						{{ $title }}
+  						{{ trans('folio.'.$title) }}
   					</a>
   				</li>
         @endforeach

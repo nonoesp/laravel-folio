@@ -192,7 +192,7 @@ class FolioController extends Controller
       if($view = $item->templateView()) {
         return view($view, ['item' => $item]);
       }
-			return view('folio::template._standard', ['item' => $item]);
+			return view(config('folio.view.item'), ['item' => $item]);
 		}
 
 	}
