@@ -1,10 +1,10 @@
 
-@extends('space::admin.layout')
+@extends('folio::admin.layout')
 
 <?php
-$settings_title = config('space.title');
+$settings_title = config('folio.title');
 if($settings_title == '') {
-	$settings_title = "Space";
+	$settings_title = "Folio";
 }
 	$site_title = 'Editing Item '.$item->id.' | '. $settings_title;
 ?>
@@ -13,9 +13,9 @@ if($settings_title == '') {
 
 @section('scripts')
 
-    <script type="text/javascript" src="/nonoesp/space/js/manifest.js"></script>
-    <script type="text/javascript" src="/nonoesp/space/js/vendor.js"></script>
-    <script type="text/javascript" src="/nonoesp/space/js/space.js"></script>
+    <script type="text/javascript" src="/nonoesp/folio/js/manifest.js"></script>
+    <script type="text/javascript" src="/nonoesp/folio/js/vendor.js"></script>
+    <script type="text/javascript" src="/nonoesp/folio/js/folio.js"></script>
 
 <script type="text/javascript">
 VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');

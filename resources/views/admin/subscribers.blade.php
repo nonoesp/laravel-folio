@@ -1,10 +1,10 @@
 
-@extends('space::admin.layout')
+@extends('folio::admin.layout')
 
 <?php
-$settings_title = Config::get('space.title');
+$settings_title = Config::get('folio.title');
 if($settings_title == '') {
-	$settings_title = "Space";
+	$settings_title = "Folio";
 }
 	$site_title = 'Subscribers | '. $settings_title;
 ?>
@@ -12,7 +12,7 @@ if($settings_title == '') {
 @section('title', 'Subscribers')
 
 @section('scripts')
-    <script type="text/javascript" src="/nonoesp/space/js/space.js"></script>
+    <script type="text/javascript" src="/nonoesp/folio/js/folio.js"></script>
 @stop
 
 @section('content')

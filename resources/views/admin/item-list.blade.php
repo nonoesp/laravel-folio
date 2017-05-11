@@ -1,19 +1,18 @@
-
-@extends('space::admin.layout')
+@extends('folio::admin.layout')
 
 <?php
-	$settings_title = config('space.title');
+	$settings_title = config('folio.title');
 	if($settings_title == '') {
-		$settings_title = "Space";
+		$settings_title = "Folio";
 	}
 	$site_title = 'Items | '. $settings_title;
 ?>
 
 @section('scripts')
 
-    <script type="text/javascript" src="/nonoesp/space/js/manifest.js"></script>
-    <script type="text/javascript" src="/nonoesp/space/js/vendor.js"></script>
-    <script type="text/javascript" src="/nonoesp/space/js/space.js"></script>
+    <script type="text/javascript" src="/nonoesp/folio/js/manifest.js"></script>
+    <script type="text/javascript" src="/nonoesp/folio/js/vendor.js"></script>
+    <script type="text/javascript" src="/nonoesp/folio/js/folio.js"></script>
 
 		<?php
 		foreach($items as $item) {
@@ -123,7 +122,7 @@ methods: {
 		return months[d.getMonth()] + ' ' + (d.getUTCDate()-1) + ', ' + (d.getYear()+1900) + ' ('+days[d.getDay()]+')';
 	},
 	edit_href: function (item) {
-		return '/{{ Space::adminPath() }}item/edit/'+item.id;
+		return '/{{ Folio::adminPath() }}item/edit/'+item.id;
 	},
 	tag_with_slug: function(slug) {
 		for(var i in this.tags) {
@@ -217,8 +216,6 @@ admin.sort_tags();
 				</li>
 			<ul>
 		</div>
-
-		<!-------------------------------->
 
 		{{-- Item List --}}
 

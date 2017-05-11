@@ -1,5 +1,5 @@
 <?php
-	$admin_path = Space::adminPath();
+	$admin_path = Folio::adminPath();
 	$exit = config('authenticate.exit');
 ?>
 

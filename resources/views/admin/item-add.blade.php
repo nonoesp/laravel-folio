@@ -1,9 +1,9 @@
-@extends('space::admin.layout')
+@extends('folio::admin.layout')
 
 <?php
 	$settings_title = Config::get('settings.title');
 	if($settings_title == '') {
-		$settings_title = "Space";
+		$settings_title = "Folio";
 	}
 	$site_title = 'New Item | '.$settings_title;
 ?>
@@ -14,7 +14,7 @@
 
 	<div class="[ c-admin ] [ u-pad-b-12x ]">
 
-		{{ Form::open(['url' => Space::adminPath().'item/add', 'method' => 'post']) }}
+		{{ Form::open(['url' => Folio::adminPath().'item/add', 'method' => 'post']) }}
 
 			<p>{{ Form::text('title', '', ['placeholder' => 'Title']) }}</p>
 
