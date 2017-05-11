@@ -26,8 +26,8 @@ return [
 
 	'cover' => [
 		'title' => '',
-		'subtitles' => ['subtitle 01','subtitle 02'],
-		'footline' => 'a simple web.'
+		'subtitles' => ['Folio for Laravel','Making the web simple.'],
+		'footline' => 'Folio for Laravel.'
 	],
 
 	'footer' => [
@@ -69,9 +69,9 @@ return [
 	'expected-show' => 100,
 
 	'feed' => [
-		'route' => 'feed', // (e.g. 'feed', or 'feed.xml')
-		'title' => 'My Folio Feed',
-		'description' => 'A description here would come handy.',
+		'route' => 'feed.xml', // (e.g. 'feed', or 'feed.xml')
+		'title' => 'Folio Feed',
+		'description' => 'Folio publications.',
 		'show' => '30', // maximum amount of articles to display
 		'logo' => '', // (optional) URL to your feed's logo
 		'default-image-src' => 'http://your-default.com/image.jpg',
