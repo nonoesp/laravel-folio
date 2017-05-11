@@ -25,7 +25,7 @@ composer require nonoesp/folio
 Next, add the new providers to the `providers` array of `config/app.php`:
 
 ```php
-	'providers' => [
+    'providers' => [
         // ...
         // nonoesp/folio
         Nonoesp\Folio\FolioServiceProvider::class,        
@@ -39,13 +39,13 @@ Next, add the new providers to the `providers` array of `config/app.php`:
         Collective\Html\HtmlServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,				
         // ...
-	],
+    ],
 ```
 
 Then, add the class aliases to the `aliases` array of `config/app.php`:
 
 ```php
-	'aliases' => [
+    'aliases' => [
         // ...
         // nonoesp/folio - Models
         'Folio' => Nonoesp\Folio\Facades\Folio::class,
@@ -67,7 +67,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
         'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
         'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,				
         // ...
-	],
+    ],
 ```
 
 [To authenticate, `Folio` uses `nonoesp/authenticate` (which should be already installed as a dependency).
