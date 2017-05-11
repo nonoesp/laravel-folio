@@ -70,8 +70,45 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 	],
 ```
 
-To authenticate, `Folio` uses `nonoesp/authenticate` (which should be already installed as a dependency).
-But you need to follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/master)
+[To authenticate, `Folio` uses `nonoesp/authenticate` (which should be already installed as a dependency).
+But you need to follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/master)]
+
+## Middleware
+
+For **Folio** translations to work properly we need to publish our `SetLocales.php` middleware, and install the `authenticate` middleware:
+
+```php
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=middleware
+php artisan vendor:publish --provider="Nonoesp\Authenticate\AuthenticateServiceProvider" --tag=middleware
+```
+
+Then add the following to `app/Html/Kernel.php`:
+
+```php
+protected $middleware = [
+        /// nonoesp/folio
+        \App\Http\Middleware\SetLocales::class,
+        /// nonoesp/authenticate
+        \Illuminate\Session\Middleware\StartSession::class,
+        \Illuminate\View\Middleware\ShareErrorsFromSession::class,			
+        \App\Http\Middleware\RememberLogin::class,        
+        /// ...
+];
+
+protected $routeMiddleware = [
+		/// nonoesp/authenticate
+		'login' => \App\Http\Middleware\RequireLogin::class,
+		/// ...
+];
+```
+
+A dependency of the authentication package of folio is `thujon/twitter`, so you will have to publish its config and add your Twitter credentials to `config/ttwitter.php` if you want to be able to log in with Twitter.
+
+```
+php artisan vendor:publish --provider="Thujohn\Twitter\TwitterServiceProvider"
+```
+
+*[Twitter url explaining how to config thujohn]*
 
 ## Migrations
 
@@ -103,24 +140,6 @@ Publish configuration file to `config/folio.php`.
 
 ```php
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=config
-```
-
-## Publish Middleware
-
-For **Folio** translations to work properly we need to publish our `SetLocales.php` middleware:
-
-```php
-php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=middleware
-```
-
-Then add it to `app/Html/Kernel.php` inside the `$middleware` array:
-
-```php
-protected $middleware = [
-		/// ...
-
-		\App\Http\Middleware\SetLocales::class,
-];
 ```
 
 ## Publish Assets
