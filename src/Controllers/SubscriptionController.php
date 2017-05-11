@@ -1,6 +1,6 @@
 <?php
 
-namespace Nonoesp\Space\Controllers;
+namespace Nonoesp\Folio\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;

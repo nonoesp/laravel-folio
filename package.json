@@ -1,33 +1,33 @@
 {
-  "name": "laravel-space",
-  "version": "5.4.0",
-  "description": "Hi there! `nonoesp/space` is a content management system package for Laravel.",
-  "main": "index.js",
-  "scripts": {
-    "dev": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "hot": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "production": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nonoesp/laravel-writing.git"
-  },
-  "author": "Nono Martínez Alonso, nono.ma",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/nonoesp/laravel-writing/issues"
-  },
-  "homepage": "https://github.com/nonoesp/laravel-writing#readme",
-  "dependencies": {
-    "axios": "0.15.3",
-    "bourbon": "4.2.7",
-    "core-scss": "github:nonoesp/core-scss",
-    "font-awesome": "4.7.0",
-    "jquery": "3.1.1",
-    "laravel-mix": "0.5.16",
-    "validate-js": "2.0.1",
-    "vue": "2.1.10",
-    "vue-resource": "1.0.3"
-  }
+    "name": "laravel-folio",
+    "version": "5.4.0",
+    "description": "Hi there! `nonoesp/folio` is a content management system package for Laravel.",
+    "main": "index.js",
+    "scripts": {
+        "dev": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "hot": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "production": "node node_modules/cross-env/bin/cross-env.js NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nonoesp/laravel-writing.git"
+    },
+    "author": "Nono Martínez Alonso, nono.ma",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/nonoesp/laravel-writing/issues"
+    },
+    "homepage": "https://github.com/nonoesp/laravel-writing#readme",
+    "dependencies": {
+        "axios": "0.15.3",
+        "bourbon": "4.2.7",
+        "core-scss": "github:nonoesp/core-scss",
+        "font-awesome": "4.7.0",
+        "jquery": "3.1.1",
+        "laravel-mix": "0.5.16",
+        "validate-js": "2.0.1",
+        "vue": "2.1.10",
+        "vue-resource": "1.0.3"
+    }
 }

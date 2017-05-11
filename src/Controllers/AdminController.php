@@ -1,10 +1,10 @@
 <?php
 
-namespace Nonoesp\Space\Controllers;
+namespace Nonoesp\Folio\Controllers;
 
 use Illuminate\Http\Request;
 use Item, User, Thinker, Recipient, Property, Subscriber; // Must be defined in your aliases
-use Nonoesp\Space\Space;
+use Nonoesp\Folio\Folio;
 use View;
 use Config;
 use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
@@ -30,7 +30,7 @@ class AdminController extends Controller
 			$items = Item::withTrashed()->orderBy('published_at', 'DESC')->get();
 		}
 
-		return View::make('space::admin.item-list')->with([
+		return View::make('folio::admin.item-list')->with([
 			'items' => $items,
 			'tag' => $tag,
 			'existing_tags' => $existing_tags
@@ -48,12 +48,12 @@ class AdminController extends Controller
 					// Slug has been removed, not empty before
 					$item->slug_title = null;
 					$item->title = Input::get('title');
-					$item->slug = Thinker::uniqueSlugWithTableAndItem(Space::table('items'), $item);
+					$item->slug = Thinker::uniqueSlugWithTableAndItem(Folio::table('items'), $item);
 				} else {
 					// Slug is empty, and was empty before
 					if($item->title != Input::get('title')) {
 						$item->title = Input::get('title');
-						$item->slug = Thinker::uniqueSlugWithTableAndItem(Space::table('items'), $item);
+						$item->slug = Thinker::uniqueSlugWithTableAndItem(Folio::table('items'), $item);
 					}
 				}
 			} else {
@@ -62,7 +62,7 @@ class AdminController extends Controller
 				if($item->slug_title != Input::get('slug_title')) {
 					// Slug has been edited
 					$item->slug_title = Input::get('slug_title');
-				// 	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Space::table('items'), $item->slug_title);
+				// 	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Folio::table('items'), $item->slug_title);
 				}
 			}
 
@@ -79,7 +79,7 @@ class AdminController extends Controller
 				$item->link = Input::get('link');
 
 				// Update Properties (before tags)
-				// foreach(Space::itemPropertyArray($item) as $key=>$value) {
+				// foreach(Folio::itemPropertyArray($item) as $key=>$value) {
 				// 	$property = Property::updateOrCreate(
 				// 		['item_id' => $item->id, 'name' => $key],
 				// 		['value' => Input::get($key)]
@@ -111,14 +111,14 @@ class AdminController extends Controller
 			$item->save();
 		}
 
-		return view('space::admin.item-edit', [
+		return view('folio::admin.item-edit', [
 			'item' => $item,
-			'templates' => Space::templates()
+			'templates' => Folio::templates()
 		]);
 	}
 
 	public function getItemCreate() {
-		return View::make('space::admin.item-add');
+		return View::make('folio::admin.item-add');
 	}
 
 	public function postItemCreate() {
@@ -141,9 +141,9 @@ class AdminController extends Controller
 	    $item->rss = (Input::get('rss') ? true : false);
 	    $item->slug_title = Input::get('slug_title');
 	    if($item->slug_title == "") {
-	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Space::table('items'), $item->title);
+	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Folio::table('items'), $item->title);
 	    } else {
-	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Space::table('items'), $item->slug_title);
+	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Folio::table('items'), $item->slug_title);
 	    }
 
 		// Publishing Date
@@ -169,14 +169,14 @@ class AdminController extends Controller
 			}
 	    }
 
-		return Redirect::to(Space::adminPath().'item/edit/'.$item->id);
+		return Redirect::to(Folio::adminPath().'item/edit/'.$item->id);
 	}
 
 	public function getItemDelete($id) {
 		$item = Item::find($id);
 		$item->delete();
 
-		return Redirect::to(Space::adminPath().'items');
+		return Redirect::to(Folio::adminPath().'items');
 	}
 
 	public function getItemRestore($id) {
@@ -189,7 +189,7 @@ class AdminController extends Controller
 		  $item->tag($tags);
 		}
 
-		return Redirect::to(Space::adminPath().'items');
+		return Redirect::to(Folio::adminPath().'items');
 	}
 
 	// Properties (API)
@@ -275,7 +275,7 @@ class AdminController extends Controller
 
 	public function getSubscribers() {
 		$subscribers = Subscriber::orderBy('id', 'DESC')->get();
-		return view('space::admin.subscribers')->withSubscribers($subscribers);
+		return view('folio::admin.subscribers')->withSubscribers($subscribers);
 	}
 
 }

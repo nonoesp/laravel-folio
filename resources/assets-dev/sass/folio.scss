@@ -1,26 +1,19 @@
-
-
 // core-scss - settings
 @import '../../../node_modules/core-scss/settings/settings.core'; // Settings, colors, breakpoints, modules
-@import 'settings.space';
-
+@import 'folio.settings';
 // vendor
 @import '../../../node_modules/bourbon/app/assets/stylesheets/bourbon';
 @import '../../../node_modules/core-scss/vendor/csswizardry-grids'; // Margin reset, grids
 @import '../../../node_modules/core-scss/vendor/typecsset'; // Type setting
 @import '../../../node_modules/font-awesome/scss/font-awesome';
-
 // core-scss - generic
 @import '../../../node_modules/core-scss/generic/generic.reset';
 @import '../../../node_modules/core-scss/generic/generic.type';
 @import '../../../node_modules/core-scss/generic/generic.selection';
-
 // core-scss - tools
 @import '../../../node_modules/core-scss/tools/tools.retina';
-
 // core-scss - elements
 @import '../../../node_modules/core-scss/elements/elements.inputs';
-
 // core-scss - objects
 @import '../../../node_modules/core-scss/objects/o-wrap';
 @import '../../../node_modules/core-scss/objects/o-band';
@@ -28,7 +21,6 @@
 @import '../../../node_modules/core-scss/objects/o-video-thumb';
 @import '../../../node_modules/core-scss/objects/o-thumb';
 @import '../../../node_modules/core-scss/objects/o-notification';
-
 // core-scss - components
 @import '../../../node_modules/core-scss/components/c-cover';
 @import '../../../node_modules/core-scss/components/c-header';
@@ -37,16 +29,13 @@
 @import '../../../node_modules/core-scss/components/c-admin';
 @import '../../../node_modules/core-scss/components/c-load-more';
 @import '../../../node_modules/core-scss/components/c-archive';
-
 // core-scss - modifiers
 @import '../../../node_modules/core-scss/modifiers/m-fa'; // Font Awesome
 @import '../../../node_modules/core-scss/modifiers/m-grid';
-
 // core-scss - utilities
 @import '../../../node_modules/core-scss/utilities/utilities.color.background';
 @import '../../../node_modules/core-scss/utilities/utilities.color.font';
 @import '../../../node_modules/core-scss/utilities/utilities.text.align';
 @import '../../../node_modules/core-scss/utilities/utilities.various';
 @import '../../../node_modules/core-scss/utilities/utilities.visibility';
-
 // custom

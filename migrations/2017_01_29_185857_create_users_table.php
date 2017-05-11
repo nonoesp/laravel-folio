@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
                $table->string('password')->nullable();
                $table->string('remember_token')->nullable();
                $table->string('image')->nullable();
-               //$table->text('biography', '');//->nullable();
                $table->string('twitter')->nullable();
                $table->string('twitter_image')->nullable();
        });

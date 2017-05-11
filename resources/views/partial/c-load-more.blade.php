@@ -4,7 +4,7 @@
 		<span class="[ c-load-more__item ] [ c-load-more__text-wrapper ]{{--
 						 --}}[ js-c-load-more__load-more ]{{--
 						 --}}[ u-cursor-pointer u-case-upper ]">
-		  {{ trans('space::base.load-more') }}
+		  {{ trans('folio::base.load-more') }}
 		</span>
 
 		<span class="[ c-load-more__item ] [ c-load-more__image-wrapper ]">

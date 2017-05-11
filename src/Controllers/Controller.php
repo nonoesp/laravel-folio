@@ -1,4 +1,4 @@
-<?php namespace Nonoesp\Space\Controllers;
+<?php namespace Nonoesp\Folio\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;

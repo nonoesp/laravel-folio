@@ -1,9 +1,9 @@
-<?php namespace Nonoesp\Space\Models;
+<?php namespace Nonoesp\Folio\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Conner\Tagging\Taggable;
-use Space;
+use Folio;
 
 class Item extends Model
 {
@@ -16,7 +16,7 @@ class Item extends Model
 
 	public function __construct() {
 	    parent::__construct();
-	    $this->table = config('space.db-prefix').'items';
+	    $this->table = config('folio.db-prefix').'items';
 	}
 
 	/**
@@ -36,10 +36,10 @@ class Item extends Model
 
 		if(!$this->template) return null;
 
-		$dir = config('space.templates-path');
+		$dir = config('folio.templates-path');
 		$template_name = str_replace("/","",$this->template);
 		if($this->template[0] == '/') {
-			$dir = 'space::template';
+			$dir = 'folio::template';
 		}
 
 		$view = $dir.'.'.$template_name;
@@ -53,7 +53,7 @@ class Item extends Model
 		if($this->slug[0] == "/") {
 			return substr($this->slug, 1, strlen($this->slug)-1);
 		}
-		return Space::path().$this->slug;
+		return Folio::path().$this->slug;
 	}
 
 	public function prev() {

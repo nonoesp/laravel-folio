@@ -1,4 +1,4 @@
-<?php namespace Nonoesp\Space;
+<?php namespace Nonoesp\Folio;
 
  use Lang;
  use Config;
@@ -9,11 +9,11 @@
  use Form;
  use Thinker;
 
-class Space {
+class Folio {
 
 	public static function itemCategoryClass($item, $class) {
 
-		$categories = config('space.special-tags'); //TODO: lang in package
+		$categories = config('folio.special-tags'); //TODO: lang in package
     if($categories == '') return;
 
 		foreach($item->tagNames() as $tag) {
@@ -30,14 +30,14 @@ class Space {
 		$result = '';
 		$idx = 0;
 		foreach($item->tags as $tag) {
-			$result .= Space::tagWithClass($tag, $class);
+			$result .= Folio::tagWithClass($tag, $class);
 			$idx++;
 		}
 		return $result;
 	}
 
 	public static function tagWithClass($tag, $class) {
-		return Html::link(Space::path().'tag/'.$tag->slug, $tag->name, array('class' => $class));
+		return Html::link(Folio::path().'tag/'.$tag->slug, $tag->name, array('class' => $class));
 	}
 
 	public static function userURL($user) {
@@ -46,12 +46,12 @@ class Space {
 
     /*
  	 * Returns
- 	 * - path string if existing, e.g. "space"
+ 	 * - path string if existing, e.g. "folio"
  	 * - false if non-existing
  	 */
 
 	public static function pathOrFalse() {
-		if($path = Config::get('space.path-prefix')) {
+		if($path = Config::get('folio.path-prefix')) {
 			return $path;
 		} else {
 			return false;
@@ -60,11 +60,11 @@ class Space {
 
 	/*
 	 * Returns a string either with:
-	 * - path and a slash, e.g. "space/"
+	 * - path and a slash, e.g. "folio/"
 	 * - empty string, i.e. ""
 	 */
 	public static function path() {
-		if($path = Space::pathOrFalse()) {
+		if($path = Folio::pathOrFalse()) {
 			return $path.'/';
 		} else {
 			return '';
@@ -76,11 +76,11 @@ class Space {
 	 */
 
 	public static function adminPath() {
-		return Config::get('space.admin-path-prefix').'/';
+		return Config::get('folio.admin-path-prefix').'/';
 	}
 
 	public static function isAvailableURI() {
-		if(!in_array(Request::path(), config('space.protected_uris'))) {
+		if(!in_array(Request::path(), config('folio.protected_uris'))) {
 			return true;
 		} else {
 			return false;
@@ -91,28 +91,28 @@ class Space {
 	 * Returns true when the current URI belongs to the package or not.
 	 */
 
-	public static function isSpaceURI() {
+	public static function isFolioURI() {
 
-    if (\Schema::hasTable(Space::table('items')) == false) {
+    if (\Schema::hasTable(Folio::table('items')) == false) {
       return false;
     }
 
 		$path = Request::path();
 
-		if($space_path = Space::path()) {
+		if($folio_path = Folio::path()) {
       // path-prefix set in config
-			if(substr($path,0,strlen($space_path)) == $space_path) {
+			if(substr($path,0,strlen($folio_path)) == $folio_path) {
         // {path-prefix}/{slug}
-				$slug = str_replace($space_path, "", $path);
-        if($item = DB::table(Space::table('items'))->whereSlug($slug)->first()) {
+				$slug = str_replace($folio_path, "", $path);
+        if($item = DB::table(Folio::table('items'))->whereSlug($slug)->first()) {
   				return true;
         }
 			}
-		} else if($item = DB::table(Space::table('items'))->whereSlug($path)->first()) {
+		} else if($item = DB::table(Folio::table('items'))->whereSlug($path)->first()) {
       // path-prefix = ''
 			return true;
 		}
-    if($item = DB::table(Space::table('items'))->whereSlug('/'.$path)->first()) {
+    if($item = DB::table(Folio::table('items'))->whereSlug('/'.$path)->first()) {
       // search for absolute explicit slug
       return true;
     }
@@ -120,7 +120,7 @@ class Space {
 	}
 
   public static function itemPropertyArray($item) {
-    $properties = config('space.properties');
+    $properties = config('folio.properties');
     $item_properties = [];
     foreach($item->tags as $tag) {
       if(array_key_exists ( $tag->slug, $properties )) {
@@ -131,7 +131,7 @@ class Space {
   }
 
   public static function itemPropertyFields($item) {
-    foreach(Space::itemPropertyArray($item) as $key=>$value) {
+    foreach(Folio::itemPropertyArray($item) as $key=>$value) {
       $placeholder = $key;
       if(is_string($value)) {
         $placeholder = $value;
@@ -166,10 +166,10 @@ class Space {
 
     $template_paths = [];
 
-    $custom_template_views_folder = ['Custom' => config('space.templates-path')];
+    $custom_template_views_folder = ['Custom' => config('folio.templates-path')];
 
     // Get template full paths
-    // if($config_paths = config('space.custom-template-views-foldername')) {
+    // if($config_paths = config('folio.custom-template-views-foldername')) {
     if($config_paths = $custom_template_views_folder) {
       foreach($config_paths as $name=>$folder) {
         //$name.' · resources/views/'.$dir
@@ -180,10 +180,10 @@ class Space {
       }
     }
 
-    //vendor/nonoesp/space/resources/views/template
-    $template_paths['Space'] = [
+    //vendor/nonoesp/folio/resources/views/template
+    $template_paths['Folio'] = [
       'folder' => '/template',
-      'path' => base_path().'/vendor/nonoesp/space/resources/views/template',
+      'path' => base_path().'/vendor/nonoesp/folio/resources/views/template',
     ];
 
     //Get template files from directories
@@ -193,7 +193,7 @@ class Space {
         $template_name = str_replace('.blade.php','',$file);
         if($template_name[0] == '_') continue;
         $template_id = $template_name;
-        if($name == 'Space') $template_id = '/'.$template_id;
+        if($name == 'Folio') $template_id = '/'.$template_id;
         $template_dir_name = $dir['folder'].'/'.$template_name;
         $files[$template_id] = ucwords(strtolower(str_replace("-"," ",$template_name).' template'));//.' · '.$template_id;
       }
@@ -206,7 +206,7 @@ class Space {
   }
 
   public static function table($name) {
-    return config('space.db-prefix').$name;
+    return config('folio.db-prefix').$name;
   }
 
 }

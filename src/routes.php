@@ -1,4 +1,4 @@
-<?php namespace Nonoesp\Space;
+<?php namespace Nonoesp\Folio;
 
 use User; // Must be defined in your aliases
 use Item; // Must be defined in your aliases
@@ -16,12 +16,12 @@ use Input;
 use Hashids;
 
 /*----------------------------------------------------------------*/
-/* SpaceController
+/* FolioController
 /*----------------------------------------------------------------*/
 
-Route::group(['middleware' => Config::get("space.middlewares")], function () {
+Route::group(['middleware' => Config::get("folio.middlewares")], function () {
 
-	$path = Space::path();
+	$path = Folio::path();
 
 	Route::get('/e/{hash}', function($hash) use ($path) {
 		$decode = Hashids::decode($hash);
@@ -32,70 +32,70 @@ Route::group(['middleware' => Config::get("space.middlewares")], function () {
 		return response()->view('errors.404', [], 404);
 	});
 
-if(Space::isAvailableURI()) {
+if(Folio::isAvailableURI()) {
 
 	Route::get('/@{user_twitter}', function($user_twitter) {
 		$user = User::where('twitter', '=', $user_twitter)->first();
-		return view('space::profile')->withUser($user);
+		return view('folio::profile')->withUser($user);
 	});
-	Route::post('items', 'Nonoesp\Space\Controllers\SpaceController@getItemsWithIds');
-	Route::get($path, array('as' => 'space', 'uses' => 'Nonoesp\Space\Controllers\SpaceController@showHome'));
-	Route::get($path.'tag/{tag}', 'Nonoesp\Space\Controllers\SpaceController@showItemTag');
-	Route::get($path.'{id}', 'Nonoesp\Space\Controllers\SpaceController@showItemWithId')->where('id', '[0-9]+');
+	Route::post('items', 'Nonoesp\Folio\Controllers\FolioController@getItemsWithIds');
+	Route::get($path, array('as' => 'space', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@showHome'));
+	Route::get($path.'tag/{tag}', 'Nonoesp\Folio\Controllers\FolioController@showItemTag');
+	Route::get($path.'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
 
-	if($path_type = Space::isSpaceURI()) { // Check this is an actual item route
-		Route::get($path.'{slug}', 'Nonoesp\Space\Controllers\SpaceController@showItem')->
+	if($path_type = Folio::isFolioURI()) { // Check this is an actual item route
+		Route::get($path.'{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
 					 where('slug', '[A-Za-z0-9\-\/]+');
-		Route::get('{slug}', 'Nonoesp\Space\Controllers\SpaceController@showItem')->
+		Route::get('{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
 					 where('slug', '[A-Za-z0-9\-\/]+');
 	}
 
 	// Feed
-	Route::get(Config::get('space.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Space\Controllers\SpaceController@getFeed'));
+	Route::get(Config::get('folio.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@getFeed'));
 
-	// Debug: Hello, Space!
-	Route::get('debug/space', 'Nonoesp\Space\Controllers\SpaceController@helloSpace');
+	// Debug: Hello, Folio!
+	Route::get('debug/space', 'Nonoesp\Folio\Controllers\FolioController@helloFolio');
 
 	// SubscriptionController
-	Route::post('subscriber/create', 'Nonoesp\Space\Controllers\SubscriptionController@postSubscriber');
+	Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@postSubscriber');
 }
 
 /*----------------------------------------------------------------*/
 /* AdminController
 /*----------------------------------------------------------------*/
 
-Route::group(['middleware' => Config::get("space.middlewares-admin")], function() { // todo: get middleware back to 'login'
+Route::group(['middleware' => Config::get("folio.middlewares-admin")], function() { // todo: get middleware back to 'login'
 
-  $admin_path = Space::adminPath();
+  $admin_path = Folio::adminPath();
 
-  Route::get($admin_path, 'Nonoesp\Space\Controllers\AdminController@getDashboard');
+  Route::get($admin_path, 'Nonoesp\Folio\Controllers\AdminController@getDashboard');
 
   // Items
-  Route::get($admin_path.'items', 'Nonoesp\Space\Controllers\AdminController@getItemList');
-	Route::get($admin_path.'items/{tag}', 'Nonoesp\Space\Controllers\AdminController@getItemList');
-  Route::any($admin_path.'item/edit/{id}', array('as' => 'item.edit', 'uses' => 'Nonoesp\Space\Controllers\AdminController@ItemEdit'));
-  Route::get($admin_path.'item/add', 'Nonoesp\Space\Controllers\AdminController@getItemCreate');
-  Route::post($admin_path.'item/add', 'Nonoesp\Space\Controllers\AdminController@postItemCreate');
-  Route::get($admin_path.'item/delete/{id}', 'Nonoesp\Space\Controllers\AdminController@getItemDelete');
-  Route::get($admin_path.'item/restore/{id}', 'Nonoesp\Space\Controllers\AdminController@getItemRestore');
+  Route::get($admin_path.'items', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
+	Route::get($admin_path.'items/{tag}', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
+  Route::any($admin_path.'item/edit/{id}', array('as' => 'item.edit', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemEdit'));
+  Route::get($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@getItemCreate');
+  Route::post($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@postItemCreate');
+  Route::get($admin_path.'item/delete/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemDelete');
+  Route::get($admin_path.'item/restore/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemRestore');
 
-	Route::get($admin_path.'subscribers', 'Nonoesp\Space\Controllers\AdminController@getSubscribers');
+	Route::get($admin_path.'subscribers', 'Nonoesp\Folio\Controllers\AdminController@getSubscribers');
 
   // Visits
-  Route::get($admin_path.'visits', 'Nonoesp\Space\Controllers\AdminController@getVisits');
+  Route::get($admin_path.'visits', 'Nonoesp\Folio\Controllers\AdminController@getVisits');
 
   Route::get($admin_path, function() use ($admin_path) {
   	return redirect()->to($admin_path.'items');
   });
 
 	// Properties (API)
-	Route::post('/api/property/update', 'Nonoesp\Space\Controllers\AdminController@postPropertyUpdate');
-	Route::post('/api/property/delete', 'Nonoesp\Space\Controllers\AdminController@postPropertyDelete');
-	Route::post('/api/property/create', 'Nonoesp\Space\Controllers\AdminController@postPropertyCreate');
+	Route::post('/api/property/update', 'Nonoesp\Folio\Controllers\AdminController@postPropertyUpdate');
+	Route::post('/api/property/delete', 'Nonoesp\Folio\Controllers\AdminController@postPropertyDelete');
+	Route::post('/api/property/create', 'Nonoesp\Folio\Controllers\AdminController@postPropertyCreate');
 
-	Route::post('/api/item/update', 'Nonoesp\Space\Controllers\AdminController@postItemUpdate');
-	Route::post('/api/item/delete', 'Nonoesp\Space\Controllers\AdminController@postItemDelete');
-	Route::post('/api/item/restore', 'Nonoesp\Space\Controllers\AdminController@postItemRestore');
+	Route::post('/api/item/update', 'Nonoesp\Folio\Controllers\AdminController@postItemUpdate');
+	Route::post('/api/item/delete', 'Nonoesp\Folio\Controllers\AdminController@postItemDelete');
+	Route::post('/api/item/restore', 'Nonoesp\Folio\Controllers\AdminController@postItemRestore');
 
 }); // close space admin
 

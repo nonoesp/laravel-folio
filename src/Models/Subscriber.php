@@ -1,4 +1,4 @@
-<?php namespace Nonoesp\Space\Models;
+<?php namespace Nonoesp\Folio\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +11,6 @@ class Subscriber extends Model
 
 	public function __construct() {
 	    parent::__construct();
-	    $this->table = config('space.db-prefix').'subscribers';
+	    $this->table = config('folio.db-prefix').'subscribers';
 	}
 }

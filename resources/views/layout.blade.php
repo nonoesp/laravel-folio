@@ -1,31 +1,31 @@
 <?php
-	//$space_typekit = config('space.typekit');
-	//$space_css = config('space.css');
-	if(!isset($space_typekit)) { $space_typekit = config('space.typekit'); }
-	$og_title_default = config('space.title');
-	$og_description_default = config('space.description');
-	$og_image_default = config('space.image-src');
+	//$folio_typekit = config('folio.typekit');
+	//$folio_css = config('folio.css');
+	if(!isset($folio_typekit)) { $folio_typekit = config('folio.typekit'); }
+	$og_title_default = config('folio.title');
+	$og_description_default = config('folio.description');
+	$og_image_default = config('folio.image-src');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- This site is built with github.com/nonoesp/laravel-space -->
+<!-- This site is built with github.com/nonoesp/laravel-folio -->
 
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui"/>
-	<title>{{ $site_title or config('space.title') }}</title>
+	<title>{{ $site_title or config('folio.title') }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="{{ $space_css or config('space.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ $folio_css or config('folio.css') }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 
-@if($space_typekit)
+@if($folio_typekit)
 	<!-- TypeKit -->
-	<script type="text/javascript" src="//use.typekit.net/{{ $space_typekit }}.js"></script>
+	<script type="text/javascript" src="//use.typekit.net/{{ $folio_typekit }}.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 @endif
 
@@ -39,7 +39,7 @@
 
 	<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-ipad.png" />
 	<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-@2x.png" />
-	<meta name="apple-mobile-web-app-title" content="{{ config('space.title-short') }}" />
+	<meta name="apple-mobile-web-app-title" content="{{ config('folio.title-short') }}" />
 	<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon.png" />
 	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
 
@@ -55,11 +55,11 @@
 	@yield('open_object_metadata')
 
 	<!-- RSS -->
-	<link rel="alternate" type="application/atom+xml" href="/{{ config('space.feed.route') }}" />
+	<link rel="alternate" type="application/atom+xml" href="/{{ config('folio.feed.route') }}" />
 
-@if(!Auth::check() && config('space.google-analytics'))
+@if(!Auth::check() && config('folio.google-analytics'))
 	<!-- Google Analytics -->
-	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{{ config('space.google-analytics') }}', 'auto');ga('send', 'pageview');</script>
+	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{{ config('folio.google-analytics') }}', 'auto');ga('send', 'pageview');</script>
 @endif
 @yield('metadata')
 
@@ -68,13 +68,13 @@
 <body>
 
 	@if($notification = Request::session()->get('notification'))
-		{!! view('space::partial.o-notification', ['notification' => $notification]) !!}
+		{!! view('folio::partial.o-notification', ['notification' => $notification]) !!}
 	@endif
 
 	{{-- Header --}}
 	<?php if(!isset($header_hidden)){ $header_hidden = false; }
-				if(!isset($header_view)){ $header_view = config('space.header.view'); }
-				if(!isset($header_classes)){ $header_classes = config('space.header.classes');; }
+				if(!isset($header_view)){ $header_view = config('folio.header.view'); }
+				if(!isset($header_classes)){ $header_classes = config('folio.header.classes');; }
 				if(!isset($header_data)){ $header_data = []; } ?>
 	@if(!$header_hidden)
 				{!! view($header_view, [
@@ -87,18 +87,18 @@
 	<?php if(!isset($cover_active)){ $cover_active = true; }
 	 			if(!isset($cover_hidden)){ $cover_hidden = true; } ?>
   @if($cover_active and $cover_hidden != true)
-      	{!! view('space::partial.c-cover', $cover_data) !!}
+      	{!! view('folio::partial.c-cover', $cover_data) !!}
   @endif
 
 @yield('content')
 
 @yield('footer')
 
-<script src="{{ mix('/nonoesp/space/js/manifest.js') }}"></script>
-<script src="{{ mix('/nonoesp/space/js/vendor.js') }}"></script>
-<script src="{{ mix('/nonoesp/space/js/space.js') }}"></script>
+<script src="{{ mix('/nonoesp/folio/js/manifest.js') }}"></script>
+<script src="{{ mix('/nonoesp/folio/js/vendor.js') }}"></script>
+<script src="{{ mix('/nonoesp/folio/js/folio.js') }}"></script>
 <script>
-	var trans = {!! json_encode(trans('space::base')) !!};
+	var trans = {!! json_encode(trans('folio::base')) !!};
 </script>
 @yield('scripts')
 

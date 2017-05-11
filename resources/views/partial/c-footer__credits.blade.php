@@ -1,6 +1,6 @@
 <?php
   if(!isset($text)) {
-      $footer = Config::get('space.footer');
+      $footer = config('folio.footer');
       $text = null;
       if($footer['credits_text']) {
         $text = $footer['credits_text'];

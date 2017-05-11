@@ -1,5 +1,5 @@
 
-@extends(config("space.view.layout"))
+@extends(config("folio.view.layout"))
 
 @section('scripts')
     @if(isset($items))
@@ -20,18 +20,18 @@
       $keep_header_classes = $header_classes;
     }
 
-    // $space_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
+    // $folio_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
     // $tag
 
     // 1. Defaults
-    $site_title = config('space.title');
-    $og_description = config('space.description');
-    $header_view = config('space.header.view');
-    $header_classes = config('space.header.classes');
-    $header_data = config('space.header.data');
+    $site_title = config('folio.title');
+    $og_description = config('folio.description');
+    $header_view = config('folio.header.view');
+    $header_classes = config('folio.header.classes');
+    $header_data = config('folio.header.data');
 
     // Footer credits
-    $footer_credits = config('space.footer-credits');
+    $footer_credits = config('folio.footer-credits');
     $footer_hidden = false;
     if(isset($footer_credits['hidden'])) {
       $footer_hidden = $footer_credits['hidden'];
@@ -45,10 +45,10 @@
     }
 
     // 2. Defaults Cover
-    $cover_data = config('space.cover.data');
-    $cover_data['title'] = config('space.cover.title');
-    $cover_data['description'] = config('space.cover.footline');
-    $cover_data['subtitle'] = Thinker::array_rand_value(config('space.cover.subtitles'));
+    $cover_data = config('folio.cover.data');
+    $cover_data['title'] = config('folio.cover.title');
+    $cover_data['description'] = config('folio.cover.footline');
+    $cover_data['subtitle'] = Thinker::array_rand_value(config('folio.cover.subtitles'));
     $cover_data['class'] = 'is-header u-background-grey ';
     $cover_classes = '';
     $cover_active = true;
@@ -56,19 +56,19 @@
 
     // 3. Define Item Type
     if(isset($items)) {
-      $space_type = 'MULTIPLE_WRITING_TYPE';
+      $folio_type = 'MULTIPLE_WRITING_TYPE';
     } else if(isset($item)) {
-      $space_type = 'SINGLE_WRITING_TYPE';
+      $folio_type = 'SINGLE_WRITING_TYPE';
     } else {
-      $space_type = 'EMPTY_TYPE';
+      $folio_type = 'EMPTY_TYPE';
     }
 
     // ------------------------------------------------------------------------
     // (A) Single Item Settings
-    if ($space_type == 'SINGLE_WRITING_TYPE') {
+    if ($folio_type == 'SINGLE_WRITING_TYPE') {
 
         // 4.1. General
-        $site_title = $item->title.' | '.config('space.title');
+        $site_title = $item->title.' | '.config('folio.title');
         $og_description = Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']);
         $og_type = 'article';
         ?>
@@ -124,11 +124,11 @@
 
     // ------------------------------------------------------------------------
     // (B) Multiple Item Settings
-    else if ($space_type == 'MULTIPLE_WRITING_TYPE') {
+    else if ($folio_type == 'MULTIPLE_WRITING_TYPE') {
 
         // Tags
         if (isset($tag)) {
-          $site_title = ucwords($tag).' | '.config('space.title');
+          $site_title = ucwords($tag).' | '.config('folio.title');
           $og_description = 'Items tagged with the category '.ucwords($tag);
           $cover_data['description'] = "Items tagged with $tag";
         }
@@ -149,7 +149,7 @@
       {{----------------------------------------}}
       {{-- (A) ITEMS  --}}
 
-      @if($space_type == 'MULTIPLE_WRITING_TYPE')
+      @if($folio_type == 'MULTIPLE_WRITING_TYPE')
 
         @section('content')
 
@@ -166,7 +166,7 @@
 
           @foreach($items as $item)
 
-            {!! view('space::partial.c-item')->
+            {!! view('folio::partial.c-item')->
                      with(['item' => $item,
                            'item_type' => 'SUMMARY_ITEM_TYPE',
                            'isTitleLinked' => 'true',
@@ -175,7 +175,7 @@
           @endforeach
 
           @if(isset($ids) and count($ids) > 0)
-              {!! view('space::partial.c-load-more', ['ids' => $ids]) !!}
+              {!! view('folio::partial.c-load-more', ['ids' => $ids]) !!}
           @endif
 
           </div>
@@ -188,14 +188,14 @@
       {{--------------------------------}}
       {{-- (B) ITEM --}}
 
-      @if($space_type == 'SINGLE_WRITING_TYPE')
+      @if($folio_type == 'SINGLE_WRITING_TYPE')
 
         @section('content')
 
         <div class="[ o-band ] [ u-pad-t-5x u-pad-b-1x ]">
           <div class="[ o-wrap ]" style="max-width: 640px">
 
-              {!! view('space::partial.c-item', [
+              {!! view('folio::partial.c-item', [
                 'item' => $item,
                 'class' => ''
               ]) !!}
@@ -217,5 +217,5 @@
       {{-----------------------------------}}
 
 @section('footer')
-	{!! view('space::partial.c-footer', ['subscribe_data' => $subscribe_data]) !!}
+	{!! view('folio::partial.c-footer', ['subscribe_data' => $subscribe_data]) !!}
 @stop

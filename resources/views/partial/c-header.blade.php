@@ -16,8 +16,8 @@
   if(isset($data['description'])) { $description = $data['description']; }
   if(isset($data['navigation'])) { $navigation = $data['navigation']; } else {
     $navigation = [
-			trans('space::base.writing') => ['/'.Config::get('space.path-prefix'), Config::get('space.path-prefix')],
-			trans('space::base.about-me') => ['/about', 'about']
+			trans('folio::base.writing') => ['/'.Config::get('folio.path-prefix'), Config::get('folio.path-prefix')],
+			trans('folio::base.about-me') => ['/about', 'about']
 		];
   }
 ?>
@@ -27,9 +27,9 @@
 
 		<nav class="[ navigation ] [ u-mar-t-0x ]">
 			<ul>
-				<li><a href="/{{ Config::get('space.path-prefix') }}" class="navigation-link js--navigation-link-space">home</a></li>
+				<li><a href="/{{ Config::get('folio.path-prefix') }}" class="navigation-link js--navigation-link-folio">home</a></li>
         @if(Auth::check())
-				<li><a href="/{!! Config::get('space.admin-path-prefix') !!}" class="navigation-link js--navigation-link-admin">admin</a></li>
+				<li><a href="/{!! Config::get('folio.admin-path-prefix') !!}" class="navigation-link js--navigation-link-admin">admin</a></li>
         @endif
 			</ul>
 		</nav>

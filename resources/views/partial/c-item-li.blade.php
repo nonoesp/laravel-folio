@@ -37,14 +37,14 @@
   		<p class="[ c-item-li__date ]">
 				@if(isset($expected))
 					@if($date < Date::now()->add('20 days'))
-						{{ trans('space::base.expected') }}
+						{{ trans('folio::base.expected') }}
 						<span class="u-hidden-palm">{{ ucWords($date->format('l j, F Y')) }}.</span>
 						<span class="u-visible-palm">{{ ucWords($date->format('F j')) }}.</span>
 					@else
-						{{ trans('space::base.expected') }}.
+						{{ trans('folio::base.expected') }}.
 					@endif
-					{{ Html::link('', trans('space::base.subscribe'), ['class' => 'js--subscribe-link']) }}
-					{{ trans('space::base.to-be-notified') }}
+					{{ Html::link('', trans('folio::base.subscribe'), ['class' => 'js--subscribe-link']) }}
+					{{ trans('folio::base.to-be-notified') }}
 				@else
         	<span>{{ ucWords($date->format('F Y')).$source }}</span>
 				@endif

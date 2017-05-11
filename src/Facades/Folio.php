@@ -1,12 +1,12 @@
 <?php
-namespace Nonoesp\Space\Facades;
+namespace Nonoesp\Folio\Facades;
 use Illuminate\Support\Facades\Facade;
-class Space extends Facade {
+class Folio extends Facade {
     /**
      * Get the registered name of the component.
      *
      * @return string
      */
-    protected static function getFacadeAccessor() { return 'space'; }
+    protected static function getFacadeAccessor() { return 'folio'; }
 
 }

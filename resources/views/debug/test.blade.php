@@ -12,20 +12,20 @@
 {{ Hashids::encode(248) }}
 
 <?php $item = Item::find(200); ?>
-<h3>nonoesp/space</h3>
-{{ Html::link(Space::path().$item->slug, Space::path().$item->slug) }}
+<h3>nonoesp/folio</h3>
+{{ Html::link(Folio::path().$item->slug, Folio::path().$item->slug) }}
 
 <h3>take {{ $amount }} items</h3>
 <?php $items = Item::take($amount)->get(); ?>
   @foreach($items as $item)
-    {{ Html::link(Space::path().$item->slug, $item->title) }}
+    {{ Html::link(Folio::path().$item->slug, $item->title) }}
     <br>
   @endforeach
 
 <h3>take {{ $amount }} more items</h3>
 <?php $items = Item::orderBy('id','DESC')->take($amount)->get(); ?>
 @foreach($items as $item)
-  {{ Html::link(Space::path().$item->id, Space::path().$item->id) }} ({{ $item->title }})
+  {{ Html::link(Folio::path().$item->id, Folio::path().$item->id) }} ({{ $item->title }})
   <br>
 @endforeach
 

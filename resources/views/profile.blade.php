@@ -1,4 +1,4 @@
-@extends(Config::get("space.view.layout"))
+@extends(Config::get("folio.view.layout"))
 
 <?php
 
@@ -8,7 +8,7 @@
 	// User Items
 	$items = Item::where('user_id', '=', $user->id)->orderBy('id', 'DESC')->take(5)->get();
 
-	$user_thumbnail = view('space::partial.c-user-picture')->with(["user" => $user,
+	$user_thumbnail = view('folio::partial.c-user-picture')->with(["user" => $user,
 	         													  	 "size" => 75,
 	         													  	 "margin_top" => "-15",
 	         													  	 "margin_bottom" => "15",
@@ -62,7 +62,7 @@
 							$date = ucWords(substr($date->format('F'), 0, 3).$date->format(' j, Y'));
 						?>
 
-	   					{!! Html::link(Space::path().$item->slug, $item->title, ['class' => 'u-font-size--b']) !!}
+	   					{!! Html::link(Folio::path().$item->slug, $item->title, ['class' => 'u-font-size--b']) !!}
 
    						<div class="c-item__inline-container">
    							<div class="c-item__inline-detail">

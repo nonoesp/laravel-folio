@@ -1,4 +1,4 @@
-<?php namespace Nonoesp\Space\Models;
+<?php namespace Nonoesp\Folio\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +10,7 @@ class Property extends Model
 
 	public function __construct() {
 	    parent::__construct();
-	    $this->table = config('space.db-prefix').'item_properties';
+	    $this->table = config('folio.db-prefix').'item_properties';
 	}
 
 	public function item()

@@ -25,7 +25,7 @@
 		$class_is_tagged = '';
 		if($item->tagNames()) $class_is_tagged = '[ is-tagged ]';
 		$class_categories = '';
-		if($categories = Space::itemCategoryClass($item, 'c-item')) $class_categories = '[ '.$categories.']';
+		if($categories = Folio::itemCategoryClass($item, 'c-item')) $class_categories = '[ '.$categories.']';
 
 		// Author
 		// $user_thumbnail = NULL;
@@ -43,7 +43,7 @@
 
 	  {{-- Title --}}
 	  @if (isset($isTitleLinked))
-	    <h1>{{ Html::link(Space::path().$item->slug, Thinker::title($item->title)) }}</h1>
+	    <h1>{{ Html::link(Folio::path().$item->slug, Thinker::title($item->title)) }}</h1>
 	  @else
 	    <h1>{{ Thinker::title($item->title) }}</h1>
 	  @endif
@@ -95,7 +95,7 @@
 			@if ($item_type == 'SUMMARY_ITEM_TYPE')
 				<p>
 					{{ Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 275, array('figcaption')) }}
-					{{ Html::link(Space::path().$item->slug, trans('space::base.continue-reading')) }}
+					{{ Html::link(Folio::path().$item->slug, trans('folio::base.continue-reading')) }}
 				</p>
 			@endif
 
@@ -107,7 +107,7 @@
 
 		{{-- Tags --}}
 			@if (count($item->tagNames()) > 0)
-				<p class="c-item__tags">{!! Space::tagListWithItemAndClass($item, 'c-item__tag u-case-upper') !!}</p>
+				<p class="c-item__tags">{!! Folio::tagListWithItemAndClass($item, 'c-item__tag u-case-upper') !!}</p>
 			@endif
 
     </div><!--

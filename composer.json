@@ -1,22 +1,20 @@
 {
-    "name": "nonoesp/space",
-    "description": "A Laravel blogging system.",
+    "name": "nonoesp/folio",
+    "description": "A Laravel content management system.",
     "license": "MIT",
-    "authors": [
-        {
-            "name": "Nono Martínez Alonso",
-            "email": "mundowarezweb@gmail.com"
-        }
-    ],
+    "authors": [{
+        "name": "Nono Martínez Alonso",
+        "email": "mundowarezweb@gmail.com"
+    }],
     "autoload": {
         "classmap": [
             "src/controllers"
         ],
         "psr-4": {
-            "Nonoesp\\Space\\": "src/"
+            "Nonoesp\\Folio\\": "src/"
         }
     },
-    "minimum-stability" : "dev",
+    "minimum-stability": "dev",
     "require": {
         "illuminate/support": "~5",
         "rtconner/laravel-tagging": "~2.0",

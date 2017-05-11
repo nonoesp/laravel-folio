@@ -21,7 +21,7 @@
                {{ Form::email('email', null, ['placeholder' => 'Email', 'class' => '[ js--subscribe__email ] [ u-case-input-lower ]', 'name' => 'EMAIL']) }}
            </div>
            <div class="[ grid__item desk--one-third ]">
-               {{ Form::submit(trans('space::base.subscribe'), ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
+               {{ Form::submit(trans('folio::base.subscribe'), ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
            </div>
 
     </div>
@@ -31,7 +31,7 @@
        <p class="[ js--subscribe__label ]{{--
              --}}[ u-font-size--a u-opacity--half u-select-none ]{{--
              --}}[ u-text-align--portable-center ]">
-           {{ trans('space::base.receive-our-posts') }}
+           {{ trans('folio::base.receive-our-posts') }}
        </p>
 
     </div>

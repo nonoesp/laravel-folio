@@ -1,9 +1,9 @@
-<?php namespace Nonoesp\Space;
+<?php namespace Nonoesp\Folio;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Container\Container;
 
-class SpaceServiceProvider extends ServiceProvider
+class FolioServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -23,13 +23,13 @@ class SpaceServiceProvider extends ServiceProvider
         $path_config = __DIR__.'/../config/config.php';
 
         // Publish Paths
-        $publish_path_views = base_path('resources/views/nonoesp/space');
-        $publish_path_lang = base_path('resources/lang/nonoesp/space');
+        $publish_path_views = base_path('resources/views/nonoesp/folio');
+        $publish_path_lang = base_path('resources/lang/nonoesp/folio');
         $publish_path_middleware = base_path('app/Http/Middleware');
-        $publish_path_assets = base_path('public/nonoesp/space');
+        $publish_path_assets = base_path('public/nonoesp/folio');
         $publish_path_sass = base_path('resources/assets/sass');
         $publish_path_js = base_path('resources/assets/js');
-        $publish_path_config = config_path('space.php');
+        $publish_path_config = config_path('folio.php');
 
         // Publish Stuff
         $this->publishes([$path_views => $publish_path_views,], 'views');
@@ -40,20 +40,20 @@ class SpaceServiceProvider extends ServiceProvider
         $this->publishes([$path_js => $publish_path_js,], 'dev-assets');//'js');
         $this->publishes([$path_config => $publish_path_config,], 'config');
 
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'space');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'folio');
 
         // Views
         if (is_dir($publish_path_views)) {
-            $this->loadViewsFrom($publish_path_views, 'space'); // Load published views
+            $this->loadViewsFrom($publish_path_views, 'folio'); // Load published views
         } else {
-            $this->loadViewsFrom($path_views, 'space');
+            $this->loadViewsFrom($path_views, 'folio');
         }
 
         // Translations
         if (is_dir($publish_path_lang)) {
-            $this->loadTranslationsFrom($publish_path_lang, 'space'); // Load published lang
+            $this->loadTranslationsFrom($publish_path_lang, 'folio'); // Load published lang
         } else {
-            $this->loadTranslationsFrom($path_lang, 'space');
+            $this->loadTranslationsFrom($path_lang, 'folio');
         }
 
         $this->loadMigrationsFrom($path_migrations);
@@ -67,11 +67,11 @@ class SpaceServiceProvider extends ServiceProvider
     public function register()
     {
         // Register Controllers
-        //$this->app->make('Nonoesp\Space\Controllers\Controller');
-        //$this->app->make('Nonoesp\Space\Controllers\SpaceController');
+        //$this->app->make('Nonoesp\Folio\Controllers\Controller');
+        //$this->app->make('Nonoesp\Folio\Controllers\FolioController');
 
         // Merge Config
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'space');
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'folio');
 
         include __DIR__.'/routes.php';
 
@@ -79,13 +79,13 @@ class SpaceServiceProvider extends ServiceProvider
         $this->app->booting(function()
         {
           $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-          $loader->alias('Space', 'Nonoesp\Space\Facades\Space');
+          $loader->alias('Folio', 'Nonoesp\Folio\Facades\Folio');
         });
 
-        $this->app->singleton('space', function (Container $app) {
-             return new Space();
+        $this->app->singleton('folio', function (Container $app) {
+             return new Folio();
          });
-        $this->app->alias('space', Space::class);
+        $this->app->alias('folio', Folio::class);
 
     }
 }

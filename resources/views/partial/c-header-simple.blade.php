@@ -16,8 +16,8 @@
   if(isset($data['description'])) { $description = $data['description']; }
   if(isset($data['navigation'])) { $navigation = $data['navigation']; } else {
     $navigation = [
-			trans('space::base.writing') => ['/'.Config::get('space.path-prefix'), Config::get('space.path-prefix')],
-			trans('space::base.about-me') => ['/about', 'about']
+			trans('folio::base.writing') => ['/'.Config::get('folio.path-prefix'), Config::get('folio.path-prefix')],
+			trans('folio::base.about-me') => ['/about', 'about']
 		];
   }
 ?>
@@ -58,7 +58,7 @@
 		@endif
 
 		@if(!isset($is_media_hidden))
-		  {!! view('space::partial.c-media')->with(['media' => Config::get('space.media_links')]) !!}
+		  {!! view('folio::partial.c-media')->with(['media' => Config::get('folio.media_links')]) !!}
 		@endif
 	</div>
 </header>

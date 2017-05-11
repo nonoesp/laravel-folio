@@ -2,22 +2,22 @@
 
 return [
 
-	'path-prefix' => 'space', // (1) 'string' site.com/string/slug, (2) '' site.com/slug
+	'path-prefix' => 'folio', // (1) 'string' site.com/string/slug, (2) '' site.com/slug
 	'admin-path-prefix' => 'admin',
 
 	'view' => [
-			'layout' => 'space::layout', 					// 'space::layout'
-			'items' => 'space::template._base',		// 'space::base'
+			'layout' => 'folio::layout', 					// 'folio::layout'
+			'items' => 'folio::template._base',		// 'folio::base'
 		],
 
 	'db-prefix' => 'folio_',
 
-	'title' => 'Space',
+	'title' => 'Folio',
 	'title-short' => 'Spc',
 	'description' => 'A simple web.',
 	'image_src' => 'http://domain.com/img/image_src.jpg',
 
-	'css' => '/nonoesp/space/css/space.css', //
+	'css' => '/nonoesp/folio/css/folio.css', //
 
 	'typekit' => '',
 	'google-analytics' => '',
@@ -35,17 +35,17 @@ return [
 		'credits_text' => ''
 		],
 
-	//'template-paths' => ['space::templates'],
+	//'template-paths' => ['folio::templates'],
 	//'special-tags' => ['highlight'],
 
 	'header' => [
-			'view' => 'space::partial.c-header',
+			'view' => 'folio::partial.c-header',
 			'classes' => ['white', 'absolute'],
 			'data' => []
 		],
 
 	'admin-header' => [
-			'view' => 'space::partial.c-header',
+			'view' => 'folio::partial.c-header',
 			'classes' => ['white', 'absolute'],
 			'data' => []
 		],
@@ -60,17 +60,17 @@ return [
     'star' => 'http://gettingsimple.com'
 	],
 
-	'protected_uris' => ['example', 'profile', 'about', 'magic'], // are not overriden by space
+	'protected_uris' => ['example', 'profile', 'about', 'magic'], // are not overriden by folio
 
-	'middlewares' => ['web'], // space routes
-	'middlewares-admin' => ['login', 'web'], // space admin routes
+	'middlewares' => ['web'], // folio routes
+	'middlewares-admin' => ['login', 'web'], // folio admin routes
 
 	'published-show' => 5,
 	'expected-show' => 100,
 
 	'feed' => [
 		'route' => 'feed', // (e.g. 'feed', or 'feed.xml')
-		'title' => 'My Space Feed',
+		'title' => 'My Folio Feed',
 		'description' => 'A description here would come handy.',
 		'show' => '30', // maximum amount of articles to display
 		'logo' => '', // (optional) URL to your feed's logo

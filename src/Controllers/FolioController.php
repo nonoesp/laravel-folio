@@ -1,10 +1,10 @@
 <?php
 
-namespace Nonoesp\Space\Controllers;
+namespace Nonoesp\Folio\Controllers;
 
 use Illuminate\Http\Request;
 use Item, User; // Must be defined in your aliases
-use Nonoesp\Space\Space;
+use Nonoesp\Folio\Folio;
 use View;
 use Config;
 use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
@@ -12,11 +12,11 @@ use App;
 use Markdown;
 use Auth;
 
-class SpaceController extends Controller
+class FolioController extends Controller
 {
 	// This is an informal test of some dependencies and features.
-  public function helloSpace() {
-		return view('space::debug.test')->with(['amount' => 2]);
+  public function helloFolio() {
+		return view('folio::debug.test')->with(['amount' => 2]);
 	}
 
 	public function showHome() {
@@ -25,8 +25,8 @@ class SpaceController extends Controller
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
 		// Config variables
-		$published_show = Config::get("space.published-show");
-		$expected_show = Config::get("space.expected-show");
+		$published_show = Config::get("folio.published-show");
+		$expected_show = Config::get("folio.expected-show");
 
 		$published_existing = Item::published()
     				   		->visibleFor($twitter_handle)
@@ -84,7 +84,7 @@ class SpaceController extends Controller
 									->take($expected_show)
 									->get();
 
-		return view(Config::get('space.view.items'))
+		return view(Config::get('folio.view.items'))
          ->with([
            'items' => $items,
            'ids' => $ids_array,
@@ -99,8 +99,8 @@ class SpaceController extends Controller
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
 		// Config variables
-		$published_show = Config::get("space.published-show");
-		$expected_show = Config::get("space.expected-show");
+		$published_show = Config::get("folio.published-show");
+		$expected_show = Config::get("folio.expected-show");
 
 		$published_existing = Item::withAnyTag($tag)
     					    ->published()
@@ -159,7 +159,7 @@ class SpaceController extends Controller
                           ->take($expected_show)
                           ->get();
 
-		return view(Config::get('space.view.items'))->with(
+		return view(Config::get('folio.view.items'))->with(
 								        [
 		             	  			'items' => $items,
 		             	  			'ids' => $ids_array,
@@ -172,7 +172,7 @@ class SpaceController extends Controller
 
 		if($item = Item::withTrashed()->whereSlug($slug)->first() or
        $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
-       $item = Item::withTrashed()->whereSlug('/'.Space::path().$slug)->first() ) {
+       $item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first() ) {
 			$item->visits++;
 			$item->save();
 
@@ -180,7 +180,7 @@ class SpaceController extends Controller
         if(($user = Auth::user() and $user->is_admin) or session('temporary-token')) {
           // private and visible (auth ok)
           session(['temporary-token' => false]);
-          $request->session()->flash('notification', trans('space::base.preview-notification'));
+          $request->session()->flash('notification', trans('folio::base.preview-notification'));
         } else {
           // private and hidden (no auth)
           return response()->view('errors.404', [], 404);
@@ -192,7 +192,7 @@ class SpaceController extends Controller
       if($view = $item->templateView()) {
         return view($view, ['item' => $item]);
       }
-			return view('space::template._standard', ['item' => $item]);
+			return view('folio::template._standard', ['item' => $item]);
 		}
 
 	}
@@ -202,7 +202,7 @@ class SpaceController extends Controller
     if($item->slug[0] == '/') {
       return redirect($item->slug);
     }
-		return redirect(Space::path().$item->slug);
+		return redirect(Folio::path().$item->slug);
 	}
 
 	public function getItemsWithIds() {
@@ -212,7 +212,7 @@ class SpaceController extends Controller
 
 		// Echo Items
 		foreach(\Input::get('ids') as $id) {
-      echo view('space::partial.c-item-li')->with(['item' => Item::find($id)]);
+      echo view('folio::partial.c-item-li')->with(['item' => Item::find($id)]);
 		}
 
 	}
@@ -228,8 +228,8 @@ class SpaceController extends Controller
 	    // check if there is cached feed and build new only if is not
 	    if (!$feed->isCached())
 	    {
-	    	 $default_author = Config::get('space.feed.default-author');
-		     $feed_show = Config::get('space.feed.show');
+	    	 $default_author = Config::get('folio.feed.default-author');
+		     $feed_show = Config::get('folio.feed.show');
 
 	       $items = Item::published()
 					          ->public()
@@ -239,21 +239,21 @@ class SpaceController extends Controller
 					          ->get();
 
 	       // set your feed's title, description, link, pubdate and language
-	       $feed->title = Config::get('space.feed.title');
-	       $feed->description = Config::get('space.feed.description');
-	       $feed->logo = Config::get('space.feed.logo');
-	       $feed->link = \URL::to('/'.Space::path());
+	       $feed->title = Config::get('folio.feed.title');
+	       $feed->description = Config::get('folio.feed.description');
+	       $feed->logo = Config::get('folio.feed.logo');
+	       $feed->link = \URL::to('/'.Folio::path());
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
          if(count($items)) $feed->pubdate = $items[0]->published_at;
 	       $feed->lang = 'en';
 	       $feed->setShortening(false); // true or false
 	       $feed->setTextLimit(159); // maximum length of description text
-	       $feed->setView("space::feed.rss");
+	       $feed->setView("folio::feed.rss");
 
 	       foreach ($items as $item)
 	       {
 	           // set item's title, author, url, pubdate, description and content
-	       	   $image_src = Config::get('space.feed.default-image-src');
+	       	   $image_src = Config::get('folio.feed.default-image-src');
 	       	   $image = '';
              $item_image = '';
 

@@ -1,8 +1,8 @@
 # A Simple CMS for Laravel
 
-Hi there! `nonoesp/space` is a content management system package for Laravel.
+Hi there! `nonoesp/folio` is a content management system package for Laravel.
 
-**Space** supports Laravel 5.4.
+**Folio** supports Laravel 5.4.
 
 ## Live Examples
 
@@ -14,11 +14,11 @@ Hi there! `nonoesp/space` is a content management system package for Laravel.
 
 ## Installation
 
-Begin by installing this package through Composer. Edit your project’s `composer.json` file to require `nonoesp/space`.
+Begin by installing this package through Composer. Edit your project’s `composer.json` file to require `nonoesp/folio`.
 
 ```json
 "require": {
-	"nonoesp/space": "^5.4"
+	"nonoesp/folio": "^5.4"
 }
 ```
 
@@ -33,8 +33,8 @@ Next, add the new providers to the `providers` array of `config/app.php`:
 ```php
 	'providers' => [
 		// ...
-        // nonoesp/space
-        Nonoesp\Space\SpaceServiceProvider::class,        
+        // nonoesp/folio
+        Nonoesp\Folio\FolioServiceProvider::class,        
         Nonoesp\Thinker\ThinkerServiceProvider::class,  
         Nonoesp\Authenticate\AuthenticateServiceProvider::class,          
         GrahamCampbell\Markdown\MarkdownServiceProvider::class,
@@ -53,15 +53,15 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 ```php
 	'aliases' => [
 		// ...
-        // nonoesp/space - Models
-        'Space' => Nonoesp\Space\Facades\Space::class,
+        // nonoesp/folio - Models
+        'Folio' => Nonoesp\Folio\Facades\Folio::class,
         'User' => 'App\User',
-        'Item' => Nonoesp\Space\Models\Item::class,    
-        'Property' => Nonoesp\Space\Models\Property::class,
-        'Recipient' => Nonoesp\Space\Models\Recipient::class,
-        'Subscriber' => Nonoesp\Space\Models\Subscriber::class,
+        'Item' => Nonoesp\Folio\Models\Item::class,    
+        'Property' => Nonoesp\Folio\Models\Property::class,
+        'Recipient' => Nonoesp\Folio\Models\Recipient::class,
+        'Subscriber' => Nonoesp\Folio\Models\Subscriber::class,
 
-        // nonoesp/space - Dependencies
+        // nonoesp/folio - Dependencies
         'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
         'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
         'Date' => Jenssegers\Date\Date::class,
@@ -76,7 +76,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 	],
 ```
 
-To authenticate, `Space` uses `nonoesp/authenticate` (which should be already installed as a dependency).
+To authenticate, `Folio` uses `nonoesp/authenticate` (which should be already installed as a dependency).
 But you need to follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/master)
 
 ## Migrations
@@ -84,7 +84,7 @@ But you need to follow the [Instructions to Install `nonoesp/authenticate`](http
 First, make sure you remove Laravel's default migration files from `database/migrations` as they can collide
 with this package.
 
-Let's create the tables required by **Space** in your database.
+Let's create the tables required by **Folio** in your database.
 
 First, make sure your database connection is setup properly in you `.env` file.
 
@@ -105,18 +105,18 @@ php artisan migrate
 
 ## Config
 
-Publish configuration file to `config/space.php`.
+Publish configuration file to `config/folio.php`.
 
 ```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=config
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=config
 ```
 
 ## Publish Middleware
 
-For **Space** translations to work properly we need to publish our `SetLocales.php` middleware:
+For **Folio** translations to work properly we need to publish our `SetLocales.php` middleware:
 
 ```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=middleware
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=middleware
 ```
 
 Then add it to `app/Html/Kernel.php` inside the `$middleware` array:
@@ -131,17 +131,17 @@ protected $middleware = [
 
 ## Publish Assets
 
-**Space** ships with compiled CSS and JS assets, in case you want to use it as is,
+**Folio** ships with compiled CSS and JS assets, in case you want to use it as is,
 they can be published as follows:
 
 ```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=assets
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=assets
 ```
 
 ## Publish Development Assets
 
 If you want to customize and compile your own stylesheets,
-**Space** also contains SCSS files with numerous variables
+**Folio** also contains SCSS files with numerous variables
 you can tweak and development JavaScript files.
 You just need to install a dependencies with `npm`,
 publish the development assets,
@@ -149,10 +149,10 @@ and generate CSS and JavaScript with Laravel Mix.
 
 Publish the development assets with:
 
-If you haven't done so, publish `nonoesp/space` development assets.
+If you haven't done so, publish `nonoesp/folio` development assets.
 
 ```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=dev-assets
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets
 ```
 
 ### Install Dependencies (with npm)
@@ -183,23 +183,23 @@ const { mix } = require('laravel-mix');
 
 // ...
 
-mix.sass('resources/assets/sass/space.scss', 'public/nonoesp/space/css');
-mix.js('resources/assets/js/space.js', 'public/nonoesp/space/js')
+mix.sass('resources/assets/sass/folio.scss', 'public/nonoesp/folio/css');
+mix.js('resources/assets/js/folio.js', 'public/nonoesp/folio/js')
    .extract(['vue', 'vue-resource', 'jquery', 'validate-js', 'lodash', 'axios']);;
 
 ```
 
 ## Customize Views
 
-You can publish **Space** views and customize them. (If you customize a few views and want to get updates from future version for others, you will need to remove the ones you haven't modify and re-publish the views of the package. This won't override your customized view, just the one you delete from your `resources/views/nonoesp/`.)
+You can publish **Folio** views and customize them. (If you customize a few views and want to get updates from future version for others, you will need to remove the ones you haven't modify and re-publish the views of the package. This won't override your customized view, just the one you delete from your `resources/views/nonoesp/`.)
 
 ```php
-php artisan vendor:publish --provider="Nonoesp\Space\SpaceServiceProvider" --tag=views
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
 ```
 
 ## License
 
-Space is licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Folio is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Me
 
