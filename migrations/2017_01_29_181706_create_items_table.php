@@ -31,11 +31,9 @@ class CreateItemsTable extends Migration
               $table->string('template')->nullable();
               $table->integer('visits')->nullable();
               $table->string('recipients_str', 512)->nullable();
-              $table->integer('rss')->nullable();
-              $table->integer('is_blog')->nullable();
+              $table->boolean('rss')->nullable();
+              $table->boolean('is_blog')->default(true)->nullable();
       });
-
-
 
     }
 

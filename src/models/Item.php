@@ -124,6 +124,11 @@ class Item extends Model
 		return NULL;
 	}
 
+	public function scopeBlog($query)
+	{
+		return $query->has('is_blog', '=', 1);
+	}
+
 	public function scopePublic($query)
 	{
 		return $query->has('recipients', '=', 0);
