@@ -32,6 +32,7 @@ class CreateItemsTable extends Migration
               $table->integer('visits')->nullable();
               $table->string('recipients_str', 512)->nullable();
               $table->integer('rss')->nullable();
+              $table->integer('is_blog')->nullable();
       });
 
 

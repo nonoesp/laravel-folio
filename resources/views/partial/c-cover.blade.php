@@ -10,7 +10,7 @@
 	</div>
 
 	<div class="c-cover__description">
-		{!! $description !!}
+		{!! $description or '' !!}
 	</div>
 
 	@if(isset($slideshow))
