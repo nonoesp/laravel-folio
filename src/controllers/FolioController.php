@@ -29,10 +29,12 @@ class FolioController extends Controller
 		$expected_show = Config::get("folio.expected-show");
 
 		$published_existing = Item::published()
+							->blog()
     				   		->visibleFor($twitter_handle)
     				   		->count();
 
 		$expected_existing = Item::expected()
+						   ->blog()
     				   	   ->visibleFor($twitter_handle)
     				       ->count();
 
@@ -49,10 +51,12 @@ class FolioController extends Controller
 		// Get Items + Items ids
 
     	$left = Item::published()
+					   ->blog()
     				   ->visibleFor($twitter_handle)
     				   ->count() - $published_show;
 
     	$items = Item::published()
+						   ->blog()
     					   ->visibleFor($twitter_handle)
     					   ->orderBy('published_at', 'DESC')
     					   ->skip(0)
@@ -64,6 +68,7 @@ class FolioController extends Controller
   		  if ($left > 0)
   		  {
 			$ids = Item::published()
+						  ->blog()
 	    				  ->visibleFor($twitter_handle)
 			              ->select('id','published_at')
 	    				  ->orderBy('published_at', 'DESC')
@@ -79,16 +84,18 @@ class FolioController extends Controller
 
 		// Get Expected Items
 		$items_expected = Item::expected()
-									->visibleFor($twitter_handle)
-									->orderBy('published_at', 'DESC')
-									->take($expected_show)
-									->get();
+								->blog()
+								->visibleFor($twitter_handle)
+								->orderBy('published_at', 'DESC')
+								->take($expected_show)
+								->get();
 
-		return view(Config::get('folio.view.items'))
+		return view(config('folio.view.collection'))
          ->with([
-           'items' => $items,
+           'collection' => $items,
            'ids' => $ids_array,
-           'items_expected' => $items_expected
+           'items_expected' => $items_expected,
+		   'header_description' => trans('folio.slogan')
          ]);
 	}
 
@@ -173,6 +180,7 @@ class FolioController extends Controller
 		if($item = Item::withTrashed()->whereSlug($slug)->first() or
        $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
        $item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first() ) {
+			$item->timestamps = false;
 			$item->visits++;
 			$item->save();
 

@@ -126,7 +126,7 @@ class Item extends Model
 
 	public function scopeBlog($query)
 	{
-		return $query->has('is_blog', '=', 1);
+		return $query->where('is_blog', '=', 1);
 	}
 
 	public function scopePublic($query)

@@ -1,3 +1,3 @@
 <div class="[ o-notification ]">
-  {{ $notification }}
+  {!! $notification !!}
 </div>
