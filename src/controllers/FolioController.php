@@ -292,9 +292,14 @@ class FolioController extends Controller
 	       	   }
 
 			 // text
-			 $text = str_replace(['<img', 'src="/'],
+			 $html = str_replace(['<img', 'src="/'],
 			 					 ['<img width="100%"', 'src="'.$request->root().'/'],
 			 					 $image.\Markdown::convertToHtml($item->text));
+
+			$html = str_replace(
+				["<p><img", "/></p>"],
+				["<p class=\"rss__img-wrapper\"><img",    "/></p>"],
+				$html);		
 
 	           $feed->add(
 	           	$item->title,
@@ -302,7 +307,7 @@ class FolioController extends Controller
 	           	$URL,
 	           	$item->published_at,
 	           	\Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']),
-	           	$text,
+	           	$html,
 	           	['url'=>$image_src,'type'=>'image/jpeg']);
 	       }
 
