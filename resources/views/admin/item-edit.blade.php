@@ -22,8 +22,23 @@ VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').a
 
 var debounced_property_sync = _.debounce(
 	function(property, model) {
+
+		if(property.value != property.old_value ||
+		property.label != property.old_label ||
+		property.name != property.old_name) {
+			// update
+		} else {
+			// no changes, abort update
+			return;
+		}
+
 		var data = property;
 		property.is_updating = true;
+		
+		property.old_value = property.value;
+		property.old_label = property.label;
+		property.old_name = property.name;
+		
 		model.$forceUpdate();
 		VueResource.Http.post('/api/property/update', data).then((response) => {
 				// success
@@ -42,10 +57,7 @@ data: {
 	item: '',
 	properties: '',
 	timers: {},
-	properties_changed: false,
-	styleObject: {
-		color: 'red'
-	}
+	properties_changed: false
 },
 watch: {
 	properties: {
@@ -57,19 +69,16 @@ watch: {
 		deep: true
 	}
 },
-computed: {
-	reversedMessage: function () {
-		return this.message.split('').reverse().join('');
-	}
-},
 methods: {
-	set_updating: function(property) {
-		property.is_updating = true;
+	initProperties: function() {
+		for(var i in this.properties) {
+			var p = this.properties[i];
+			p.old_name = p.name;
+			p.old_label = p.label;
+			p.old_value = p.value;
+		}
 	},
 	sync_properties: function(property) {
-		if(this.properties_changed == false) {
-			return;
-		}
 		if(editing_property != -1 && property.id != editing_property) {
 			debounced_property_sync.flush();
 		}
@@ -104,6 +113,7 @@ methods: {
 			admin.item = {!! $item !!};
 			admin.properties = {!! $item->properties !!};
 			admin.message = "{!! $item->title !!}";
+			admin.initProperties();
 		</script>
 @stop
 
@@ -168,7 +178,6 @@ methods: {
 				</div>
 			@endforeach
 
-
 			{{-- Template Drop-down --}}
 
 			<div class="[ grid__item ] [ one-whole ]">
@@ -179,7 +188,6 @@ methods: {
 					<p>View <i>{{$item->templateView()}}</i> is missing!</p>
 				@endif
 			</div>
-
 
 			{{-- Blog Feed --}}
 
@@ -192,7 +200,6 @@ methods: {
 			<div class="[ grid__item ] [ one-whole ]">
 				<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS Feed</label></p>
 			</div>			
-
 
 			{{-- Properties --}}
 
