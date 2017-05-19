@@ -99,6 +99,7 @@ class AdminController extends Controller
 
 		    $item->recipients_str = Input::get('recipients_str');
 		    $item->rss = (Input::get('rss') ? true : false);
+			$item->is_blog = (Input::get('is_blog') ? true : false);
 		    $item->recipients()->delete();
 		    if($item->recipients_str != NULL)
 		    {

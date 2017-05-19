@@ -181,11 +181,17 @@ methods: {
 			</div>
 
 
+			{{-- Blog Feed --}}
+
+			<div class="[ grid__item ] [ one-whole ]">
+				<p><label for="blog">{{ Form::checkbox('is_blog', null, null, array('id' => 'is_blog')) }} Blog Feed</label></p>
+			</div>
+
 			{{-- RSS --}}
 
 			<div class="[ grid__item ] [ one-whole ]">
-				<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS</label></p>
-			</div>
+				<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS Feed</label></p>
+			</div>			
 
 
 			{{-- Properties --}}
