@@ -24,7 +24,9 @@
     // $tag
 
     // 1. Defaults
-    $site_title = config('folio.title');
+    if(!isset($site_title)) {
+      $site_title = config('folio.title');
+    }
     $og_description = config('folio.description');
     $header_view = config('folio.header.view');
     $header_classes = config('folio.header.classes');

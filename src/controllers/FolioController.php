@@ -114,6 +114,10 @@ class FolioController extends Controller
     				   		->visibleFor($twitter_handle)
     				   		->count();
 
+		if($published_existing <= 0) {
+			return response()->view('errors.404', [], 404);
+		}
+
 		$expected_existing = Item::withAnyTag($tag)
 						   ->expected()
     				   	   ->visibleFor($twitter_handle)
@@ -166,13 +170,15 @@ class FolioController extends Controller
                           ->take($expected_show)
                           ->get();
 
-		return view(Config::get('folio.view.items'))->with(
-								        [
-		             	  			'items' => $items,
-		             	  			'ids' => $ids_array,
-		             	  			'tag' => $tag,
-		             	  			'items_expected' => $items_expected
-		             	  		]);
+		return view(config('folio.view.collection'))
+         ->with([
+           'collection' => $items,
+           'ids' => $ids_array,
+           'items_expected' => $items_expected,
+		   'tag' => $tag,
+		   'header_description' => trans('folio.slogan')
+         ]);
+
 	}
 
 	public function showItem(Request $request, $slug) {

@@ -7,7 +7,7 @@ return [
 
 	'view' => [
 		'layout' => 'folio::layout', // 'folio::layout'
-		'items' => 'template._base', // 'folio::base'
+		'collection' => 'template._base', // 'folio::base'
 		'item' => 'template._standard', // 'folio::template._standard'
 	],
 
