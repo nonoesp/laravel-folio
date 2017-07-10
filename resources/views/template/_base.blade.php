@@ -4,7 +4,7 @@
 @section('scripts')
     @if(isset($items))
         <script>
-          @if ($ids)
+          @if (isset($ids))
             {{ 'ids = '.json_encode($ids).';' }}
           @endif
         </script>
