@@ -16,6 +16,7 @@ class SubscriptionController extends Controller
     $source = \Input::get('source');
     $campaign = \Input::get('campaign');
     $path = \Input::get('path');
+    $ip = '1.2.3.4';
 
     $subscriber = new Subscriber();
     $subscriber->email = $email;
@@ -23,6 +24,7 @@ class SubscriptionController extends Controller
     $subscriber->source = $source;
     $subscriber->campaign = $campaign;
     $subscriber->path = $path;
+    $subscriber->ip = $ip;
     $subscriber->save();
 
       return response()->json([
