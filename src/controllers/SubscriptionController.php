@@ -9,14 +9,14 @@ use Subscriber;
 
 class SubscriptionController extends Controller
 {
-  public function postSubscriber()
+  public function postSubscriber(Request $request)
   {
     $email = \Input::get('email');
     $name = \Input::get('name');
     $source = \Input::get('source');
     $campaign = \Input::get('campaign');
     $path = \Input::get('path');
-    $ip = '1.2.3.4';
+    $ip = $request->ip();
 
     $subscriber = new Subscriber();
     $subscriber->email = $email;
