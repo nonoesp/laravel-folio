@@ -78,6 +78,12 @@ if($settings_title == '') {
 										@endif
 										{{ $campaign }}
 									@endif
+									@if($ip = $subscriber->ip)
+										@if($subscriber->path or $subscriber->source or $subscribe->campaign)
+										·
+										@endif
+										{{ $ip }}
+									@endif									
 									{{--
 									@if($subscriber->path or $subscriber->source or $subscriber->campaign)
 										·
