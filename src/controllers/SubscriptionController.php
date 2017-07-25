@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Subscriber;
+use Thinker;
 
 class SubscriptionController extends Controller
 {
@@ -16,7 +17,7 @@ class SubscriptionController extends Controller
     $source = \Input::get('source');
     $campaign = \Input::get('campaign');
     $path = \Input::get('path');
-    $ip = $request->ip();
+    $ip = Thinker::clientIp();
 
     $subscriber = new Subscriber();
     $subscriber->email = $email;
