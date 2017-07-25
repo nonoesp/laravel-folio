@@ -110,17 +110,15 @@
             // 4.2.2. Item w/ cover
             $cover_data['subtitle'] = $item->title;
             $cover_data['image'] = $item->image;
-            $cover_data['class'] .= 'is-faded is-fullscreen';
+            $cover_data['class'] .= 'is-faded -is-fullscreen';
             if(strlen($item->title) > 40) {
               $cover_data['classes_title_b'] = 'c-cover__title-b--small';
             }
 
             $header_classes = ['absolute', 'borderless', 'white'];
-            $header_data = [
-              'is_media_hidden' => true,
-              'is_navigation_hidden' => true,
-              'color' => 'white'
-            ];
+            $header_data['is_media_hidden'] = true;
+            $header_data['sis_navigation_hidden'] = true;
+            $header_data['color'] = 'white';
         }
     }
 
