@@ -1,6 +1,5 @@
 .git/
 vendor/
-fonts/
 node_modules/
 composer.phar
 composer.lock
