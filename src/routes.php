@@ -51,7 +51,7 @@ if(Folio::isAvailableURI()) {
 	}
 
 	// Feed
-	Route::get(Config::get('folio.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@getFeed'));
+	Route::get(Config::get('folio.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FeedController@getFeed'));
 
 	// Debug: Hello, Folio!
 	Route::get('debug/space', 'Nonoesp\Folio\Controllers\FolioController@helloFolio');

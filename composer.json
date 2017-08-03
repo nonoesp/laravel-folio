@@ -8,7 +8,9 @@
     }],
     "autoload": {
         "classmap": [
-            "src/controllers"
+            "src/controllers",
+            "src/models",
+            "src/facades"
         ],
         "psr-4": {
             "Nonoesp\\Folio\\": "src/"

@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Conner\Tagging\Taggable;
 use Folio;
 
+
 class Item extends Model
 {
 	use SoftDeletes;
@@ -176,4 +177,5 @@ class Item extends Model
 	public function isPublic() {
 		return !count($this->recipients()->get());
 	}
+	
 }
