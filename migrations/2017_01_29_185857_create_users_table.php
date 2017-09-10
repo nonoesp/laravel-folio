@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
                $table->string('image')->nullable();
                $table->string('twitter')->nullable();
                $table->string('twitter_image')->nullable();
+               $table->string('bio')->nullable();
        });
 
        $user = new User();
