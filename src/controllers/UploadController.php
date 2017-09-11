@@ -2,7 +2,7 @@
 
 namespace Nonoesp\Folio\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 use Form;
 use Input;
 use Image;

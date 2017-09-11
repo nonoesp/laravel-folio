@@ -1,4 +1,4 @@
-<?php namefolio Nonoesp\Folio;
+<?php namespace Nonoesp\Folio;
 
 use User; // Must be defined in your aliases
 use Item; // Must be defined in your aliases
