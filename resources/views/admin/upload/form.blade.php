@@ -32,7 +32,7 @@
 			</br>
 		@endif
 
-		{{ Form::open(array('url' => '/upload', 'method' => 'POST', 'files' => true)) }}
+		{{ Form::open(array('url' => Folio::adminPath().'upload', 'method' => 'POST', 'files' => true)) }}
 
 			<p>{{ Form::file('photo', null) }}</p>
 			<p>{{ Form::label('Name') }}</p>

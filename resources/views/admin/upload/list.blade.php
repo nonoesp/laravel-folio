@@ -18,7 +18,7 @@
 			<div class="[ grid__item one-quarter portable--one-half ]">
 				<p>
 					<img src="{{ config('folio.media-upload-path').$basename }}" style="width:100%">
-					<br>{{ $basename }} (<a href="/upload/delete/{{ $basename }}">X</a>)
+					<br>{{ $basename }} (<a href="/{{ Folio::adminPath().'upload/delete/'.$basename }}">X</a>)
 				</p>
 			</div>
 
