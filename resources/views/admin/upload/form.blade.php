@@ -1,7 +1,7 @@
 @extends('folio::admin.layout')
 
 <?php
-	$site_title = 'Upload — '.Config::get('settings.title');
+	$site_title = 'Upload — '.config('folio.title');
 ?>
 
 @section('title', 'Upload')

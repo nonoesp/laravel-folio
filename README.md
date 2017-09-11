@@ -37,7 +37,8 @@ Next, add the new providers to the `providers` array of `config/app.php`:
         Roumen\Feed\FeedServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
-        Vinkla\Hashids\HashidsServiceProvider::class,				
+        Vinkla\Hashids\HashidsServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,					
         // ...
     ],
 ```
@@ -65,7 +66,8 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
         'Html' => Collective\Html\HtmlFacade::class,   
         'Input' => Illuminate\Support\Facades\Input::class,
         'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
-        'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,				
+        'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,
+        'Image' => Intervention\Image\Facades\Image::class,				
         // ...
     ],
 ```

@@ -23,7 +23,7 @@ class UploadController extends Controller
 		    if($name == '') {
 		      $name = 'Untitled.jpg';
 		    }
-		    $img_URL = 'img/u/'.$name;
+		    $img_URL = config('folio.media-upload-path').$name;
 		    $shouldReplace = Input::get('shouldReplace');
 
 		    if(file_exists(public_path($img_URL))) {
