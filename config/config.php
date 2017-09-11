@@ -25,6 +25,8 @@ return [
 
 	'templates-path' => 'template', // search for custom templates at /resources/views/{value}
 
+	'media-upload-path' => '\/img\/u', // path where media is uploaded
+
 	'cover' => [
 		'title' => '',
 		'subtitles' => ['Folio for Laravel','Making the web simple.'],

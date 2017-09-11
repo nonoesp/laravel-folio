@@ -27,6 +27,7 @@
         "graham-campbell/markdown": "^8.0",
         "webuni/commonmark-attributes-extension": "^0.5.0",
         "laravelcollective/html": "5.5.*",
-        "vinkla/hashids": "*"
+        "vinkla/hashids": "*",
+        "intervention/image": "^2.3"
     }
 }
