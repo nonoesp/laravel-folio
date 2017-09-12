@@ -57,22 +57,11 @@
 			<div class="[ grid__item ]">{{ Form::file('photo', null) }}</div>
 			<div class="[ grid__item ]">{{ Form::label('Name') }}</div>
 			<div class="[ grid__item ]">{{ Form::text('name', null, array('placeholder' => 'project-name.jpg')) }}</div>
-			<div class="[ grid__item ]">{{ Form::label('Width')}}</div>
+			<div class="[ grid__item ]">{{ Form::label('Maximum Width (Image will be resized if larger)')}}</div>
 			<div class="[ grid__item ]">{{ Form::text('max_width', '1200', array('placeholder' => 'Width')) }}</div>
 			<div class="[ grid__item ]">{{ Form::checkbox('shouldReplace', 'Replace') }} {{ Form::label('Replace if exists?') }}</div>
 			<div class="[ grid__item ]">{{ Form::label('') }}</div>
 			<div class="[ grid__item ]]">{{ Form::submit('Upload') }}</div>
-
-			{{--  <div class="[ grid__item one-fifth   ] [ u-text-align--right ]">{{ Form::label('File') }}</div>
-			<div class="[ grid__item four-fifths ]">{{ Form::file('photo', null) }}</div>
-			<div class="[ grid__item one-fifth   ] [ u-text-align--right ]">{{ Form::label('Name') }}</div>
-			<div class="[ grid__item four-fifths ]">{{ Form::text('name', null, array('placeholder' => 'project-name.jpg')) }}</div>
-			<div class="[ grid__item one-fifth   ] [ u-text-align--right ]">{{ Form::label('Width')}}</div>
-			<div class="[ grid__item four-fifths ]">{{ Form::text('max_width', '1200', array('placeholder' => 'Width')) }}</div>
-			<div class="[ grid__item one-fifth   ] [ u-text-align--right ]">{{ Form::label('Replace') }}</div>
-			<div class="[ grid__item four-fifths ]">{{ Form::checkbox('shouldReplace') }}</div>
-			<div class="[ grid__item one-fifth   ] [ u-text-align--right ]">{{ Form::label('') }}</div>
-			<div class="[ grid__item four-fifths ] ]">{{ Form::submit('Submit') }}</div>  --}}
 
 		</div>
 
