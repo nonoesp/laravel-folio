@@ -6,12 +6,23 @@ use Request;
 use Form;
 use Input;
 use Image;
+use File;
 
 class UploadController extends Controller
 {
 
     public function getUploadForm()
 	{
+
+		$mediaPath = config('folio.media-upload-path');
+
+		if(!File::exists(public_path($mediaPath))) {
+			// path does not exist
+			return view('folio::admin.notification', [
+				'title' => 'Upload',
+				'message' => "Media folder not found at <code>".$mediaPath."</code>."
+			]);
+		}
 
 		  $img_exists = false;
 		  $img_uploaded = false;
@@ -23,7 +34,7 @@ class UploadController extends Controller
 		    if($name == '') {
 		      $name = 'Untitled.jpg';
 		    }
-		    $img_URL = config('folio.media-upload-path').$name;
+		    $img_URL = $mediaPath.$name;
 		    $shouldReplace = Input::get('shouldReplace');
 
 		    if(file_exists(public_path($img_URL))) {

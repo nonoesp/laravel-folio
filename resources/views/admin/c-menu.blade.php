@@ -15,6 +15,10 @@
           <i class="[ fa fa-file-o fa--social ]"></i>
       </a>
 
+      <a href="/{{ $admin_path }}upload">
+          <i class="[ fa fa-file-image-o fa--social ]"></i>
+      </a>	  
+
       <a href="/{{ $admin_path }}subscribers">
           <i class="[ fa fa-envelope-o fa--social ]"></i>
       </a>
