@@ -27,6 +27,10 @@ return [
 
 	'media-upload-path' => '/img/u/', // path where media is uploaded
 
+	'uploader' => [
+		'max_width' => 1500
+	],
+
 	'cover' => [
 		'title' => '',
 		'subtitles' => ['Folio for Laravel','Making the web simple.'],

@@ -58,7 +58,7 @@
 			<div class="[ grid__item ]">{{ Form::label('Name') }}</div>
 			<div class="[ grid__item ]">{{ Form::text('name', null, array('placeholder' => 'project-name.jpg')) }}</div>
 			<div class="[ grid__item ]">{{ Form::label('Maximum Width (Image will be resized if larger)')}}</div>
-			<div class="[ grid__item ]">{{ Form::text('max_width', '1500', array('placeholder' => 'Width')) }}</div>
+			<div class="[ grid__item ]">{{ Form::text('max_width', config('folio.uploader.max_width'), array('placeholder' => 'Width')) }}</div>
 			<div class="[ grid__item ]">{{ Form::checkbox('shouldReplace', 'Replace') }} {{ Form::label('Replace if exists?') }}</div>
 			<div class="[ grid__item ]">{{ Form::label('') }}</div>
 			<div class="[ grid__item ]]">{{ Form::submit('Upload') }}</div>
