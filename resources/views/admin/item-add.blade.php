@@ -16,9 +16,9 @@
 
 		{{ Form::open(['url' => Folio::adminPath().'item/add', 'method' => 'post']) }}
 
-			<p>{{ Form::text('title', '', ['placeholder' => 'Title']) }}</p>
+			<p>{{ Form::text('title', '', ['placeholder' => 'An Awesome Title']) }}</p>
 
-			<p>{{ Form::text('image', '', ['placeholder' => 'Image']) }}</p>
+			{{--  <p>{{ Form::text('image', '', ['placeholder' => 'Image']) }}</p>
 
 			<p>{{ Form::text('image_str', '', ['placeholder' => 'Image (Thumbnail)']) }}</p>
 
@@ -36,7 +36,9 @@
 
 			<p>{{ Form::text('recipients_str', '', ['placeholder' => '@recipients']) }}</p>
 
-			<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS</label></p>
+			<p><label for="is_blog">{{ Form::checkbox('is_blog', null, true, ['id' => 'is_blog']) }} Blog Feed</label></p>
+
+			<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS Feed</label></p>  --}}
 
 			<p>{{ Form::submit('Create') }}</p>
 

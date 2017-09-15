@@ -95,12 +95,20 @@ class AdminController extends Controller
 		    	$item->retag(explode(",", $item->tags_str));
 		    } else {
 		    	$item->untag();
-		    }
+			}
+			
+			$is_hidden = Input::get('is_hidden');
+			if($is_hidden && !$item->trashed()) {
+			 	$item->delete();
+			} else if(!$is_hidden && $item->trashed()) {
+				$item->restore();
+			}
 
 		    $item->recipients_str = Input::get('recipients_str');
 		    $item->rss = (Input::get('rss') ? true : false);
 			$item->is_blog = (Input::get('is_blog') ? true : false);
-		    $item->recipients()->delete();
+			$item->recipients()->delete();
+			
 		    if($item->recipients_str != NULL)
 		    {
 				foreach($item->recipientsArray() as $recipient)
@@ -126,20 +134,25 @@ class AdminController extends Controller
 
 		$item = new Item();
 		$item->title = Input::get('title');
-		$item->text = Input::get('text');
-		$item->image = Input::get('image');
-		$item->image_src = Input::get('image_src');
-		if(Thinker::IsInstagramPostURL($item->image)) {
-			$item->image = Thinker::InstagramImageURL($item->image);
-		}
-		if(Thinker::IsInstagramPostURL($item->image_src)) {
-			$item->image_src = Thinker::InstagramImageURL($item->image_src);
-		}
-		$item->video = Input::get('video');
-		$item->link = Input::get('link');
-		$item->tags_str = Input::get('tags_str');
-	    $item->recipients_str = Input::get('recipients_str');
-	    $item->rss = (Input::get('rss') ? true : false);
+		if($item->title == "") $item->title = "Untitled";
+
+		// $item->text = Input::get('text');
+		// $item->image = Input::get('image');
+		// $item->image_src = Input::get('image_src');
+		// if(Thinker::IsInstagramPostURL($item->image)) {
+			// $item->image = Thinker::InstagramImageURL($item->image);
+		// }
+		// if(Thinker::IsInstagramPostURL($item->image_src)) {
+			// $item->image_src = Thinker::InstagramImageURL($item->image_src);
+		// }
+		// $item->video = Input::get('video');
+		// $item->link = Input::get('link');
+		// $item->tags_str = Input::get('tags_str');
+	    // $item->recipients_str = Input::get('recipients_str');
+		// $item->rss = (Input::get('rss') ? true : false);
+		
+		$item->is_blog = false;
+
 	    $item->slug_title = Input::get('slug_title');
 	    if($item->slug_title == "") {
 	    	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Folio::table('items'), $item->title);
@@ -157,18 +170,18 @@ class AdminController extends Controller
 		$item->save();
 
 		// laravel-tagging
-		if($item->tags_str != '') {
-		  $tags = explode(",", $item->tags_str);
-		  $item->tag($tags);
-		}
+		// if($item->tags_str != '') {
+		//   $tags = explode(",", $item->tags_str);
+		//   $item->tag($tags);
+		// }
 
-	    if($item->recipients_str != NULL)
-	    {
-			foreach($item->recipientsArray() as $recipient)
-			{
-			$item->recipients()->save(new Recipient(["twitter" => $recipient]));
-			}
-	    }
+	    // if($item->recipients_str != NULL)
+	    // {
+			// foreach($item->recipientsArray() as $recipient)
+			// {
+			// $item->recipients()->save(new Recipient(["twitter" => $recipient]));
+			// }
+	    // }
 
 		return Redirect::to(Folio::adminPath().'item/edit/'.$item->id);
 	}

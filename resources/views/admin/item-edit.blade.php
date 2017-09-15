@@ -149,7 +149,7 @@ methods: {
 		<a href="{{ '/'.$item->path() }}">Preview</a>
 	</p>
 
-	<div class="[ c-admin__form ] [ grid ]">
+	<div class="[ c-admin-form-v2 ] [ grid ]">
 
 		@if( Request::isMethod('post') )
 			<div class="[ grid__item ] [ one-whole ]">
@@ -188,6 +188,10 @@ methods: {
 					<p>View <i>{{$item->templateView()}}</i> is missing!</p>
 				@endif
 			</div>
+
+			<div class="[ grid__item ] [ one-whole ]">
+				<p><label for="hidden">{{ Form::checkbox('is_hidden', null, $item->trashed(), array('id' => 'is_hidden')) }} Hidden</label></p>
+			</div>			
 
 			{{-- Blog Feed --}}
 

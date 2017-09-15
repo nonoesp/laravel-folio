@@ -198,11 +198,21 @@ admin.sort_tags();
 
 	@section('content')
 
+	<style>
+	[v-cloak] {
+  		display: none;
+	}
+	</style>
+
 	<div class="[ c-admin ] [ admin-list ]">
+
+		{{-- Loading.. --}}
+
+		{{--  <div v-if="false">...</div>		  --}}
 
 		{{-- Tag Cloud --}}
 
-		<div class="[ c-admin__existing-tags ] [ u-pad-b-2x ]">
+		<div v-cloak class="[ u-visible-vue ] [ c-admin__existing-tags ] [ u-pad-b-2x ]">
 			<ul>
 				<li @click="display_all_tags()"
 						v-bind:class="{ 'u-opacity--low': !unfiltered }"
@@ -219,7 +229,7 @@ admin.sort_tags();
 
 		{{-- Item List --}}
 
-		<div v-for="item in items" class="admin-list-item" v-if="!item.hidden" ref="items">
+		<div v-cloak v-for="item in items" class="[ u-visible-vue ] [ admin-list-item ]" v-if="!item.hidden" ref="items">
 			<p v-bind:class="{ 'u-opacity--half': item.deleted_at }">
 				<a v-bind:href="edit_href(item)">
 					@{{ item.title }}
