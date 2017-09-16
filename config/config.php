@@ -31,6 +31,18 @@ return [
 		'max_width' => 1500
 	],
 
+	'subscribers' => [
+		'should-notify' => false,
+		'from' => [
+			'email' => 'from@domain.com',
+			'name' => 'John Smith'
+		],
+		'to' => [
+			'email' => 'to@domain.com',
+			'name' => 'Alissa Smith'
+		]
+	],
+
 	'cover' => [
 		'title' => '',
 		'subtitles' => ['Folio for Laravel','Making the web simple.'],

@@ -1,0 +1,1 @@
+<p>A new subscriber to {{ config('folio.title-short') }}! ({{ $email }})</p>

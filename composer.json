@@ -28,6 +28,7 @@
         "webuni/commonmark-attributes-extension": "^0.5.0",
         "laravelcollective/html": "5.5.*",
         "vinkla/hashids": "*",
-        "intervention/image": "^2.3"
+        "intervention/image": "^2.3",
+        "aws/aws-sdk-php": "~3.0"
     }
 }

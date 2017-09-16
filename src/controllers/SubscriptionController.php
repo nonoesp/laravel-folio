@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Subscriber;
 use Thinker;
+use Mail;
 
 class SubscriptionController extends Controller
 {
@@ -27,14 +28,22 @@ class SubscriptionController extends Controller
     $subscriber->path = $path;
     $subscriber->ip = $ip;
     $subscriber->save();
-
-      return response()->json([
-          'success' => true,
-          'email' => $subscriber->email,
-          'source' => $subscriber->source,
-          'name' => $subscriber->name,
-          'campaign' => $subscriber->campaign,
-          'path' => $subscriber->path
-      ]);
+    
+    if(config('folio.subscribers.should-notify') == true) {
+      Mail::send('folio::email.new-subscriber', ['email' => $email], function ($m) use ($email) {
+        $m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
+        $m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))->
+            subject('New Subscriber to '.config('folio.title-short'));
+      });
+    }
+    
+    return response()->json([
+        'success' => true,
+        'email' => $subscriber->email,
+        'source' => $subscriber->source,
+        'name' => $subscriber->name,
+        'campaign' => $subscriber->campaign,
+        'path' => $subscriber->path
+    ]);
   }
 }
