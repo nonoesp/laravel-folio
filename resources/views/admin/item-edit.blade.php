@@ -119,7 +119,7 @@ methods: {
 
 <?php
 	$inputs = [
-		['name' => 'published_at', 'placeholder' => 'Publishing Date (yyyy-mm-dd hh:mm:ss)', 'label' => 'Date'],
+		['name' => 'published_at', 'placeholder' => 'Publication Date (yyyy-mm-dd hh:mm:ss)', 'label' => 'Publication Date'],
 		['name' => 'image', 'placeholder' => 'Image', 'label' => 'Image'],
 		['name' => 'image_src', 'placeholder' => 'Thumbnail', 'label' => 'Thumbnail'],
 		['name' => 'video', 'placeholder' => 'Video', 'label' => 'Video URL'],
