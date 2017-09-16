@@ -51,7 +51,7 @@ if($settings_title == '') {
 					<li>
 						<a href="mailto:{{ $subscriber->email }}" target="_blank">
 
-							<b class="c-archive__list__title">{{ $subscriber->email }}</b>
+							<b class="c-archive__list__title">{{ strtolower($subscriber->email) }}</b>
 
 							<em class="c-archive__list__date u-font-size--a">
 
