@@ -214,7 +214,7 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 
 ## Subscribers Notificaitons
 
-TODO: Explain you need to set a mail driver (amazon ses) and config `config/mail.php` and `config/services.php`.
+TODO: Explain you need to set a mail driver (amazon ses) and config `config/mail.php` and `config/services.php` and `config/folio.php`.
 
 ## License
 
