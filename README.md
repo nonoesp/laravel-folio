@@ -212,6 +212,10 @@ You can publish **Folio** views and customize them. (If you customize a few view
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
 ```
 
+## Subscribers Notificaitons
+
+TODO: Explain you need to set a mail driver (amazon ses) and config `config/mail.php` and `config/services.php`.
+
 ## License
 
 Folio is licensed under the [MIT license](http://opensource.org/licenses/MIT).
