@@ -37,7 +37,11 @@
                 "Nonoesp\\Folio\\FolioServiceProvider"
             ],
             "aliases": {
-                "Folio": "Nonoesp\\Folio\\Facades\\Folio"
+                "Folio": "Nonoesp\\Folio\\Facades\\Folio",
+                "Item": "Nonoesp\\Folio\\Models\\Item",
+                "Property": "Nonoesp\\Folio\\Models\\Property",
+                "Recipient": "Nonoesp\\Folio\\Models\\Recipient",
+                "Subscriber": "Nonoesp\\Folio\\Models\\Subscriber"
             }
         }
     }
