@@ -71,13 +71,13 @@ return [
 		],
 
 	'media_links' => [
-    'rss' => '/feed.xml',
-    'facebook' => 'http://facebook.com/nonoesp',
-    'twitter' => 'http://twitter.com/nonoesp',
-    'instagram' => 'http://instagram.com/nonoesp',
-    'dribbble' => 'http://dribbble.com/nonoesp',
-    'github' => 'http://github.com/nonoesp',
-    'star' => 'http://gettingsimple.com'
+		'rss' => '/feed.xml',
+		'facebook' => 'http://facebook.com/nonoesp',
+		'twitter' => 'http://twitter.com/nonoesp',
+		'instagram' => 'http://instagram.com/nonoesp',
+		'dribbble' => 'http://dribbble.com/nonoesp',
+		'github' => 'http://github.com/nonoesp',
+		'star' => 'http://gettingsimple.com'
 	],
 
 	'protected_uris' => ['example', 'profile', 'about', 'magic'], // are not overriden by folio
@@ -97,5 +97,15 @@ return [
 		'default-image-src' => 'http://your-default.com/image.jpg',
 		'default-author' => 'Nono Martínez Alonso'
 	],
+
+	'social' => [
+		'twitter' => [
+			'handle' => '@nonoesp'
+		],
+		'facebook' => [
+			'author' => 'http://facebook.com/nonoesp',
+			'publisher' => 'http://facebook.com/gettingsimple',
+		]
+	]
 
 ];

@@ -76,10 +76,10 @@
         ?>
 
         @section('open_object_metadata'){{--
-          --}}<meta property="article:author" content="http://facebook.com/nonoesp" />
+          --}}<meta property="article:author" content="{{ config('folio.social.facebook.author') }}" />
 {{--  --}}    <meta property="article:modified_time" content="{{ $item->updated_at }}" />
 {{--  --}}    <meta property="article:published_time" content="{{ $item->published_at }}" />
-{{--  --}}    <meta property="article:publisher" content="http://facebook.com/gettingsimple" />{{--
+{{--  --}}    <meta property="article:publisher" content="{{ config('folio.social.facebook.publisher') }}" />{{--
       --}}    @foreach($item->tagNames() as $tag)
 
 {{--  --}}    <meta property="article:tag" content="{{ strtolower($tag) }}" />@endforeach
