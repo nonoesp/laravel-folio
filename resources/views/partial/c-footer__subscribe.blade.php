@@ -36,9 +36,9 @@
              --}}[ u-text-align--portable-center ]">
 
                 @if(isset($text))
-                    {{ $text }}
+                    {!! $text !!}
                 @else
-                    {{ trans('folio::base.receive-our-posts') }}
+                    {!! trans('folio::base.receive-our-posts') !!}
                 @endif
            
        </p>
