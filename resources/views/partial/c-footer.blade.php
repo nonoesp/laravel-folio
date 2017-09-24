@@ -10,6 +10,8 @@ if(!isset($hide_credits)) {
 
 $source = '';
 $campaign = '';
+$button_text = trans('folio::base.subscribe');
+$text = trans('folio::base.receive-our-posts');
 
 if(!isset($subscribe_data)) {
   $subscribe_data = null;
@@ -20,6 +22,12 @@ if(!isset($subscribe_data)) {
   if(isset($subscribe_data['campaign'])) {
     $campaign = $subscribe_data['campaign'];
   }
+  if(isset($subscribe_data['button_text'])) {
+    $button_text = $subscribe_data['button_text'];
+  }
+  if(isset($subscribe_data['text'])) {
+    $text = $subscribe_data['text'];
+  }  
 }
 
   if(isset($data['classes'])) { $classes = $data['classes']; }
@@ -28,7 +36,12 @@ if(!isset($subscribe_data)) {
 <div class="[ u-pad-b-1x u-pad-t-1x {{ $classes or '' }} ]">
 
   <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule u-pad-b-2x ]">
-    {!! view('folio::partial.c-footer__subscribe', ['source' => $source, 'campaign' => $campaign]) !!}
+    {!! view('folio::partial.c-footer__subscribe', [
+      'source' => $source,
+      'campaign' => $campaign,
+      'button_text' => $button_text,
+      'text' => $text
+      ]) !!}
   </div>
 
   @if($hide_credits == false)

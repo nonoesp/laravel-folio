@@ -1,4 +1,3 @@
-
 <footer class="[ c-footer ]">
 
 <div class="[ grid ]">
@@ -21,7 +20,11 @@
                {{ Form::email('email', null, ['placeholder' => 'Email', 'class' => '[ js--subscribe__email ] [ u-case-input-lower ]', 'name' => 'EMAIL']) }}
            </div>
            <div class="[ grid__item desk--one-third ]">
-               {{ Form::submit(trans('folio::base.subscribe'), ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
+                @if(isset($button_text))
+                    {{ Form::submit($button_text, ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
+                @else
+                    {{ Form::submit(trans('folio::base.subscribe'), ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
+                @endif
            </div>
 
     </div>
@@ -31,7 +34,13 @@
        <p class="[ js--subscribe__label ]{{--
              --}}[ u-font-size--a u-opacity--half u-select-none ]{{--
              --}}[ u-text-align--portable-center ]">
-           {{ trans('folio::base.receive-our-posts') }}
+
+                @if(isset($text))
+                    {{ $text }}
+                @else
+                    {{ trans('folio::base.receive-our-posts') }}
+                @endif
+           
        </p>
 
     </div>
