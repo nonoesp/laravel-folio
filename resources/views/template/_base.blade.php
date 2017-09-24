@@ -73,6 +73,7 @@
         $site_title = $item->title.' | '.config('folio.title');
         $og_description = Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']);
         $og_type = 'article';
+        $og_url = Request::root().'/'.Folio::path().$item->id;
         ?>
 
         @section('open_object_metadata'){{--

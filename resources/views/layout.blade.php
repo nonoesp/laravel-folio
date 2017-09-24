@@ -5,6 +5,8 @@
 	$og_title_default = config('folio.title');
 	$og_description_default = config('folio.description');
 	$og_image_default = config('folio.image-src');
+	$og_url_default = Request::root().'/'.Request::path();
+	$fb_app_id_default = config('folio.social.facebook.app_id');
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +50,8 @@
 	<link rel="image_src" href="{{ $og_image or $og_image_default }}" />
 
 	<!-- Open Graph meta data -->
+	<meta property="fb:app_id" content="{{ $fb_app_id or $fb_app_id_default }}" />
+	<meta property="og:url" content="{{ $og_url or $og_url_default }}" />
 	<meta property="og:image" content="{{ $og_image or $og_image_default }}" />
 	<meta property="og:title" content="{{ $og_title or $og_title_default }}" />
 	<meta property="og:description" content="{{ $og_description or $og_description_default }}" />

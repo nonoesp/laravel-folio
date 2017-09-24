@@ -103,8 +103,9 @@ return [
 			'handle' => '@nonoesp'
 		],
 		'facebook' => [
-			'author' => 'http://facebook.com/nonoesp',
-			'publisher' => 'http://facebook.com/gettingsimple',
+			'app_id' => 'your-app-id',
+			'author' => 'http://facebook.com/author-username',
+			'publisher' => 'http://facebook.com/publisher-username',
 		]
 	]
 
