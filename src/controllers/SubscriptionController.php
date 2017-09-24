@@ -30,7 +30,7 @@ class SubscriptionController extends Controller
     $subscriber->save();
     
     if(config('folio.subscribers.should-notify') == true) {
-      Mail::send('folio::email.new-subscriber', ['email' => $email], function ($m) use ($email) {
+      Mail::send('folio::email.new-subscriber', ['email' => $email, 'path' => $path], function ($m) use ($email) {
         $m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
         $m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))->
             subject('New Subscriber to '.config('folio.title-short'));
