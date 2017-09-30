@@ -44,7 +44,11 @@ class UploadController extends Controller
 		    if(!$img_exists || $img_exists && $shouldReplace) {
 		      if(Input::hasFile('photo')) {
 		        $max_width = Input::get('max_width');
-		        $img = Image::make(Input::file('photo'));      
+						$img = Image::make(Input::file('photo'));      
+						
+						echo "size:".$img->size();
+						echo '<br><br>';
+
 		        // Downsize image if wider than $max_width
 		        if($img->width() > $max_width) {
 		          $img->resize($max_width, null, function ($constraint) {
@@ -53,7 +57,13 @@ class UploadController extends Controller
 		          });
 		        }
 		        $img->save(public_path($img_URL));
-		      }
+		      } else {
+
+						return view('folio::admin.upload.form')->with([
+							'message' => 'Invalid image provided.</br>It was either empty of bigger than the limit configured in your server.'
+							]);
+
+					}
     
 		      if(Input::hasFile('photo')) {
 		      	$img_uploaded = true;

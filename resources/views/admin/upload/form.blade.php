@@ -21,7 +21,11 @@
 
 		@if(Request::isMethod('post'))
 
-			@if($img_exists)
+			@if(isset($message))
+				<p>{!! $message !!}</p>
+			@endif
+
+			@if(isset($img_exists) && $img_exists == true)
 				<p>
 					@if(!$img_uploaded)
 						An image with this name already exists.
@@ -33,7 +37,7 @@
 				</p>
 			@endif
 			
-			@if($img_uploaded)
+			@if(isset($img_uploaded) && $img_uploaded == true)
 					<p>![]({{ $img_URL }})</p>
 					<p><img src="{{ $img_URL }}" style="max-width: 100%"></p>
 			@endif
