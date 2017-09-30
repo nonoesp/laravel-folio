@@ -45,9 +45,6 @@ class UploadController extends Controller
 		      if(Input::hasFile('photo')) {
 		        $max_width = Input::get('max_width');
 						$img = Image::make(Input::file('photo'));      
-						
-						echo "size:".$img->size();
-						echo '<br><br>';
 
 		        // Downsize image if wider than $max_width
 		        if($img->width() > $max_width) {
