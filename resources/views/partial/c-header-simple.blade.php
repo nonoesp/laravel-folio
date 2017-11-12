@@ -21,13 +21,17 @@
 			trans('folio::base.about-me') => ['/about', 'about']
 		];
   }
+	$header_domain = '';
+	if(config('folio.domain')) {
+		$header_domain = 'http://'.config('folio.domain');
+	}
 ?>
 
 <!-- c-header-simple 1.0: styling based on frankchimero.com -->
 
 <header class="[ c-header-simple ] {{ $class_specified }}">
 	<div class="[ o-wrap o-wrap--size-full ]">
-		<a href="/" class="[ c-header-simple__name ]">
+		<a href="{{ $header_domain }}/" class="[ c-header-simple__name ]">
 			{{ $title or 'Folio' }}
 		</a>
 		@if(!isset($is_navigation_hidden))
