@@ -19,6 +19,10 @@ use Hashids;
 /* FolioController
 /*----------------------------------------------------------------*/
 
+/* TODO: figure out better strategy to restrict domain
+ * as having an explicit domain might limit usage
+ * throughout multiple domains.
+ * /
 Route::group(['domain' => config('folio.domain'),'middleware' => Config::get("folio.middlewares")], function () {
 
 	$path = Folio::path();
