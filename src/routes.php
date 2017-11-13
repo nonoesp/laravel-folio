@@ -19,7 +19,7 @@ use Hashids;
 /* FolioController
 /*----------------------------------------------------------------*/
 
-Route::group(['middleware' => Config::get("folio.middlewares")], function () {
+Route::group(['domain' => config('folio.domain'),'middleware' => Config::get("folio.middlewares")], function () {
 
 	$path = Folio::path();
 
