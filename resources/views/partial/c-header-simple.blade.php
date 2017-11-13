@@ -21,6 +21,7 @@
 			trans('folio::base.about-me') => ['/about', 'about']
 		];
   }
+	if(isset($data['media_links'])) { $media_links = $data['media_links']; } else { $media_links = config('folio.media_links'); }
 	$header_domain = '';
 	if(config('folio.domain')) {
 		$header_domain = 'http://'.config('folio.domain');
@@ -67,7 +68,7 @@
 		@endif
 
 		@if(!isset($is_media_hidden))
-		  {!! view('folio::partial.c-media')->with(['media' => Config::get('folio.media_links')]) !!}
+		  {!! view('folio::partial.c-media')->with(['media' => $media_links]) !!}
 		@endif
 	</div>
 </header>
