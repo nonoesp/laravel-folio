@@ -14,6 +14,7 @@
   if(isset($data['is_media_hidden'])) { $is_media_hidden = $data['is_media_hidden']; }
   if(isset($data['image'])) { $image = $data['image']; }
 	if(isset($data['title'])) { $title = $data['title']; }
+	if(isset($data['title_svg'])) { $title_svg = $data['title_svg']; }
   if(isset($data['description'])) { $description = $data['description']; }
   if(isset($data['navigation'])) { $navigation = $data['navigation']; } else {
     $navigation = [
@@ -33,7 +34,18 @@
 <header class="[ c-header-simple ] {{ $class_specified }}">
 	<div class="[ o-wrap o-wrap--size-full ]">
 		<a href="{{ $header_domain }}/" class="[ c-header-simple__name ]">
-			{{ $title or 'Folio' }}
+			@if(isset($title_svg))
+				<div class="[ -u-hidden ] [ c-header__icon-desktop ]
+					[ o-icon-prototype
+					o-icon-prototype--display-inline
+					o-icon-prototype--size-logo-line-desktop-static
+					@if(isset($color))o-icon-prototype--color-{{$color}}@endif ]">
+					{!! config('svg.'.$title_svg) !!}
+				</div>
+
+			@else
+				{{ $title or 'Folio' }}
+			@endif
 		</a>
 		@if(!isset($is_navigation_hidden))
 		<nav role="navigation" class="[ c-header-simple__navigation ]">
