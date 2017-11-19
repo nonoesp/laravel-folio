@@ -1,11 +1,15 @@
 <?php
 // hide credits?
 if(!isset($hide_credits)) {
-  $footer_credits = Config::get('space.footer');
+  $footer_credits = config('space.footer');
   $hide_credits = false;
   if(isset($footer_credits['hide_credits'])) {
     $hide_credits = $footer_credits['hide_credits'];
   }
+}
+// hide subscribe?
+if(!isset($hide_subscribe)) {
+  $hide_subscribe = false;
 }
 
 $source = '';
@@ -35,23 +39,29 @@ if(!isset($subscribe_data)) {
 
 <div class="[ u-pad-b-1x u-pad-t-1x {{ $classes or '' }} ]">
 
-  <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule u-pad-b-2x ]">
-    {!! view('folio::partial.c-footer__subscribe', [
-      'source' => $source,
-      'campaign' => $campaign,
-      'button_text' => $button_text,
-      'text' => $text
-      ]) !!}
-  </div>
+  @if($hide_subscribe == false)
+
+    <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule u-pad-b-2x ]">
+      {!! view('folio::partial.c-footer__subscribe', [
+        'source' => $source,
+        'campaign' => $campaign,
+        'button_text' => $button_text,
+        'text' => $text
+        ]) !!}
+    </div>
+
+  @endif
 
   @if($hide_credits == false)
-  <div class="[ o-wrap o-wrap--size-medium ]">
-    @if(isset($credits_text))
-      {!! view('folio::partial.c-footer__credits')->with(['text' => $credits_text]) !!}
-    @else
-      {!! view('folio::partial.c-footer__credits') !!}
-    @endif
-  </div>
+
+    <div class="[ o-wrap o-wrap--size-medium ]">
+      @if(isset($credits_text))
+        {!! view('folio::partial.c-footer__credits')->with(['text' => $credits_text]) !!}
+      @else
+        {!! view('folio::partial.c-footer__credits') !!}
+      @endif
+    </div>
+
   @endif
 
 </div>
