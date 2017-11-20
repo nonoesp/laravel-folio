@@ -11,6 +11,10 @@ return [
 		'item' => 'template._standard', // 'folio::template._standard'
 	],
 
+	// Pattern of domains accepted by Folio (e.g. 'localhost|example.com|127.0.0.1')
+	'domain-pattern' => 'yourdomain.com|localhost|127.0.0.1', 
+	
+	// Prefix for database tables
 	'db-prefix' => 'folio_',
 
 	'title' => 'Folio',

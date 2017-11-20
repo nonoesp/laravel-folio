@@ -29,7 +29,7 @@
 	}
 ?>
 
-<!-- c-header-simple 1.0: styling based on frankchimero.com -->
+<!-- c-header-simple · styling based on frankchimero.com -->
 
 <header class="[ c-header-simple ] {{ $class_specified }}">
 	<div class="[ o-wrap o-wrap--size-full ]">
@@ -64,12 +64,6 @@
 						// Insert {path-prefix}
 						$href[0] = str_replace('{path-prefix}', config('folio.path-prefix'), $href[0]);
 						$href[1] = str_replace('{path-prefix}', config('folio.path-prefix'), $href[1]);
-						// Insert {domain}
-						if(config('folio.port') && config('folio.port') != '80') {
-							$href[0] = str_replace('{domain}', config('folio.domain').':'.config('folio.port'), $href[0]);
-						} else {
-							$href[0] = str_replace('{domain}', config('folio.domain'), $href[0]);							
-						}
 						?>
 						<li>
 							<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} ]">
