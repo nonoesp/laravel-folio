@@ -62,29 +62,31 @@ if(Folio::isAvailableURI()) {
 	Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@postSubscriber');
 }
 
+}); // close folio general domain pattern group
+
 /*----------------------------------------------------------------*/
 /* AdminController
 /*----------------------------------------------------------------*/
 
-Route::group(['middleware' => Config::get("folio.middlewares-admin")], function() { // todo: get middleware back to 'login'
+Route::group(['middleware' => Config::get("folio.middlewares-admin")], function() {
+	
+	$admin_path = Folio::adminPath();
 
-  	$admin_path = Folio::adminPath();
+	Route::get($admin_path, 'Nonoesp\Folio\Controllers\AdminController@getDashboard');
 
-  	Route::get($admin_path, 'Nonoesp\Folio\Controllers\AdminController@getDashboard');
-
-  	// Items
-  	Route::get($admin_path.'items', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
+	// Items
+	Route::get($admin_path.'items', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
 	Route::get($admin_path.'items/{tag}', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
-  	Route::any($admin_path.'item/edit/{id}', array('as' => 'item.edit', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemEdit'));
-  	Route::get($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@getItemCreate');
-  	Route::post($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@postItemCreate');
-  	Route::get($admin_path.'item/delete/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemDelete');
-  	Route::get($admin_path.'item/restore/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemRestore');
+	Route::any($admin_path.'item/edit/{id}', array('as' => 'item.edit', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemEdit'));
+	Route::get($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@getItemCreate');
+	Route::post($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@postItemCreate');
+	Route::get($admin_path.'item/delete/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemDelete');
+	Route::get($admin_path.'item/restore/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemRestore');
 
 	Route::get($admin_path.'subscribers', 'Nonoesp\Folio\Controllers\AdminController@getSubscribers');
 
-  	// Visits
-  	Route::get($admin_path.'visits', 'Nonoesp\Folio\Controllers\AdminController@getVisits');
+	// Visits
+	Route::get($admin_path.'visits', 'Nonoesp\Folio\Controllers\AdminController@getVisits');
 
 	Route::get($admin_path, function() use ($admin_path) {
 		return redirect()->to($admin_path.'items');
@@ -105,5 +107,3 @@ Route::group(['middleware' => Config::get("folio.middlewares-admin")], function(
 	Route::get($admin_path.'upload/delete/{name}', 'Nonoesp\Folio\Controllers\UploadController@postDeleteMedia');
 	
 }); // close folio admin
-
-}); // close folio general

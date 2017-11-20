@@ -15,11 +15,11 @@ use Auth;
 class FolioController extends Controller
 {
 	// This is an informal test of some dependencies and features.
-  public function helloFolio() {
+  public function helloFolio($domain) {
 		return view('folio::debug.test')->with(['amount' => 2]);
 	}
 
-	public function showHome() {
+	public function showHome($domain) {
 
 		// Get user's Twitter handle (or visitor)
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
@@ -100,7 +100,7 @@ class FolioController extends Controller
 	}
 
 	// Simplify making showHome a generic function, then call it directly from route or from Controller function
-	public function showItemTag($tag) {
+	public function showItemTag($domain, $tag) {
 
 		// Get user's Twitter handle (or visitor)
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
@@ -181,7 +181,7 @@ class FolioController extends Controller
 
 	}
 
-	public static function showItem(Request $request, $slug) {
+	public static function showItem($domain, Request $request, $slug) {
 
 		if($item = Item::withTrashed()->whereSlug($slug)->first() or
        $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
@@ -211,7 +211,7 @@ class FolioController extends Controller
 
 	}
 
-	public function showItemWithId($id) {
+	public function showItemWithId($domain, $id) {
 		$item = Item::withTrashed()->find($id);
     if($item->slug[0] == '/') {
       return redirect($item->slug);
@@ -219,7 +219,7 @@ class FolioController extends Controller
 		return redirect(Folio::path().$item->slug);
 	}
 
-	public function getItemsWithIds() {
+	public function getItemsWithIds($domain) {
 
 		// Set Item Type
 		\Input::get('item_type') ? $item_type = \Input::get('item_type') : $item_type = 'DEFAULT_ITEM_TYPE';
