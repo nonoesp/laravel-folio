@@ -34,7 +34,9 @@
 <header class="[ c-header-simple ] {{ $class_specified }}">
 	<div class="[ o-wrap o-wrap--size-full ]">
 		<a href="{{ $header_domain }}/" class="[ c-header-simple__name ]">
+
 			@if(isset($title_svg))
+
 				<div class="[ -u-hidden ] [ c-header__icon-desktop ]
 					[ o-icon-prototype
 					o-icon-prototype--display-inline
@@ -44,33 +46,50 @@
 				</div>
 
 			@else
+			
 				{{ $title or 'Folio' }}
+			
 			@endif
+
 		</a>
+
 		@if(!isset($is_navigation_hidden))
-		<nav role="navigation" class="[ c-header-simple__navigation ]">
-			<ul>
 
-        @foreach($navigation as $title=>$href)
-					<?php
-						$href[0] = str_replace('{path-prefix}',config('folio.path-prefix'), $href[0]);
-						$href[1] = str_replace('{path-prefix}',config('folio.path-prefix'), $href[1]);
-					?>
-          <li>
-  					<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} ]">
-  						{{ trans('folio.'.$title) }}
-  					</a>
-  				</li>
-        @endforeach
+			<nav role="navigation" class="[ c-header-simple__navigation ]">
+				<ul>
 
-			</ul>
-		</nav>
+					@foreach($navigation as $title=>$href)
+
+						<?php
+						// Insert {path-prefix}
+						$href[0] = str_replace('{path-prefix}', config('folio.path-prefix'), $href[0]);
+						$href[1] = str_replace('{path-prefix}', config('folio.path-prefix'), $href[1]);
+						// Insert {domain}
+						if(config('folio.port') && config('folio.port') != '80') {
+							$href[0] = str_replace('{domain}', config('folio.domain').':'.config('folio.port'), $href[0]);
+						} else {
+							$href[0] = str_replace('{domain}', config('folio.domain'), $href[0]);							
+						}
+						?>
+						<li>
+							<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} ]">
+								{{ trans('folio.'.$title) }}
+							</a>
+						</li>
+						
+					@endforeach
+
+				</ul>
+			</nav>
+
     @endif
+
 		@if(isset($image))
 		<div class="[ c-header-simple__image ]">
 			<img class="[ u-round ]" src="{{ $image }}">
 		</div>
 		@endif
+		
 		@if(isset($description))
 		<div class="[ c-header-simple__description ]">
 			<div class="[ o-wrap  o-wrap--bio  o-wrap--bleed ]">
@@ -82,5 +101,6 @@
 		@if(!isset($is_media_hidden))
 		  {!! view('folio::partial.c-media')->with(['media' => $media_links]) !!}
 		@endif
+
 	</div>
 </header>
