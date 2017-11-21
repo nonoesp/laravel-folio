@@ -1,6 +1,13 @@
 
 ## TODO
 
+
+- [ ] lazy load for images (in collections)!
+- [ ] fix footnotes in rss (use older markdown parser like nonoma)
+- [ ] next/previous (of tag) category (based on source url, portraits or writing for instance)
+
+---
+
 - [ ] Add item translations in admin.
 - [ ] Add `info` template for page without header (like about) from `nono.ma`.
 - [ ] Select option for blog-or-not. (Pages and projects could be excluded from 'blog' feed.) Maybe categories?
