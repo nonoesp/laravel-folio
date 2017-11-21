@@ -36,6 +36,16 @@ class SubscriptionController extends Controller
             subject('New Subscriber to '.config('folio.title-short'));
       });
     }
+
+    if(config('folio.should-add-to-mailchimp') == true) {
+      \Newsletter::subscribeOrUpdate(
+        $email, [
+          // Here we need to reference the merge tags (e.g. 'NAME') and pass a valid string (even if empty) for it to work
+          //'NAME'=> $name,
+          //'LASTNAME'=> $lastname,
+          'IP' => $ip
+          ]);
+    }
     
     return response()->json([
         'success' => true,
