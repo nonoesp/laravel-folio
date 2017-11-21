@@ -18,7 +18,7 @@ return [
 	'db-prefix' => 'folio_',
 
 	// Wether subscribers should be added to Mailchimp (configuration on .env, using Spatie\Newsletter)
-	'should-add-to-mailchimp' => true,
+	'should-add-to-mailchimp' => false,
 
 	'title' => 'Folio',
 	'title-short' => 'Spc',
