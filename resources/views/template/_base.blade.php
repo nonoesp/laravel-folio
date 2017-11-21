@@ -27,7 +27,9 @@
     if(!isset($site_title)) {
       $site_title = config('folio.title');
     }
-    $og_description = config('folio.description');
+    if(!isset($og_description)) {
+      $og_description = config('folio.description');
+    }
     $header_view = config('folio.header.view');
     $header_classes = config('folio.header.classes');
     $header_data = config('folio.header.data');
