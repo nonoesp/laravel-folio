@@ -16,6 +16,7 @@
 	if(isset($data['title'])) { $title = $data['title']; }
 	if(isset($data['title_svg'])) { $title_svg = $data['title_svg']; }
   if(isset($data['description'])) { $description = $data['description']; }
+	if(isset($data['color'])) { $color = $data['color']; }
   if(isset($data['navigation'])) { $navigation = $data['navigation']; } else {
     $navigation = [
 			trans('folio::base.writing') => ['/'.Config::get('folio.path-prefix'), Config::get('folio.path-prefix')],
