@@ -195,7 +195,7 @@ class Folio {
         $template_id = $template_name;
         if($name == 'Folio') $template_id = '/'.$template_id;
         $template_dir_name = $dir['folder'].'/'.$template_name;
-        $files[$template_id] = ucwords(strtolower(str_replace("-"," ",$template_name).' template'));//.' · '.$template_id;
+        $files[$template_id] = ucwords(strtolower(str_replace("-"," ",$template_name).''));
       }
       if(count($files)) {
         $templates[$name] = $files;
