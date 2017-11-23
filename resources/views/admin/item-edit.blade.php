@@ -6,7 +6,8 @@ $settings_title = config('folio.title');
 if($settings_title == '') {
 	$settings_title = "Folio";
 }
-	$site_title = 'Editing Item '.$item->id.' | '. $settings_title;
+$site_title = 'Editing Item '.$item->id.' | '. $settings_title;
+$remove_wrap = true;
 ?>
 
 @section('title', 'Items')
@@ -18,6 +19,7 @@ if($settings_title == '') {
     <script type="text/javascript" src="/nonoesp/folio/js/folio.js"></script>
 
 <script type="text/javascript">
+
 VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 var debounced_property_sync = _.debounce(
@@ -57,7 +59,8 @@ data: {
 	item: '',
 	properties: '',
 	timers: {},
-	properties_changed: false
+	properties_changed: false,
+	isTextareaFocused: false
 },
 watch: {
 	properties: {
@@ -68,6 +71,9 @@ watch: {
 		},
 		deep: true
 	}
+},
+mounted() {
+	//this.adjustTextareaHeight(this.$refs.editor, 0);
 },
 methods: {
 	initProperties: function() {
@@ -103,6 +109,31 @@ methods: {
 			}, (response) => {
 				// error
 			});
+	},
+	textareaKeyupHandler: function (event) {
+		this.adjustTextareaHeight(event.srcElement, 0);
+	},
+	adjustTextareaHeight: function(textarea, height) {
+		if(height == 0) {
+			var scrollTop = document.documentElement.scrollTop;
+			textarea.style.height = "1px";
+			textarea.style.height = (25+textarea.scrollHeight)+"px";
+			document.documentElement.scrollTop = scrollTop;
+		} else {
+			textarea.style.height = '150px';
+		}
+	},
+	updateTextareaFocus: function(event) {
+		switch(event.type) {
+			case 'focus':
+				this.isTextareaFocused = true;
+				this.adjustTextareaHeight(event.srcElement, 0);
+			break;
+			case 'blur':
+				this.isTextareaFocused = false;
+				this.adjustTextareaHeight(event.srcElement, '150px');
+			break;
+		}
 	}
 }
 });
@@ -142,12 +173,16 @@ methods: {
 
 <div class="[ c-admin ] [ u-pad-b-12x ]">
 
-	<p>
-		Editing Item {{ $item->id }}
-		<a href="/e/{{ Hashids::encode($item->id) }}">
-		<i class="[ fa fa-link fa--social ]"></i></a>
-		<a href="{{ '/'.$item->path() }}">Preview</a>
-	</p>
+	<div class="[ o-wrap o-wrap--size-small ]">
+
+		<p>
+			Editing Item {{ $item->id }}
+			<a href="/e/{{ Hashids::encode($item->id) }}">
+			<i class="[ fa fa-link fa--social ]"></i></a>
+			<a href="{{ '/'.$item->path() }}">Preview</a>
+		</p>
+
+	</div>
 
 	<div class="[ c-admin-form-v2 ] [ grid ]">
 
@@ -159,13 +194,25 @@ methods: {
 
 		{{ Form::model($item, array('route' => array('item.edit', $item->id))) }}
 
-		<div class="[ grid__item ] [ one-whole ]">
-			<p>{{ Form::text('title', null, array('placeholder' => 'Title')) }}</p>
+		<div class="[ o-wrap o-wrap--size-small ]">
+			<div class="[ grid__item ] [ one-whole ]">
+				<p>{{ Form::text('title', null, array('placeholder' => 'Title')) }}</p>
+			</div>
 		</div>
 
 		<div class="[ grid__item ] [ one-whole ]">
-			<p>{{ Form::textarea('text', null, array('placeholder' => 'Text')) }}</p>
+			<p class="[ unwrapped wide ]">{{ Form::textarea('text', null, [
+				'placeholder' => 'Text',
+				'ref' => 'editor',
+				'v-on:keyup' => 'textareaKeyupHandler',
+				'@focus' => 'updateTextareaFocus',
+				'@blur' => 'updateTextareaFocus',
+				'v-bind:class' => '{ "u-opacity--high" : !isTextareaFocused }'
+				]) }}</p>
 		</div>
+
+
+		<div class="[ o-wrap o-wrap--size-600 ]">
 
 			@foreach($inputs as $input)
 				<div v-if="item.{{ $input['name'] }}" class="[ grid__item ]
@@ -206,66 +253,63 @@ methods: {
 			</div>			
 
 			{{-- Properties --}}
+				
+				<div v-if="properties.length" class="[ grid__item ] [ u-pad-b-1x ]">
+					<strong>Properties</strong>
+				</div>
 
-			<div v-if="properties.length" class="[ grid__item ] [ u-pad-b-1x ]">
-				<strong>Properties</strong>
-			</div>
+				<div v-for="property in properties" class="[ grid__item one-whole ] [ c-admin__property ]">
 
-			<div v-for="property in properties" class="[ grid__item one-whole ] [ c-admin__property ]">
-
-					<div class="[ grid grid--narrow ]">
-						<div class="[ grid__item ]
-						[ c-admin-form__label u-text-align--right c-admin--font-light ]
-						[ one-half portable--one-whole ]
-						[ u-hidden-portable ]">
-							<span>@{{ property.id }}</span>
-						</div>
-						<!--
-					--><div class="[ grid__item four-twelfths  ] [ u-text-align--right ]">
-							<input type="text"
-							placeholder="Label"
-							v-model="property.label"
-							@keyup="sync_properties(property)"
-							v-bind:data-id="property.id" data-field="label"
-							class="u-text-align--right">
-						</div><!--
-						--><div class="[ grid__item three-twelfths ]">
-							<input type="text"
-							placeholder="identifier"
-							v-model="property.name"
-							@keyup="sync_properties(property)"
-							v-bind:data-id="property.id" data-field="name"
-							class="u-text-align--right">
-								{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
-						</div><!--
-						--><div class="[ grid__item four-twelfths ]">
-								<input type="text" v-model="property.value"
-								placeholder="Value"
+						<div class="[ grid grid--narrow ]">
+							<div class="[ grid__item ]
+							[ c-admin-form__label u-text-align--right c-admin--font-light ]
+							[ one-half portable--one-whole ]
+							[ u-hidden-portable ]">
+								<span>@{{ property.id }}</span>
+							</div>
+							<!--
+						--><div class="[ grid__item four-twelfths  ] [ u-text-align--right ]">
+								<input type="text"
+								placeholder="Label"
+								v-model="property.label"
 								@keyup="sync_properties(property)"
-								v-bind:data-id="property.id" data-field="value">
-						</div><!--
-						--><div @click="delete_property(property)"
-						v-bind:data-id="property.id"
-						class="[ grid__item one-twelfth ] [ u-opacity--low ]">
-							<span class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
-								<i class="fa fa-trash-o"></i>
-							</span>
-							<span v-if="property.is_updating">
-								<i class="fa fa-refresh fa-spin fa-fw"></i>
-								<span class="sr-only">Loading...</span>
-							</span>
-						</div><!--
-			 --></div>
+								v-bind:data-id="property.id" data-field="label"
+								class="u-text-align--right">
+							</div><!--
+							--><div class="[ grid__item three-twelfths ]">
+								<input type="text"
+								placeholder="identifier"
+								v-model="property.name"
+								@keyup="sync_properties(property)"
+								v-bind:data-id="property.id" data-field="name"
+								class="u-text-align--right">
+									{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
+							</div><!--
+							--><div class="[ grid__item four-twelfths ]">
+									<input type="text" v-model="property.value"
+									placeholder="Value"
+									@keyup="sync_properties(property)"
+									v-bind:data-id="property.id" data-field="value">
+							</div><!--
+							--><div @click="delete_property(property)"
+							v-bind:data-id="property.id"
+							class="[ grid__item one-twelfth ] [ u-opacity--low ]">
+								<span class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+									<i class="fa fa-trash-o"></i>
+								</span>
+								<span v-if="property.is_updating">
+									<i class="fa fa-refresh fa-spin fa-fw"></i>
+									<span class="sr-only">Loading...</span>
+								</span>
+							</div><!--
+				--></div>
 
-			</div>
-
+				</div>
 
 
 			<div class="[ grid__item ] [ u-pad-b-2x u-pad-t-0x ] [ c-admin--font-light ] ">
-					{{--<span class="[ fa fa-plus fa--social ]"></span>--}}
-					<span @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</span>
+					<p @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</p>
 			</div>
-
 
 			<div class="[ grid__item ] [ one-whole ]">
 				<p>{{ Form::submit('Save') }}</p>

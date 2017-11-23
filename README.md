@@ -183,7 +183,7 @@ npm install nonoesp/core-scss bourbon font-awesome
 And the following for JavaScript development.
 
 ```bash
-npm install vue vue-resource lodash jquery validate-js
+npm install vue vue-resource vue-focus lodash jquery validate-js
 ```
 
 ### Compile Assets (with Laravel Mix)

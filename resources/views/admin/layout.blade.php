@@ -3,6 +3,11 @@
 	$folio_css = config('folio.css');
 	if($folio_typekit == '') $folio_typekit = null;
 	if($folio_css == '') $folio_css = null;
+	if(isset($remove_wrap) && $remove_wrap == true) {
+		$remove_wrap = true;
+	} else {
+		$remove_wrap = false;
+	}
 ?>
 
 <!DOCTYPE html>
@@ -29,18 +34,26 @@
 
 <body>
 
-  <div class="[ o-band ] [ u-pad-t-4x u-pad-b-4x ]">
-    <div class="[ o-wrap o-wrap--size-small ]">
+  	<div class="[ o-band ] [ u-pad-t-4x u-pad-b-4x ]">
 
-	@if(!isset($shouldHideMenu))
-		{!! view('folio::admin.c-menu') !!}
-	@endif
-	<div class="admin-title u-borderBottom">@yield('title', 'Admin')</div>
+		<div class="[ o-wrap o-wrap--size-small ]">
+			@if(!isset($shouldHideMenu))
+				{!! view('folio::admin.c-menu') !!}
+			@endif
+			<div class="admin-title u-borderBottom">@yield('title', 'Admin')</div>
+		</div>
 
-	@yield('content')
+		@if($remove_wrap == false)
+			<div class="[ o-wrap o-wrap--size-small ]">
+		@endif
+
+			@yield('content')
+
+		@if($remove_wrap == false)
+			</div>
+		@endif
 
 	</div>
-</div>
 
 {{--<script type="text/javascript" src="/js/vendor/jquery.min.js"></script>--}}<!--
 -->@yield('scripts')<!--

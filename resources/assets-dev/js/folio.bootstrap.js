@@ -1,5 +1,3 @@
-
-
 window._ = require('lodash');
 
 /**
@@ -19,6 +17,7 @@ window.$ = window.jQuery = require('jquery');
 window.Vue = require('vue');
 window.VueResource = require('vue-resource');
 window.Vue.use(window.VueResource);
+window.Focus = require('vue-focus');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
