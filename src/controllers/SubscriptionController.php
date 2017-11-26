@@ -58,7 +58,8 @@ class SubscriptionController extends Controller
   }
 
   // Soft delete an existing subscriber
-  public function delete($id) {
+  public function delete() {
+    $id = \Input::get('id');
     if($subscriber = Subscriber::find($id)) {
       $subscriber->delete();
     } else {
@@ -67,7 +68,8 @@ class SubscriptionController extends Controller
   }
 
   // Restore a soft-deleted subscriber
-  public function restore($id) {
+  public function restore() {
+    $id = \Input::get('id');
     if($subscriber = Subscriber::onlyTrashed()->find($id)) {
       $subscriber->restore();
     } else {

@@ -107,7 +107,7 @@ Route::group(['middleware' => Config::get("folio.middlewares-admin")], function(
 	Route::get($admin_path.'upload/delete/{name}', 'Nonoesp\Folio\Controllers\UploadController@postDeleteMedia');
 	
 	// SubscriptionController
-	Route::get('subscriber/delete/{id}', 'Nonoesp\Folio\Controllers\SubscriptionController@delete');
-	Route::get('subscriber/restore/{id}', 'Nonoesp\Folio\Controllers\SubscriptionController@restore');
+	Route::post('subscriber/delete', 'Nonoesp\Folio\Controllers\SubscriptionController@delete');
+	Route::post('subscriber/restore', 'Nonoesp\Folio\Controllers\SubscriptionController@restore');
 
 }); // close folio admin

@@ -12,7 +12,35 @@ if($settings_title == '') {
 @section('title', 'Subscribers')
 
 @section('scripts')
-    <script type="text/javascript" src="/nonoesp/folio/js/folio.js"></script>
+
+	<script type="text/javascript" src="/nonoesp/folio/js/manifest.js"></script>
+	<script type="text/javascript" src="/nonoesp/folio/js/vendor.js"></script>
+	<script type="text/javascript" src="/nonoesp/folio/js/folio.js"></script>
+
+	<script type="text/javascript">
+		
+		VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');		
+	
+		var admin = new Vue({
+			el: '.c-admin',
+			data: {
+				name: 'subscribers'
+			},
+			methods: {
+				hide: function(id) {
+					VueResource.Http.post('/subscriber/delete', {id: id}).then((response) => {
+							// success
+							location.href = location.href;
+					}, (response) => {
+							// error
+					});
+
+				}
+			}
+		});
+
+	</script>
+
 @stop
 
 @section('content')
@@ -21,9 +49,12 @@ if($settings_title == '') {
 	.grid {
 		letter-spacing: inherit;
 	}
+	.o-hide-button {
+		cursor:pointer;
+	}
 </style>
 
-<div class="c-admin">
+<div class="[ c-admin ]">
 
   @if(count($subscribers))
 
@@ -36,9 +67,8 @@ if($settings_title == '') {
 		<ul class="c-archive__list">
 			@foreach($subscribers as $subscriber)
 
-				<?php
+					<?php
 					$date = new Date($subscriber->created_at);
-					//$date = ucWords(substr($date->format('F'), 0, 3).'&nbsp;'.$date->format('j').'&nbsp;'.$date->format('Y'));
 					$date = ucWords(substr($date->format('l'), 0, 3)
 							 .'&nbsp;'
 							 .$date->format('j')
@@ -83,12 +113,12 @@ if($settings_title == '') {
 										·
 										@endif
 										{{ $ip }}
-									@endif									
-									{{--
-									@if($subscriber->path or $subscriber->source or $subscriber->campaign)
+									@endif
+									
+									@if($subscriber->path or $subscriber->source or $subscribe->campaign or $subscribe->ip)
 										·
 									@endif
-									--}}
+									<span class="o-hide-button" onclick="admin.hide({{$subscriber->id}})">hide</span>
 						</p>
 
 					</li>
