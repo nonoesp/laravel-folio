@@ -5,9 +5,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Subscriber extends Model
 {
+    use SoftDeletes;
 	protected $table;
 	protected $fillable = array('id', 'email', 'name', 'source');
-	protected $softDelete = true;
 
 	public function __construct() {
 	    parent::__construct();

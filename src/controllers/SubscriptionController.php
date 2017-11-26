@@ -11,7 +11,7 @@ use Mail;
 
 class SubscriptionController extends Controller
 {
-  public function postSubscriber(Request $request)
+  public function create(Request $request)
   {
     $email = \Input::get('email');
     $name = \Input::get('name');
@@ -56,4 +56,22 @@ class SubscriptionController extends Controller
         'path' => $subscriber->path
     ]);
   }
+
+  // Soft delete an existing subscriber
+  public function delete($id) {
+    if($subscriber = Subscriber::find($id)) {
+      $subscriber->delete();
+    } else {
+      // does not exist or is already deleted
+    }
+  }
+
+  // Restore a soft-deleted subscriber
+  public function restore($id) {
+    if($subscriber = Subscriber::onlyTrashed()->find($id)) {
+      $subscriber->restore();
+    } else {
+      // does not exist or is already restored
+    }
+  }  
 }

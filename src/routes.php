@@ -59,7 +59,7 @@ if(Folio::isAvailableURI()) {
 	Route::get('debug/folio', 'Nonoesp\Folio\Controllers\FolioController@helloFolio');
 
 	// SubscriptionController
-	Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@postSubscriber');
+	Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create');
 }
 
 }); // close folio general domain pattern group
@@ -106,4 +106,8 @@ Route::group(['middleware' => Config::get("folio.middlewares-admin")], function(
 	Route::get($admin_path.'upload/list', 'Nonoesp\Folio\Controllers\UploadController@getMediaList');
 	Route::get($admin_path.'upload/delete/{name}', 'Nonoesp\Folio\Controllers\UploadController@postDeleteMedia');
 	
+	// SubscriptionController
+	Route::get('subscriber/delete/{id}', 'Nonoesp\Folio\Controllers\SubscriptionController@delete');
+	Route::get('subscriber/restore/{id}', 'Nonoesp\Folio\Controllers\SubscriptionController@restore');
+
 }); // close folio admin
