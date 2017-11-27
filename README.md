@@ -51,7 +51,7 @@ But you need to follow the [Instructions to Install `nonoesp/authenticate`](http
 
 ## Middleware
 
-For **Folio** translations to work properly we need to publish our `SetLocales.php` middleware, and install the `authenticate` middleware:
+Run the following to installed a set of middlewares required by **Folio**.
 
 ```php
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=middleware
@@ -84,12 +84,12 @@ A dependency of the authentication package of folio is `thujon/twitter`, so you 
 php artisan vendor:publish --provider="Thujohn\Twitter\TwitterServiceProvider"
 ```
 
-*[Twitter url explaining how to config thujohn]*
+If you want to support Login with Twitter, you need to create a Twitter app at <https://apps.twitter.com/>, and then fill a few parameters on `config/ttwitter.php`.
 
 ## Migrations
 
 First, make sure you remove Laravel's default migration files from `database/migrations` as they can collide
-with this package.
+with Folio's migrations.
 
 Let's create the tables required by **Folio** in your database.
 
