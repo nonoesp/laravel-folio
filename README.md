@@ -24,7 +24,7 @@ Most packages will be auto-discovered by Laravel.
 
 ## Laravel
 
-Next, add the new providers to the `providers` array of `config/app.php`:
+Next, add (some) providers that are still not auto-discoverable to the `providers` array of `config/app.php`:
 
 ```php
     'providers' => [
@@ -45,9 +45,6 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
         'User' => 'App\User',		
     ],
 ```
-
-[To authenticate, `Folio` uses `nonoesp/authenticate` (which should be already installed as a dependency).
-But you need to follow the [Instructions to Install `nonoesp/authenticate`](https://github.com/nonoesp/laravel-authenticate/tree/master)]
 
 ## Middleware
 
@@ -78,13 +75,15 @@ protected $routeMiddleware = [
 ];
 ```
 
+### Sign in with Twitter
+
 A dependency of the authentication package of folio is `thujon/twitter`, so you will have to publish its config and add your Twitter credentials to `config/ttwitter.php` if you want to be able to log in with Twitter.
 
 ```
 php artisan vendor:publish --provider="Thujohn\Twitter\TwitterServiceProvider"
 ```
 
-If you want to support Login with Twitter, you need to create a Twitter app at <https://apps.twitter.com/>, and then fill a few parameters on `config/ttwitter.php`.
+You need to create a Twitter app at <https://apps.twitter.com/>, and then fill a few parameters on `config/ttwitter.php`.
 
 ## Migrations
 
