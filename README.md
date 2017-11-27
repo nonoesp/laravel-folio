@@ -27,19 +27,11 @@ Next, add the new providers to the `providers` array of `config/app.php`:
 ```php
     'providers' => [
         // ...
-        // nonoesp/folio
-        //Nonoesp\Folio\FolioServiceProvider::class,        
-        //Nonoesp\Thinker\ThinkerServiceProvider::class,  
-        //Nonoesp\Authenticate\AuthenticateServiceProvider::class,          
-        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
+        // nonoesp/folio dependencies without auto-discovery
         Conner\Tagging\Providers\TaggingServiceProvider::class,
-        Jenssegers\Date\DateServiceProvider::class,
-        Roumen\Feed\FeedServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
-        //Vinkla\Hashids\HashidsServiceProvider::class,
-        //Intervention\Image\ImageServiceProvider::class,					
-        // ...        
+        Vinkla\Hashids\HashidsServiceProvider::class,
+        // ...         
     ],
 ```
 
@@ -48,27 +40,10 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 ```php
     'aliases' => [
         // ...
-        // nonoesp/folio - Models
-        // 'Folio' => Nonoesp\Folio\Facades\Folio::class,
-        // 'User' => 'App\User',
-        // 'Item' => Nonoesp\Folio\Models\Item::class,    
-        // 'Property' => Nonoesp\Folio\Models\Property::class,
-        // 'Recipient' => Nonoesp\Folio\Models\Recipient::class,
-        // 'Subscriber' => Nonoesp\Folio\Models\Subscriber::class,
-
-        // nonoesp/folio - Dependencies
-        //'Thinker' => Nonoesp\Thinker\Facades\Thinker::class,
-        //'Authenticate' => Nonoesp\Authenticate\Facades\Authenticate::class,
-        'Date' => Jenssegers\Date\Date::class,
-        'Feed' => Roumen\Feed\Feed::class,
-        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,   
+        // nonoesp/folio dependencies without auto-discovery
         'Input' => Illuminate\Support\Facades\Input::class,
-        'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
-        //'Hashids'   => Vinkla\Hashids\Facades\Hashids::class,
-        // 'Image' => Intervention\Image\Facades\Image::class,				
-        // ...       
+        'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,			
+        // ...         
     ],
 ```
 
