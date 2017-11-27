@@ -1,6 +1,12 @@
 
 @extends(config("folio.view.layout"))
 
+<?php
+if(isset($collection)) {
+  $items = $collection;
+}
+?>
+
 @section('scripts')
     @if(isset($items))
         <script>
