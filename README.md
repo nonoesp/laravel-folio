@@ -117,6 +117,8 @@ Publish configuration file to `config/folio.php`.
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=config
 ```
 
+<!--
+
 ## Publish Assets
 
 **Folio** ships with compiled CSS and JS assets, in case you want to use it as is,
@@ -125,6 +127,8 @@ they can be published as follows:
 ```php
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=assets
 ```
+
+-->
 
 ## Publish Development Assets
 
