@@ -1,4 +1,4 @@
-@extends('layout.html-plain')
+@extends('folio::layout.plain')
 
 <?php
   $site_title = $item->title.' | '.config('folio.title');
