@@ -172,18 +172,10 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 
 ### Install Dependencies (with npm)
 
-First, let's install all our asset dependencies.
-
-Run the following for Sass development.
+First, let's install all our asset dependencies (some of them are SCSS dependencies and others are JavaScript).
 
 ```bash
-npm install nonoesp/core-scss bourbon font-awesome
-```
-
-And the following for JavaScript development.
-
-```bash
-npm install vue vue-resource vue-focus lodash jquery validate-js
+npm install nonoesp/core-scss bourbon font-awesome vue vue-resource vue-focus lodash jquery validate-js webpack
 ```
 
 ### Compile Assets (with Laravel Mix)
@@ -194,13 +186,13 @@ Your `webpack.mix.js` file should look like this.
 (You can omit the `.js` or the `.sass` part, just keep whatever you are compiling.)
 
 ```php
-const { mix } = require('laravel-mix');
+let mix = require('laravel-mix');
 
 // ...
 
 mix.sass('resources/assets/sass/folio.scss', 'public/nonoesp/folio/css');
 mix.js('resources/assets/js/folio.js', 'public/nonoesp/folio/js')
-   .extract(['vue', 'vue-resource', 'jquery', 'validate-js', 'lodash', 'axios']);;
+   .extract(['vue', 'vue-resource', 'vue-focus', 'jquery', 'validate-js', 'lodash', 'axios']);
 
 ```
 
