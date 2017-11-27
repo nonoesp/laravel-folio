@@ -77,13 +77,11 @@ protected $routeMiddleware = [
 
 ### Sign in with Twitter
 
-A dependency of the authentication package of folio is `thujon/twitter`, so you will have to publish its config and add your Twitter credentials to `config/ttwitter.php` if you want to be able to log in with Twitter.
+You need to publish the config file of `thujon/twitter` and add your Twitter credentials to `config/ttwitter.php`. (You can create a Twitter app at <https://apps.twitter.com/>.)
 
 ```
 php artisan vendor:publish --provider="Thujohn\Twitter\TwitterServiceProvider"
 ```
-
-You need to create a Twitter app at <https://apps.twitter.com/>, and then fill a few parameters on `config/ttwitter.php`.
 
 ## Migrations
 
