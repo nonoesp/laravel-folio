@@ -27,10 +27,9 @@ Next, add the new providers to the `providers` array of `config/app.php`:
 ```php
     'providers' => [
         // ...
-        // nonoesp/folio dependencies without auto-discovery
+        // nonoesp/folio dependencies
         Conner\Tagging\Providers\TaggingServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
-        Vinkla\Hashids\HashidsServiceProvider::class,
         // ...         
     ],
 ```
@@ -39,11 +38,11 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 
 ```php
     'aliases' => [
-        // ...
-        // nonoesp/folio dependencies without auto-discovery
+        // nonoesp/folio dependencies
         'Input' => Illuminate\Support\Facades\Input::class,
-        'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,			
-        // ...         
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
+        'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
+        'User' => 'App\User',		
     ],
 ```
 

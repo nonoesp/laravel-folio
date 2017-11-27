@@ -19,7 +19,15 @@ use Hashids;
 /* FolioController
 /*----------------------------------------------------------------*/
 
-Route::pattern('foliodomain', config('folio.domain-pattern'));
+/*
+* Create a domain pattern if provided in config.php
+* Otherwise allow the current domain (i.e., any domain)
+*/
+if(config('folio.domain-pattern') == null) {
+	Route::pattern('foliodomain', Request::getHost());
+} else {
+	Route::pattern('foliodomain', config('folio.domain-pattern'));
+}
 
 Route::group(['domain' => '{foliodomain}','middleware' => Config::get("folio.middlewares")], function () {
 

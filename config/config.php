@@ -12,7 +12,7 @@ return [
 
     /*
      * The base route for your the admin of your Folio installation.
-     */		
+	 */		
 	'admin-path-prefix' => 'admin',
 
     /*
@@ -32,9 +32,10 @@ return [
 
 	/*
      * Pattern of domains accepted by Folio.
-	 * e.g. 'localhost|example.com|127.0.0.1'
+	 * (1) null - accept any domain
+	 * (2) pattern - just accept provided domains, e.g. 'localhost|example.com|127.0.0.1'
      */
-	'domain-pattern' => 'yourdomain.com|localhost|127.0.0.1', 
+	'domain-pattern' => null,
 	
 	/*
 	 * Prefix for database tables
@@ -49,42 +50,91 @@ return [
      */	
 	'should-add-to-mailchimp' => false,
 
+	/*
+	 * The main title of the Folio site.
+	 */
 	'title' => 'Folio',
-	'title-short' => 'Spc',
+
+	/*
+	 * A short title
+	 */	
+	'title-short' => 'Fol',
+
+	/*
+	 * A brief description of your site.
+	 * Default og_description.
+	 */		
 	'description' => 'A simple web.',
+
+	/*
+	 * A thumbnail for your site.
+	 * Default og_image.
+	 */			
 	'image_src' => 'http://domain.com/img/image_src.jpg',
 
+	/*
+	 * Path of your Folio stylesheets.
+	 * By default, this matches where Folio assets are deployed.
+	 */		
 	'css' => '/nonoesp/folio/css/folio.css',
 
+	/*
+	 * Your typekit id. (Optional)
+	 */			
 	'typekit' => '',
 
+	/*
+	 * Your Google Analytics code. (Optional)
+	 * Folio won't track activity by logged admins.
+	 */				
 	'google-analytics' => '',
 
-	// path where media is uploaded
+	/*
+	 * The folder of a folder where media (images) are uploaded to.
+	 * TODO: Include in uploader settings.
+	 */				
 	'media-upload-path' => '/img/u/',
 
+	/*
+	 * Settings for the media uploaded.
+	 */			
 	'uploader' => [
 		'max_width' => 1500
 	],
 
 	'subscribers' => [
+		/*
+	 	* Wether Folio should send a "new subscriber" notification e-mail.
+	 	*/				
 		'should-notify' => false,
+		/*
+	 	* 'From' e-mail for notifications.
+	 	*/				
 		'from' => [
 			'email' => 'from@domain.com',
 			'name' => 'John Smith'
 		],
+		/*
+	 	* 'To' e-mail for notifications.
+	 	*/						
 		'to' => [
 			'email' => 'to@domain.com',
 			'name' => 'Alissa Smith'
 		]
 	],
 
+	/*
+	* The configuration of Folio's template cover.
+	*/					
 	'cover' => [
 		'title' => '',
 		'subtitles' => ['Folio for Laravel','Making the web simple.'],
 		'footline' => 'Folio for Laravel.'
 	],
 
+	/*
+	* The configuration of Folio's template footer.
+	*/			
 	'footer' => [
 		'hide_credits' => false,
 		'credits_text' => ''
@@ -93,6 +143,9 @@ return [
 	//'template-paths' => ['folio::templates'],
 	//'special-tags' => ['highlight'],
 
+	/*
+	* The configuration of Folio's template header.
+	*/			
 	'header' => [
 			'title' => 'Folio',		
 			'view' => 'folio::partial.c-header',
