@@ -182,34 +182,34 @@ class FolioController extends Controller
 	}
 
 	public static function showItem($domain, Request $request, $slug) {
-
-		if($item = Item::withTrashed()->whereSlug($slug)->first() or
-       $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
-       $item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first() ) {
-			$item->timestamps = false;
-			$item->visits++;
-			$item->save();
-
-      if($item->trashed() or \Date::now() < $item->published_at) {
-        if(($user = Auth::user() and $user->is_admin) or session('temporary-token')) {
-          // private and visible (auth ok)
-          session(['temporary-token' => false]);
-          $request->session()->flash('notification', trans('folio::base.preview-notification'));
-        } else {
-          // private and hidden (no auth)
-          return response()->view('errors.404', [], 404);
-        }
-      } else {
-        // public
-      }
-
-      if($view = $item->templateView()) {
-        return view($view, ['item' => $item]);
-      }
-			return view(config('folio.view.item'), ['item' => $item]);
-		}
-
-	}
+		
+				if($item = Item::withTrashed()->whereSlug($slug)->first() or
+			   $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
+			   $item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first() ) {
+					$item->timestamps = false;
+					$item->visits++;
+					$item->save();
+		
+			  if($item->trashed() or \Date::now() < $item->published_at) {
+				if(($user = Auth::user() and $user->is_admin) or session('temporary-token')) {
+				  // private and visible (auth ok)
+				  session(['temporary-token' => false]);
+				  $request->session()->flash('notification', trans('folio::base.preview-notification'));
+				} else {
+				  // private and hidden (no auth)
+				  return response()->view('errors.404', [], 404);
+				}
+			  } else {
+				// public
+			  }
+				  
+			  if($view = $item->templateView() && view()->exists($item->templateView())) {
+					return view($view, ['item' => $item]);
+				  }
+				return view(config('folio.view.item'), ['item' => $item]);
+			}
+		
+			}
 
 	public function showItemWithId($domain, $id) {
 		$item = Item::withTrashed()->find($id);

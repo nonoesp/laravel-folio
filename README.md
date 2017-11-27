@@ -20,17 +20,17 @@ Install using composer:
 composer require nonoesp/folio:dev-master
 ```
 
+Most packages will be auto-discovered by Laravel.
+
 ## Laravel
 
 Next, add the new providers to the `providers` array of `config/app.php`:
 
 ```php
     'providers' => [
-        // ...
         // nonoesp/folio dependencies
         Conner\Tagging\Providers\TaggingServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
-        // ...         
     ],
 ```
 
