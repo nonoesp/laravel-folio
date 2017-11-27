@@ -2,22 +2,51 @@
 
 return [
 
-	'path-prefix' => 'folio', // (1) 'string' site.com/string/slug, (2) '' site.com/slug
+    /*
+     * The base route for your Folio installation.
+	 * You can set Folio to run on the root '/' by setting this to '' or null.
+	 * (1) 'string' site.com/string/slug
+	 * (2) '' site.com/slug
+     */	
+	'path-prefix' => 'folio',
+
+    /*
+     * The base route for your the admin of your Folio installation.
+     */		
 	'admin-path-prefix' => 'admin',
 
+    /*
+     * The location of the templates to use for the main layout of Folio, collections, and items
+     */
 	'view' => [
-		'layout' => 'folio::layout', // 'folio::layout'
-		'collection' => 'template._base', // 'folio::base'
-		'item' => 'template._standard', // 'folio::template._standard'
+		'layout' => 'folio::layout', 				// defaults to 'folio::layout'
+		'collection' => 'folio::template._base', 	// defaults to 'folio::template._base'
+		'item' => 'folio::template._standard', 		// defaults to 'folio::template._standard'
 	],
 
-	// Pattern of domains accepted by Folio (e.g. 'localhost|example.com|127.0.0.1')
+	/*
+     * The path for Folio to search for custom templates.
+	 * eg. 'template' with search for templates on /resources/views/template.
+     */
+	'templates-path' => 'template',
+
+	/*
+     * Pattern of domains accepted by Folio.
+	 * e.g. 'localhost|example.com|127.0.0.1'
+     */
 	'domain-pattern' => 'yourdomain.com|localhost|127.0.0.1', 
 	
-	// Prefix for database tables
+	/*
+	 * Prefix for database tables
+     */	
 	'db-prefix' => 'folio_',
 
-	// Wether subscribers should be added to Mailchimp (configuration on .env, using Spatie\Newsletter)
+	/*
+     * Wether subscribers should be added to Mailchimp or not.
+	 * Mailchimp configuration should be added to .env for Spatie\Newsletter as follows:
+	 * MAILCHIMP_APIKEY=your-api-key
+	 * MAILCHIMP_LIST_ID=your-list-id
+     */	
 	'should-add-to-mailchimp' => false,
 
 	'title' => 'Folio',
@@ -25,14 +54,14 @@ return [
 	'description' => 'A simple web.',
 	'image_src' => 'http://domain.com/img/image_src.jpg',
 
-	'css' => '/nonoesp/folio/css/folio.css', //
+	'css' => '/nonoesp/folio/css/folio.css',
 
 	'typekit' => '',
+
 	'google-analytics' => '',
 
-	'templates-path' => 'template', // search for custom templates at /resources/views/{value}
-
-	'media-upload-path' => '/img/u/', // path where media is uploaded
+	// path where media is uploaded
+	'media-upload-path' => '/img/u/',
 
 	'uploader' => [
 		'max_width' => 1500
