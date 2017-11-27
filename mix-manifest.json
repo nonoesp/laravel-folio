@@ -1,4 +1,6 @@
 {
+    "/resources/assets/js/vendor.js": "/resources/assets/js/vendor.js",
     "/resources/assets/js/folio.js": "/resources/assets/js/folio.js",
-    "/resources/assets/css/folio.css": "/resources/assets/css/folio.css"
+    "/resources/assets/css/folio.css": "/resources/assets/css/folio.css",
+    "/resources/assets/js/manifest.js": "/resources/assets/js/manifest.js"
 }
