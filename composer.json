@@ -23,7 +23,7 @@
         "nonoesp/authenticate": "^5.4",
         "nonoesp/thinker": "^5.4",
         "jenssegers/date": "^3.0",
-        "roumen/feed": "2.10.*",
+        "roumen/feed": "2.11.*",
         "graham-campbell/markdown": "^8.0",
         "webuni/commonmark-attributes-extension": "^0.5.0",
         "laravelcollective/html": "5.5.*",
