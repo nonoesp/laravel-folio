@@ -202,11 +202,19 @@ class FolioController extends Controller
 			  } else {
 				// public
 			  }
-				  
-			  if($view = $item->templateView() && view()->exists($item->templateView())) {
-					return view($view, ['item' => $item]);
-				  }
-				return view(config('folio.view.item'), ['item' => $item]);
+			
+
+			  // Get the template view for this item
+			  $itemTemplateView = $item->templateView();
+
+			  // Set to default Folio item view if empty or non-existing
+			  if(!$itemTemplateView || !view()->exists($itemTemplateView)) {
+				$itemTemplateView = config('folio.view.item');
+			  } else {
+				// Template view $itemTemplateView is good to go!
+			  }
+
+			return view($itemTemplateView, ['item' => $item]);
 			}
 		
 			}
