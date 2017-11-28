@@ -29,7 +29,8 @@
         "laravelcollective/html": "5.5.*",
         "vinkla/hashids": "*",
         "intervention/image": "^2.3",
-        "aws/aws-sdk-php": "~3.0"
+        "aws/aws-sdk-php": "~3.0",
+        "spatie/laravel-newsletter": "^4.1"
     },
     "extra": {
         "laravel": {
