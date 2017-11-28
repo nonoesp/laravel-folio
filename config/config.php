@@ -127,9 +127,11 @@ return [
 	* The configuration of Folio's template cover.
 	*/					
 	'cover' => [
+		'hidden' => false,
 		'title' => '',
 		'subtitles' => ['Folio for Laravel','Making the web simple.'],
-		'footline' => 'Folio for Laravel.'
+		'footline' => 'Folio for Laravel.',
+		'class' => 'is-cool some-class'		
 	],
 
 	/*

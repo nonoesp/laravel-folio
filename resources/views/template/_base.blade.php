@@ -25,6 +25,12 @@ if(isset($collection)) {
     if(isset($header_classes)) {
       $keep_header_classes = $header_classes;
     }
+    if(isset($cover_data)) {
+      $keep_cover_data = $cover_data;
+    }
+    if(isset($cover_classes)) {
+      $keep_cover_classes = $cover_classes;
+    }    
 
     // $folio_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
     // $tag
@@ -60,7 +66,6 @@ if(isset($collection)) {
     $cover_data['description'] = config('folio.cover.footline');
     $cover_data['subtitle'] = Thinker::array_rand_value(config('folio.cover.subtitles'));
     $cover_data['class'] = 'is-header u-background-grey ';
-    $cover_classes = '';
     $cover_active = true;
     if(!isset($cover_hidden)) $cover_hidden = false;
 
@@ -119,7 +124,7 @@ if(isset($collection)) {
             // 4.2.2. Item w/ cover
             $cover_data['subtitle'] = $item->title;
             $cover_data['image'] = $item->image;
-            $cover_data['class'] .= 'is-faded -is-fullscreen';
+            $cover_data['class'] .= 'is-faded is-fullscreen';
             if(strlen($item->title) > 40) {
               $cover_data['classes_title_b'] = 'c-cover__title-b--small';
             }
@@ -153,6 +158,15 @@ if(isset($collection)) {
     if(isset($keep_header_classes)) {
       $header_classes = $keep_header_classes;
     }
+    if(isset($keep_cover_data)) {
+      foreach($keep_cover_data as $key=>$val) {
+        $cover_data[$key] = $val;
+      }
+    }
+    if(isset($keep_cover_classes)) {
+      $cover_classes = $keep_cover_classes;
+    }    
+    
 ?>
 
       {{----------------------------------------}}

@@ -187,16 +187,18 @@ methods: {
 	<div class="[ c-admin-form-v2 ] [ grid ]">
 
 		@if( Request::isMethod('post') )
+		<div class="[ o-wrap o-wrap--size-small ]">		
 			<div class="[ grid__item ] [ one-whole ]">
 				<p>Changes saved.</p>
 			</div>
+		</div>
 		@endif
 
 		{{ Form::model($item, array('route' => array('item.edit', $item->id))) }}
 
 		<div class="[ o-wrap o-wrap--size-small ]">
 			<div class="[ grid__item ] [ one-whole ]">
-				<p>{{ Form::text('title', null, array('placeholder' => 'Title')) }}</p>
+				<p>{{ Form::text('title', null, ['placeholder' => 'Title']) }}</p>
 			</div>
 		</div>
 
