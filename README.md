@@ -16,7 +16,7 @@ Create webs to publish your content with custom templates.
 
 Install using composer:
 
-```
+```bash
 composer require nonoesp/folio:dev-master
 ```
 
@@ -50,7 +50,7 @@ Then, add the class aliases to the `aliases` array of `config/app.php`:
 
 Run the following to installed a set of middlewares required by **Folio**.
 
-```php
+```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=middleware
 php artisan vendor:publish --provider="Nonoesp\Authenticate\AuthenticateServiceProvider" --tag=middleware
 ```
@@ -79,7 +79,7 @@ protected $routeMiddleware = [
 
 You need to publish the config file of `thujon/twitter` and add your Twitter credentials to `config/ttwitter.php`. (You can create a Twitter app at <https://apps.twitter.com/>.)
 
-```
+```bash
 php artisan vendor:publish --provider="Thujohn\Twitter\TwitterServiceProvider"
 ```
 
@@ -94,13 +94,13 @@ First, make sure your database connection is setup properly in you `.env` file.
 
 Publish `rtconner/tagging` migrations:
 
-```php
+```bash
 php artisan vendor:publish --provider="Conner\Tagging\Providers\TaggingServiceProvider"
 ```
 
 Then, run the migrations:
 
-```php
+```bash
 php artisan migrate
 ```
 
@@ -111,7 +111,7 @@ php artisan migrate
 
 Publish configuration file to `config/folio.php`.
 
-```php
+```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=config
 ```
 
@@ -141,7 +141,7 @@ Publish the development assets with:
 
 If you haven't done so, publish `nonoesp/folio` development assets.
 
-```php
+```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets
 ```
 
@@ -160,7 +160,7 @@ Run `npm install` to make sure Laravel Mix is setup properly.
 Your `webpack.mix.js` file should look like this.
 (You can omit the `.js` or the `.sass` part, just keep whatever you are compiling.)
 
-```php
+```javascript
 let mix = require('laravel-mix');
 
 // ...
@@ -173,7 +173,7 @@ mix.js('resources/assets/js/folio.js', 'public/nonoesp/folio/js')
 
 ## Customize Translations
 
-```
+```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=lang
 ```
 
@@ -181,7 +181,7 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 
 You can publish **Folio** views and customize them. (If you customize a few views and want to get updates from future version for others, you will need to remove the ones you haven't modify and re-publish the views of the package. This won't override your customized view, just the one you delete from your `resources/views/nonoesp/`.)
 
-```php
+```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
 ```
 
