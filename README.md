@@ -171,6 +171,12 @@ mix.js('resources/assets/js/folio.js', 'public/nonoesp/folio/js')
 
 ```
 
+## Customize Translations
+
+```
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=lang
+```
+
 ## Customize Views
 
 You can publish **Folio** views and customize them. (If you customize a few views and want to get updates from future version for others, you will need to remove the ones you haven't modify and re-publish the views of the package. This won't override your customized view, just the one you delete from your `resources/views/nonoesp/`.)

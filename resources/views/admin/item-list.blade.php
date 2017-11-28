@@ -28,30 +28,8 @@
 VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
 var months = [
-	'january',
-	'february',
-	'march',
-	'april',
-	'may',
-	'june',
-	'july',
-	'august',
-	'september',
-	'october',
-	'november',
-	'december',
-	'jan',
-	'feb',
-	'mar',
-	'apr',
-	'may',
-	'jun',
-	'jul',
-	'aug',
-	'sep',
-	'oct',
-	'nov',
-	'dec'
+	'january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december',
+	'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'
 ];
 
 var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -79,9 +57,9 @@ watch: {
 	}
 },
 computed: {
-	test: function (item) {
-		return 'March';
-	}
+	orderedTags: function () {
+		return _.orderBy(this.tags, ['count'], ['desc'])
+  	}
 },
 methods: {
 	update_item: function(item) {
@@ -219,7 +197,7 @@ admin.sort_tags();
 						class="u-cursor-pointer">
 					All
 				</li>
-				<li v-for="tag in tags" class="u-cursor-pointer"
+				<li v-for="tag in orderedTags" class="u-cursor-pointer"
 				   @click="filter_by_tag(tag)"
 					 v-bind:class="{ 'u-opacity--low': !tag.selected }">
 					 @{{ tag.slug }} · @{{ tag.count }}
