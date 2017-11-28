@@ -176,9 +176,21 @@ return [
 	'middlewares' => ['web'], // folio routes
 	'middlewares-admin' => ['login', 'web'], // folio admin routes
 
+	/*
+	 * The amount of published items to display in Folio's home page.
+	 * (The rest will be passed as a JavaScript JSON object for "load more".)
+	 */		
 	'published-show' => 5,
+
+	/*
+	 * The amount of items expected to display in Folio's home page.
+	 * Expected items are active items with a published date in the future.
+	 */	
 	'expected-show' => 100,
 
+	/*
+	 * The RSS Feed configuration.
+	 */
 	'feed' => [
 		'route' => 'feed.xml', // (e.g. 'feed', or 'feed.xml')
 		'title' => 'Folio Feed',
