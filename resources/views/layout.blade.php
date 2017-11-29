@@ -39,11 +39,11 @@
 	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
 	<meta name="theme-color" content="#ffffff">
 
-	<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-ipad.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-@2x.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png" />
 	<meta name="apple-mobile-web-app-title" content="{{ config('folio.title-short') }}" />
-	<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon.png" />
-	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
 	<!-- Tags -->
 	<meta name="description" content="{{ $og_description or $og_description_default }}" />
