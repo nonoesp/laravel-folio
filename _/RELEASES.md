@@ -1,6 +1,10 @@
 
 ## Release Notes
 
+### 5.5.*
+
+- Add package auto-discovery.
+
 ### 5.4.*
 
 * Renamed package to `nonoesp/space`.
