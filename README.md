@@ -189,6 +189,18 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 
 TODO: Explain you need to set a mail driver (amazon ses) and config `config/mail.php` and `config/services.php` and `config/folio.php`.
 
+## Helper Functions
+
+### Show a Folio URL outside Folio
+
+This sample route displays an item with an explicit `slug` without need to have a matching route or domain.
+
+```php
+Route::get('/', function ($domain, Request $request) {
+    return \Nonoesp\Folio\Controllers\FolioController::showItem($domain, $request, 'sketches');
+});
+```
+
 ## License
 
 Folio is licensed under the [MIT license](http://opensource.org/licenses/MIT).

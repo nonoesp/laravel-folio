@@ -14,6 +14,9 @@ use Auth;
 
 class FeedController extends Controller
 {
+	public function getFeedItems(Request $request) {
+		return Item::all();
+	}
 
 	public function getFeed(Request $request) {
 
