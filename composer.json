@@ -21,7 +21,7 @@
         "illuminate/support": "~5",
         "rtconner/laravel-tagging": "~2.0",
         "nonoesp/authenticate": "^5.4",
-        "nonoesp/thinker": "^5.4",
+        "nonoesp/thinker": "*",
         "jenssegers/date": "^3.0",
         "roumen/feed": "2.11.*",
         "graham-campbell/markdown": "^8.0",
