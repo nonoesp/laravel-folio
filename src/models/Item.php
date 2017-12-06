@@ -4,9 +4,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Conner\Tagging\Taggable;
 use Folio;
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
 
-
-class Item extends Model
+class Item extends Model implements Feedable
 {
 	use SoftDeletes;
 	use Taggable;
@@ -33,6 +34,21 @@ class Item extends Model
 	 * @var array
 	 */
 	//protected $hidden = array('is_', 'remember_token');
+
+	/**
+	 * The feed representation of an Item.
+	 */
+	public function toFeedItem()
+    {
+        return FeedItem::create()
+            ->id($this->id)
+            ->title($this->title)
+            ->summary('summary')
+            ->updated(new \Date($this->published_at))
+            ->link('url-here')
+            ->author('author');
+	}
+	
 	public function templateView() {
 
 		if(!$this->template) return null;
