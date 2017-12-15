@@ -105,13 +105,7 @@ if(isset($collection)) {
         <?php
 
         // image_src
-        if ($item->image_src) {
-          $og_image = $item->image_src;
-        } else if ($item->image) {
-          $og_image = $item->image;
-        } else if ($item->video) {
-          $og_image = Thinker::getVideoThumb($item->video);
-        }
+        $og_image = $item->thumbnail();
 
         // 4.2. Cover or not
         if ($item->image == '' || $cover_hidden) {
