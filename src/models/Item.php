@@ -193,5 +193,32 @@ class Item extends Model implements Feedable
 	public function isPublic() {
 		return !count($this->recipients()->get());
 	}
+
+	// TODO: Add tests (https://websanova.com/blog/laravel/creating-a-new-package-in-laravel-5-part-5-unit-testing)
+	/**
+	 * Retrieve the thumbnail corresponding to this image
+	 */
+	public function thumbnail($forceAbsolute = true) {
+
+			$thumbnail = $this->image_src;
+			
+            // Fall back to image, video, or default image_src
+            if($this->image_src == '') {
+				if($this->image) {
+					$thumbnail = $this->image;
+				} else if ($this->video) {
+					$thumbnail = \Thinker::getVideoThumb($this->video);
+				} else {
+					$thumbnail = config('folio.image-src');
+				}
+			} 
+
+			// Make path absolute (add domain) when thumbnail is relative
+			if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
+				return \Request::root().$thumbnail;
+			} else {
+				return $thumbnail;
+			}
+	}
 	
 }
