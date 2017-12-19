@@ -183,7 +183,7 @@ class FolioController extends Controller
 
 	public static function showItem($domain, Request $request, $slug) {
 		
-				if($item = Item::withTrashed()->whereSlug($slug)->first() or
+			if($item = Item::withTrashed()->whereSlug($slug)->first() or
 			   $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
 			   $item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first() ) {
 					$item->timestamps = false;
@@ -194,7 +194,26 @@ class FolioController extends Controller
 				if(($user = Auth::user() and $user->is_admin) or session('temporary-token')) {
 				  // private and visible (auth ok)
 				  session(['temporary-token' => false]);
-				  $request->session()->flash('notification', trans('folio::base.preview-notification'));
+				  
+						if($user = Auth::user() and $user->is_admin) {
+							if($item->trashed()) {
+								$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
+												'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
+												trans('folio::base.this-page-is-hidden');
+							} else {
+  								$date = new \Date($item->published_at);
+								$date = ucWords($date->format('F').' '.$date->format('j, Y'));
+								$is_blog = $item->is_blog ? 'blog' : '<span style="text-decoration: line-through;">blog</span>';
+								$is_rss = $item->rss ? 'rss' : '<span style="text-decoration: line-through;">rss</span>';
+								$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
+								'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
+								trans('folio::base.scheduled-for').' '.$date.' &nbsp;·&nbsp; '.$is_blog.' &nbsp;·&nbsp; '.$is_rss;
+							}
+						} else {
+					  $notification = trans('folio::base.preview-of-unpublished-page');
+				  }
+
+				  $request->session()->flash('notification', $notification);
 				} else {
 				  // private and hidden (no auth)
 				  return response()->view('errors.404', [], 404);
@@ -202,7 +221,6 @@ class FolioController extends Controller
 			  } else {
 				// public
 			  }
-			
 
 			  // Get the template view for this item
 			  $itemTemplateView = $item->templateView();

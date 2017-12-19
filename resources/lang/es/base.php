@@ -12,13 +12,16 @@ return [
 
 	// space.subscribe.js
 	'subscribe' => 'Suscribirme',
-  'to_receive_our_updates' => 'Nuestras publicaciones en tu e-mail.',
-  'email_is_not_valid' => 'Este email no parece ser válido.',
-  'thanks_for_subscribing' => 'Gracias por suscribirte!',
+  	'to_receive_our_updates' => 'Nuestras publicaciones en tu e-mail.',
+  	'email_is_not_valid' => 'Este email no parece ser válido.',
+  	'thanks_for_subscribing' => 'Gracias por suscribirte!',
 
 	'writing' => 'Escritos',
 	'about-me' => 'Acerca de',
 
-	'preview-notification' => 'Está previsualización es solo visible para ti.',
+	// notifications
+	'scheduled-for' => 'Programado para el',
+	'this-page-is-hidden' => 'Esta página está oculta.',
+	'preview-of-unpublished-page' => 'Previsualización de una página no publicada.',
 
 ];
