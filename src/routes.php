@@ -33,7 +33,7 @@ Route::group(['domain' => '{foliodomain}','middleware' => Config::get("folio.mid
 
 	$path = Folio::path();
 
-	Route::get('/e/{hash}', function($hash) use ($path) {
+	Route::get('/e/{hash}', function($domain, $hash) use ($path) {
 		$decode = Hashids::decode($hash);
 		if(count($decode)) {
 			session(['temporary-token'=>true]);
