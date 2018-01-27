@@ -98,6 +98,10 @@ Publish `rtconner/tagging` migrations:
 php artisan vendor:publish --provider="Conner\Tagging\Providers\TaggingServiceProvider"
 ```
 
+```bash
+php artisan migrate --path=vendor/mpociot/versionable/src/migrations
+```
+
 Then, run the migrations:
 
 ```bash
