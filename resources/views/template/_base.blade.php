@@ -120,7 +120,7 @@ if(isset($collection)) {
             // 4.2.2. Item w/ cover
             $cover_data['subtitle'] = $item->title;
             $cover_data['image'] = $item->image;
-            $cover_data['class'] .= 'is-faded is-fullscreen';
+            $cover_data['class'] .= 'is-faded--30 is-fullscreen';
             if(strlen($item->title) > 40) {
               $cover_data['classes_title_b'] = 'c-cover__title-b--small';
             }

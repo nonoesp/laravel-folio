@@ -9,6 +9,7 @@ use Spatie\Feed\FeedItem;
 
 class Item extends Model implements Feedable
 {
+	use \Mpociot\Versionable\VersionableTrait;
 	use SoftDeletes;
 	use Taggable;
 

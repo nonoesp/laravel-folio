@@ -177,6 +177,7 @@ methods: {
 
 		<p>
 			Editing Item {{ $item->id }}
+			· <a href="/admin/item/versions/{{ $item->id }}">Versions</a>
 			<a href="/e/{{ Hashids::encode($item->id) }}">
 			<i class="[ fa fa-link fa--social ]"></i></a>
 			<a href="{{ '/'.$item->path() }}">Preview</a>

@@ -3,7 +3,7 @@
 namespace Nonoesp\Folio\Controllers;
 
 use Illuminate\Http\Request;
-use Item, User, Thinker, Recipient, Property, Subscriber; // Must be defined in your aliases
+use Item, User, Thinker, Recipient, Property, Subscriber;
 use Nonoesp\Folio\Folio;
 use View;
 use Config;
@@ -119,11 +119,18 @@ class AdminController extends Controller
 		 	$item->text = Input::get('text');
 			$item->save();
 		}
-
+		
 		return view('folio::admin.item-edit', [
 			'item' => $item,
 			'templates' => Folio::templates()
 		]);
+	}
+
+	public function ItemVersions(Request $request, $id) {
+		$item = Item::withTrashed()->find($id);
+		return view('folio::admin.item-versions', [
+			'item' => $item
+		]);		
 	}
 
 	public function getItemCreate() {
