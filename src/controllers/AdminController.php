@@ -58,7 +58,7 @@ class AdminController extends Controller
 				}
 			} else {
 				$item->slug = Input::get('slug_title');
-
+				$item->title = Input::get('title');
 				if($item->slug_title != Input::get('slug_title')) {
 					// Slug has been edited
 					$item->slug_title = Input::get('slug_title');
