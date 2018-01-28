@@ -70,7 +70,7 @@ return [
 	 * A thumbnail for your site.
 	 * Default og_image.
 	 */			
-	'image_src' => 'http://domain.com/img/image_src.jpg',
+	'image-src' => 'http://domain.com/img/image_src.jpg',
 
 	/*
 	 * Path of your Folio stylesheets.
