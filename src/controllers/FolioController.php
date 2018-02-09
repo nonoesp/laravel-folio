@@ -100,7 +100,7 @@ class FolioController extends Controller
 	}
 
 	// Simplify making showHome a generic function, then call it directly from route or from Controller function
-	public function showItemTag($domain, $tag) {
+	public static function showItemTag($domain, $tag) {
 
 		// Get user's Twitter handle (or visitor)
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
