@@ -97,7 +97,7 @@ methods: {
 	},
 	human_date: function (item) {
 		var d = new Date(item.published_at);
-		return months[d.getMonth()] + ' ' + (d.getUTCDate()-1) + ', ' + (d.getYear()+1900) + ' ('+days[d.getDay()]+')';
+		return months[d.getMonth()] + ' ' + (d.getDate()) + ', ' + (d.getYear()+1900) + ' ('+days[d.getDay()]+')';
 	},
 	edit_href: function (item) {
 		return '/{{ Folio::adminPath() }}item/edit/'+item.id;

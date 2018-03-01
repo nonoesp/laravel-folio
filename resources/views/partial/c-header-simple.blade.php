@@ -15,7 +15,8 @@
   if(isset($data['image'])) { $image = $data['image']; }
 	if(isset($data['title'])) { $title = $data['title']; }
 	if(isset($data['title_svg'])) { $title_svg = $data['title_svg']; }
-  if(isset($data['description'])) { $description = $data['description']; }
+	if(isset($data['description'])) { $description = $data['description']; }
+	if(isset($data['description_classes'])) { $description_classes = $data['description_classes']; }
 	if(isset($data['color'])) { $color = $data['color']; }
   if(isset($data['navigation'])) { $navigation = $data['navigation']; } else {
     $navigation = [
@@ -86,7 +87,7 @@
 		@endif
 		
 		@if(isset($description))
-		<div class="[ c-header-simple__description ]">
+		<div class="[ c-header-simple__description 	@if(isset($description_classes))[ {{ $description_classes }} ]@endif ]">
 			<div class="[ o-wrap  o-wrap--bio  o-wrap--bleed ]">
 				{!! $description !!}
 			</div>

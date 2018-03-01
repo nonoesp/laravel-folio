@@ -142,6 +142,17 @@ class Item extends Model implements Feedable
 		return NULL;
 	}
 
+	// Cast the value of a property to a boolean
+	// returns true if property value is 'true', false otherwise
+	public function boolProperty($key) {
+		if($p = $this->property($key)) {
+			if($p->value == 'true') {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function scopeBlog($query)
 	{
 		return $query->where('is_blog', '=', 1);
