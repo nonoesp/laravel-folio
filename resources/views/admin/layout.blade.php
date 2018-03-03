@@ -34,6 +34,9 @@
 
 <body>
 
+	{{--  c-floating-menu  --}}
+  	{!! view('folio::partial.c-floating-menu') !!}
+
   	<div class="[ o-band ] [ u-pad-t-4x u-pad-b-4x ]">
 
 		<div class="[ o-wrap o-wrap--size-small ]">
