@@ -10,7 +10,7 @@ $site_title = 'Editing Item '.$item->id.' | '. $settings_title;
 $remove_wrap = true;
 ?>
 
-@section('title', 'Items')
+@section('title', 'Editing Item '.$item->id)
 
 @section('scripts')
 
@@ -161,6 +161,15 @@ methods: {
 	];
 ?>
 
+@section('floating.menu')
+  	{!! view('folio::partial.c-floating-menu', ['buttons' => [
+		  '·' => '/'.Folio::path(),
+		  '<i class="fa fa-history"></i>' => $item->versionsPath(),
+		  '<i class="fa fa-link"></i>' => $item->encodedPath(),
+		  '<i class="fa fa-eye"></i>' => '/'.$item->path()
+		  ]]) !!}
+@stop
+
 @section('content')
 
 <style media="screen">
@@ -172,18 +181,6 @@ methods: {
 {{-- Vue Component --}}
 
 <div class="[ c-admin ] [ u-pad-b-12x ]">
-
-	<div class="[ o-wrap o-wrap--size-small ]">
-
-		<p>
-			Editing Item {{ $item->id }}
-			· <a href="/admin/item/versions/{{ $item->id }}">Versions</a>
-			<a href="/e/{{ Hashids::encode($item->id) }}">
-			<i class="[ fa fa-link fa--social ]"></i></a>
-			<a href="{{ '/'.$item->path() }}">Preview</a>
-		</p>
-
-	</div>
 
 	<div class="[ c-admin-form-v2 ] [ grid ]">
 

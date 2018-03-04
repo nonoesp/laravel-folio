@@ -1,24 +1,26 @@
+<?php
+
+  if(!isset($buttons)) {
+    $buttons = ['·' => '/'.Folio::path()];
+  }
+
+?>
+
 @if($user = Auth::user())
   @if($user->is_admin)
 
-    @if(isset($item))
+    @if(isset($buttons))
+
       <div class="[ c-floating-menu ]">
-        <a href="/admin/item/edit/{{ $item->id }}" class="[ c-floating-menu__item ]">
-          <div class="[ c-floating-menu__item-button c-floating-menu__item-button ]">
-            edit
-          </div>
-        </a>
+        @foreach($buttons as $label=>$path)
+          <a href="{{ $path }}" class="[ c-floating-menu__item ]">
+            <div class="[ c-floating-menu__item-button c-floating-menu__item-button ]">
+              {!! $label !!}
+            </div>
+          </a>
+        @endforeach
       </div>
-    @else
-      <div class="[ c-floating-menu c-floating-menu ]">
-
-        <a href="/{{ Folio::path() }}" class="[ c-floating-menu__item ]">
-          <div class="[ c-floating-menu__item-button ]">
-            ·
-          </div>
-        </a>
-
-      </div>
+  
     @endif
 
   @endif

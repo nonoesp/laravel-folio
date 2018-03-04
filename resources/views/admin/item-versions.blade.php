@@ -8,14 +8,21 @@
     $site_title = 'Versions of Item '.$item->id.' | '. $settings_title;
 ?>
 
-@section('title', 'Items')
+@section('title', 'Versions of Item '.$item->id)
+
+@section('floating.menu')
+  	{!! view('folio::partial.c-floating-menu', ['buttons' => [
+		  '·' => '/'.Folio::path(),
+		  '<i class="fa fa-check"></i>' => $item->editPath(),
+		  ]]) !!}
+@stop
 
 @section('content')
 
 	<div class="[ c-admin ] [ u-pad-b-12x ]">
         
         <p>
-            <a href="/admin/item/edit/{{ $item->id }}">Go back to Item {{ $item->id }}</a>
+            <a href="/admin/item/edit/{{ $item->id }}">Return to Item</a>
         </p>
 
         @foreach($item->versions->reverse() as $key=>$version)

@@ -67,12 +67,29 @@ class Item extends Model implements Feedable
 		//}
 	}
 
+	// The public path of the item
+	// (Returns 404 if the post is hidden or scheduled for the future)
 	public function path() {
 		if($this->slug[0] == "/") {
 			return substr($this->slug, 1, strlen($this->slug)-1);
 		}
 		return Folio::path().$this->slug;
 	}
+
+	// An encoded path that provides access to hidden items
+	public function encodedPath() {
+		return '/e/'.\Hashids::encode($this->id);
+	}
+
+	// The admin path to edit this item
+	public function editPath() {
+		return '/'.config('folio.admin-path-prefix').'/item/edit/'.$this->id;
+	}
+
+	// The admin path to review the history versions of this item
+	public function versionsPath() {
+		return '/'.config('folio.admin-path-prefix').'/item/versions/'.$this->id;
+	}	
 
 	public function prev() {
 			if($prev = Item::where('published_at','<', $this->published_at)->
