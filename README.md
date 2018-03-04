@@ -11,6 +11,7 @@ Create webs to publish your content with custom templates.
 - [lourdes.ac](http://lourdes.ac)
 - [ar-ma.net](http://ar-ma.net/blog)
 - [gettingarchitecturedone.com](http://gettingarchitecturedone.com/writing)
+- [robotexmachina.com](http://robotexmachina.com)
 
 ## Installation
 
