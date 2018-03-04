@@ -14,7 +14,7 @@
       <div class="[ c-floating-menu ]">
         @foreach($buttons as $label=>$path)
           <a href="{{ $path }}" class="[ c-floating-menu__item ]">
-            <div class="[ c-floating-menu__item-button c-floating-menu__item-button ]">
+            <div class="[ c-floating-menu__item-button c-floating-menu__item-button u-text-align--center ]">
               {!! $label !!}
             </div>
           </a>
