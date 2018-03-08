@@ -1,10 +1,19 @@
+<?php
+if(!isset($source) && request()->has('utm_source')) {
+      $source = request()->input('utm_source');
+}
+if(!isset($campaign) && request()->has('utm_campaign')) {
+      $campaign = request()->input('utm_campaign');
+}
+?>
+
 <footer class="[ c-footer ]">
 
 <div class="[ grid ]">
 
     <div class="[ c-footer__item ] [ grid__item one-whole ]">
 
-    {{ Form::open(array('class' => '[ s-form-subscribe ] [ js--subscribe__form ]', 'url' => Config::get('services.mailchimp.long'))) }}
+    {{ Form::open(array('class' => '[ s-form-subscribe ] [ js--subscribe__form ]', 'url' => config('services.mailchimp.long'))) }}
 
     <div class="[ grid ] [ grid--narrow ]">
 
