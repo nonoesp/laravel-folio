@@ -102,7 +102,7 @@
   @endif
 
 @section('floating.menu')
-  	{!! view('folio::partial.c-floating-menu', ['buttons' => ['·' => '/admin']]) !!}
+  	{!! view('folio::partial.c-floating-menu', ['buttons' => ['<i class="fa fa-gear"></i>' => '/admin']]) !!}
 @show
 
 @yield('content')

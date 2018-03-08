@@ -35,7 +35,7 @@
 <body>
 
 @section('floating.menu')
-  	{!! view('folio::partial.c-floating-menu', ['buttons' => ['·' => '/'.Folio::path()]]) !!}
+  	{!! view('folio::partial.c-floating-menu', ['buttons' => ['<i class="fa fa-home"></i>' => '/'.Folio::path()]]) !!}
 @show
 
   	<div class="[ o-band ] [ u-pad-t-4x u-pad-b-4x ]">
