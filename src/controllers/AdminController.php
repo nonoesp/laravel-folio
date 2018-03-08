@@ -25,9 +25,16 @@ class AdminController extends Controller
 		});
 
 		if($tag) {
-			$items = Item::withTrashed()->withAnyTag([$tag])->orderBy('published_at', 'DESC')->get();
+			$items = Item::
+			withTrashed()->
+			withAnyTag([$tag])->
+			orderBy('published_at', 'DESC')->
+			get(['id','title', 'published_at', 'deleted_at']);
 		} else {
-			$items = Item::withTrashed()->orderBy('published_at', 'DESC')->get();
+			$items = Item::
+			withTrashed()->
+			orderBy('published_at', 'DESC')->
+			get(['id','title', 'published_at', 'deleted_at']);
 		}
 
 		return View::make('folio::admin.item-list')->with([

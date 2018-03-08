@@ -27,7 +27,7 @@
 
         @foreach($item->versions->reverse() as $key=>$version)
             <?php
-            $date = new Date($version->getModel()->published_at);
+            $date = new Date($version->updated_at);
             $date = ucWords($date->format('F').' '.$date->format('j, Y').$date->format(' H:i:s'));
             ?>
             <div class="[ u-pad-b-1x u-pad-t-2x ] [ c-admin--font-light ] ">

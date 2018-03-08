@@ -12,10 +12,35 @@ class Item extends Model implements Feedable
 	use \Mpociot\Versionable\VersionableTrait;
 	use SoftDeletes;
 	use Taggable;
-
+	/**
+	 * @var string
+	 */
 	protected $table;
+	/**
+	 * @var array
+	 */
 	protected $dates = ['deleted_at'];
+	/**
+	 * @var boolean
+	 */
 	protected $softDelete = true;
+	/**
+	 * @var array
+	 */	
+	protected $dontVersionFields = [
+		'image',
+		'image_src',
+		'video',
+		'tags_str',
+		'slug',
+		'slug_title',
+		'link',
+		'template',
+		'visits',
+		'recipients_str',
+		'rss',
+		'is_blog'
+	];
 
 	public function __construct() {
 	    parent::__construct();
