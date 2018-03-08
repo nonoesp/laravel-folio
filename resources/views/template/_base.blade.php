@@ -209,6 +209,10 @@ if(isset($collection)) {
 
       @if($folio_type == 'SINGLE_WRITING_TYPE')
 
+        @section('floating.menu')
+          {!! view('folio::partial.c-floating-menu', ['buttons' => ['<i class="fa fa-pencil"></i>' => $item->editPath()]]) !!}
+        @stop
+
         @section('content')
 
         <div class="[ o-band ] [ u-pad-t-5x u-pad-b-1x ]">
