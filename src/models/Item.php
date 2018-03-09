@@ -13,9 +13,6 @@ class Item extends Model implements Feedable
 	use SoftDeletes;
 	use Taggable;
 
-	use \Mpociot\Versionable\VersionableTrait;
-	use SoftDeletes;
-	use Taggable;
 	/**
 	 * @var string
 	 */
