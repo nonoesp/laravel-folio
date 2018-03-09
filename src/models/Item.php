@@ -264,18 +264,18 @@ class Item extends Model implements Feedable
 	 */
 	public function thumbnail($forceAbsolute = true) {
 
+		// Fallback on images to grab the main thumbnail
+		if($this->image_src) {
 			$thumbnail = $this->image_src;
-			
-            // Fall back to image, video, or default image_src
-            if($this->image_src == '') {
-				if($this->image) {
-					$thumbnail = $this->image;
-				} else if ($this->video) {
-					$thumbnail = $this->videoThumbnail();
-				} else {
-					$thumbnail = config('folio.image-src');
-				}
-			} 
+		} else if($this->image) {
+			$thumbnail = $this->image;
+		} else if ($this->customVideoThumbnail()) {
+			$thumbnail = $this->customVideoThumbnail();
+		} else if($this->video) {
+			$thumbnail = $this->videoThumbnail();
+		} else {
+			$thumbnail = config('folio.image-src');
+		}
 
 			// Make path absolute (add domain) when thumbnail is relative
 			if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
@@ -286,26 +286,19 @@ class Item extends Model implements Feedable
 	}
 
 	/**
-	 * Returns the URL provided as video-thumbnail custom property
-	 * or the actual video thumbnail (grabbed from the provider).
+	 * Returns the URL of the video thumbnail from the provider.
 	 */
-	public function videoThumbnail($forceAbsolute = true) {
-		$thumbnail = null;
+	public function videoThumbnail() {
 		if($this->video) {
-			if($vt = $this->stringProperty('video-thumbnail')) {
-				$thumbnail = $vt;
-			} else {
-				$thumbnail = \Thinker::getVideoThumb($this->video);
-			}			
+			return \Thinker::getVideoThumb($this->video);
 		}
-		// Make path absolute (add domain) when thumbnail is relative
-		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
-			return \Request::root().$thumbnail;
-		} else {
-			return $thumbnail;
-		}
+		return null;
 	}
 
+	/**
+	 * Returns the URL of the custom video thumbnail specified
+	 * on this Item with the custom property video-thumbnail.
+	 */	
 	public function customVideoThumbnail($forceAbsolute = true) {
 		$thumbnail = null;
 		if($vt = $this->stringProperty('video-thumbnail')) {
