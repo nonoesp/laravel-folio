@@ -306,13 +306,26 @@ class Item extends Model implements Feedable
 		}
 	}
 
+	public function customVideoThumbnail($forceAbsolute = true) {
+		$thumbnail = null;
+		if($vt = $this->stringProperty('video-thumbnail')) {
+			$thumbnail = $vt;
+		}			
+		// Make path absolute (add domain) when thumbnail is relative
+		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
+			return \Request::root().$thumbnail;
+		} else {
+			return $thumbnail;
+		}
+	}
+
 	/**
 	 * Render video as HTML if the Item has a video URL.
 	 * (Currently YouTube and Vimeo are supported.)
 	 */
 	public function renderVideo() {
 		if($this->video) {
-			return \Thinker::videoWithURL($this->video, 'c-item-v2__cover-media', $this->videoThumbnail());
+			return \Thinker::videoWithURL($this->video, 'c-item-v2__cover-media', $this->customVideoThumbnail());
 		}
 	}
 	
