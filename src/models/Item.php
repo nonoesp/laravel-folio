@@ -274,7 +274,7 @@ class Item extends Model implements Feedable
 				if($this->image) {
 					$thumbnail = $this->image;
 				} else if ($this->video) {
-					$thumbnail = \Thinker::getVideoThumb($this->video);
+					$thumbnail = $this->videoThumbnail();
 				} else {
 					$thumbnail = config('folio.image-src');
 				}
@@ -286,6 +286,37 @@ class Item extends Model implements Feedable
 			} else {
 				return $thumbnail;
 			}
+	}
+
+	/**
+	 * Returns the URL provided as video-thumbnail custom property
+	 * or the actual video thumbnail (grabbed from the provider).
+	 */
+	public function videoThumbnail($forceAbsolute = true) {
+		$thumbnail = null;
+		if($this->video) {
+			if($vt = $this->stringProperty('video-thumbnail')) {
+				$thumbnail = $vt;
+			} else {
+				$thumbnail = \Thinker::getVideoThumb($this->video);
+			}			
+		}
+		// Make path absolute (add domain) when thumbnail is relative
+		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
+			return \Request::root().$thumbnail;
+		} else {
+			return $thumbnail;
+		}
+	}
+
+	/**
+	 * Render video as HTML if the Item has a video URL.
+	 * (Currently YouTube and Vimeo are supported.)
+	 */
+	public function renderVideo() {
+		if($this->video) {
+			return \Thinker::videoWithURL($this->video, 'c-item-v2__cover-media', $this->videoThumbnail());
+		}
 	}
 	
 }
