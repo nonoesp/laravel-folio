@@ -31,6 +31,9 @@ if(isset($collection)) {
     if(isset($cover_classes)) {
       $keep_cover_classes = $cover_classes;
     }    
+    if(isset($footer_data)) {
+      $keep_footer_data = $footer_data;
+    }
 
     // $folio_type (SINGLE_WRITING_TYPE, MULTIPLE_WRITING_TYPE)
     // $tag
@@ -48,19 +51,15 @@ if(isset($collection)) {
     $header_classes = config('folio.header.classes');
     $header_data = config('folio.header.data');
 
-    // Footer credits
+    // Footer
     $footer_credits = config('folio.footer-credits');
-    $footer_hidden = false;
-    if(isset($footer_credits['hidden'])) {
-      $footer_hidden = $footer_credits['hidden'];
-    }
-
-    if(!isset($subscribe_data)) {
-      $subscribe_data = [
-        'source' => 'folio',
-        'campaign' => 'default'
-      ];
-    }
+    $hide_footer = false;
+    // TODO $footer_data = config('folio.footer.data';)
+    $footer_data = [
+      'hide_subscribe' => false,
+      'hide_credits' => false,
+      'credits' => config('folio.footer-credits'),
+    ];
 
     // 2. Defaults Cover
     $cover_data = config('folio.cover.data');
@@ -162,7 +161,12 @@ if(isset($collection)) {
     if(isset($keep_cover_classes)) {
       $cover_classes = $keep_cover_classes;
     }    
-    
+    if(isset($keep_footer_data)) {
+      foreach($keep_footer_data as $key=>$val) {
+        $footer_data[$key] = $val;
+      }
+    }
+
 ?>
 
       {{----------------------------------------}}
@@ -240,5 +244,5 @@ if(isset($collection)) {
       {{-----------------------------------}}
 
 @section('footer')
-	{!! view('folio::partial.c-footer', ['subscribe_data' => $subscribe_data]) !!}
+	{!! view('folio::partial.c-footer', $footer_data) !!}
 @stop

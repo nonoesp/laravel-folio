@@ -196,13 +196,13 @@ class Item extends Model implements Feedable
 		return false;
 	}
 
-	public function stringProperty($key) {
+	public function stringProperty($key, $default = null) {
 		if($p = $this->property($key)) {
 			if($p->value != '') {
 				return $p->value;
 			}
 		}
-		return null;
+		return $default;
 	}
 
 	public function scopeBlog($query)
