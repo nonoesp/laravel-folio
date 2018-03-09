@@ -24,7 +24,7 @@
         "nonoesp/thinker": "*",
         "jenssegers/date": "^3.0",
         "roumen/feed": "2.11.*",
-        "graham-campbell/markdown": "^8.0",
+        "graham-campbell/markdown": "^10.0",
         "webuni/commonmark-attributes-extension": "^0.5.0",
         "laravelcollective/html": "5.5.*",
         "vinkla/hashids": "*",
