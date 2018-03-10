@@ -24,17 +24,24 @@ class AdminController extends Controller
 			return -$item->count;
 		});
 
+		$select_fields = [
+			'id',
+			'title',
+			'tags_str',
+			'published_at',
+			'deleted_at'];
+
 		if($tag) {
 			$items = Item::
 			withTrashed()->
 			withAnyTag([$tag])->
 			orderBy('published_at', 'DESC')->
-			get(['id','title', 'published_at', 'deleted_at']);
+			get($select_fields);
 		} else {
 			$items = Item::
 			withTrashed()->
 			orderBy('published_at', 'DESC')->
-			get(['id','title', 'published_at', 'deleted_at']);
+			get($select_fields);
 		}
 
 		return View::make('folio::admin.item-list')->with([
