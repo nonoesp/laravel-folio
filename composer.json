@@ -16,17 +16,21 @@
             "Nonoesp\\Folio\\": "src/"
         }
     },
+    "repositories": [{
+        "url": "https://github.com/jdavidbakr/commonmark-attributes-extension",
+        "type": "git"
+    }],
     "minimum-stability": "dev",
     "require": {
         "illuminate/support": "~5",
         "rtconner/laravel-tagging": "~2.0",
         "nonoesp/authenticate": "^5.5",
         "nonoesp/thinker": "*",
-        "jenssegers/date": "^3.0",
-        "roumen/feed": "2.11.*",
-        "graham-campbell/markdown": "^8.0",
-        "webuni/commonmark-attributes-extension": "^0.5.0",
-        "laravelcollective/html": "5.5.*",
+        "jenssegers/date": "^3.*",
+        "roumen/feed": "2.12.*",
+        "graham-campbell/markdown": "^10.0",
+        "jdavidbakr/commonmark-attributes-extension": "dev-master",
+        "laravelcollective/html": "5.6.*",
         "vinkla/hashids": "*",
         "intervention/image": "^2.3",
         "aws/aws-sdk-php": "~3.0",
