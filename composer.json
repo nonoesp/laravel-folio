@@ -35,7 +35,7 @@
         "intervention/image": "^2.3",
         "aws/aws-sdk-php": "~3.0",
         "spatie/laravel-newsletter": "^4.1",
-        "spatie/laravel-feed": "^2.12.*",
+        "spatie/laravel-feed": "^2.0",
         "doctrine/dbal": "^2.5",
         "mpociot/versionable": "~2.0"
     },
