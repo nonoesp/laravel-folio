@@ -268,7 +268,7 @@ methods: {
 								<span>@{{ property.id }}</span>
 							</div>
 							<!--
-						--><div class="[ grid__item four-twelfths  ] [ u-text-align--right ]">
+						--><div class="[ grid__item three-twelfths  ] [ u-text-align--right ]">
 								<input type="text"
 								placeholder="Label"
 								v-model="property.label"
@@ -285,7 +285,7 @@ methods: {
 								class="u-text-align--right">
 									{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
 							</div><!--
-							--><div class="[ grid__item four-twelfths ]">
+							--><div class="[ grid__item five-twelfths ]">
 									<input type="text" v-model="property.value"
 									placeholder="Value"
 									@keyup="sync_properties(property)"
