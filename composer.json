@@ -18,7 +18,7 @@
     },
     "repositories": [{
         "url": "https://github.com/jdavidbakr/commonmark-attributes-extension",
-        "type": "git"
+        "type": "vcs"
     }],
     "minimum-stability": "dev",
     "require": {
