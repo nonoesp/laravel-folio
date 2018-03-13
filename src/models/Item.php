@@ -171,6 +171,13 @@ class Item extends Model implements Feedable
 		return $this->hasMany('Property');
 	}
 
+    /**
+     * Get the Property from an Item if it exists.
+	 * Returns the first one if multiple exist.
+     *
+	 * @param string $key
+     * @return \Nonoesp\Folio\Models\Property
+     */
 	public function property($key) {
 		if($property = $this->properties()->where('name', $key)->first()) {
 				if($value = $property->value) {
@@ -183,6 +190,23 @@ class Item extends Model implements Feedable
 			// property with $key does not exist in database
 		}
 		return NULL;
+	}
+
+    /**
+     * Get an array of properties from an Item if they exist.
+	 * Returns the first one if multiple exist.
+     *
+	 * @param string $key
+     * @return \Nonoesp\Folio\Models\Property array
+     */
+	public function propertyArray($key) {
+
+		$propertyArray = $this->properties()->where('name', $key)->get();
+		if($propertyArray->count()) {
+		  return $propertyArray;
+		}
+		return NULL;
+
 	}
 
 	// Cast the value of a property to a boolean
