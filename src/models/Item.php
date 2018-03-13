@@ -17,14 +17,17 @@ class Item extends Model implements Feedable
 	 * @var string
 	 */
 	protected $table;
+
 	/**
 	 * @var array
 	 */
 	protected $dates = ['deleted_at'];
+	
 	/**
 	 * @var boolean
 	 */
 	protected $softDelete = true;
+	
 	/**
 	 * @var array
 	 */	
