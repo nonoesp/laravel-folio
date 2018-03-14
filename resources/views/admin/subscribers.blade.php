@@ -85,7 +85,7 @@ if($settings_title == '') {
 
 							<em class="c-archive__list__date u-font-size--a">
 
-								{{ $date }}
+								{!! $date !!}
 
 							</em>
 

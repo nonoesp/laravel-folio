@@ -420,7 +420,9 @@ methods: {
 			</div>
 
 			<div class="[ grid__item ] [ one-whole ]">
-				<p>{{ Form::submit('Save') }}</p>
+				<p>{{ Form::submit('Save', [
+					'v-bind:disabled'=>"!isDirty()"
+					]) }}</p>
 			</div>
 
 		{{ Form::close() }}

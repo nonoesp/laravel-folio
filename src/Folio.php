@@ -51,7 +51,7 @@ class Folio {
  	 */
 
 	public static function pathOrFalse() {
-		if($path = Config::get('folio.path-prefix')) {
+		if($path = config('folio.path-prefix')) {
 			return $path;
 		} else {
 			return false;
@@ -90,7 +90,6 @@ class Folio {
 	/*
 	 * Returns true when the current URI belongs to the package or not.
 	 */
-
 	public static function isFolioURI() {
 
     if (\Schema::hasTable(Folio::table('items')) == false) {
@@ -119,6 +118,7 @@ class Folio {
 		return false;
 	}
 
+  // TODO: Place inside Item class
   public static function itemPropertyArray($item) {
     $properties = config('folio.properties');
     $item_properties = [];
@@ -130,6 +130,7 @@ class Folio {
     return $item_properties;
   }
 
+  // TODO: Place inside Item class
   public static function itemPropertyFields($item) {
     foreach(Folio::itemPropertyArray($item) as $key=>$value) {
       $placeholder = $key;
@@ -149,6 +150,7 @@ class Folio {
     }
   }
 
+  // TODO: Place inside Item class
   public static function itemPropertiesWithPrefix($item, $prefix) {
     $matching_properties = [];
     foreach($item->properties()->get() as $property) {
@@ -159,6 +161,11 @@ class Folio {
     return $matching_properties;
   }
 
+  /**
+   * Return the existing templates in the resources/view/template directory.
+   * 
+   * @return array
+   */
   public static function templates() {
 
     $templates = [];
@@ -205,6 +212,9 @@ class Folio {
     return $templates;
   }
 
+  /**
+   * Get the name of database table with its Folio prefix.
+   */
   public static function table($name) {
     return config('folio.db-prefix').$name;
   }

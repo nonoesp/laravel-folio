@@ -4,7 +4,9 @@
     "license": "MIT",
     "authors": [{
         "name": "Nono Martínez Alonso",
-        "email": "mundowarezweb@gmail.com"
+        "email": "mundowarezweb@gmail.com",
+        "role": "Developer",
+        "homepage": "https://nono.ma"
     }],
     "autoload": {
         "classmap": [
@@ -22,8 +24,9 @@
     }],
     "minimum-stability": "dev",
     "require": {
-        "illuminate/support": "~5",
-        "rtconner/laravel-tagging": "~2.0",
+        "php": ">=7.1.3",
+        "illuminate/support": "5.6.*",
+        "rtconner/laravel-tagging": "~2.2.3",
         "nonoesp/authenticate": "^5.5",
         "nonoesp/thinker": "^1.1",
         "jenssegers/date": "^3.0",
@@ -38,6 +41,9 @@
         "spatie/laravel-feed": "^2.0",
         "doctrine/dbal": "^2.5",
         "mpociot/versionable": "~2.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "~3.0"
     },
     "extra": {
         "laravel": {

@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Conner\Tagging\Taggable;
 use Folio;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
@@ -11,7 +10,7 @@ class Item extends Model implements Feedable
 {
 	use \Mpociot\Versionable\VersionableTrait;
 	use SoftDeletes;
-	use Taggable;
+	use \Conner\Tagging\Taggable;
 
 	/**
 	 * @var string
