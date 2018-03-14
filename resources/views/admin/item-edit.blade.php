@@ -25,10 +25,14 @@ $remove_wrap = true;
 <script type="text/javascript">
 
 Mousetrap.bindGlobal(['ctrl+s', 'command+s'], function(e) {
-    console.log('save');
+	save();
 	e.preventDefault();
 	return false;
 });
+
+var save = function() {
+	$("form").submit();
+}
 
 VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
