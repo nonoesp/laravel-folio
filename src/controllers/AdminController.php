@@ -155,7 +155,7 @@ class AdminController extends Controller
 	 * a Folio item.
 	 */
 	public function ItemDestroy(Request $request, $id) {
-		$item = Item::find($id);
+		$item = Item::withTrashed()->find($id);
 		return view('folio::admin.item-destroy', ['item' => $item]);
 	}
 
@@ -163,7 +163,7 @@ class AdminController extends Controller
 	 * Destroys the item forever (can't be undone).
 	 */
 	public function ItemForceDelete(Request $request, $id) {
-		$item = Item::find($id);
+		$item = Item::withTrashed()->find($id);
 		if($item) {
 			$item->forceDelete();
 		}

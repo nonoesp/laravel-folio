@@ -12,8 +12,7 @@
 
 @section('floating.menu')
   	{!! view('folio::partial.c-floating-menu', ['buttons' => [
-		  '·' => '/'.Folio::path(),
-		  '<i class="fa fa-check"></i>' => $item->editPath(),
+		  '<i class="fa fa-chevron-left"></i>' => $item->editPath(),
 		  ]]) !!}
 @stop
 
