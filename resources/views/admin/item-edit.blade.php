@@ -111,7 +111,8 @@ methods: {
 			});
 	},
 	textareaKeyupHandler: function (event) {
-		this.adjustTextareaHeight(event.srcElement, 0);
+		let target = this.targetElement(event);
+		this.adjustTextareaHeight(target, 0);
 	},
 	adjustTextareaHeight: function(textarea, height) {
 		if(height == 0) {
@@ -124,16 +125,25 @@ methods: {
 		}
 	},
 	updateTextareaFocus: function(event) {
+
+		let target = this.targetElement(event);
+
 		switch(event.type) {
 			case 'focus':
 				this.isTextareaFocused = true;
-				this.adjustTextareaHeight(event.srcElement, 0);
+				this.adjustTextareaHeight(target, 0);
 			break;
 			case 'blur':
 				this.isTextareaFocused = false;
-				this.adjustTextareaHeight(event.srcElement, '150px');
+				this.adjustTextareaHeight(target, '150px');
 			break;
 		}
+	},
+	targetElement(event) {
+		if(event.srcElement == undefined) {
+			return event.target;
+		}
+		return event.srcElement;
 	}
 }
 });
