@@ -102,6 +102,9 @@ class AdminController extends Controller
 
 				// Template
 				$item->template = Input::get('template');
+				if($item->template == "null") {
+					$item->template = null;
+				}
 
 				// Tags
 		  	$item->tags_str = Input::get('tags_str');
