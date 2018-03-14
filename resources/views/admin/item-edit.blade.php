@@ -17,8 +17,18 @@ $remove_wrap = true;
     <script type="text/javascript" src="/nonoesp/folio/js/manifest.js"></script>
     <script type="text/javascript" src="/nonoesp/folio/js/vendor.js"></script>
     <script type="text/javascript" src="/nonoesp/folio/js/folio.js"></script>
+	<!-- Mousetrap for handling keyboard shortcuts -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.1/mousetrap.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.1/plugins/global-bind/mousetrap-global-bind.min.js"></script>
+
 
 <script type="text/javascript">
+
+Mousetrap.bindGlobal(['ctrl+s', 'command+s'], function(e) {
+    console.log('save');
+	e.preventDefault();
+	return false;
+});
 
 VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
