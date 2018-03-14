@@ -110,6 +110,16 @@ class Item extends Model implements Feedable
 		return '/e/'.\Hashids::encode($this->id);
 	}
 
+	// The admin path to destroy this item
+	public function destroyPath() {
+		return '/'.config('folio.admin-path-prefix').'/item/destroy/'.$this->id;
+	}
+
+	// The admin path to destroy this item
+	public function forceDeletePath() {
+		return '/'.config('folio.admin-path-prefix').'/item/force-delete/'.$this->id;
+	}	
+
 	// The admin path to edit this item
 	public function editPath() {
 		return '/'.config('folio.admin-path-prefix').'/item/edit/'.$this->id;

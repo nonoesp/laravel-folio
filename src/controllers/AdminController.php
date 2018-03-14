@@ -150,8 +150,28 @@ class AdminController extends Controller
 		]);		
 	}
 
+	/**
+	 * A page to make sure the user wants to force delete
+	 * a Folio item.
+	 */
+	public function ItemDestroy(Request $request, $id) {
+		$item = Item::find($id);
+		return view('folio::admin.item-destroy', ['item' => $item]);
+	}
+
+	/**
+	 * Destroys the item forever (can't be undone).
+	 */
+	public function ItemForceDelete(Request $request, $id) {
+		$item = Item::find($id);
+		if($item) {
+			$item->forceDelete();
+		}
+		return Redirect::to(Folio::adminPath().'items');
+	}	
+
 	public function getItemCreate() {
-		return View::make('folio::admin.item-add');
+		return view('folio::admin.item-add');
 	}
 
 	public function postItemCreate() {
