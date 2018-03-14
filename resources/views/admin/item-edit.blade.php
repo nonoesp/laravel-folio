@@ -62,7 +62,9 @@ Mousetrap.bindGlobal('command+i', function(e) {
 });
 
 var save = function() {
-	$("form").submit();
+	if(admin.isDirty()) {
+		$("form").submit();
+	}
 }
 
 $(document).on('submit', 'form', function() {
