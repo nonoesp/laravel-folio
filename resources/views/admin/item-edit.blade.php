@@ -20,7 +20,8 @@ $remove_wrap = true;
 	<!-- Mousetrap for handling keyboard shortcuts -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.1/mousetrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.1/plugins/global-bind/mousetrap-global-bind.min.js"></script>
-
+	<!-- Clipboard -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 
 <script type="text/javascript">
 
@@ -242,6 +243,11 @@ methods: {
 			// parse deleted_at date to true if existing for isDirty to detect property
 			if(admin.item.deleted_at != null) admin.item.deleted_at = true;
 			if(admin.originalItem.deleted_at != null) admin.originalItem.deleted_at = true;
+			new ClipboardJS('.js--encoded-path');
+			$(document).on('click', '.js--encoded-path', function(e) {
+				e.preventDefault();
+				return false;
+			});
 		</script>
 @stop
 
@@ -263,12 +269,14 @@ methods: {
 		  '<i class="fa fa-home"></i>' => '/'.Folio::path(),
 		  '<i class="fa fa-times"></i>' => $item->destroyPath(),
 		  '<i class="fa fa-history"></i>' => $item->versionsPath(),
-		  '<i class="fa fa-link"></i>' => $item->encodedPath(),
+		  '<i class="fa fa-link"></i>' => [$item->encodedPath(), 'js--encoded-path', 'data-clipboard-text="blah"'],
 		  '<i class="fa fa-eye"></i>' => '/'.$item->path()
 		  ]]) !!}
 @stop
 
 @section('content')
+
+<button class="sscopyclipboard" data-clipboard-text="http://nono.ma{{ $item->encodedPath() }}">copy to clip</button>
 
 <style media="screen">
 	.grid {
