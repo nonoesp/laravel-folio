@@ -24,8 +24,38 @@ $remove_wrap = true;
 
 <script type="text/javascript">
 
+/*
+ * Prevent the user from walking away without saving changes.
+ */
+window.onbeforeunload = function() {
+	if(isSaving) {
+		return null;
+	}
+    return admin.isDirty() ? "If you leave this page you will lose your unsaved changes." : null;
+}
+
+/*
+ * Wether the user requested to save.
+ * (User to not warn the user the file has unsaved changes.)
+ */
+var isSaving = false; 
+
+/*
+ * CTRL+S & COMMAND+S
+ * Keyboard shortcut to save edits by submitting the form.
+ */
 Mousetrap.bindGlobal(['ctrl+s', 'command+s'], function(e) {
 	save();
+	e.preventDefault();
+	return false;
+});
+
+/*
+ * command+i
+ * Keyboard shortcut to log if the Item is "dirty."
+ */
+Mousetrap.bindGlobal('command+i', function(e) {
+	console.log('admin.isDirty(): ' + admin.isDirty());
 	e.preventDefault();
 	return false;
 });
@@ -33,6 +63,10 @@ Mousetrap.bindGlobal(['ctrl+s', 'command+s'], function(e) {
 var save = function() {
 	$("form").submit();
 }
+
+$(document).on('submit', 'form', function() {
+	isSaving = true;
+});
 
 VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
 
@@ -71,6 +105,7 @@ var admin = new Vue({
 el: '.c-admin',
 data: {
 	item: '',
+	originalItem: '',
 	properties: '',
 	timers: {},
 	properties_changed: false,
@@ -158,6 +193,40 @@ methods: {
 			return event.target;
 		}
 		return event.srcElement;
+	},
+	isDirty() {
+		var trackedFields = [
+			'title',
+			'text',
+			'video',
+			'published_at',
+			'image',
+			'image_src',
+			'link',
+			'slug_title',
+			'tags_str',
+			'recipients_str',
+			'template',
+			'deleted_at',
+			'rss',
+			'is_blog',
+		];
+
+		for(var i in this.item) {
+
+			if(trackedFields.includes(i)) {
+			
+				let itemValue = this.item[i];
+				let originalValue = this.originalItem[i];
+
+				if((itemValue == "" || itemValue == "null") && originalValue == null) {
+					// ignore this as is not really "dirty"
+				} else if(itemValue != originalValue) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }
 });
@@ -166,9 +235,13 @@ methods: {
 
 		<script>
 			admin.item = {!! $item !!};
+			admin.originalItem = {!! $item !!};
 			admin.properties = {!! $item->properties !!};
 			admin.message = "{!! $item->title !!}";
 			admin.initProperties();
+			// parse deleted_at date to true if existing for isDirty to detect property
+			if(admin.item.deleted_at != null) admin.item.deleted_at = true;
+			if(admin.originalItem.deleted_at != null) admin.originalItem.deleted_at = true;
 		</script>
 @stop
 
@@ -220,7 +293,7 @@ methods: {
 
 		<div class="[ o-wrap o-wrap--size-small ]">
 			<div class="[ grid__item ] [ one-whole ]">
-				<p>{{ Form::text('title', null, ['placeholder' => 'Title']) }}</p>
+				<p>{{ Form::text('title', null, ['placeholder' => 'Title', 'v-model' => 'item.title']) }}</p>
 			</div>
 		</div>
 
@@ -229,6 +302,7 @@ methods: {
 				'placeholder' => 'Text',
 				'ref' => 'editor',
 				'v-on:keyup' => 'textareaKeyupHandler',
+				'v-model' => 'item.text',
 				'@focus' => 'updateTextareaFocus',
 				'@blur' => 'updateTextareaFocus',
 				'v-bind:class' => '{ "u-opacity--high" : !isTextareaFocused }'
@@ -245,7 +319,7 @@ methods: {
 					<span>{{ $input['label'] }}</span>
 				</div><!--
 		 --><div class="[ grid__item ] [ one-whole ]">
-		 			<p>{{ Form::text($input['name'], null, array('v-model' => 'item.'.$input['name'],'placeholder' => $input['placeholder'])) }}</p>
+		 			<p>{{ Form::text($input['name'], null, ['v-model' => 'item.'.$input['name'], 'placeholder' => $input['placeholder']]) }}</p>
 				</div>
 			@endforeach
 
@@ -253,7 +327,7 @@ methods: {
 
 			<div class="[ grid__item ] [ one-whole ]">
 				<p>
-					{{ Form::select('template', $templates, $item->template) }}
+					{{ Form::select('template', $templates, $item->template, ['v-model' => 'item.template']) }}
 				</p>
 				@if($item->templateView() != null && !view()->exists($item->templateView()))
 					<p>View <i>{{$item->templateView()}}</i> is missing!</p>
@@ -261,19 +335,19 @@ methods: {
 			</div>
 
 			<div class="[ grid__item ] [ one-whole ]">
-				<p><label for="hidden">{{ Form::checkbox('is_hidden', null, $item->trashed(), array('id' => 'is_hidden')) }} Hidden</label></p>
+				<p><label for="hidden">{{ Form::checkbox('is_hidden', null, $item->trashed(), ['id' => 'is_hidden', 'v-model' => 'item.deleted_at']) }} Hidden</label></p>
 			</div>			
 
 			{{-- Blog Feed --}}
 
 			<div class="[ grid__item ] [ one-whole ]">
-				<p><label for="blog">{{ Form::checkbox('is_blog', null, null, array('id' => 'is_blog')) }} Blog Feed</label></p>
+				<p><label for="blog">{{ Form::checkbox('is_blog', null, null, ['id' => 'is_blog', 'v-model' => 'item.is_blog']) }} Blog Feed</label></p>
 			</div>
 
 			{{-- RSS --}}
 
 			<div class="[ grid__item ] [ one-whole ]">
-				<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS Feed</label></p>
+				<p><label for="rss">{{ Form::checkbox('rss', null, null, ['id' => 'rss', 'v-model' => 'item.rss']) }} RSS Feed</label></p>
 			</div>			
 
 			{{-- Properties --}}

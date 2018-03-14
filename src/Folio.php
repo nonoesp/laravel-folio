@@ -162,7 +162,7 @@ class Folio {
   public static function templates() {
 
     $templates = [];
-    $templates[null] = ucwords(strtolower('default template'));
+    $templates["null"] = ucwords(strtolower('default template'));
 
     $template_paths = [];
 
