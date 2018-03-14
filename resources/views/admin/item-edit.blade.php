@@ -276,8 +276,6 @@ methods: {
 
 @section('content')
 
-<button class="sscopyclipboard" data-clipboard-text="http://nono.ma{{ $item->encodedPath() }}">copy to clip</button>
-
 <style media="screen">
 	.grid {
 		letter-spacing: inherit;
