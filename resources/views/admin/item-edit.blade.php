@@ -269,7 +269,10 @@ methods: {
 		  '<i class="fa fa-home"></i>' => '/'.Folio::path(),
 		  '<i class="fa fa-times"></i>' => $item->destroyPath(),
 		  '<i class="fa fa-history"></i>' => $item->versionsPath(),
-		  '<i class="fa fa-link"></i>' => [$item->encodedPath(), 'js--encoded-path', 'data-clipboard-text="blah"'],
+		  '<i class="fa fa-link"></i>' => [
+			  $item->encodedPath(),
+			  'js--encoded-path',
+			  'data-clipboard-text="http://nono.ma'.$item->encodedPath().'"'],
 		  '<i class="fa fa-eye"></i>' => '/'.$item->path()
 		  ]]) !!}
 @stop
