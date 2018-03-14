@@ -261,6 +261,7 @@ methods: {
 @section('floating.menu')
   	{!! view('folio::partial.c-floating-menu', ['buttons' => [
 		  '<i class="fa fa-home"></i>' => '/'.Folio::path(),
+		  '<i class="fa fa-times"></i>' => $item->destroyPath(),
 		  '<i class="fa fa-history"></i>' => $item->versionsPath(),
 		  '<i class="fa fa-link"></i>' => $item->encodedPath(),
 		  '<i class="fa fa-eye"></i>' => '/'.$item->path()
