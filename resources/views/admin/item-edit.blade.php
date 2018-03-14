@@ -274,7 +274,7 @@ methods: {
 		  '<i class="fa fa-link"></i>' => [
 			  $item->encodedPath(),
 			  'js--encoded-path',
-			  'data-clipboard-text="http://nono.ma'.$item->encodedPath().'"'],
+			  'data-clipboard-text="'.$item->encodedPath(true).'"'],
 		  '<i class="fa fa-eye"></i>' => '/'.$item->path()
 		  ]]) !!}
 @stop

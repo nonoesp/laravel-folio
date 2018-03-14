@@ -105,8 +105,12 @@ class Item extends Model implements Feedable
 	}
 
 	// An encoded path that provides access to hidden items
-	public function encodedPath() {
-		return '/e/'.\Hashids::encode($this->id);
+	public function encodedPath($absolute = false) {
+		$path = '/e/'.\Hashids::encode($this->id);
+		if($absolute) {
+			return \Request::root().$path;
+		}
+		return $path;
 	}
 
 	// The admin path to destroy this item
