@@ -52,6 +52,19 @@ Mousetrap.bindGlobal(['ctrl+s', 'command+s'], function(e) {
 });
 
 /*
+ * esc (escape key)
+ * Keyboard shortcut to escape text editing mode.
+ */
+Mousetrap.bindGlobal('esc', function(e) {
+	let textarea = $('textarea')[0];
+	textarea.blur();
+	admin.adjustTextareaHeight(textarea, 150);
+	$(document).scrollTop(0);
+	e.preventDefault();
+	return false;
+});
+
+/*
  * command+i
  * Keyboard shortcut to log if the Item is "dirty."
  */
@@ -112,7 +125,8 @@ data: {
 	properties: '',
 	timers: {},
 	properties_changed: false,
-	isTextareaFocused: false
+	isTextareaFocused: false,
+	isTextareaExpanded: false
 },
 watch: {
 	properties: {
@@ -156,7 +170,7 @@ methods: {
 		var data = { item_id: this.item.id }
 		VueResource.Http.post('/api/property/create', data).then((response) => {
 				// success
-				console.log(response);
+				//console.log(response);
 				this.properties.push({id: response.body.property_id});
 			}, (response) => {
 				// error
@@ -168,12 +182,14 @@ methods: {
 	},
 	adjustTextareaHeight: function(textarea, height) {
 		if(height == 0) {
+			this.isTextAreaExpanded = true;
 			var scrollTop = document.documentElement.scrollTop;
 			textarea.style.height = "1px";
 			textarea.style.height = (25+textarea.scrollHeight)+"px";
 			document.documentElement.scrollTop = scrollTop;
 		} else {
-			textarea.style.height = '150px';
+			this.isTextAreaExpanded = false;
+			textarea.style.height = height+'px';
 		}
 	},
 	updateTextareaFocus: function(event) {
@@ -187,7 +203,7 @@ methods: {
 			break;
 			case 'blur':
 				this.isTextareaFocused = false;
-				this.adjustTextareaHeight(target, '150px');
+				//this.adjustTextareaHeight(target, 150);
 			break;
 		}
 	},
