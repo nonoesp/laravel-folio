@@ -227,13 +227,15 @@ class Item extends Model implements Feedable
 
 	// Cast the value of a property to a boolean
 	// returns true if property value is 'true', false otherwise
-	public function boolProperty($key) {
+	public function boolProperty($key, $default = false) {
 		if($p = $this->property($key)) {
 			if($p->value == 'true') {
 				return true;
+			} else {
+				return false;
 			}
 		}
-		return false;
+		return $default;
 	}
 
 	public function stringProperty($key, $default = null) {
