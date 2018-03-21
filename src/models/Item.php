@@ -370,7 +370,7 @@ class Item extends Model implements Feedable
 	 * by specifying the custom property 'markdown-parser' to
 	 * commonmark, vtalbot, or michelf
 	 */
-	public function htmlText() {
+	public function htmlText($veilImages = true) {
 
 		$markdown_parser = $this->stringProperty('markdown-parser', 'default');
 
@@ -394,17 +394,23 @@ class Item extends Model implements Feedable
 				["<img",    "/>"],
 				$html);
 
-			$search = array( 
+			// Replace image src for veil.gif to then show with unveil.js
+			// and save the user from initially loading all images
+
+			if($veilImages) {
+
+				$search = array( 
 					'/<img src="(.*?)" alt="(.*?)" \/>/is',
 					'/<img class="(.*?)" src="(.*?)" alt="(.*?)" \/>/is'
 					); 
 
-			$replace = array( 
-					'<img src="/img/veil.gif" data-src="$1" alt="$2" \/>',
-					'<img class="$1" src="/img/veil.gif" data-src="$2" alt="$3" \/>'
-					); 
+				$replace = array( 
+						'<img src="/img/veil.gif" data-src="$1" alt="$2" \/>',
+						'<img class="$1" src="/img/veil.gif" data-src="$2" alt="$3" \/>'
+						); 
 
-			$html = preg_replace ($search, $replace, $html); 
+				$html = preg_replace ($search, $replace, $html); 
+			}
 		
 		} else if($markdown_parser == "vtalbot") {
 

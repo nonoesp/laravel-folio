@@ -88,10 +88,10 @@ class FeedController extends Controller
                 $image = '<p><img src="'.$item_image.'" alt="'.$item->title.'"></p>';
             }
 
-			 // text
-			 $html = str_replace(['<img', 'src="/'],
+			// text
+			$html = str_replace(['<img', 'src="/'],
 			 					 ['<img width="100%"', 'src="'.$request->root().'/'],
-			 					 $image.$item->htmlText());
+			 					 $image.$item->htmlText(false));
 
 			$html = str_replace(
 				["<p><img", "/></p>"],
