@@ -363,5 +363,62 @@ class Item extends Model implements Feedable
 			return \Thinker::videoWithURL($this->video, 'c-item-v2__cover-media', $this->customVideoThumbnail());
 		}
 	}
+
+	/**
+	 * Get the Item's Markdown text parsed as HTML with
+	 * the correct parser. Each Item can set its own parser
+	 * by specifying the custom property 'markdown-parser' to
+	 * commonmark, vtalbot, or michelf
+	 */
+	public function htmlText() {
+
+		$markdown_parser = $this->stringProperty('markdown-parser', 'default');
+
+		if($markdown_parser == "commonmark") {
+
+			// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
+			$environment = \League\CommonMark\Environment::createCommonMarkEnvironment();
+			// Optional: Add your own parsers, renderers, extensions, etc. (if desired)
+			$environment->addExtension(new \Webuni\CommonMark\AttributesExtension\AttributesExtension);
+			// For example:  $environment->addInlineParser(new TwitterHandleParser());
+			// Define your configuration (reference at https://commonmark.thephpleague.com/configuration/):
+			$config = ['html_input' => 'allow'];
+			// Create the converter
+			$converter = new \League\CommonMark\CommonMarkConverter($config, $environment);
+
+			// read and parse markdown
+			$html = $converter->convertToHtml($this->text);
+
+			$html = str_replace(
+				["<p><img", "/></p>"],
+				["<img",    "/>"],
+				$html);
+
+			$search = array( 
+					'/<img src="(.*?)" alt="(.*?)" \/>/is',
+					'/<img class="(.*?)" src="(.*?)" alt="(.*?)" \/>/is'
+					); 
+
+			$replace = array( 
+					'<img src="/img/veil.gif" data-src="$1" alt="$2" \/>',
+					'<img class="$1" src="/img/veil.gif" data-src="$2" alt="$3" \/>'
+					); 
+
+			$html = preg_replace ($search, $replace, $html); 
+		
+		} else if($markdown_parser == "vtalbot") {
+
+			$html = \VTalbot\Markdown\Facades\Markdown::convertToHtml($this->text);
+			$html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
+
+		} else {
+
+			$html = \Michelf\MarkdownExtra::defaultTransform($this->text);
+			$html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
+
+		}
+
+		return $html;
+	}
 	
 }

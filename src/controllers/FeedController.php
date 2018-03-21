@@ -91,7 +91,7 @@ class FeedController extends Controller
 			 // text
 			 $html = str_replace(['<img', 'src="/'],
 			 					 ['<img width="100%"', 'src="'.$request->root().'/'],
-			 					 $image.\Markdown::convertToHtml($item->text));
+			 					 $image.$item->htmlText());
 
 			$html = str_replace(
 				["<p><img", "/></p>"],
@@ -103,7 +103,7 @@ class FeedController extends Controller
 	           	$default_author,
 	           	$URL,
 	           	$item->published_at,
-	           	\Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 159, ['sup']),
+	           	\Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']),
 	           	$html,
 	           	['url'=>$item_image_src,'type'=>'image/jpeg']);
 	       }
