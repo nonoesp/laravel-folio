@@ -48,7 +48,7 @@
 	     		@endif
 
 	   			@if($user->bio)
-	   				{!! Markdown::convertToHtml($user->bio) !!}
+	   				{!! \Michelf\MarkdownExtra::defaultTransform($user->bio) !!}
 	   				<br>
 	   			@endif
 

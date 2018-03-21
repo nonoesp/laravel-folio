@@ -68,13 +68,13 @@
 			@if ($item_type == 'DEFAULT_ITEM_TYPE')
 
 				@if ($item->isPublic())
-					{!! Markdown::convertToHtml($item->text) !!}
+					{!! $item->htmlText() !!}
 				@else
 					@if($twitter_handle = Authenticate::isUserLoggedInTwitter())
 						<?php /*@if($item->visibleFor($twitter_handle) OR Auth::user()->is_admin)*/ ?>
 						@if($item->visibleFor($twitter_handle))
 							{{--Visible for @twitter_handle--}}
-							{!! Markdown::convertToHtml($item->text) !!}
+							{!! $item->htmlText() !!}
 						@else
 							{{--Not visible for this @twitter_handle--}}
 							<p>Oh, this content doesn't seem to be visible for {{ "@".$twitter_handle }}.</p>
@@ -94,7 +94,7 @@
 
 			@if ($item_type == 'SUMMARY_ITEM_TYPE')
 				<p>
-					{{ Thinker::limitMarkdownText(Markdown::convertToHtml($item->text), 275, array('figcaption')) }}
+					{{ Thinker::limitMarkdownText($item->htmlText(), 275, array('figcaption')) }}
 					{{ Html::link(Folio::path().$item->slug, trans('folio::base.continue-reading')) }}
 				</p>
 			@endif

@@ -76,7 +76,7 @@ html,body{
           <p><img src="{{ $item->image }}"></p>
         @endif
 
-        {!! Markdown::convertToHtml($item->text) !!}
+        {!! $item->htmlText() !!}
 
       </div>
 
