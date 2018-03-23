@@ -31,6 +31,7 @@ class Item extends Model implements Feedable
 	 * @var array
 	 */	
 	protected $dontVersionFields = [
+		'title',
 		'image',
 		'image_src',
 		'video',

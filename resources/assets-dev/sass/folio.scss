@@ -18,6 +18,8 @@
 @import '../../../node_modules/core-scss/objects/o-wrap';
 @import '../../../node_modules/core-scss/objects/o-band';
 @import '../../../node_modules/core-scss/objects/o-icon';
+@import '../../../node_modules/core-scss/objects/o-icon-prototype';
+@import '../../../node_modules/core-scss/objects/o-icon-sizes';
 @import '../../../node_modules/core-scss/objects/o-video-thumb';
 @import '../../../node_modules/core-scss/objects/o-thumb';
 @import '../../../node_modules/core-scss/objects/o-notification';
@@ -29,6 +31,7 @@
 @import '../../../node_modules/core-scss/components/c-admin';
 @import '../../../node_modules/core-scss/components/c-load-more';
 @import '../../../node_modules/core-scss/components/c-archive';
+@import '../../../node_modules/core-scss/components/c-floating-menu';
 // core-scss - modifiers
 @import '../../../node_modules/core-scss/modifiers/m-fa'; // Font Awesome
 @import '../../../node_modules/core-scss/modifiers/m-grid';
@@ -38,4 +41,5 @@
 @import '../../../node_modules/core-scss/utilities/utilities.text.align';
 @import '../../../node_modules/core-scss/utilities/utilities.various';
 @import '../../../node_modules/core-scss/utilities/utilities.visibility';
+@import '../../../node_modules/core-scss/utilities/utilities.font.family';
 // custom
