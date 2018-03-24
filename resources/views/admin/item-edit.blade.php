@@ -74,10 +74,15 @@ Mousetrap.bindGlobal('command+i', function(e) {
 	return false;
 });
 
-var save = function() {
-	if(admin.isDirty()) {
-		$("form").submit();
+var save = function(e) {
+	if(e) {
+		e.preventDefault();
 	}
+	if(admin.isDirty()) {
+		admin.saveItemChanges();
+		//$("form").submit();
+	}
+	return;
 }
 
 $(document).on('submit', 'form', function() {
@@ -212,6 +217,52 @@ methods: {
 			return event.target;
 		}
 		return event.srcElement;
+	},
+	saveItemChanges() {
+		
+		let itemId = this.item.id;
+		let itemData = {
+			title: this.item.title,
+			text: this.item.text,
+			video: this.item.video,
+			published_at: this.item.published_at,
+			image: this.item.image,
+			image_src: this.item.image_src,
+			link: this.item.link,
+			slug_title: this.item.slug_title,
+			tags_str: this.item.tags_str,
+			recipients_str: this.item.recipients_str,
+			template: this.item.template,
+			deleted_at: this.item.deleted_at,
+			rss: this.item.rss,
+			is_blog: this.item.is_blog,
+		};
+
+		$(".js--save").html('Saving..');
+
+		VueResource.Http.post('/item/update/' + itemId, itemData).then((response) => {
+
+			// Force cleanup dirty originalItem
+			if(response.ok) {
+				this.originalItem.title = this.item.title;
+				this.originalItem.text = this.item.text;
+				this.originalItem.video = this.item.video;
+				this.originalItem.published_at = this.item.published_at;
+				this.originalItem.image = this.item.image;
+				this.originalItem.image_src = this.item.image_src;
+				this.originalItem.link = this.item.link;
+				this.originalItem.slug_title = this.item.slug_title;
+				this.originalItem.tags_str = this.item.tags_str;
+				this.originalItem.recipients_str = this.item.recipients_str;
+				this.originalItem.template = this.item.template;
+				this.originalItem.deleted_at = this.item.deleted_at;
+				this.originalItem.rss = this.item.rss;
+				this.originalItem.is_blog = this.item.is_blog;
+				
+				$(".js--save").html('Save');
+			}
+
+		});
 	},
 	isDirty() {
 		var trackedFields = [
@@ -438,8 +489,10 @@ methods: {
 			</div>
 
 			<div class="[ grid__item ] [ one-whole ]">
-				<p>{{ Form::submit('Save', [
-					'v-bind:disabled'=>"!isDirty()"
+				<p>{{ Form::button('Save', [
+					'v-on:click' => 'save()',
+					'v-bind:disabled'=>"!isDirty()",
+					'class' => 'js--save'
 					]) }}</p>
 			</div>
 

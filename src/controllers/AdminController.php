@@ -336,4 +336,40 @@ class AdminController extends Controller
 		return view('folio::admin.subscribers')->withSubscribers($subscribers);
 	}
 
+	/**
+	 *  Ajax Item Update
+	 * TODO: Use CRUD to bind the model from Vue.js to Eloquent?
+	 */
+	
+	public function postItemUpdateAjax(Request $request, $id) {
+
+		$item = Item::withTrashed()->find($id);
+
+		$item->title = request('title');
+		$item->text = request('text');
+		$item->video = request('video');
+		$item->published_at = request('published_at');
+		$item->image = request('image');
+		$item->image_src = request('image_src');
+		$item->link = request('link');
+		$item->slug_title = request('slug_title');
+		$item->tags_str = request('tags_str');
+		$item->recipients_str = request('recipients_str');
+		$item->template = request('template');
+		if(request('deleted_at')) {
+			$item->deleted_at = \Date::now();
+		} else {
+			$item->deleted_at = null;
+		}
+		$item->rss = request('rss');
+		$item->is_blog = request('is_blog');
+		
+		$item->save();
+
+		return response()->json([
+			'message' => 'Post updated successfully!'
+		], 200);
+
+	}
+
 }
