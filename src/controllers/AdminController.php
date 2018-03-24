@@ -387,7 +387,8 @@ class AdminController extends Controller
 		$item->save();
 
 		return response()->json([
-			'message' => 'Post updated successfully!'
+			'message' => 'Post updated successfully!',
+			'path' => '/'.$item->path()
 		], 200);
 
 	}

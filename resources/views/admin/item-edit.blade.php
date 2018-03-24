@@ -258,7 +258,8 @@ methods: {
 				this.originalItem.deleted_at = this.item.deleted_at;
 				this.originalItem.rss = this.item.rss;
 				this.originalItem.is_blog = this.item.is_blog;
-				
+
+				$(".js--item-path").attr('href', response.body.path);
 				$(".js--save").html('Save');
 			}
 
@@ -342,7 +343,10 @@ methods: {
 			  $item->encodedPath(),
 			  'js--encoded-path',
 			  'data-clipboard-text="'.$item->encodedPath(true).'"'],
-		  '<i class="fa fa-eye"></i>' => '/'.$item->path()
+		  '<i class="fa fa-eye"></i>' => [
+			  '/'.$item->path(),
+			  'js--item-path',
+			  '']
 		  ]]) !!}
 @stop
 
