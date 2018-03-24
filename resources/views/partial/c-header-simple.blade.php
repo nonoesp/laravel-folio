@@ -69,7 +69,7 @@
 						?>
 						<li>
 							<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} ]">
-								{{ trans('folio.'.$title) }}
+								{!! trans('folio.'.$title) !!}
 							</a>
 						</li>
 						
