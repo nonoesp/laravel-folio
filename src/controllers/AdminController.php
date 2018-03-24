@@ -179,21 +179,6 @@ class AdminController extends Controller
 		$item = new Item();
 		$item->title = Input::get('title');
 		if($item->title == "") $item->title = "Untitled";
-
-		// $item->text = Input::get('text');
-		// $item->image = Input::get('image');
-		// $item->image_src = Input::get('image_src');
-		// if(Thinker::IsInstagramPostURL($item->image)) {
-			// $item->image = Thinker::InstagramImageURL($item->image);
-		// }
-		// if(Thinker::IsInstagramPostURL($item->image_src)) {
-			// $item->image_src = Thinker::InstagramImageURL($item->image_src);
-		// }
-		// $item->video = Input::get('video');
-		// $item->link = Input::get('link');
-		// $item->tags_str = Input::get('tags_str');
-	    // $item->recipients_str = Input::get('recipients_str');
-		// $item->rss = (Input::get('rss') ? true : false);
 		
 		$item->is_blog = false;
 
@@ -212,20 +197,6 @@ class AdminController extends Controller
 
 	    // Save
 		$item->save();
-
-		// laravel-tagging
-		// if($item->tags_str != '') {
-		//   $tags = explode(",", $item->tags_str);
-		//   $item->tag($tags);
-		// }
-
-	    // if($item->recipients_str != NULL)
-	    // {
-			// foreach($item->recipientsArray() as $recipient)
-			// {
-			// $item->recipients()->save(new Recipient(["twitter" => $recipient]));
-			// }
-	    // }
 
 		return Redirect::to(Folio::adminPath().'item/edit/'.$item->id);
 	}
@@ -345,7 +316,7 @@ class AdminController extends Controller
 
 		$item = Item::withTrashed()->find($id);
 
-		$item->title = request('title');
+		//$item->title = request('title');
 		$item->text = request('text');
 		$item->video = request('video');
 		$item->published_at = request('published_at');
@@ -364,6 +335,55 @@ class AdminController extends Controller
 		$item->rss = request('rss');
 		$item->is_blog = request('is_blog');
 		
+		// title
+		if(request('slug_title') == null) {
+			if($item->slug_title != null) {
+				// Slug has been removed, not empty before
+				$item->slug_title = null;
+				$item->title = request('title');
+				$item->slug = Thinker::uniqueSlugWithTableAndItem(Folio::table('items'), $item);
+			} else {
+				// Slug is empty, and was empty before
+				if($item->title != request('title')) {
+					$item->title = request('title');
+					$item->slug = Thinker::uniqueSlugWithTableAndItem(Folio::table('items'), $item);
+				}
+			}
+		} else {
+			$item->slug = request('slug_title');
+			$item->title = request('title');
+			if($item->slug_title != request('slug_title')) {
+				// Slug has been edited
+				$item->slug_title = request('slug_title');
+			}
+		}
+
+		// ..
+		if(Thinker::IsInstagramPostURL($item->image)) {
+			$item->image = Thinker::InstagramImageURL($item->image);
+		}
+		if(Thinker::IsInstagramPostURL($item->image_src)) {
+			$item->image_src = Thinker::InstagramImageURL($item->image_src);
+		}
+		if($item->template == "null") {
+			$item->template = null;
+		}
+		if ($item->tags_str != '') {
+			$item->retag(explode(",", $item->tags_str));
+		} else {
+			$item->untag();
+		}
+
+		// Recipients
+		$item->recipients()->delete();
+		if($item->recipients_str != NULL)
+		{
+			foreach($item->recipientsArray() as $recipient)
+			{
+			$item->recipients()->save(new Recipient(["twitter" => $recipient]));
+			}
+		}
+
 		$item->save();
 
 		return response()->json([
