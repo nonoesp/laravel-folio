@@ -6,7 +6,7 @@ $settings_title = config('folio.title');
 if($settings_title == '') {
 	$settings_title = "Folio";
 }
-$site_title = 'Editing Item '.$item->id.' | '. $settings_title;
+$site_title = 'Editing Item '.$item->id.' · '.$item->title.' | '. $settings_title;
 $remove_wrap = true;
 ?>
 
