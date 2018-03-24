@@ -21,7 +21,7 @@ class Item extends Model implements Feedable
 	 * @var array
 	 */
 	protected $dates = ['deleted_at'];
-	
+
 	/**
 	 * @var boolean
 	 */
