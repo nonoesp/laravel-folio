@@ -19,6 +19,9 @@ use Hashids;
 /* FolioController
 /*----------------------------------------------------------------*/
 
+	// SubscriptionController (outside controller to allow cross-domain subscription)
+	Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create');
+
 /*
 * Create a domain pattern if provided in config.php
 * Otherwise allow the current domain (i.e., any domain)
@@ -66,8 +69,6 @@ if(Folio::isAvailableURI()) {
 	// Debug: Hello, Folio!
 	Route::get('debug/folio', 'Nonoesp\Folio\Controllers\FolioController@helloFolio');
 
-	// SubscriptionController
-	Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create');
 }
 
 }); // close folio general domain pattern group
