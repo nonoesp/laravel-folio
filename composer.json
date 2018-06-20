@@ -18,10 +18,6 @@
             "Nonoesp\\Folio\\": "src/"
         }
     },
-    "repositories": [{
-        "url": "https://github.com/jdavidbakr/commonmark-attributes-extension",
-        "type": "vcs"
-    }],
     "minimum-stability": "dev",
     "require": {
         "php": ">=7.1.3",
