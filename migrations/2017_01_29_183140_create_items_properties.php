@@ -19,7 +19,7 @@ class CreateItemsProperties extends Migration
                $table->integer('item_id')->nullable();
                $table->timestamps();
                $table->string('name')->nullable();
-               $table->string('value')->nullable();
+               $table->string('value', 1024)->nullable();
                $table->string('label')->nullable();
        });
 
