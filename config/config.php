@@ -15,6 +15,13 @@ return [
 	 */		
 	'admin-path-prefix' => 'admin',
 
+	/*
+	 * The base route path for permanent links.
+	 * @param string (for specifying a path) or empty (defaults to path-prefix)
+	 * e.g., 'post' would create URLs like domain.com/post/245
+	 */				
+	'permalink-prefix' => '',
+
     /*
      * The location of the templates to use for the main layout of Folio, collections, and items
      */
