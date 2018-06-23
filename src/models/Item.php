@@ -428,4 +428,16 @@ class Item extends Model implements Feedable
 		return $html;
 	}
 	
+	/**
+	 * Get the Item's permanent link, constructed with
+	 * the 'permalink-prefix' from Folio's config and
+	 * the id of the Item.
+	 */	
+	public function permalink() {
+		$permalink_prefix = Folio::path();
+		if(config('folio.permalink-prefix')) {
+			$permalink_prefix = config('folio.permalink-prefix').'/';
+		}
+		return \Request::root().'/'.$permalink_prefix.$this->id;
+	}
 }

@@ -87,7 +87,7 @@ if(isset($collection)) {
         $site_title = $item->title.' | '.config('folio.title');
         $og_description = Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']);
         $og_type = 'article';
-        $og_url = Request::root().'/'.Folio::path().$item->id;
+        $og_url = $item->permalink();
         ?>
 
         @section('open_object_metadata'){{--
