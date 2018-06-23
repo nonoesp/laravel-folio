@@ -84,7 +84,7 @@ if(isset($collection)) {
     if ($folio_type == 'SINGLE_WRITING_TYPE') {
 
         // 4.1. General
-        $site_title = $item->title.' | '.config('folio.title');
+        $site_title = $item->title.' · '.config('folio.title');
         $og_description = Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']);
         $og_type = 'article';
         $og_url = $item->permalink();
@@ -137,7 +137,7 @@ if(isset($collection)) {
 
         // Tags
         if (isset($tag)) {
-          $site_title = ucwords($tag).' | '.config('folio.title');
+          $site_title = ucwords($tag).' · '.config('folio.title');
           $og_description = 'Items tagged with the category '.ucwords($tag);
           $cover_data['description'] = "Items tagged with $tag";
         }
