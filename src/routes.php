@@ -55,11 +55,8 @@ if(Folio::isAvailableURI()) {
 	Route::get($path, array('as' => 'folio', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@showHome'));
 	Route::get($path.'tag/{tag}', 'Nonoesp\Folio\Controllers\FolioController@showItemTag');
 
-	$permalink_prefix = $path;
-	if(config('folio.permalink-prefix')) {
-		$permalink_prefix = config('folio.permalink-prefix').'/';
-	}
-	Route::get($permalink_prefix.'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
+	// Permalinks
+	Route::get(Folio::permalinkPrefix().'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
 
 	if($path_type = Folio::isFolioURI()) { // Check this is an actual item route
 		Route::get($path.'{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->

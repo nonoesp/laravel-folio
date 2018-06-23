@@ -219,4 +219,25 @@ class Folio {
     return config('folio.db-prefix').$name;
   }
 
+  /**
+   * Get the permalink prefix.
+   */  
+  public static function permalinkPrefix() {
+    
+    $permalink_prefix = '';
+    
+    if($prefix = config('folio.permalink-prefix')) {
+			if($prefix[0] == '{' && $prefix[strlen($prefix) - 1] == '}') {
+				// another Folio config key as prefix, root/key/id
+				$configKey = substr($prefix, 1, strlen($prefix) - 2);
+				$permalink_prefix = config('folio.'.$configKey).'/';
+			} else {
+				// provided string as prefix, root/prefix/id
+				$permalink_prefix = $prefix.'/';
+			}
+    }
+    
+    return $permalink_prefix;
+  }
+
 }

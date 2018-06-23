@@ -434,10 +434,6 @@ class Item extends Model implements Feedable
 	 * the id of the Item.
 	 */	
 	public function permalink() {
-		$permalink_prefix = Folio::path();
-		if(config('folio.permalink-prefix')) {
-			$permalink_prefix = config('folio.permalink-prefix').'/';
-		}
-		return \Request::root().'/'.$permalink_prefix.$this->id;
+		return \Request::root().'/'.Folio::permalinkPrefix().$this->id;
 	}
 }
