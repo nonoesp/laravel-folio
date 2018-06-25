@@ -52,6 +52,18 @@ if(!isset($campaign) && request()->has('utm_campaign')) {
            
        </p>
 
+       <p class="[ js--subscribe__label-privacy ]{{--
+             --}}[ u-font-size--70 u-opacity--half u-select-none ]{{--
+             --}}[ u-text-align--portable-center ]">
+
+                @if(isset($text_small))
+                    {!! $text_small !!}
+                @else
+                    {!! trans('folio::base.newsletter-privacy') !!}
+                @endif
+           
+       </p>       
+
     </div>
 
 </div>
