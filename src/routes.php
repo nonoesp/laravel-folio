@@ -39,8 +39,11 @@ Route::group(['domain' => '{foliodomain}','middleware' => Config::get("folio.mid
 	Route::get('/e/{hash}', function($domain, $hash) use ($path) {
 		$decode = Hashids::decode($hash);
 		if(count($decode)) {
-			session(['temporary-token'=>true]);
-			return Redirect::to($path.$decode[0]);
+			$item = Item::withTrashed()->find($decode[0]);
+			if($item) {
+				session(['temporary-token'=>true]);
+				return Redirect::to($item->path());
+			}
 		}
 		return response()->view('errors.404', [], 404);
 	});
