@@ -55,6 +55,10 @@ class AdminController extends Controller
 
 		$item = Item::withTrashed()->find($id);
 
+		if(!$item) {
+			return response()->view('errors.404', [], 404);
+		}
+
 		if ($request->isMethod('post')) {
 
 			if(Input::get('slug_title') == null) {
