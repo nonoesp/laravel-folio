@@ -60,6 +60,7 @@ if(Folio::isAvailableURI()) {
 
 	// Permalinks
 	Route::get(Folio::permalinkPrefix().'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
+	Route::get('disqus/'.'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
 
 	if($path_type = Folio::isFolioURI()) { // Check this is an actual item route
 		Route::get($path.'{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->

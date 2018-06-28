@@ -436,4 +436,12 @@ class Item extends Model implements Feedable
 	public function permalink() {
 		return \Request::root().'/'.Folio::permalinkPrefix().$this->id;
 	}
+
+	/**
+	 * Get the Item's permanent link for disqus, constructed with
+	 * the 'disqus/' prefix plus Item's id.
+	 */	
+	public function disqusPermalink() {
+		return str_replace("https", "http", \Request::root().'/disqus/'.$this->id);
+	}
 }
