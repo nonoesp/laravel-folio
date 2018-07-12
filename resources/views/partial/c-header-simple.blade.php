@@ -66,9 +66,12 @@
 						// Insert {path-prefix}
 						$href[0] = str_replace('{path-prefix}', config('folio.path-prefix'), $href[0]);
 						$href[1] = str_replace('{path-prefix}', config('folio.path-prefix'), $href[1]);
+						$isExternal = false;
+						if(count($href) > 2) { if($href[2] == 'external') { $isExternal = true; } }
 						?>
 						<li>
-							<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} ]">
+							<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} 
+							@if($isExternal) u-is-external u-is-external--top-right ]" target="_blank" @else ]" @endif>
 								{!! trans('folio.'.$title) !!}
 							</a>
 						</li>
