@@ -87,7 +87,7 @@ if(isset($collection)) {
         $site_title = $item->title.' · '.config('folio.title');
         $og_title = $item->title;
         if($item->stringProperty('podcast-episode')) {
-          $og_title .= '&nbsp;(#'.$item->stringProperty('podcast-episode').')';
+          $og_title .= ' (#'.$item->stringProperty('podcast-episode').')';
         }
         $og_description = Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']);
         $og_type = 'article';
