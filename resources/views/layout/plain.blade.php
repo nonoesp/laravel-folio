@@ -66,7 +66,7 @@
 	@yield('open_object_metadata')
 
 	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="{{ config('folio.social.twitter.handle') }}" />
 	<meta name="twitter:title" content="{{ $og_title or $og_title_default }}" />
 	<meta name="twitter:description" content="{{ $og_description or $og_description_default }}" />
