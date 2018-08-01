@@ -1,8 +1,6 @@
 <img src="assets/folio@2x.gif?reload2" alt="Folio for Laravel logo." width="200px">
 
-A simple way to publish your content with custom layouts.
-
-[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/nonoesp)
+Display your web content with custom templates.
 
 ## Live Examples
 
@@ -213,3 +211,5 @@ Folio is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 ## Me
 
 I'm [Nono Martínez Alonso](http://nono.ma) (nono.ma), a computational designer with a penchant for design, code, and simplicity. I tweet at [@nonoesp](http://www.twitter.com/nonoesp) and write at [Getting Simple](http://gettingsimple.com/). If you use this package, I would love to hear about it. Thanks!
+
+[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/nonoesp)
