@@ -1,10 +1,8 @@
-# Folio
+<img src="assets/folio@2x.gif?reload2" alt="Folio for Laravel logo." width="200px">
+
+A simple way to publish your content with custom layouts.
 
 [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/nonoesp)
-
-Create webs to publish your content with custom templates.
-
-![Folio for Laravel logo.](assets/folio@2x.gif?reload)
 
 ## Live Examples
 
