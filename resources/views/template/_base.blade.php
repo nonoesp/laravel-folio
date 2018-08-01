@@ -85,6 +85,10 @@ if(isset($collection)) {
 
         // 4.1. General
         $site_title = $item->title.' · '.config('folio.title');
+        $og_title = $item->title;
+        if($item->stringProperty('podcast-episode')) {
+          $og_title .= '&nbsp;(#'.$item->stringProperty('podcast-episode').')';
+        }
         $og_description = Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']);
         $og_type = 'article';
         $og_url = $item->permalink();
@@ -143,7 +147,9 @@ if(isset($collection)) {
         }
     }
 
-    $og_title = $site_title;
+    if(!isset($og_title)) {
+      $og_title = $site_title;
+    }
 
     if(isset($keep_header_data)) {
       foreach($keep_header_data as $key=>$val) {

@@ -63,14 +63,17 @@
 	<meta property="og:title" content="{{ $og_title or $og_title_default }}" />
 	<meta property="og:description" content="{{ $og_description or $og_description_default }}" />
 	<meta property="og:type" content="{{ $og_type or 'profile' }}" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="900" />
 	@yield('open_object_metadata')
 
 	<!-- Twitter Card -->
-	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:site" content="{{ config('folio.social.twitter.handle') }}" />
+	<meta name="twitter:creator" content="{{ config('folio.social.twitter.handle') }}" />
 	<meta name="twitter:title" content="{{ $og_title or $og_title_default }}" />
 	<meta name="twitter:description" content="{{ $og_description or $og_description_default }}" />
 	<meta name="twitter:image" content="{{ $og_image or $og_image_default }}" />
+	<meta name="twitter:card" content="summary_large_image" />
 
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" href="/{{ config('folio.feed.route') }}" />
