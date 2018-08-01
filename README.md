@@ -4,6 +4,8 @@
 
 Create webs to publish your content with custom templates.
 
+![Folio for Laravel logo.](assets/folio@2x.gif)
+
 ## Live Examples
 
 - [nono.ma](http://nono.ma)
