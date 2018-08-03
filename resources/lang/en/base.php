@@ -2,15 +2,16 @@
 
 return [
 
-	// space
+	// Folio
 	'by' => 'by',
 	'expected' => 'Expected',
 	'to-be-notified' => 'to be notified.',
 	'load-more' => 'load more',
 	'continue-reading' => 'Read&nbsp;More…',
 	'receive-our-posts' => 'Receive our publications via e-mail.',
+	'newsletter-privacy' => 'By clicking above to submit this form, you acknowledge that the information you provide will be transferred to MailChimp for processing in accordance with their <a href="https://mailchimp.com/legal/privacy/">Privacy Policy</a> and <a href="https://mailchimp.com/legal/terms/">Terms</a>.',
 
-	// space.subscribe.js
+	// folio.subscribe.js
 	'subscribe' => 'Subscribe',
 	'newsletter' => 'Newsletter',
   	'to_receive_our_updates' => 'Receive our publications via e-mail.',

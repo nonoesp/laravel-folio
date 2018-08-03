@@ -2,15 +2,17 @@
 
 return [
 
-	// space
+	// Folio
 	'by' => 'by',
 	'expected' => 'Previsto en',
 	'to-be-notified' => 'para ser notificado.',
 	'load-more' => 'cargar más',
 	'continue-reading' => 'Leer&nbsp;Más…',
 	'receive-our-posts' => 'Nuestras publicaciones en tu e-mail.',
+	'newsletter-privacy' => 'Al pulsar el botón de arriba para enviar este formulario,
+	entiendes que la información que proporciones será transferida a MailChimp para ser procesada de acuerdo a su <a href="https://mailchimp.com/legal/privacy/">Política de Privacidad</a> y <a href="https://mailchimp.com/legal/terms/">Términos</a>.',
 
-	// space.subscribe.js
+	// folio.subscribe.js
 	'subscribe' => 'Suscribirme',
 	'newsletter' => 'Newsletter',
   	'to_receive_our_updates' => 'Nuestras publicaciones en tu e-mail.',
