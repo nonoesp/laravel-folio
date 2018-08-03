@@ -6,6 +6,7 @@ Display your web content with custom templates.
 
 - [nono.ma](http://nono.ma)
 - [gettingsimple.com](http://gettingsimple.com)
+- [gettingsimple.com/podcast](http://gettingsimple.com/podcast)
 - [lourdes.ac](http://lourdes.ac)
 - [ar-ma.net](http://ar-ma.net/blog)
 - [gettingarchitecturedone.com](http://gettingarchitecturedone.com/writing)
