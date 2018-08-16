@@ -26,7 +26,7 @@ if(!isset($campaign) && request()->has('utm_campaign')) {
            @endif
 
            <div class="[ grid__item desk--two-thirds ]">
-               {{ Form::email('email', null, ['placeholder' => 'Email', 'class' => '[ js--subscribe__email ] [ u-case-input-lower ]', 'name' => 'EMAIL']) }}
+               {{ Form::email('email', null, ['placeholder' => trans('folio::base.your-email-address'), 'class' => '[ js--subscribe__email ] [ u-case-input-lower ]', 'name' => 'EMAIL']) }}
            </div>
            <div class="[ grid__item desk--one-third ]">
                 @if(isset($button_text))

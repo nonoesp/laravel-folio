@@ -8,14 +8,15 @@ return [
 	'to-be-notified' => 'para ser notificado.',
 	'load-more' => 'cargar más',
 	'continue-reading' => 'Leer&nbsp;Más…',
-	'receive-our-posts' => 'Nuestras publicaciones en tu e-mail.',
+	'receive-our-posts' => 'Nuestras publicaciones en tu email.',
 	'newsletter-privacy' => 'Al pulsar el botón de arriba para enviar este formulario,
 	entiendes que la información que proporciones será transferida a MailChimp para ser procesada de acuerdo a su <a href="https://mailchimp.com/legal/privacy/">Política de Privacidad</a> y <a href="https://mailchimp.com/legal/terms/">Términos</a>.',
+	'your-email-address' => 'Tu email',
 
 	// folio.subscribe.js
 	'subscribe' => 'Suscribirme',
 	'newsletter' => 'Newsletter',
-  	'to_receive_our_updates' => 'Nuestras publicaciones en tu e-mail.',
+  	'to_receive_our_updates' => 'Nuestras publicaciones en tu email.',
   	'email_is_not_valid' => 'Este email no parece ser válido.',
   	'thanks_for_subscribing' => 'Gracias por suscribirte!',
 
