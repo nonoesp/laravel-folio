@@ -29,8 +29,8 @@ class FeedController extends Controller
 	    // check if there is cached feed and build new only if is not
 	    if (!$feed->isCached())
 	    {
-	        $default_author = Config::get('folio.feed.default-author');
-		    $feed_show = Config::get('folio.feed.show');
+	        $default_author = config('folio.feed.default-author');
+		    $feed_show = config('folio.feed.show');
 
 	        $items = Item::published()
                             ->public()
@@ -40,9 +40,9 @@ class FeedController extends Controller
                             ->get();
 
 	       // set your feed's title, description, link, pubdate and language
-	       $feed->title = Config::get('folio.feed.title');
-	       $feed->description = Config::get('folio.feed.description');
-	       $feed->logo = Config::get('folio.feed.logo');
+	       $feed->title = config('folio.feed.title');
+	       $feed->description = config('folio.feed.description');
+	       $feed->logo = config('folio.feed.logo');
 	       $feed->link = \URL::to('/'.Folio::path());
 	       $feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
          if(count($items)) $feed->pubdate = $items[0]->published_at;
@@ -64,11 +64,15 @@ class FeedController extends Controller
             
             $image = '';
             $item_image = $item->image;
-            $item_image_src = $item->image_src;
+			$item_image_src = $item->image_src;
+			
+			if ($item->stringProperty('rss-image')) {
+				$item_image = $item->stringProperty('rss-image');
+			}
 
              // Make sure $item->image is global (not local like /img/u/image.jpg)
-             if ($item->image && substr($item->image, 0, 1) == '/') {
-                 $item_image = $request->root().$item->image;
+             if ($item_image && substr($item_image, 0, 1) == '/') {
+                 $item_image = $request->root().$item_image;
              }
 
             // And image_src is global or falls back to default

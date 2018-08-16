@@ -232,9 +232,9 @@ class AdminController extends Controller
 		$key = Input::get('name');
 		$value = Input::get('value');
 		$label = Input::get('label');
-		if($key) $property->name = $key;
-		if($value) $property->value = $value;
-		if($label) $property->label = $label;
+		$property->name = $key;
+		$property->value = $value;
+		$property->label = $label;
 		$property->save();
 		return response()->json([
 				'success' => true,
