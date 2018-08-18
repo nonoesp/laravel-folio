@@ -52,6 +52,8 @@ if(!isset($campaign) && request()->has('utm_campaign')) {
            
        </p>
 
+
+    @if(!isset($hide_terms))
        <p class="[ js--subscribe__label-privacy ]{{--
              --}}[ u-font-size--70 u-opacity--half u-select-none ]{{--
              --}}[ u-text-align--portable-center ]">
@@ -63,6 +65,7 @@ if(!isset($campaign) && request()->has('utm_campaign')) {
                 @endif
            
        </p>       
+    @endif
 
     </div>
 
