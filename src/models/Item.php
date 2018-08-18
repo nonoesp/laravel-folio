@@ -365,15 +365,9 @@ class Item extends Model implements Feedable
 		}
 	}
 
-	/**
-	 * Get the Item's Markdown text parsed as HTML with
-	 * the correct parser. Each Item can set its own parser
-	 * by specifying the custom property 'markdown-parser' to
-	 * commonmark, vtalbot, or michelf
-	 */
-	public function htmlText($veilImages = true) {
+	public static function convertToHtml($text, $markdown_parser = 'default', $veilImages = 'true') {
 
-		$markdown_parser = $this->stringProperty('markdown-parser', 'default');
+		//$markdown_parser = $this->stringProperty('markdown-parser', 'default');
 
 		if($markdown_parser == "commonmark") {
 
@@ -388,7 +382,7 @@ class Item extends Model implements Feedable
 			$converter = new \League\CommonMark\CommonMarkConverter($config, $environment);
 
 			// read and parse markdown
-			$html = $converter->convertToHtml($this->text);
+			$html = $converter->convertToHtml($text);
 
 			$html = str_replace(
 				["<p><img", "/></p>"],
@@ -415,16 +409,28 @@ class Item extends Model implements Feedable
 		
 		} else if($markdown_parser == "vtalbot") {
 
-			$html = \VTalbot\Markdown\Facades\Markdown::convertToHtml($this->text);
+			$html = \VTalbot\Markdown\Facades\Markdown::convertToHtml($text);
 			$html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
 
 		} else {
 
-			$html = \Michelf\MarkdownExtra::defaultTransform($this->text);
+			$html = \Michelf\MarkdownExtra::defaultTransform($text);
 			$html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
 
 		}
 
+		return $html;
+	}
+
+	/**
+	 * Get the Item's Markdown text parsed as HTML with
+	 * the correct parser. Each Item can set its own parser
+	 * by specifying the custom property 'markdown-parser' to
+	 * commonmark, vtalbot, or michelf
+	 */
+	public function htmlText($veilImages = true) {
+		$markdown_parser = $this->stringProperty('markdown-parser', 'default');
+		$html = Item::convertToHtml($this->text, $markdown_parser, $veilImages);
 		return $html;
 	}
 	
