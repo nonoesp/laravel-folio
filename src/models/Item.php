@@ -509,7 +509,8 @@ class Item extends Model implements Feedable
 										->take($limit)
 										->get();					
 				} else {
-		              $collection = Item::all();
+					  $collection = Item::orderBy($sort, $order)
+					  					->get();
 				}
             } else {
 				if($limit) {
@@ -518,7 +519,9 @@ class Item extends Model implements Feedable
 										->take($limit)
 										->get();					
 				} else {
-              		 $collection = Item::blog()->get();
+					   $collection = Item::blog()
+					   					 ->orderBy($sort, $order)
+					   					 ->get();
 				}
             }
 
