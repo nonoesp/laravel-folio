@@ -119,7 +119,9 @@ class FeedController extends Controller
 			- $cache (duration, value of 0 turns off caching)
 			- $key (custom cache key as string)
 		*/
-		return $feed->render('rss');
+		return $feed->render('rss')->withHeaders([
+			'Content-Type' => 'text/xml'
+		]);
 	}
 
 }
