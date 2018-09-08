@@ -26,7 +26,7 @@
         "nonoesp/authenticate": "^5.5",
         "nonoesp/thinker": "^1.1",
         "jenssegers/date": "^3.0",
-        "roumen/feed": "2.12.*",
+        "laravelium/feed": "2.12.*",
         "graham-campbell/markdown": "^10.0",
         "webuni/commonmark-attributes-extension": "dev-master",
         "laravelcollective/html": "5.6.*",
