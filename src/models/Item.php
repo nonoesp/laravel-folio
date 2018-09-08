@@ -466,7 +466,7 @@ class Item extends Model implements Feedable
 			'sort' => $this->stringProperty('collection-sort', 'published_at'),
 			'order' => $this->stringProperty('collection-order', 'DESC'),
 			'limit' => $this->intProperty('collection-limit'),
-			'showAll' => $this->stringProperty('collection-show-all'),
+			'showAll' => $this->boolProperty('collection-show-all'),
 		]);
 	}
 
@@ -494,7 +494,7 @@ class Item extends Model implements Feedable
 		$sort = Item::arrayValueOrDefault($params, 'sort', 'published_at');
 		$order = Item::arrayValueOrDefault($params, 'order', 'DESC');
 		$limit = Item::arrayValueOrDefault($params, 'limit');
-		$showAll = Item::arrayValueOrDefault($params, 'showAll');
+		$showAll = Item::arrayValueOrDefault($params, 'showAll', false);
 		$collection = [];
 
     	if(isset($tags)) {
