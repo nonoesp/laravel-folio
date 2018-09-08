@@ -248,6 +248,15 @@ class Item extends Model implements Feedable
 		return $default;
 	}
 
+	public function intProperty($key, $default = null) {
+		if($p = $this->property($key)) {
+			if($p->value != '') {
+				return intval($p->value);
+			}
+		}
+		return $default;
+	}	
+
 	public function scopeBlog($query)
 	{
 		return $query->where('is_blog', '=', 1);
@@ -449,5 +458,101 @@ class Item extends Model implements Feedable
 	 */	
 	public function disqusPermalink() {
 		return str_replace("https", "http", \Request::root().'/disqus/'.$this->id);
+	}
+
+	public function collection() {
+		return Item::makeCollection([
+			'tags' => $this->stringProperty('collection'),
+			'sort' => $this->stringProperty('collection-sort', 'published_at'),
+			'order' => $this->stringProperty('collection-order', 'DESC'),
+			'limit' => $this->intProperty('collection-limit'),
+			'showAll' => $this->stringProperty('collection-show-all'),
+		]);
+	}
+
+	public static function arrayValueOrDefault($array, $key, $default = null) {
+		if(array_key_exists($key, $array)) {
+			return $array[$key];
+		}
+		return $default;
+	}
+
+	/**
+	 * Create a collection of items with a query.
+	 * @param $params
+	 * 	[
+	 *		'tags' => 'design, code', // or '*' for wildcard
+	 *		'sort' => 'published_at',
+	 *		'order' => 'DESC',
+	 *		'limit' => 5,
+	 *		'showAll' => false, // or true to display all items
+	 *	]
+	 */
+	public static function makeCollection($params) {
+
+		$tags = Item::arrayValueOrDefault($params, 'tags');
+		$sort = Item::arrayValueOrDefault($params, 'sort', 'published_at');
+		$order = Item::arrayValueOrDefault($params, 'order', 'DESC');
+		$limit = Item::arrayValueOrDefault($params, 'limit');
+		$showAll = Item::arrayValueOrDefault($params, 'showAll');
+		$collection = [];
+
+    	if(isset($tags)) {
+        	$tagsArray = explode(",", $tags);
+
+          if($tags === "*") {
+            
+            // Show all items (tag wildcard)
+            if($showAll) {
+				if($limit) {
+		              $collection = Item::orderBy($sort, $order)
+										->take($limit)
+										->get();					
+				} else {
+		              $collection = Item::all();
+				}
+            } else {
+				if($limit) {
+		              $collection = Item::blog()
+										->orderBy($sort, $order)
+										->take($limit)
+										->get();					
+				} else {
+              		 $collection = Item::blog()->get();
+				}
+            }
+
+          } else {
+
+            // Show all items with provided tags
+            if($showAll) {
+				if($limit) {
+		              $collection = Item::withAnyTag($tagsArray)
+										->orderBy($sort, $order)
+										->take($limit)
+										->get();					
+				} else {				
+              		$collection = Item::withAnyTag($tagsArray)
+					  					->orderBy($sort, $order)
+									  	->get();
+				}
+            } else {
+				if($limit) {
+		              $collection = Item::withAnyTag($tagsArray)
+										->blog()
+										->orderBy($sort, $order)
+										->take($limit)
+										->get();					
+				} else {	
+              		$collection = Item::withAnyTag($tagsArray)
+					  				 	->blog()
+										->orderBy($sort, $order)
+										->get();
+				}
+            }
+
+          }
+	  }
+	  return $collection;
 	}
 }
