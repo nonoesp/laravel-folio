@@ -496,6 +496,10 @@ class Item extends Model implements Feedable
 		$limit = Item::arrayValueOrDefault($params, 'limit');
 		$showAll = Item::arrayValueOrDefault($params, 'showAll', false);
 		$collection = [];
+		$isAdmin = false;
+		if ($user = Auth::user() and $user->is_admin) {
+			$isAdmin = true;
+		}
 
     	if(isset($tags)) {
         	$tagsArray = explode(",", $tags);
@@ -505,12 +509,25 @@ class Item extends Model implements Feedable
             // Show all items (tag wildcard)
             if($showAll) {
 				if($limit) {
-		              $collection = Item::orderBy($sort, $order)
-										->take($limit)
-										->get();					
+					if($isAdmin) {
+						$collection = Item::withTrashed()
+											->orderBy($sort, $order)
+											->take($limit)
+											->get();	
+					} else {
+						$collection = Item::orderBy($sort, $order)
+											->take($limit)
+											->get();	
+					}
 				} else {
-					  $collection = Item::orderBy($sort, $order)
-					  					->get();
+					if($isAdmin) {
+						$collection = Item::withTrahsed()
+											->orderBy($sort, $order)
+											->get();
+					} else {
+						$collection = Item::orderBy($sort, $order)
+											->get();
+					}
 				}
             } else {
 				if($limit) {
@@ -530,14 +547,28 @@ class Item extends Model implements Feedable
             // Show all items with provided tags
             if($showAll) {
 				if($limit) {
-		              $collection = Item::withAnyTag($tagsArray)
-										->orderBy($sort, $order)
-										->take($limit)
-										->get();					
-				} else {				
-              		$collection = Item::withAnyTag($tagsArray)
-					  					->orderBy($sort, $order)
-									  	->get();
+						if($isAdmin) {
+							$collection = Item::withTrashed()->withAnyTag($tagsArray)
+												->orderBy($sort, $order)
+												->take($limit)
+												->get();	
+						} else {
+							$collection = Item::withAnyTag($tagsArray)
+												->orderBy($sort, $order)
+												->take($limit)
+												->get();	
+						}				
+				} else {	
+					if($isAdmin) {
+						$collection = Item::withTrashed()
+											->withAnyTag($tagsArray)
+											->orderBy($sort, $order)
+											->get();			
+					} else {
+						$collection = Item::withAnyTag($tagsArray)
+											->orderBy($sort, $order)
+											->get();						
+					}			
 				}
             } else {
 				if($limit) {
