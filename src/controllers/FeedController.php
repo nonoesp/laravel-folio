@@ -97,10 +97,12 @@ class FeedController extends Controller
 					'<img',
 					'src="/',
 					'href="/',
+					'<hr />',
 				], [
 					'<img width="100%"',
 					'src="'.$request->root().'/',
 					'href="'.$request->root().'/',
+					'<br />',
 				],
 				$image.$item->htmlText(false, $request->root()));
 
