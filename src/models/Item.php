@@ -430,9 +430,15 @@ class Item extends Model implements Feedable
 
 		// Cleanup
 		$html = str_replace(
-			['<p></p>'],
-			[''],
-			$html);
+		[
+			'<p><nopodcast></p>',
+			'<p></nopodcast></p>',
+		],
+		[
+			'',
+			'',
+		],
+		$html);
 
 		return $html;
 	}
