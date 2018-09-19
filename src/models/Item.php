@@ -497,7 +497,7 @@ class Item extends Model implements Feedable
 		$showAll = Item::arrayValueOrDefault($params, 'showAll', false);
 		$collection = [];
 		$isAdmin = false;
-		if ($user = Auth::user() and $user->is_admin) {
+		if ($user = \Auth::user() and $user->is_admin) {
 			$isAdmin = true;
 		}
 
