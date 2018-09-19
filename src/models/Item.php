@@ -428,6 +428,12 @@ class Item extends Model implements Feedable
 
 		}
 
+		// Cleanup
+		$html = str_replace(
+			['<p></p>'],
+			[''],
+			$html);
+
 		return $html;
 	}
 
