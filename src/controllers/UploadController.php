@@ -11,7 +11,7 @@ use File;
 class UploadController extends Controller
 {
 
-    public function getUploadForm()
+    public function getUploadForm(Request $request)
 	{
 
 		$mediaPath = config('folio.media-upload-path');
@@ -27,14 +27,15 @@ class UploadController extends Controller
 		  $img_exists = false;
 		  $img_uploaded = false;
 		  $img_URL = "";
+			$img_name = "";
 
 		  if(Request::isMethod('post')) {
 
-		    $name = Input::get('name');
-		    if($name == '') {
-		      $name = 'Untitled.jpg';
+		    $img_name = Input::get('name');
+		    if($img_name == '') {
+		      $img_name = request()->file('photo')->getClientOriginalName();
 		    }
-		    $img_URL = $mediaPath.$name;
+		    $img_URL = $mediaPath.$img_name;
 		    $shouldReplace = Input::get('shouldReplace');
 
 		    if(file_exists(public_path($img_URL))) {
@@ -73,7 +74,8 @@ class UploadController extends Controller
 		return view('folio::admin.upload.form')->with([
 			'img_exists' => $img_exists,
 			'img_uploaded' => $img_uploaded,
-			'img_URL' => $img_URL
+			'img_URL' => $img_URL,
+			'img_name' => $img_name,
 			]);
 	}
 
