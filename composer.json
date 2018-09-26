@@ -36,7 +36,7 @@
         "spatie/laravel-newsletter": "^4.1",
         "spatie/laravel-feed": "^2.0",
         "doctrine/dbal": "^2.5",
-        "mpociot/versionable": "~2.0",
+        "mpociot/versionable": "~3.0",
         "michelf/php-markdown": "^1.8"
     },
     "require-dev": {
