@@ -59,7 +59,7 @@ function handleSubscribeResponse(response) {
 }
 
 function restoreSubscriptionForm() {
-    console.log('restore subscription form');
+
     $(".js--subscribe__email").val('');
     $(".js--subscribe__form").show();
     $(".js--subscribe__label").removeClass('u-text-align--center');
