@@ -32,7 +32,7 @@ class SubscriptionController extends Controller
     $subscriber->save();
 
     $data = [];
-    if($path = $subscriber->name) {
+    if($name = $subscriber->name) {
       array_push($data, $name);
     }
     if($source = $subscriber->source) {
