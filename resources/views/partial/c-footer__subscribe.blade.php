@@ -5,9 +5,12 @@ if(!isset($source) && request()->has('utm_source')) {
 if(!isset($campaign) && request()->has('utm_campaign')) {
       $campaign = request()->input('utm_campaign');
 }
+if(!isset($medium) && request()->has('utm_medium')) {
+      $medium = request()->input('utm_medium');
+}
 ?>
 
-<footer class="[ c-footer ]">
+<footer class="[ c-footer ] [ c-subscribe ] [ js--subscribe ] ">
 
 <div class="[ grid ]">
 
@@ -19,6 +22,10 @@ if(!isset($campaign) && request()->has('utm_campaign')) {
 
            @if(isset($source))
                {{ Form::hidden('source', $source, ['class' => 'js--subscribe__source']) }}
+           @endif
+
+           @if(isset($medium))
+               {{ Form::hidden('medium', $medium, ['class' => 'js--subscribe__medium']) }}
            @endif
 
            @if(isset($campaign))

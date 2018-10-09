@@ -92,32 +92,31 @@ if($settings_title == '') {
 						</a>
 
 						<p class="u-font-size--a u-opacity--low -u-hidden-palm -u-text-align--right" style="margin-top:-0.8em">
-									@if($path = $subscriber->path)
-										{{$path}}
-									@endif
-									@if($source = $subscriber->source)
-
-									@if($subscriber->path)
-									·
-									@endif
-										{{ $source }}
-									@endif
-									@if($campaign = $subscriber->campaign)
-										@if($subscriber->path or $subscriber->source)
-										·
-										@endif
-										{{ $campaign }}
-									@endif
-									@if($ip = $subscriber->ip)
-										@if($subscriber->path or $subscriber->source or $subscribe->campaign)
-										·
-										@endif
-										{{ $ip }}
-									@endif
+						
+									<?php
+										$data = [];
+										if($path = $subscribe->path) {
+											push_array($data, $path);
+										}
+										if($source = $subscriber->source) {
+											push_array($data, $source);
+										}
+										@if($source = $subscriber->source) {
+											push_array($data, $source);
+										}
+										@if($campaign = $subscriber->campaign) {
+											push_array($data, $campaign);
+										}
+										@if($ip = $subscriber->ip) {
+											push_array($data, $ip);
+										}
+									?>
 									
-									@if($subscriber->path or $subscriber->source or $subscribe->campaign or $subscribe->ip)
+									@if(count($data))
+										{{ join(" · ", $data) }}
 										·
 									@endif
+
 									<span class="o-hide-button" onclick="admin.hide({{$subscriber->id}})">hide</span>
 						</p>
 

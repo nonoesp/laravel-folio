@@ -13,6 +13,7 @@ if(!isset($hide_subscribe)) {
 }
 
 $source = '';
+$medium = '';
 $campaign = '';
 $button_text = trans('folio::base.subscribe');
 $text = trans('folio::base.receive-our-posts');
@@ -22,6 +23,9 @@ if(!isset($subscribe_data)) {
 } else {
   if(isset($subscribe_data['source'])) {
     $source = $subscribe_data['source'];
+  }
+  if(isset($subscribe_data['medium'])) {
+    $medium = $subscribe_data['medium'];
   }
   if(isset($subscribe_data['campaign'])) {
     $campaign = $subscribe_data['campaign'];
@@ -44,6 +48,7 @@ if(!isset($subscribe_data)) {
     <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule u-pad-b-2x ]">
       {!! view('folio::partial.c-footer__subscribe', [
         'source' => $source,
+        'medium' => $medium,
         'campaign' => $campaign,
         'button_text' => $button_text,
         'text' => $text

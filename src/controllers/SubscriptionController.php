@@ -16,6 +16,7 @@ class SubscriptionController extends Controller
     $email = \Input::get('email');
     $name = \Input::get('name');
     $source = \Input::get('source');
+    $medium = \Input::get('medium');
     $campaign = \Input::get('campaign');
     $path = \Input::get('path');
     $ip = Thinker::clientIp();
@@ -24,6 +25,7 @@ class SubscriptionController extends Controller
     $subscriber->email = $email;
     $subscriber->name = $name;
     $subscriber->source = $source;
+    $subscriber->medium = $medium;
     $subscriber->campaign = $campaign;
     $subscriber->path = $path;
     $subscriber->ip = $ip;
@@ -50,8 +52,9 @@ class SubscriptionController extends Controller
     return response()->json([
         'success' => true,
         'email' => $subscriber->email,
-        'source' => $subscriber->source,
         'name' => $subscriber->name,
+        'source' => $subscriber->source,
+        'medium' => $subscriber->medium,
         'campaign' => $subscriber->campaign,
         'path' => $subscriber->path
     ]);
