@@ -95,20 +95,20 @@ if($settings_title == '') {
 						
 									<?php
 										$data = [];
-										if($path = $subscribe->path) {
-											push_array($data, $path);
+										if($path = $subscriber->path) {
+											array_push($data, $path);
 										}
 										if($source = $subscriber->source) {
-											push_array($data, $source);
+											array_push($data, $source);
 										}
-										@if($source = $subscriber->source) {
-											push_array($data, $source);
+										if($medium = $subscriber->medium) {
+											array_push($data, $medium);
 										}
-										@if($campaign = $subscriber->campaign) {
-											push_array($data, $campaign);
+										if($campaign = $subscriber->campaign) {
+											array_push($data, $campaign);
 										}
-										@if($ip = $subscriber->ip) {
-											push_array($data, $ip);
+										if($ip = $subscriber->ip) {
+											array_push($data, $ip);
 										}
 									?>
 									

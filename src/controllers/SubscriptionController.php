@@ -30,9 +30,28 @@ class SubscriptionController extends Controller
     $subscriber->path = $path;
     $subscriber->ip = $ip;
     $subscriber->save();
-    
+
+    $data = [];
+    if($path = $subscriber->name) {
+      array_push($data, $name);
+    }
+    if($source = $subscriber->source) {
+      array_push($data, $source);
+    }
+    if($medium = $subscriber->medium) {
+      array_push($data, $medium);
+    }
+    if($campaign = $subscriber->campaign) {
+      array_push($data, $campaign);
+    }
+    if($ip = $subscriber->ip) {
+      array_push($data, $ip);
+    }
+
     if(config('folio.subscribers.should-notify') == true) {
-      Mail::send('folio::email.new-subscriber', ['email' => $email, 'path' => $path], function ($m) use ($email) {
+      Mail::send('folio::email.new-subscriber',
+      ['email' => $email, 'path' => $path, 'data' => $data],
+      function ($m) use ($email) {
         $m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
         $m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))->
             subject('New Subscriber to '.config('folio.title-short'));
@@ -42,7 +61,8 @@ class SubscriptionController extends Controller
     if(config('folio.should-add-to-mailchimp') == true) {
       \Newsletter::subscribeOrUpdate(
         $email, [
-          // Here we need to reference the merge tags (e.g. 'NAME') and pass a valid string (even if empty) for it to work
+          // Here we need to reference the merge tags (e.g. 'NAME')
+          // and pass a valid string (even if empty) for it to work
           //'NAME'=> $name,
           //'LASTNAME'=> $lastname,
           'IP' => $ip
