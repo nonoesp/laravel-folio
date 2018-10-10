@@ -15,7 +15,7 @@ if(!isset($hide_subscribe)) {
 $source = '';
 $medium = '';
 $campaign = '';
-$button_text = trans('folio::base.subscribe');
+$button_text = trans('folio::base.subscribe_button_text');
 $text = trans('folio::base.receive-our-posts');
 
 if(!isset($subscribe_data)) {

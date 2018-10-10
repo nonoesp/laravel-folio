@@ -46,7 +46,7 @@ $(document).on('click', '.js--subscribe__submit', function(event) {
                 // Reset form state
                 emailField.prop('disabled', false);
                 submitButton.prop('disabled', false);
-                submitButton.val(trans.subscribe);
+                submitButton.val(trans.subscribe_button_text);
             },
             traditional: true
         });

@@ -13,8 +13,10 @@ return [
 	'your-email-address' => 'Your email address',
 
 	// folio.subscribe.js
-	'subscribe' => 'Sign Up',
+	'subscribe' => 'Subscribe',
+	'subscribe_button_text' => 'Sign Me Up',
 	'newsletter' => 'Newsletter',
+	'follow' => 'Follow',	
   	'to_receive_our_updates' => 'Receive our publications via email.',
   	'email_is_not_valid' => 'Something is not right with that email.',
   	'thanks_for_subscribing' => 'Thanks for subscribing!',

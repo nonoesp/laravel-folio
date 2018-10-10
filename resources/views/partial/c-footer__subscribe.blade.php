@@ -39,7 +39,7 @@ if(!isset($medium) && request()->has('utm_medium')) {
                 @if(isset($button_text))
                     {{ Form::submit($button_text, ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
                 @else
-                    {{ Form::submit(trans('folio::base.subscribe'), ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
+                    {{ Form::submit(trans('folio::base.subscribe_button_text'), ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
                 @endif
            </div>
 
