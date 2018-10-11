@@ -471,6 +471,13 @@ class Item extends Model implements Feedable
 	public function disqusPermalink() {
 		return str_replace("https", "http", \Request::root().'/disqus/'.$this->id);
 	}
+	
+	public static function arrayValueOrDefault($array, $key, $default = null) {
+		if(array_key_exists($key, $array)) {
+			return $array[$key];
+		}
+		return $default;
+	}
 
 	public function collection() {
 		return Item::makeCollection([
@@ -480,13 +487,6 @@ class Item extends Model implements Feedable
 			'limit' => $this->intProperty('collection-limit'),
 			'showAll' => $this->boolProperty('collection-show-all'),
 		]);
-	}
-
-	public static function arrayValueOrDefault($array, $key, $default = null) {
-		if(array_key_exists($key, $array)) {
-			return $array[$key];
-		}
-		return $default;
 	}
 
 	/**
@@ -523,33 +523,39 @@ class Item extends Model implements Feedable
 				if($limit) {
 					if($isAdmin) {
 						$collection = Item::withTrashed()
+											->published()
 											->orderBy($sort, $order)
 											->take($limit)
 											->get();	
 					} else {
-						$collection = Item::orderBy($sort, $order)
+						$collection = Item::published()
+						->orderBy($sort, $order)
 											->take($limit)
 											->get();	
 					}
 				} else {
 					if($isAdmin) {
 						$collection = Item::withTrahsed()
+											->published()
 											->orderBy($sort, $order)
 											->get();
 					} else {
-						$collection = Item::orderBy($sort, $order)
+						$collection = Item::published()
+						->orderBy($sort, $order)
 											->get();
 					}
 				}
             } else {
 				if($limit) {
 		              $collection = Item::blog()
+										->published()
 										->orderBy($sort, $order)
 										->take($limit)
 										->get();					
 				} else {
 					   $collection = Item::blog()
-					   					 ->orderBy($sort, $order)
+											->published()
+											->orderBy($sort, $order)
 					   					 ->get();
 				}
             }
@@ -560,40 +566,47 @@ class Item extends Model implements Feedable
             if($showAll) {
 				if($limit) {
 						if($isAdmin) {
-							$collection = Item::withTrashed()->withAnyTag($tagsArray)
-												->orderBy($sort, $order)
-												->take($limit)
-												->get();	
+							$collection = Item::withTrashed()
+											  ->withAnyTag($tagsArray)
+											  ->published()
+											  ->orderBy($sort, $order)
+											  ->take($limit)
+  											  ->get();	
 						} else {
 							$collection = Item::withAnyTag($tagsArray)
-												->orderBy($sort, $order)
-												->take($limit)
-												->get();	
+											  ->published()
+											  ->orderBy($sort, $order)
+											  ->take($limit)
+											  ->get();	
 						}				
 				} else {	
 					if($isAdmin) {
 						$collection = Item::withTrashed()
-											->withAnyTag($tagsArray)
-											->orderBy($sort, $order)
-											->get();			
+										  ->withAnyTag($tagsArray)
+										  ->published()
+										  ->orderBy($sort, $order)
+										  ->get();			
 					} else {
 						$collection = Item::withAnyTag($tagsArray)
-											->orderBy($sort, $order)
-											->get();						
+										  ->published()
+										  ->orderBy($sort, $order)
+										  ->get();						
 					}			
 				}
             } else {
 				if($limit) {
 		              $collection = Item::withAnyTag($tagsArray)
 										->blog()
+										->published()
 										->orderBy($sort, $order)
 										->take($limit)
 										->get();					
 				} else {	
               		$collection = Item::withAnyTag($tagsArray)
-					  				 	->blog()
-										->orderBy($sort, $order)
-										->get();
+					  				  ->blog()
+									  ->published()
+									  ->orderBy($sort, $order)
+									  ->get();
 				}
             }
 
