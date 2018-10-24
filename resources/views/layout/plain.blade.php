@@ -24,10 +24,10 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui"/>
-	<title>{{ $site_title or config('folio.title') }}</title>
+	<title>{{ $site_title ?? config('folio.title') }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="{{ $folio_css or config('folio.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ $folio_css ?? config('folio.css') }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -53,16 +53,16 @@
 	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
 
 	<!-- Tags -->
-	<meta name="description" content="{{ $og_description or $og_description_default }}" />
-	<link rel="image_src" href="{{ $og_image or $og_image_default }}" />
+	<meta name="description" content="{{ $og_description ?? $og_description_default }}" />
+	<link rel="image_src" href="{{ $og_image ?? $og_image_default }}" />
 
 	<!-- Open Graph meta data -->
-	<meta property="fb:app_id" content="{{ $fb_app_id or $fb_app_id_default }}" />
-	<meta property="og:url" content="{{ $og_url or $og_url_default }}" />
-	<meta property="og:image" content="{{ $og_image or $og_image_default }}" />
-	<meta property="og:title" content="{{ $og_title or $og_title_default }}" />
-	<meta property="og:description" content="{{ $og_description or $og_description_default }}" />
-	<meta property="og:type" content="{{ $og_type or 'profile' }}" />
+	<meta property="fb:app_id" content="{{ $fb_app_id ?? $fb_app_id_default }}" />
+	<meta property="og:url" content="{{ $og_url ?? $og_url_default }}" />
+	<meta property="og:image" content="{{ $og_image ?? $og_image_default }}" />
+	<meta property="og:title" content="{{ $og_title ?? $og_title_default }}" />
+	<meta property="og:description" content="{{ $og_description ?? $og_description_default }}" />
+	<meta property="og:type" content="{{ $og_type ?? 'profile' }}" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="900" />
 	@yield('open_object_metadata')
@@ -70,9 +70,9 @@
 	<!-- Twitter Card -->
 	<meta name="twitter:site" content="{{ config('folio.social.twitter.handle') }}" />
 	<meta name="twitter:creator" content="{{ config('folio.social.twitter.handle') }}" />
-	<meta name="twitter:title" content="{{ $og_title or $og_title_default }}" />
-	<meta name="twitter:description" content="{{ $og_description or $og_description_default }}" />
-	<meta name="twitter:image" content="{{ $og_image or $og_image_default }}" />
+	<meta name="twitter:title" content="{{ $og_title ?? $og_title_default }}" />
+	<meta name="twitter:description" content="{{ $og_description ?? $og_description_default }}" />
+	<meta name="twitter:image" content="{{ $og_image ?? $og_image_default }}" />
 	<meta name="twitter:card" content="summary_large_image" />
 
 	<!-- RSS -->
@@ -80,7 +80,7 @@
 
 @if(!Auth::check() && config('folio.google-analytics'))
 	<!-- Google Analytics -->
-	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{{ $google_analytics or config('folio.google-analytics') }}', 'auto');ga('send', 'pageview');</script>
+	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{{ $google_analytics ?? config('folio.google-analytics') }}', 'auto');ga('send', 'pageview');</script>
 @endif
 @yield('metadata')
 

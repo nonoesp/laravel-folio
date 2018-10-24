@@ -49,7 +49,7 @@
 
 			@else
 			
-				{{ $title or 'Folio' }}
+				{{ $title ?? 'Folio' }}
 			
 			@endif
 

@@ -15,8 +15,8 @@
         @foreach($buttons as $label=>$path)
           @if(is_array($path))
             <a href="{{ $path[0] }}"
-               class="[ c-floating-menu__item {{$path[1] or ''}} ]"
-               {!! $path[2] or '' !!}>
+               class="[ c-floating-menu__item {{$path[1] ?? ''}} ]"
+               {!! $path[2] ?? '' !!}>
           @else
             <a href="{{ $path }}" class="[ c-floating-menu__item ]">
           @endif

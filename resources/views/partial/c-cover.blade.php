@@ -1,16 +1,16 @@
 
-<section class="[ c-cover {!! $class or 'c-cover--header' !!} ]"{{--
+<section class="[ c-cover {!! $class ?? 'c-cover--header' !!} ]"{{--
 --}} @if(isset($image)) style="background-image:url('{!! $image !!}')" @endif{{--
 --}} @if(isset($background_color)) style="background-color:{{$background_color}}" @endif>
 
 	<div class="c-cover__title">
 		<span class="[ c-cover__title-a ]">{!! $title !!}</span>
 		<br>
-		<span class="[ c-cover__title-b  {!! $classes_title_b or '' !!} ]">{!! $subtitle or '' !!}</span>
+		<span class="[ c-cover__title-b  {!! $classes_title_b ?? '' !!} ]">{!! $subtitle ?? '' !!}</span>
 	</div>
 
 	<div class="c-cover__description">
-		{!! $description or '' !!}
+		{!! $description ?? '' !!}
 	</div>
 
 	@if(isset($slideshow))

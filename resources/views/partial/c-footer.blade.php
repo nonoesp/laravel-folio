@@ -41,7 +41,7 @@ if(!isset($subscribe_data)) {
   if(isset($data['classes'])) { $classes = $data['classes']; }
 ?>
 
-<div class="[ u-pad-b-1x u-pad-t-1x {{ $classes or '' }} ]">
+<div class="[ u-pad-b-1x u-pad-t-1x {{ $classes ?? '' }} ]">
 
   @if($hide_subscribe == false)
 
