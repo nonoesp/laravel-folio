@@ -22,8 +22,8 @@
     "require": {
         "php": ">=7.1.3",
         "illuminate/support": "5.7.*",
-        "rtconner/laravel-tagging": "~2.2.3",
-        "nonoesp/authenticate": "^5.5",
+        "rtconner/laravel-tagging": "^3.0",
+        "nonoesp/authenticate": "^5.7",
         "nonoesp/thinker": "^1.1",
         "jenssegers/date": "^3.0",
         "laravelium/feed": "3.0.*",
