@@ -154,7 +154,7 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 First, let's install all our asset dependencies (some of them are SCSS dependencies and others are JavaScript).
 
 ```bash
-npm install nonoesp/core-scss bourbon font-awesome vue vue-resource vue-focus lodash jquery validate-js
+npm install nonoesp/folio-scss bourbon font-awesome vue vue-resource vue-focus lodash jquery validate-js
 ```
 
 ### Compile Assets (with Laravel Mix)
