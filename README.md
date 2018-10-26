@@ -169,8 +169,8 @@ let mix = require('laravel-mix');
 
 // ...
 
-mix.sass('resources/assets/sass/folio.scss', 'public/nonoesp/folio/css');
-mix.js('resources/assets/js/folio.js', 'public/nonoesp/folio/js')
+mix.sass('resources/sass/folio.scss', 'public/nonoesp/folio/css');
+mix.js('resources/js/folio.js', 'public/nonoesp/folio/js')
    .extract(['vue', 'vue-resource', 'vue-focus', 'jquery', 'validate-js', 'lodash', 'axios']);
 
 ```
