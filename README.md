@@ -165,7 +165,7 @@ Your `webpack.mix.js` file should look like this.
 (You can omit the `.js` or the `.sass` part, just keep whatever you are compiling.)
 
 ```javascript
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
 
 // ...
 
@@ -189,7 +189,7 @@ You can publish **Folio** views and customize them. (If you customize a few view
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
 ```
 
-## Subscribers Notificaitons
+## Subscribers Notifications
 
 TODO: Explain you need to set a mail driver (amazon ses) and config `config/mail.php` and `config/services.php` and `config/folio.php`.
 
@@ -211,6 +211,6 @@ Folio is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Me
 
-I'm [Nono Martínez Alonso](http://nono.ma) (nono.ma), a computational designer with a penchant for design, code, and simplicity. I tweet at [@nonoesp](http://www.twitter.com/nonoesp) and write at [Getting Simple](http://gettingsimple.com/). If you use this package, I would love to hear about it. Thanks!
+I'm [Nono Martínez Alonso](http://nono.ma) (nono.ma), a computational designer with a penchant for design, code, and simplicity. I tweet at [@nonoesp](http://www.twitter.com/nonoesp) and host [The Getting Simple Podcast](http://gettingsimple.com/podcast). If you use this package, I would love to hear about it. Thanks!
 
 [![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/nonoesp)
