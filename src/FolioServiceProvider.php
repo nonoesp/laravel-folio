@@ -27,8 +27,8 @@ class FolioServiceProvider extends ServiceProvider
         $publish_path_lang = base_path('resources/lang/nonoesp/folio');
         $publish_path_middleware = base_path('app/Http/Middleware');
         $publish_path_assets = base_path('public/');
-        $publish_path_sass = base_path('resources/assets/sass');
-        $publish_path_js = base_path('resources/assets/js');
+        $publish_path_sass = base_path('resources/sass');
+        $publish_path_js = base_path('resources/js');
         $publish_path_config = config_path('folio.php');
 
         // Publish Stuff
