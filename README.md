@@ -29,7 +29,7 @@ Next, add (some) providers that are still not auto-discoverable to the `provider
 ```php
     'providers' => [
         // nonoesp/folio dependencies
-        Conner\Tagging\Providers\TaggingServiceProvider::class,
+        // Conner\Tagging\Providers\TaggingServiceProvider::class,
         Thujohn\Twitter\TwitterServiceProvider::class,
     ],
 ```
