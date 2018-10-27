@@ -28,9 +28,6 @@
 		<nav class="[ navigation ] [ u-mar-t-0x ]">
 			<ul>
 				<li><a href="/{{ Config::get('folio.path-prefix') }}" class="navigation-link js--navigation-link-folio">home</a></li>
-        @if(Auth::check())
-				<li><a href="/{!! Config::get('folio.admin-path-prefix') !!}" class="navigation-link js--navigation-link-admin">admin</a></li>
-        @endif
 			</ul>
 		</nav>
 
