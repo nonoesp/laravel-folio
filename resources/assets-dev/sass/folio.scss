@@ -1,45 +1,45 @@
 // folio-scss - settings
-@import '../../../node_modules/folio-scss/settings/settings.core'; // Settings, colors, breakpoints, modules
+@import '../../node_modules/folio-scss/settings/settings.core'; // Settings, colors, breakpoints, modules
 @import 'folio.settings';
 // vendor
-@import '../../../node_modules/bourbon/app/assets/stylesheets/bourbon';
-@import '../../../node_modules/folio-scss/vendor/csswizardry-grids'; // Margin reset, grids
-@import '../../../node_modules/folio-scss/vendor/typecsset'; // Type setting
-@import '../../../node_modules/font-awesome/scss/font-awesome';
+@import '../../node_modules/bourbon/app/assets/stylesheets/bourbon';
+@import '../../node_modules/folio-scss/vendor/csswizardry-grids'; // Margin reset, grids
+@import '../../node_modules/folio-scss/vendor/typecsset'; // Type setting
+@import '../../node_modules/font-awesome/scss/font-awesome';
 // folio-scss - generic
-@import '../../../node_modules/folio-scss/generic/generic.reset';
-@import '../../../node_modules/folio-scss/generic/generic.type';
-@import '../../../node_modules/folio-scss/generic/generic.selection';
+@import '../../node_modules/folio-scss/generic/generic.reset';
+@import '../../node_modules/folio-scss/generic/generic.type';
+@import '../../node_modules/folio-scss/generic/generic.selection';
 // folio-scss - tools
-@import '../../../node_modules/folio-scss/tools/tools.retina';
+@import '../../node_modules/folio-scss/tools/tools.retina';
 // folio-scss - elements
-@import '../../../node_modules/folio-scss/elements/elements.inputs';
-// folio-scss - objects
-@import '../../../node_modules/folio-scss/objects/o-wrap';
-@import '../../../node_modules/folio-scss/objects/o-band';
-@import '../../../node_modules/folio-scss/objects/o-icon';
-@import '../../../node_modules/folio-scss/objects/o-icon-prototype';
-@import '../../../node_modules/folio-scss/objects/o-icon-sizes';
-@import '../../../node_modules/folio-scss/objects/o-video-thumb';
-@import '../../../node_modules/folio-scss/objects/o-thumb';
-@import '../../../node_modules/folio-scss/objects/o-notification';
+@import '../../node_modules/folio-scss/elements/elements.inputs';
+// folio-scss - object
+@import '../../node_modules/folio-scss/objects/o-wrap';
+@import '../../node_modules/folio-scss/objects/o-band';
+@import '../../node_modules/folio-scss/objects/o-icon';
+@import '../../node_modules/folio-scss/objects/o-icon-prototype';
+@import '../../node_modules/folio-scss/objects/o-icon-sizes';
+@import '../../node_modules/folio-scss/objects/o-video-thumb';
+@import '../../node_modules/folio-scss/objects/o-thumb';
+@import '../../node_modules/folio-scss/objects/o-notification';
 // folio-scss - components
-@import '../../../node_modules/folio-scss/components/c-cover';
-@import '../../../node_modules/folio-scss/components/c-header';
-@import '../../../node_modules/folio-scss/components/c-header-simple';
-@import '../../../node_modules/folio-scss/components/c-item';
-@import '../../../node_modules/folio-scss/components/c-admin';
-@import '../../../node_modules/folio-scss/components/c-load-more';
-@import '../../../node_modules/folio-scss/components/c-archive';
-@import '../../../node_modules/folio-scss/components/c-floating-menu';
+@import '../../node_modules/folio-scss/components/c-cover';
+@import '../../node_modules/folio-scss/components/c-header';
+@import '../../node_modules/folio-scss/components/c-header-simple';
+@import '../../node_modules/folio-scss/components/c-item';
+@import '../../node_modules/folio-scss/components/c-admin';
+@import '../../node_modules/folio-scss/components/c-load-more';
+@import '../../node_modules/folio-scss/components/c-archive';
+@import '../../node_modules/folio-scss/components/c-floating-menu';
 // folio-scss - modifiers
-@import '../../../node_modules/folio-scss/modifiers/m-fa'; // Font Awesome
-@import '../../../node_modules/folio-scss/modifiers/m-grid';
+@import '../../node_modules/folio-scss/modifiers/m-fa'; // Font Awesome
+@import '../../node_modules/folio-scss/modifiers/m-grid';
 // folio-scss - utilities
-@import '../../../node_modules/folio-scss/utilities/utilities.color.background';
-@import '../../../node_modules/folio-scss/utilities/utilities.color.font';
-@import '../../../node_modules/folio-scss/utilities/utilities.text.align';
-@import '../../../node_modules/folio-scss/utilities/utilities.various';
-@import '../../../node_modules/folio-scss/utilities/utilities.visibility';
-@import '../../../node_modules/folio-scss/utilities/utilities.font.family';
+@import '../../node_modules/folio-scss/utilities/utilities.color.background';
+@import '../../node_modules/folio-scss/utilities/utilities.color.font';
+@import '../../node_modules/folio-scss/utilities/utilities.text.align';
+@import '../../node_modules/folio-scss/utilities/utilities.various';
+@import '../../node_modules/folio-scss/utilities/utilities.visibility';
+@import '../../node_modules/folio-scss/utilities/utilities.font.family';
 // custom
