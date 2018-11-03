@@ -376,8 +376,6 @@ class Item extends Model implements Feedable
 
 	public static function convertToHtml($text, $markdown_parser = 'default', $veilImages = 'true') {
 
-		//$markdown_parser = $this->stringProperty('markdown-parser', 'default');
-
 		if($markdown_parser == "commonmark") {
 
 			// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
