@@ -376,8 +376,6 @@ class Item extends Model implements Feedable
 
 	public static function convertToHtml($text, $markdown_parser = 'default', $veilImages = 'true') {
 
-		//$markdown_parser = $this->stringProperty('markdown-parser', 'default');
-
 		if($markdown_parser == "commonmark") {
 
 			// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
@@ -451,10 +449,42 @@ class Item extends Model implements Feedable
 	 */
 	public function htmlText($veilImages = true) {
 		$markdown_parser = $this->stringProperty('markdown-parser', 'default');
+		if($this->hasExcerptTag()) {
+			$text = explode(config('folio.excerpt-tag'), $this->text)[1];
+			$html = Item::convertToHtml($text, $markdown_parser, $veilImages);
+			return $html;
+		}		
 		$html = Item::convertToHtml($this->text, $markdown_parser, $veilImages);
 		return $html;
 	}
 	
+	public function hasExcerpt() {
+		return $this->hasMoreTag() || $this->hasExcerptTag();
+	}
+
+	public function hasMoreTag() {
+		return count(explode(config('folio.more-tag'), $this->text)) > 1;
+	}
+
+	public function hasExcerptTag() {
+		return count(explode(config('folio.excerpt-tag'), $this->text)) > 1;
+	}
+	
+	public function htmlTextExcerpt($veilImages = true) {
+		if($this->hasMoreTag()) {
+			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
+			$textExcerpt = explode(config('folio.more-tag'), $this->text)[0];
+			$html = Item::convertToHtml($textExcerpt, $markdown_parser, $veilImages);
+			return $html;
+		} else if($this->hasExcerptTag()) {
+			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
+			$textExcerpt = explode(config('folio.excerpt-tag'), $this->text)[0];
+			$html = Item::convertToHtml($textExcerpt, $markdown_parser, $veilImages);
+			return $html;
+		}
+		return $this->htmlText();
+	}
+
 	/**
 	 * Get the Item's permanent link, constructed with
 	 * the 'permalink-prefix' from Folio's config and

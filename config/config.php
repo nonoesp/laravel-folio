@@ -184,6 +184,14 @@ return [
 	'middlewares-admin' => ['login', 'web'], // folio admin routes
 
 	/*
+	 * The HTML tags to use on Item's text field to specify where a
+	 * exceprt or teaser end.
+	 * 
+	 */
+	'more-tag' => '<!--more-->',
+	'excerpt-tag' => '<!--excerpt-->',
+
+	/*
 	 * The amount of published items to display in Folio's home page.
 	 * (The rest will be passed as a JavaScript JSON object for "load more".)
 	 */		
