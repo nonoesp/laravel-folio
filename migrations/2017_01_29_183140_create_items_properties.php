@@ -21,6 +21,7 @@ class CreateItemsProperties extends Migration
                $table->string('name')->nullable();
                $table->string('value', 1024)->nullable();
                $table->string('label')->nullable();
+               $table->integer('order_column')->nullable();
        });
 
 

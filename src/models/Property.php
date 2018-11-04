@@ -2,9 +2,13 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 
-class Property extends Model
+class Property extends Model implements Sortable
 {
+	use SortableTrait;
+
 	protected $table;
 	protected $fillable = array('id', 'item_id', 'label', 'name', 'value');
 

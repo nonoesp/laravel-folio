@@ -117,6 +117,7 @@ Route::group(['middleware' => Config::get("folio.middlewares-admin")], function(
 	Route::post('/api/property/update', 'Nonoesp\Folio\Controllers\AdminController@postPropertyUpdate');
 	Route::post('/api/property/delete', 'Nonoesp\Folio\Controllers\AdminController@postPropertyDelete');
 	Route::post('/api/property/create', 'Nonoesp\Folio\Controllers\AdminController@postPropertyCreate');
+	Route::post('/api/property/swap', 'Nonoesp\Folio\Controllers\AdminController@postPropertySwap');
 
 	Route::post('/api/item/update', 'Nonoesp\Folio\Controllers\AdminController@postItemUpdate');
 	Route::post('/api/item/delete', 'Nonoesp\Folio\Controllers\AdminController@postItemDelete');

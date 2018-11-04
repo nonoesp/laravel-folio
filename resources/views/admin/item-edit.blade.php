@@ -163,13 +163,40 @@ methods: {
 		debounced_property_sync(property, this);
 		this.properties_changed = false;
 	},
+	movePropertyUp: function(property) {
+
+			const index = this.properties.indexOf(property);
+			const upperProperty = this.properties[index - 1];
+			this.properties.splice(index - 1, 2, property, upperProperty );
+
+			VueResource.Http.post('/api/property/swap', {id: property.id, id2: upperProperty.id})
+			.then((response) => {
+				// success
+			}, (response) => {
+				// error
+			});
+	},
+	movePropertyDown: function(property) {
+		const index = this.properties.indexOf(property);
+		const bottomProperty = this.properties[index + 1];
+		this.properties.splice(index, 2, bottomProperty, property );
+
+		VueResource.Http.post('/api/property/swap', {id: property.id, id2: bottomProperty.id})
+		.then((response) => {
+			// success
+		}, (response) => {
+			// error
+		});		
+	},
 	delete_property: function(property) {
-		VueResource.Http.post('/api/property/delete', {id: property.id}).then((response) => {
+		if(confirm("Are you sure you want to delete this property? This cannot be undone.")) {
+			VueResource.Http.post('/api/property/delete', {id: property.id}).then((response) => {
 				// success
 				this.properties.splice(this.properties.indexOf(property), 1);
 			}, (response) => {
 				// error
 			});
+		}
 	},
 	add_property: function(event) {
 		var data = { item_id: this.item.id }
@@ -307,7 +334,7 @@ methods: {
 		<script>
 			admin.item = {!! $item !!};
 			admin.originalItem = {!! $item !!};
-			admin.properties = {!! $item->properties !!};
+			admin.properties = {!! $item->properties->sortBy('order_column')->values() !!};
 			admin.message = "{!! $item->title !!}";
 			admin.initProperties();
 			// parse deleted_at date to true if existing for isDirty to detect property
@@ -439,14 +466,18 @@ methods: {
 					<strong>Properties</strong>
 				</div>
 
-				<div v-for="property in properties" class="[ grid__item one-whole ] [ c-admin__property ]">
+				<div v-for="(property, index) in properties" class="[ grid__item one-whole ] [ c-admin__property ]">
 
 						<div class="[ grid grid--narrow ]">
 							<div class="[ grid__item ]
 							[ c-admin-form__label u-text-align--right c-admin--font-light ]
 							[ one-half portable--one-whole ]
 							[ u-hidden-portable ]">
-								<span>@{{ property.id }}</span>
+								{{-- <span>@{{ property.id }} · @{{ property.order_column }}
+								@{{ index }}</span> --}}
+								{{-- <span class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+									<i class="fa fa-trash-o"></i>
+								</span>												 --}}
 							</div>
 							<!--
 						--><div class="[ grid__item three-twelfths  ] [ u-text-align--right ]">
@@ -472,12 +503,22 @@ methods: {
 									@keyup="sync_properties(property)"
 									v-bind:data-id="property.id" data-field="value">
 							</div><!--
-							--><div @click="delete_property(property)"
-							v-bind:data-id="property.id"
+							--><div
 							class="[ grid__item one-twelfth ] [ u-opacity--low ]">
-								<span class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+								<span @click="delete_property(property)" v-bind:data-id="property.id"
+								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
 									<i class="fa fa-trash-o"></i>
 								</span>
+								<span @click="movePropertyUp(property)" v-bind:data-id="property.id"
+								v-if="index != 0"
+								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+									<i class="fa fa-angle-up"></i>
+								</span>				
+								<span @click="movePropertyDown(property)" v-bind:data-id="property.id"
+								v-if="index != properties.length - 1"
+								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+									<i class="fa fa-angle-down"></i>
+								</span>								
 								<span v-if="property.is_updating">
 									<i class="fa fa-refresh fa-spin fa-fw"></i>
 									<span class="sr-only">Loading...</span>

@@ -269,6 +269,19 @@ class AdminController extends Controller
 		]);
 	}
 
+	function postPropertySwap() {
+		$property_id = Input::get('id');
+		$property_id_swap = Input::get('id2');
+		$property = Property::find($property_id);
+		$property_swap = Property::find($property_id_swap);
+
+		Property::swapOrder($property, $property_swap);
+
+		return response()->json([
+			'success' => true
+	]);
+	}
+
 	// Items API
 
 	function postItemUpdate() {
