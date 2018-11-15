@@ -447,14 +447,17 @@ class Item extends Model implements Feedable
 	 * by specifying the custom property 'markdown-parser' to
 	 * commonmark, vtalbot, or michelf
 	 */
-	public function htmlText($veilImages = true) {
+	public function htmlText($veilImages = true, $parseExternalLinks = false) {
 		$markdown_parser = $this->stringProperty('markdown-parser', 'default');
 		if($this->hasExcerptTag()) {
 			$text = explode(config('folio.excerpt-tag'), $this->text)[1];
 			$html = Item::convertToHtml($text, $markdown_parser, $veilImages);
-			return $html;
-		}		
-		$html = Item::convertToHtml($this->text, $markdown_parser, $veilImages);
+		} else {
+            $html = Item::convertToHtml($this->text, $markdown_parser, $veilImages);
+        }
+        if ($parseExternalLinks) {
+            $html = Item::parseExternalLinks($html);
+        }
 		return $html;
 	}
 	
@@ -470,20 +473,39 @@ class Item extends Model implements Feedable
 		return count(explode(config('folio.excerpt-tag'), $this->text)) > 1;
 	}
 	
-	public function htmlTextExcerpt($veilImages = true) {
+	public function htmlTextExcerpt($veilImages = true, $parseExternalLinks = false) {
 		if($this->hasMoreTag()) {
 			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
 			$textExcerpt = explode(config('folio.more-tag'), $this->text)[0];
 			$html = Item::convertToHtml($textExcerpt, $markdown_parser, $veilImages);
-			return $html;
 		} else if($this->hasExcerptTag()) {
 			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
 			$textExcerpt = explode(config('folio.excerpt-tag'), $this->text)[0];
 			$html = Item::convertToHtml($textExcerpt, $markdown_parser, $veilImages);
-			return $html;
-		}
-		return $this->htmlText();
-	}
+		} else {
+            return $this->htmlText();
+        }
+        if ($parseExternalLinks) {
+            $html = Item::parseExternalLinks($html);
+        }
+        return $html;
+    }
+    
+    /**
+     * Add target="_blank" and class="is-external" to any links
+     * with an href starting on http:// or https://
+     */
+    public function parseExternalLinks($html) {
+        $from = [
+            'href="http://',
+            'href="https://',
+        ];
+        $to = [
+            'target="_blank" class="is-external" href="http://',
+            'target="_blank" class="is-external" href="https://',
+        ];
+        return str_replace($from, $to, $html);
+    }
 
 	/**
 	 * Get the Item's permanent link, constructed with
