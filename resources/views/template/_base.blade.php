@@ -91,6 +91,7 @@ if(isset($collection)) {
           $site_title = $og_title.' · '.config('folio.title');
         }
         $og_description = Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']);
+        $og_description = $item->stringProperty('meta-description', $og_description);
         $og_type = 'article';
         $og_url = $item->permalink();
         ?>
@@ -145,6 +146,11 @@ if(isset($collection)) {
           $site_title = ucwords($tag).' · '.config('folio.title');
           $og_description = 'Items tagged with the category '.ucwords($tag);
           $cover_data['description'] = "Items tagged with $tag";
+        }
+
+        // Master Item
+        if (isset($item)) {
+            $og_description = $item->stringProperty('meta-description', $og_description);
         }
     }
 
