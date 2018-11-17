@@ -82,7 +82,13 @@
 <body>
 
 	@if($notification = Request::session()->get('notification'))
-		{!! view('folio::partial.o-notification', ['notification' => $notification]) !!}
+		<?php
+			$notification_data = [
+				'notification' => $notification,
+				'classes' => ['o-notification--light'],
+			];
+		?>
+		{!! view('folio::partial.o-notification', $notification_data) !!}
 	@endif
 
 	{{-- Header --}}

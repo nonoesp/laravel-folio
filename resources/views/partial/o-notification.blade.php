@@ -1,3 +1,3 @@
-<div class="[ o-notification ]">
+<div class="[ o-notification @isset($classes) {{ join(" ", $classes) }} @endisset ]">
   {!! $notification !!}
 </div>
