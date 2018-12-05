@@ -301,7 +301,6 @@ class AdminController extends Controller
 	function postItemDelete() {
 		$item = Item::withTrashed()->find(Input::get('id'));
 		$item->delete();
-		// $item->save();
 		return response()->json([
 				'success' => true,
 				'item' => $item
@@ -311,6 +310,7 @@ class AdminController extends Controller
 	function postItemRestore() {
 		$item = Item::withTrashed()->find(Input::get('id'));
 		$item->restore();
+		$item->retag($item->tags_str);
 		return response()->json([
 				'success' => true,
 				'item' => $item
