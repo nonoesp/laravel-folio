@@ -691,4 +691,12 @@ class Item extends Model implements Feedable
 	  }
 	  return $collection;
 	}
+
+	public function date($format = 'F j, Y') {
+		return Item::formatDate($this->published_at, $format);
+	}
+
+	public static function formatDate($date, $format = 'F j, Y') {
+		return ucWords(\Date::parse($date)->format($format));
+	}
 }
