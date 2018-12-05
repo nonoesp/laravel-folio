@@ -531,6 +531,31 @@ class Item extends Model implements Feedable
 		return $default;
 	}
 
+	/**
+	 * Returns an array of all existing tag names in all items.
+	 */
+	public static function existingTagNames() {
+		$tagNames = [];
+		foreach(Item::existingTags() as $tag) {
+			array_push($tagNames, $tag->name);
+		}
+		return $tagNames;
+	}
+
+	/**
+	 * Returns an array with an Item's collection tag names.
+	 */
+	public function collectionTagNames() {
+		if($collectionTags = $this->property('collection')) {
+			// Get a clean array of lowercase strings of collection tag names
+			$collections = explode(",", strtolower(str_replace(', ',',',$collectionTags->value)));
+			// Wether to show items that are not marked as blog in this collection
+			$collectionShowAll = $this->boolProperty('collection-show-all');
+			return $collections;
+		}
+		return null;
+	}
+
 	public function collection() {
 		return Item::makeCollection([
 			'tags' => $this->stringProperty('collection'),
