@@ -3,15 +3,18 @@
 	$href = '/'.$item->path();
 	$target = "";
 	$class_is_external = '';
-	$source = "";
 	if($item->link != "") {
 		$href = $item->link;
-		$target = ' target="_"';
-		$class_is_external = '[ is-external ]';
-		$source = " · ".explode("/", $item->link)[2];
+		if(substr($item->link, 0,4) == 'http') {
+			$target = ' target="_"';
+			$class_is_external = '[ is-external ]';
+			$source = explode("/", $item->link)[2];
+		}
 	}
-  $class_is_tagged = '';
-  if($item->tagNames()) $class_is_tagged = '[ is-tagged ]';
+	$class_is_tagged = '';
+	if($item->tagNames()) {
+		$class_is_tagged = '[ is-tagged ]';
+	}
 	$is_expected = false;
 	$class_is_expected = '';
 	if(isset($expected)) {
@@ -46,7 +49,7 @@
 					{{ Html::link('', trans('folio::base.subscribe'), ['class' => 'js--subscribe-link']) }}
 					{{ trans('folio::base.to-be-notified') }}
 				@else
-        	<span>{{ ucWords($date->format('F Y')).$source }}</span>
+        	<span>{{ $item->date('F Y') }}@isset($source) · {{$source}}@endisset</span>
 				@endif
   		</p>
 
