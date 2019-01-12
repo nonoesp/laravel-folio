@@ -66,7 +66,9 @@ class BackupDatabase extends Command
 					$m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
 					$m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))
 					->subject('Database backup '.config('folio.title-short'))
-					->attach($filepath);
+					->attach($filepath, [
+                        'mime' => 'application/gzip',
+					]);
 				});
 			}
 
