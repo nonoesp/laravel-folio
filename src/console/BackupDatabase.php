@@ -12,25 +12,20 @@ class BackupDatabase extends Command
 
 	protected $description = 'Backup the database';
 
+	protected $directory = 'backup/';
 	
     protected $process;
 	
     public function __construct()
     {
 		parent::__construct();
-		
-		$db_name = env('DB_DATABASE');
-		$db_username = env('DB_USERNAME');
-		$db_password = env('DB_PASSWORD');
-		$filename = $this->filename();
 	
-		// Execute shell command to dump gzipped database to file
 		$this->process = new Process(sprintf(
 			'mysqldump -u%s -p%s %s | gzip > %s',
-			$db_username,
-			$db_password,
-			$db_name,
-			'../tmp/'.$filename.'.sql.gz'
+			env('DB_DATABASE'),
+			env('DB_USERNAME'),
+			env('DB_PASSWORD'),
+			$this->filepath()
 		));
     }
 
@@ -41,9 +36,14 @@ class BackupDatabase extends Command
 				$db_name;
 	}
 
+	public function filepath() {
+		return $this->directory.$this->filename().'.sql.gz';
+	}
+
     public function handle()
     {
         try {
+			// return 2;
             $this->process->mustRun();
 
 			$this->info('The backup has been proceed successfully.');
@@ -51,6 +51,7 @@ class BackupDatabase extends Command
 			$app_url = env('APP_URL');
 			$db_name = env('DB_DATABASE');
 			$filename = $this->filename();
+			$filepath = $this->filepath();
 
 			// Send database via email
 			\Mail::send('email.text',
@@ -59,14 +60,14 @@ class BackupDatabase extends Command
 				$db_name.'</strong> backed up as '.
 				'<strong>'.$filename.'.sql.gz</strong>!'
 			],
-			function ($m) use ($filename) {
+			function ($m) use ($filepath) {
 				$m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
 				$m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))
 				->subject('Database backup '.config('folio.title-short'))
-				->attach('../tmp/'.$filename.'.sql.gz');
+				->attach($filepath);
 			});
         } catch (ProcessFailedException $exception) {
-            $this->error('The backup process has been failed.');
+            return $this->error('The backup process has been failed.');
         }
     }
 }
