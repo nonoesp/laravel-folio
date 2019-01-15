@@ -8,11 +8,11 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class BackupDatabase extends Command
 {
-    protected $signature = 'db:backup {path?} {email?}';
+    protected $signature = 'folio:backup {directory?} {name?} {--email}';
 
 	protected $description = 'Backup the database';
 
-	protected $defaultDirectory = '../backup/';
+	protected $defaultDirectory = '../storage/app/backup/';
 	
     protected $process;
 	
@@ -22,7 +22,18 @@ class BackupDatabase extends Command
     }
 
 	public static function constructFilepath($directory, $prefix) {
-		return $directory.'/'.$prefix.'_'.env('DB_DATABASE').'.sql.gz';
+		return $directory.'/'.BackupDatabase::filename($prefix);
+	}
+
+	public static function defaultFilename() {
+		return BackupDatabase::filename(BackupDatabase::timestamp());
+	}
+
+	public static function filename($prefix = null) {
+		if ($prefix) {
+			return $prefix.'_'.env('DB_DATABASE').'.sql.gz';
+		}
+		return env('DB_DATABASE').'.sql.gz';
 	}
 
 	public static function timestamp() {
@@ -30,32 +41,38 @@ class BackupDatabase extends Command
 	}
 
 	public function filepath() {
-		if ($this->argument('path')) {
-			return $this->argument('path');
+		if ($this->argument('directory')) {
+			if ($this->argument('name')) {
+				return $this->argument('directory').'/'.$this->argument('name');
+			}
+			return $this->argument('directory').'/'.$this->filename($this->timestamp());
 		}
 		return $this->constructFilepath($this->defaultDirectory, $this->timestamp());
 	}
 
     public function handle()
     {
+		$filepath = $this->filepath();
+
 		$this->process = new Process(sprintf(
 			'mysqldump -u%s -p%s %s | gzip > %s',
 			env('DB_USERNAME'),
 			env('DB_PASSWORD'),
 			env('DB_DATABASE'),
-			$this->filepath()
+			$filepath
 		));
 		
         try {
             $this->process->mustRun();
-
-			$this->info('The backup has been proceed successfully.');
+			$this->info('The backup has been successful.');
 	
 			$app_url = env('APP_URL');
 			$db_name = env('DB_DATABASE');
-			$filepath = $this->filepath();
 
-			if ($this->argument('email')) {
+			if ($this->option('email')) {
+				
+				$this->info('Sending email.');
+
 				\Mail::send('email.text',
 				['text' =>
 					$app_url.' database <strong>'.
@@ -73,7 +90,7 @@ class BackupDatabase extends Command
 			}
 
         } catch (ProcessFailedException $exception) {
-            return $this->error('The backup process has been failed.');
+            return $this->error('The backup process has failed.');
         }
     }
 }
