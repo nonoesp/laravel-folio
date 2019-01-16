@@ -90,9 +90,9 @@ class BackupDatabase extends Command
 				['text' =>
 					$app_url.' database <strong>'.
 					$db_name.'</strong> backed up as '.
-					'<strong>'.$filepath.'</strong>!'
+					'<strong>'.$attachment_name.'</strong>!'
 				],
-				function ($m) use ($attachment_name) {
+				function ($m) use ($filepath, $attachment_name) {
 					$m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
 					$m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))
 					->subject('Database backup '.config('folio.title-short'))
@@ -101,6 +101,19 @@ class BackupDatabase extends Command
 						'as' => $attachment_name,
 					]);
 				});
+
+				\Mail::send('email.text',
+				['text' =>
+					$app_url.' database <strong>'.
+					$db_name.'</strong> backed up as '.
+					'<strong>'.$attachment_name.'</strong>!'
+				],
+				function ($m) use ($filepath, $attachment_name) {
+					$m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
+					$m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))
+					->subject('Database backup '.config('folio.title-short'));
+				});				
+
 			}
 
         } catch (ProcessFailedException $exception) {
