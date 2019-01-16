@@ -92,7 +92,7 @@ class BackupDatabase extends Command
 					$db_name.'</strong> backed up as '.
 					'<strong>'.$filepath.'</strong>!'
 				],
-				function ($m) use ($filepath) {
+				function ($m) use ($attachment_name) {
 					$m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
 					$m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))
 					->subject('Database backup '.config('folio.title-short'))
