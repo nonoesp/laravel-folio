@@ -321,9 +321,7 @@ class Item extends Model implements Feedable
 			$thumbnail = $this->image_src;
 		} else if($this->image) {
 			$thumbnail = $this->image;
-		} else if ($this->customVideoThumbnail()) {
-			$thumbnail = $this->customVideoThumbnail();
-		} else if($this->video) {
+		} else if($this->videoThumbnail()) {
 			$thumbnail = $this->videoThumbnail();
 		} else {
 			$thumbnail = config('folio.image-src');
@@ -341,11 +339,23 @@ class Item extends Model implements Feedable
 	 * Returns the URL of the video thumbnail from the provider.
 	 */
 	public function videoThumbnail() {
+		if($customVideoThumbnail = $this->customVideoThumbnail()) {
+			return $customVideoThumbnail;
+		} else if($providerVideoThumbnail = $this->providerVideoThumbnail()) {
+			return $providerVideoThumbnail;
+		}
+		return null;
+	}
+
+	/**
+	 * Returns the URL of the video thumbnail from the provider.
+	 */
+	public function providerVideoThumbnail() {
 		if($this->video) {
 			return \Thinker::getVideoThumb($this->video);
 		}
 		return null;
-	}
+	}	
 
 	/**
 	 * Returns the URL of the custom video thumbnail specified

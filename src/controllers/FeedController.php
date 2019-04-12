@@ -86,7 +86,7 @@ class FeedController extends Controller
 
 				if ($item->video) {
 					$image = '<p><a href="'.$URL.'">'
-						.'<img src="'.\Thinker::getVideoThumb($item->video)
+						.'<img src="'.$item->videoThumbnail()
 						.'" alt="'.$item->title.'"></a></p>';
 				} else if ($item->image) {
 					$image = '<p><img src="'.$item_image.'" alt="'.$item->title.'"></p>';
