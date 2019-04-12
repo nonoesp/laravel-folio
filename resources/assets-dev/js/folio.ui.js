@@ -55,7 +55,7 @@ function itemsWithIds(ids) {
   // <meta name="csrf-token" content="{{ csrf_token() }}" />
 
   $.ajax({
-        url: 'http://' + document.domain + '/items',
+        url: '//' + document.domain + '/items',
         type: 'POST',
         data: {ids: ids},
         //data: {ids: ids, item_type: 'SUMMARY_ITEM_TYPE'},
@@ -75,7 +75,7 @@ console.log('the service is ' + service);
 
   if (service == 'youtube') {
     return '<iframe width="100%" height="268" style="max-width:100%"'+
-           'src="http://www.youtube.com/embed/'+code+
+           'src="https://www.youtube.com/embed/'+code+
          '?autoplay=1" frameborder="0" allowfullscreen></iframe>';
   }
 
@@ -89,7 +89,7 @@ console.log('the service is ' + service);
 
 function getVimeoThumb(code) {
   $.ajax({
-        url: 'http://vimeo.com/api/v2/video/' + code + '.json',
+        url: 'https://vimeo.com/api/v2/video/' + code + '.json',
         dataType: 'jsonp',
         success: function(data) {
              console.log(data[0].thumbnail_large);
