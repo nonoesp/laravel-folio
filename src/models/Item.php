@@ -574,6 +574,7 @@ class Item extends Model implements Feedable
 			'limit' => $this->intProperty('collection-limit'),
 			'showAll' => $this->boolProperty('collection-show-all'),
 			'showHidden' => $this->boolProperty('collection-show-hidden'),
+			'showScheduled' => $this->boolProperty('collection-show-scheduled'),
 		]);
 	}
 
@@ -596,12 +597,19 @@ class Item extends Model implements Feedable
 		$limit = Item::arrayValueOrDefault($params, 'limit');
 		$showAll = Item::arrayValueOrDefault($params, 'showAll', false);
 		$showHidden = Item::arrayValueOrDefault($params, 'showHidden', false);
+		$showScheduled = Item::arrayValueOrDefault($params, 'showScheduled', false);
 		$collection = [];
+
+		$display = $showScheduled ? '1' : '0';
+		echo '$showScheduled: '.$display.'
+';
 		
 		$shouldShowTrashed = false;
 		if ($user = \Auth::user() and $user->is_admin or $showHidden) {
 			$shouldShowTrashed = true;
 		}
+
+		$published = function($query) { $query->published(); };
 
     	if(isset($tags)) {
         	$tagsArray = explode(",", $tags);
@@ -613,40 +621,40 @@ class Item extends Model implements Feedable
 				if($limit) {
 					if($shouldShowTrashed) {
 						$collection = Item::withTrashed()
-											->published()
+											->when(!$showScheduled, $published) // formerly ->published()
 											->orderBy($sort, $order)
 											->take($limit)
-											->get();	
+											->get();
 					} else {
-						$collection = Item::published()
-						->orderBy($sort, $order)
+						$collection = Item::when(!$showScheduled, $published) // formerly published()
+											->orderBy($sort, $order)
 											->take($limit)
 											->get();	
 					}
 				} else {
 					if($shouldShowTrashed) {
 						$collection = Item::withTrahsed()
-											->published()
+											->when(!$showScheduled, $published) // formerly ->published()
 											->orderBy($sort, $order)
 											->get();
 					} else {
-						$collection = Item::published()
-						->orderBy($sort, $order)
+						$collection = Item::when(!$showScheduled, $published) // formerly published()
+											->orderBy($sort, $order)
 											->get();
 					}
 				}
             } else {
 				if($limit) {
 		              $collection = Item::blog()
-										->published()
+					  					->when(!$showScheduled, $published) // formerly ->published()
 										->orderBy($sort, $order)
 										->take($limit)
 										->get();					
 				} else {
 					   $collection = Item::blog()
-											->published()
-											->orderBy($sort, $order)
-					   					 ->get();
+					   					   ->when(!$showScheduled, $published) // formerly ->published()
+										   ->orderBy($sort, $order)
+					   					   ->get();
 				}
             }
 
@@ -658,13 +666,13 @@ class Item extends Model implements Feedable
 						if($shouldShowTrashed) {
 							$collection = Item::withTrashed()
 											  ->withAnyTag($tagsArray)
-											  ->published()
+											  ->when(!$showScheduled, $published) // formerly ->published()
 											  ->orderBy($sort, $order)
 											  ->take($limit)
   											  ->get();	
 						} else {
 							$collection = Item::withAnyTag($tagsArray)
-											  ->published()
+							->when(!$showScheduled, $published) // formerly ->published()
 											  ->orderBy($sort, $order)
 											  ->take($limit)
 											  ->get();	
@@ -673,12 +681,12 @@ class Item extends Model implements Feedable
 					if($shouldShowTrashed) {
 						$collection = Item::withTrashed()
 										  ->withAnyTag($tagsArray)
-										  ->published()
+										  ->when(!$showScheduled, $published) // formerly ->published()
 										  ->orderBy($sort, $order)
 										  ->get();			
 					} else {
 						$collection = Item::withAnyTag($tagsArray)
-										  ->published()
+										  ->when(!$showScheduled, $published) // formerly ->published()
 										  ->orderBy($sort, $order)
 										  ->get();						
 					}			
@@ -687,14 +695,14 @@ class Item extends Model implements Feedable
 				if($limit) {
 		              $collection = Item::withAnyTag($tagsArray)
 										->blog()
-										->published()
+										->when(!$showScheduled, $published) // formerly ->published()
 										->orderBy($sort, $order)
 										->take($limit)
 										->get();					
 				} else {	
               		$collection = Item::withAnyTag($tagsArray)
 					  				  ->blog()
-									  ->published()
+									  ->when(!$showScheduled, $published) // formerly ->published()
 									  ->orderBy($sort, $order)
 									  ->get();
 				}
