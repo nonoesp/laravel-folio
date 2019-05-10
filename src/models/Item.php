@@ -355,7 +355,7 @@ class Item extends Model implements Feedable
 			return \Thinker::getVideoThumb($this->video);
 		}
 		return null;
-	}	
+	}
 
 	/**
 	 * Returns the URL of the custom video thumbnail specified
@@ -365,7 +365,7 @@ class Item extends Model implements Feedable
 		$thumbnail = null;
 		if($vt = $this->stringProperty('video-thumbnail')) {
 			$thumbnail = $vt;
-		}			
+		}
 		// Make path absolute (add domain) when thumbnail is relative
 		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
 			return \Request::root().$thumbnail;
@@ -573,6 +573,7 @@ class Item extends Model implements Feedable
 			'order' => $this->stringProperty('collection-order', 'DESC'),
 			'limit' => $this->intProperty('collection-limit'),
 			'showAll' => $this->boolProperty('collection-show-all'),
+			'showHidden' => $this->boolProperty('collection-show-hidden'),
 		]);
 	}
 
@@ -594,10 +595,12 @@ class Item extends Model implements Feedable
 		$order = Item::arrayValueOrDefault($params, 'order', 'DESC');
 		$limit = Item::arrayValueOrDefault($params, 'limit');
 		$showAll = Item::arrayValueOrDefault($params, 'showAll', false);
+		$showHidden = Item::arrayValueOrDefault($params, 'showHidden', false);
 		$collection = [];
-		$isAdmin = false;
-		if ($user = \Auth::user() and $user->is_admin) {
-			$isAdmin = true;
+		
+		$shouldShowTrashed = false;
+		if ($user = \Auth::user() and $user->is_admin or $showHidden) {
+			$shouldShowTrashed = true;
 		}
 
     	if(isset($tags)) {
@@ -608,7 +611,7 @@ class Item extends Model implements Feedable
             // Show all items (tag wildcard)
             if($showAll) {
 				if($limit) {
-					if($isAdmin) {
+					if($shouldShowTrashed) {
 						$collection = Item::withTrashed()
 											->published()
 											->orderBy($sort, $order)
@@ -621,7 +624,7 @@ class Item extends Model implements Feedable
 											->get();	
 					}
 				} else {
-					if($isAdmin) {
+					if($shouldShowTrashed) {
 						$collection = Item::withTrahsed()
 											->published()
 											->orderBy($sort, $order)
@@ -652,7 +655,7 @@ class Item extends Model implements Feedable
             // Show all items with provided tags
             if($showAll) {
 				if($limit) {
-						if($isAdmin) {
+						if($shouldShowTrashed) {
 							$collection = Item::withTrashed()
 											  ->withAnyTag($tagsArray)
 											  ->published()
@@ -667,7 +670,7 @@ class Item extends Model implements Feedable
 											  ->get();	
 						}				
 				} else {	
-					if($isAdmin) {
+					if($shouldShowTrashed) {
 						$collection = Item::withTrashed()
 										  ->withAnyTag($tagsArray)
 										  ->published()
