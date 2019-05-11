@@ -19,13 +19,13 @@ class FeedController extends Controller
 		return Item::all();
 	}
 
-	public function getFeed(Request $request) {
+	public function makeFeed(Request $request, $domain, $customView = "folio::feed.rss") {
 
 		// Create new feed
 		$feed = App::make("feed");
 
-		// Cache the feed for 60 minutes (second parameter is optional)
-		$feed->setCache(0, 'laravelFeedKey-3');
+		// Cache the feed for 5 minutes (second parameter is optional)
+		$feed->setCache(5, 'folio-feed-3');
 
 		// Check if there is cached feed and build new only if is not
 		if (!$feed->isCached()) {
@@ -51,7 +51,7 @@ class FeedController extends Controller
 			$feed->lang = 'en';
 			$feed->setShortening(false); // true or false
 			$feed->setTextLimit(159); // maximum length of description text
-			$feed->setCustomView("folio::feed.rss");
+			$feed->setCustomView($customView);
 
 			foreach ($items as $item) {
 				// Link

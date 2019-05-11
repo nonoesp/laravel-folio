@@ -32,7 +32,7 @@ if(config('folio.domain-pattern') == null) {
 	Route::pattern('foliodomain', config('folio.domain-pattern'));
 }
 
-Route::group(['domain' => '{foliodomain}','middleware' => Config::get("folio.middlewares")], function () {
+Route::group(['domain' => '{foliodomain}','middleware' => config("folio.middlewares")], function () {
 
 	$path = Folio::path();
 
@@ -70,7 +70,7 @@ if(Folio::isAvailableURI()) {
 	}
 
 	// Feed
-	Route::get(Config::get('folio.feed.route'), array('as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FeedController@getFeed'));
+	Route::get(config('folio.feed.route'), ['as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FeedController@makeFeed']);
 
 	// Debug: Hello, Folio!
 	Route::get('debug/folio', 'Nonoesp\Folio\Controllers\FolioController@helloFolio');
@@ -83,7 +83,7 @@ if(Folio::isAvailableURI()) {
 /* AdminController
 /*----------------------------------------------------------------*/
 
-Route::group(['middleware' => Config::get("folio.middlewares-admin")], function() {
+Route::group(['middleware' => config("folio.middlewares-admin")], function() {
 	
 	$admin_path = Folio::adminPath();
 
