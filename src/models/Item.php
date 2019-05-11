@@ -600,10 +600,6 @@ class Item extends Model implements Feedable
 		$showScheduled = Item::arrayValueOrDefault($params, 'showScheduled', false);
 		$collection = [];
 
-		$display = $showScheduled ? '1' : '0';
-		echo '$showScheduled: '.$display.'
-';
-		
 		$shouldShowTrashed = false;
 		if ($user = \Auth::user() and $user->is_admin or $showHidden) {
 			$shouldShowTrashed = true;
