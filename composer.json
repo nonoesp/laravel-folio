@@ -31,7 +31,7 @@
         "webuni/commonmark-attributes-extension": "dev-master",
         "laravelcollective/html": "5.8.*",
         "vinkla/hashids": "^6.0.0",
-        "intervention/image": "^2.4.*",
+        "intervention/image": "^2.4",
         "aws/aws-sdk-php": "~3.0",
         "spatie/laravel-newsletter": "^4.4",
         "spatie/laravel-feed": "^2.2",
