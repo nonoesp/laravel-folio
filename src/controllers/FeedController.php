@@ -21,7 +21,7 @@ class FeedController extends Controller
 		$feed = App::make("feed");
 
 		// Defaults
-		$cacheDuration = 5;
+		$cacheDuration = 0;
 		$cacheKey = 'folio-feed';
 
 		// Overrides (before caching)
