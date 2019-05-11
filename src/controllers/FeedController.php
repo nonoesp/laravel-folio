@@ -20,16 +20,29 @@ class FeedController extends Controller
 		// Create new feed
 		$feed = App::make("feed");
 
+		// Defaults
+		$cacheDuration = 5;
+		$cacheKey = 'folio-feed';
+
+		// Overrides (before caching)
+		if ($item) {
+			$cacheDuration = $item->intProperty('feed-cache-duration', $cacheDuration);
+			$cacheKey = $item->stringProperty('feed-key', $cacheKey);
+		}
 		// Cache the feed for 5 minutes (second parameter is optional)
-		$feed->setCache(5, 'folio-feed-3');
+		$feed->setCache($cacheDuration, $cacheKey);
 		$feed->clearCache(); // Temporarily because laravelium/feed is buggy
+
+		return $cacheDuration;
 
 		// Check if there is cached feed and build new only if is not
 		if (!$feed->isCached()) {
 
 			$default_author = config('folio.feed.default-author');
 			$feed_show = config('folio.feed.show');
+			$feedTitle = config('folio.feed.title');
 
+			// Collection
 			if ($item) {
 				$items = $item->collection();
 			} else {
@@ -41,8 +54,15 @@ class FeedController extends Controller
 				->get();
 			}
 
+			// Overrides (after caching)
+			if ($item) {
+				$cacheDuration = $item->intProperty('feed-cache-duration', $cacheDuration);
+				$cacheKey = $item->stringProperty('feed-key', $cacheKey);
+				$feedTitle = $item->stringProperty('feed-title', $feedTitle);
+			}
+
 			// set your feed's title, description, link, pubdate and language
-			$feed->title = config('folio.feed.title');
+			$feed->title = $feedTitle;
 			$feed->description = config('folio.feed.description');
 			$feed->logo = config('folio.feed.logo');
 			$feed->link = URL::to('/'.Folio::path());

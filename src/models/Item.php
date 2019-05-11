@@ -197,7 +197,8 @@ class Item extends Model implements Feedable
      */
 	public function property($key) {
 		if($property = $this->properties()->where('name', $key)->first()) {
-				if($value = $property->value) {
+				$value = $property->value;
+				if($value || $value != '') {
 					// property exists and has value
 					return $property;
 				} else {
