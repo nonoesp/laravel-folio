@@ -15,29 +15,31 @@ use Response, URL;
 
 class FeedController extends Controller
 {
-	public function getFeedItems(Request $request) {
-		return Item::all();
-	}
-
-	public function makeFeed(Request $request, $domain, $customView = "folio::feed.rss") {
+	public static function makeFeed(Request $request, $domain, $item = null) {
 
 		// Create new feed
 		$feed = App::make("feed");
 
 		// Cache the feed for 5 minutes (second parameter is optional)
 		$feed->setCache(5, 'folio-feed-3');
+		$feed->clearCache(); // Temporarily because laravelium/feed is buggy
 
 		// Check if there is cached feed and build new only if is not
 		if (!$feed->isCached()) {
 
 			$default_author = config('folio.feed.default-author');
 			$feed_show = config('folio.feed.show');
-			$items = Item::published()
-						->public()
-						->orderBy('published_at', 'DESC')
-						->rss()
-						->take($feed_show)
-						->get();
+
+			if ($item) {
+				$items = $item->collection();
+			} else {
+				$items = Item::published()
+				->public()
+				->orderBy('published_at', 'DESC')
+				->rss()
+				->take($feed_show)
+				->get();
+			}
 
 			// set your feed's title, description, link, pubdate and language
 			$feed->title = config('folio.feed.title');
@@ -51,7 +53,7 @@ class FeedController extends Controller
 			$feed->lang = 'en';
 			$feed->setShortening(false); // true or false
 			$feed->setTextLimit(159); // maximum length of description text
-			$feed->setCustomView($customView);
+			$feed->setCustomView("folio::feed.rss");
 
 			foreach ($items as $item) {
 				// Link

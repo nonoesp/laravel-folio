@@ -230,7 +230,12 @@ class FolioController extends Controller
 				$itemTemplateView = config('folio.view.item');
 			  } else {
 				// Template view $itemTemplateView is good to go!
-			  }
+				}
+				
+				// Return XML feed directy if Item is-feed
+				if($item->boolProperty('is-feed')) {
+					return \Nonoesp\Folio\Controllers\FeedController::makeFeed($request, $domain, $item);
+				}
 
 			return view($itemTemplateView, ['item' => $item]);
 			}
