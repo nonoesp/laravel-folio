@@ -227,7 +227,7 @@ class FolioController extends Controller
 
 			  // Set to default Folio item view if empty or non-existing
 			  if(!$itemTemplateView || !view()->exists($itemTemplateView)) {
-				$itemTemplateView = config('folio.view.item');
+					$itemTemplateView = config('folio.view.item');
 			  } else {
 				// Template view $itemTemplateView is good to go!
 				}

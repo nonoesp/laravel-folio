@@ -29,11 +29,8 @@ class FeedController extends Controller
 			$cacheDuration = $item->intProperty('feed-cache-duration', $cacheDuration);
 			$cacheKey = $item->stringProperty('feed-key', $cacheKey);
 		}
-		// Cache the feed for 5 minutes (second parameter is optional)
+		// Cache the feed for X minutes (second parameter is optional)
 		$feed->setCache($cacheDuration, $cacheKey);
-		$feed->clearCache(); // Temporarily because laravelium/feed is buggy
-
-		return $cacheDuration;
 
 		// Check if there is cached feed and build new only if is not
 		if (!$feed->isCached()) {
@@ -41,6 +38,11 @@ class FeedController extends Controller
 			$default_author = config('folio.feed.default-author');
 			$feed_show = config('folio.feed.show');
 			$feedTitle = config('folio.feed.title');
+			$feedDescription = config('folio.feed.description');
+			$feedLogo = config('folio.feed.logo');
+			$feedLink = URL::to('/'.Folio::path());
+			$feedLang = 'en';
+			$feedCustomView = "folio::template.rss";
 
 			// Collection
 			if ($item) {
@@ -59,21 +61,37 @@ class FeedController extends Controller
 				$cacheDuration = $item->intProperty('feed-cache-duration', $cacheDuration);
 				$cacheKey = $item->stringProperty('feed-key', $cacheKey);
 				$feedTitle = $item->stringProperty('feed-title', $feedTitle);
+				$feedDescription = $item->stringProperty('feed-description', $feedDescription);
+				$feedLogo = $item->stringProperty('feed-logo', $feedLogo);
+				$feedLang = $item->stringProperty('feed-lang', $feedLang);
+
+				// Try to use Item's template
+				$itemTemplateView = $item->templateView(); // Template view for this item
+				if(!$itemTemplateView || !view()->exists($itemTemplateView)) {
+					// Fallback to default Folio item view if empty or non-existing
+					$itemTemplateView = config('folio.view.item');
+				} else {
+					// Template view $itemTemplateView is good to go!
+					$feedCustomView = $itemTemplateView;
+				}
+
+				// Allow to override with 'feed-view'
+				$feedCustomView = $item->stringProperty('feed-view', $feedCustomView);
 			}
 
 			// set your feed's title, description, link, pubdate and language
 			$feed->title = $feedTitle;
-			$feed->description = config('folio.feed.description');
-			$feed->logo = config('folio.feed.logo');
-			$feed->link = URL::to('/'.Folio::path());
+			$feed->description = $feedDescription;
+			$feed->logo = $feedLogo;
+			$feed->link = $feedLink;
 			$feed->setDateFormat('datetime'); // 'datetime', 'timestamp' or 'carbon'
 			if(count($items)) {
 				$feed->pubdate = $items[0]->published_at;
 			}
-			$feed->lang = 'en';
+			$feed->lang = $feedLang;
 			$feed->setShortening(false); // true or false
 			$feed->setTextLimit(159); // maximum length of description text
-			$feed->setCustomView("folio::feed.rss");
+			$feed->setCustomView($feedCustomView);
 
 			foreach ($items as $item) {
 				// Link
