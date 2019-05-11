@@ -633,7 +633,7 @@ class Item extends Model implements Feedable
 					}
 				} else {
 					if($shouldShowTrashed) {
-						$collection = Item::withTrahsed()
+						$collection = Item::withTrashed()
 											->when(!$showScheduled, $published) // formerly ->published()
 											->orderBy($sort, $order)
 											->get();
