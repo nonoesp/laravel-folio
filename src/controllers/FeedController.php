@@ -124,7 +124,8 @@ class FeedController extends Controller
 				} else if ($item_image_src && substr($item_image_src, 0, 1) == '/') {
 					$item_image_src = $request->root().$item_image_src;
 				} else if($item_image_src == '') {
-					$item_image_src = config('folio.feed.default-image-src');
+					// Disabled to avoid displaying placeholder image in all posts
+					// $item_image_src = config('folio.feed.default-image-src');
 				}
 
 				if ($item->video) {
@@ -147,7 +148,8 @@ class FeedController extends Controller
 					'href="'.$request->root().'/',
 					'<br />',
 				],
-				$image.$item->htmlText(false, $request->root()));
+				//$image.
+				$item->htmlText(false, $request->root()));
 
 				$html = str_replace(
 					["<p><img", "/></p>"],
@@ -155,26 +157,31 @@ class FeedController extends Controller
 					$html);		
 
 				// add item as array with custom tags
-				$feed->addItem([
+				$feedItem = [
 					'title' => $item->title,
 					'author' => $default_author,
 					'url' => $URL,
 					'pubdate' => $item->published_at,
 					'description' => \Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']),
 					'content' => $html,
-					'media:content' => [
+				];
+
+				if ($item_image_src) {
+					$feedItem['media:content'] = [
 						'url' => $item_image_src,
 						'medium' => 'image',
 						// 'height' => '768',
 						// 'width' => '1024'
-					],
-					'enclosure' => [
+					];
+					$feedItem['enclosure'] = [
 						'url' => $item_image_src,
-						'type' => "image/jpeg",
+						'type' => 'image/jpeg',
 						// 'height' => '768',
 						// 'width' => '1024'
-					],					
-				]);
+					];
+				}
+
+				$feed->addItem($feedItem);
 
 				}
 		}
