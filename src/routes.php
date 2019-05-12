@@ -64,9 +64,9 @@ if(Folio::isAvailableURI()) {
 
 	if($path_type = Folio::isFolioURI()) { // Check this is an actual item route
 		Route::get($path.'{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
-					 where('slug', '[A-Za-z0-9\-\/]+');
+					 where('slug', '[A-Za-z0-9.\-\/]+');
 		Route::get('{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
-					 where('slug', '[A-Za-z0-9\-\/]+');
+					 where('slug', '[A-Za-z0-9.\-\/]+');
 	}
 
 	// Feed
