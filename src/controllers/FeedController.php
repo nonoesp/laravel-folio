@@ -169,13 +169,13 @@ class FeedController extends Controller
 
 				if ($item_image_src) {
 					$feedItem['media:content'] = [
-						'url' => $item_image_src,
+						'url' => $item_image,
 						'medium' => 'image',
 						// 'height' => '768',
 						// 'width' => '1024'
 					];
 					$feedItem['enclosure'] = [
-						'url' => $item_image_src,
+						'url' => $item_image,
 						'type' => 'image/jpeg',
 						// 'height' => '768',
 						// 'width' => '1024'
