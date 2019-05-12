@@ -63,6 +63,7 @@ class FeedController extends Controller
 				$feedTitle = $item->stringProperty('feed-title', $feedTitle);
 				$feedDescription = $item->stringProperty('feed-description', $feedDescription);
 				$feedLogo = $item->stringProperty('feed-logo', $feedLogo);
+				$feedLink = $item->stringProperty('feed-link', $feedLink);
 				$feedLang = $item->stringProperty('feed-lang', $feedLang);
 
 				// Try to use Item's template
@@ -106,8 +107,10 @@ class FeedController extends Controller
 				$item_image = $item->image;
 				$item_image_src = $item->image_src;
 
-				if ($item->stringProperty('rss-image')) {
-					$item_image = $item->stringProperty('rss-image');
+				if ($item->stringProperty('feed-image')) {
+					$item_image_src = $item->stringProperty('feed-image');
+				} else if ($item->stringProperty('rss-image')) {
+					$item_image_src = $item->stringProperty('rss-image');
 				}
 
 				// Make sure $item->image is global (not local like /img/u/image.jpg)
@@ -118,9 +121,9 @@ class FeedController extends Controller
 				// And image_src is global or falls back to default
 				if ($item_image_src == '' && $item->image) {
 					$item_image_src = $item_image;
-				} else if ($item->image_src && substr($item->image_src, 0, 1) == '/') {
-					$item_image_src = $request->root().$item->image_src;
-				} else {
+				} else if ($item_image_src && substr($item_image_src, 0, 1) == '/') {
+					$item_image_src = $request->root().$item_image_src;
+				} else if($item_image_src == '') {
 					$item_image_src = config('folio.feed.default-image-src');
 				}
 
