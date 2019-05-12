@@ -133,7 +133,8 @@ class FeedController extends Controller
 						.'<img src="'.$item->videoThumbnail()
 						.'" alt="'.$item->title.'"></a></p>';
 				} else if ($item->image) {
-					$image = '<p><img src="'.$item_image.'" alt="'.$item->title.'"></p>';
+					// Disable to avoid displaying image twice and control location in Mailchimp template
+					// $image = '<p><img src="'.$item_image.'" alt="'.$item->title.'"></p>';
 				}
 
 				// Text
@@ -148,7 +149,7 @@ class FeedController extends Controller
 					'href="'.$request->root().'/',
 					'<br />',
 				],
-				//$image.
+				$image.
 				$item->htmlText(false, $request->root()));
 
 				$html = str_replace(
