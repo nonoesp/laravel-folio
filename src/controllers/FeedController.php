@@ -164,6 +164,7 @@ class FeedController extends Controller
 					'content' => $html,
 					'media:content' => [
 						'url' => $item_image_src,
+						'medium' => 'image',
 						// 'height' => '768',
 						// 'width' => '1024'
 					],
