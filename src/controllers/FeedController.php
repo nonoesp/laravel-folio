@@ -154,14 +154,27 @@ class FeedController extends Controller
 					["<p class=\"rss__img-wrapper\"><img", "/></p>"],
 					$html);		
 
-				$feed->add(
-					$item->title,
-					$default_author,
-					$URL,
-					$item->published_at,
-					\Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']),
-					$html,
-					['url'=>$item_image_src,'type'=>'image/jpeg']);
+				// add item as array with custom tags
+				$feed->addItem([
+					'title' => $item->title,
+					'author' => $default_author,
+					'url' => $URL,
+					'pubdate' => $item->published_at,
+					'description' => \Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']),
+					'content' => $html,
+					'media:content' => [
+						'url' => $item_image_src,
+						// 'height' => '768',
+						// 'width' => '1024'
+					],
+					'enclosure' => [
+						'url' => $item_image_src,
+						'type' => "image/jpeg",
+						// 'height' => '768',
+						// 'width' => '1024'
+					],					
+				]);
+
 				}
 		}
 
