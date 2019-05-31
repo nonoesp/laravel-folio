@@ -107,10 +107,11 @@ class FeedController extends Controller
 				$item_image = $item->image;
 				$item_image_src = $item->image_src;
 
+				// Override cover image with custom properties
 				if ($item->stringProperty('feed-image')) {
-					$item_image_src = $item->stringProperty('feed-image');
+					$item_image = $item->stringProperty('feed-image');
 				} else if ($item->stringProperty('rss-image')) {
-					$item_image_src = $item->stringProperty('rss-image');
+					$item_image = $item->stringProperty('rss-image');
 				}
 
 				// Make sure $item->image is global (not local like /img/u/image.jpg)
