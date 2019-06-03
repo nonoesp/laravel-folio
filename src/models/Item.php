@@ -154,28 +154,38 @@ class Item extends Model implements Feedable
 									 first();
 	}
 
-	public function prevWithAnyTag($tags) {
+	public function prevWithAnyTag($tags, $loop = true) {
 			if($prev = Item::withAnyTag($tags)->
-											 where('published_at','<', $this->published_at)->
-											 orderBy('published_at', 'DESC')->
-											 first()) {
+							published()->
+							where('published_at','<', $this->published_at)->
+							orderBy('published_at', 'DESC')->
+							first()) {
 				return $prev;
 			}
-			return Item::withAnyTag($tags)->
-									 orderBy('published_at', 'DESC')->
-									 first();
+			if ($loop) {
+				return Item::withAnyTag($tags)->
+				published()->
+				orderBy('published_at', 'DESC')->
+				first();				
+			}
+			return;
 	}
 
-	public function nextWithAnyTag($tags) {
+	public function nextWithAnyTag($tags, $loop = true) {
 			if($next = Item::withAnyTag($tags)->
-											 where('published_at','>', $this->published_at)->
-											 orderBy('published_at', 'ASC')->
-											 first()) {
+							published()->
+							where('published_at','>', $this->published_at)->
+							orderBy('published_at', 'ASC')->
+							first()) {
 				return $next;
 			}
-			return Item::withAnyTag($tags)->
-									 orderBy('published_at', 'ASC')->
-									 first();
+			if ($loop) {
+				return Item::withAnyTag($tags)->
+						published()->
+						orderBy('published_at', 'ASC')->
+						first();
+			}
+			return;
 	}
 
 	public function recipients()
