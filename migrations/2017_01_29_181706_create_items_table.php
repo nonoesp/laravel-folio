@@ -19,8 +19,8 @@ class CreateItemsTable extends Migration
               $table->timestamps();
               $table->softDeletes();
               $table->dateTime('published_at')->nullable();
-              $table->string('title')->nullable();
-              $table->text('text')->nullable();
+              $table->json('title')->nullable();
+              $table->json('text')->nullable();
               $table->string('image')->nullable();
               $table->string('image_src')->nullable();
               $table->string('video')->nullable();

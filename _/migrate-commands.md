@@ -100,3 +100,59 @@ Artisan::command('folio:retag', function() {
 
 });
 ```
+
+# 2019.06.04 Translations
+
+How to update to translatable models.
+
+## Install
+
+This is done automatically because the dependency is in `composer.json`.
+
+```bash
+# composer require spatie/laravel-translatable
+```
+
+## Database
+
+- rename `title` to `title_plain`
+- rename `text` to `text_plain`
+- create a `title` field that is of JSON type in database table
+- create a `text` field that is of JSON type in database table
+
+## Run migration command
+
+Put this command in your Laravel app, in `routes/console.php`.
+
+```php
+/*
+ * A command to migrate Folio Item's title and text
+ * to JSON to support the HasTranslations trait.
+ */
+Artisan::command('folio:toJSON', function() {
+    
+    $items = Item::withTrashed()->get();
+    app()->setLocale('en');
+    foreach($items as $item) {
+        $this->info("Migrated item $item->id.");
+        $item->title = $item->title_plain;
+        $item->text = $item->text_plain;
+        $item->save();
+    }
+});
+```
+
+Then run the following command on the terminal.
+
+```bash
+php artisan folio:toJSON
+```
+
+## Files edited
+
+- `composer.json`
+- `config/config.php`
+- `src/models/Item.php`
+- `src/controllers/AdminController.php`
+- `resources/views/admin/item-edit.blade.php`
+- `resources/views/admin/item-list.blade.php`

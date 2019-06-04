@@ -32,6 +32,11 @@ return [
 	],
 
 	/*
+	 * Translations that will show up when editing items. Defaults to ['en'].
+	 */
+	'translations' => ['en'],
+
+	/*
      * The path for Folio to search for custom templates.
 	 * eg. 'template' with search for templates on /resources/views/template.
      */

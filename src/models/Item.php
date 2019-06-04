@@ -11,6 +11,12 @@ class Item extends Model implements Feedable
 	use \Mpociot\Versionable\VersionableTrait;
 	use SoftDeletes;
 	use \Conner\Tagging\Taggable;
+	use \Spatie\Translatable\HasTranslations;
+
+	/**
+	 * @var array
+	 */
+	public $translatable = ['title', 'text'];
 
 	/**
 	 * @var string

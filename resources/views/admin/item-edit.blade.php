@@ -8,6 +8,32 @@ if($settings_title == '') {
 }
 $site_title = 'Editing Item '.$item->id.' · '.$item->title.' | '. $settings_title;
 $remove_wrap = true;
+
+$translations = config('folio.translations');
+if(!$translations) $translations = ['en'];
+
+foreach($translations as $translation) {
+	if(!in_array($translation, ResourceBundle::getLocales(''))) {
+		$language_errors = [
+'**'.$translation.'** is not a valid locale.  
+Provide valid `translations` in `config/folio.php`.
+
+For instance, you can specify English and Spanish.
+
+```php
+\'translations\' => [\'en\', \'es\'],
+```
+
+Or you can just leave it empty (defaults to `en`).
+
+```php
+\'translations\' => [],
+```
+'
+		];
+	}
+}
+
 ?>
 
 @section('title', 'Editing Item '.$item->id)
@@ -122,7 +148,7 @@ var debounced_property_sync = _.debounce(
 
 var editing_property = -1;
 
-var admin = new Vue({
+const admin = new Vue({
 el: '.c-admin',
 data: {
 	item: '',
@@ -145,6 +171,21 @@ watch: {
 },
 mounted() {
 	//this.adjustTextareaHeight(this.$refs.editor, 0);
+},
+created() {
+	this.item = {!! $item !!};
+	this.originalItem = {!! $item !!};
+	this.properties = {!! $item->properties->sortBy('order_column')->values() !!};
+	this.message = "{!! $item->title !!}";
+	this.initProperties();
+	// parse deleted_at date to true if existing for isDirty to detect property
+	if(this.item.deleted_at != null) this.item.deleted_at = true;
+	if(this.originalItem.deleted_at != null) this.originalItem.deleted_at = true;
+	new ClipboardJS('.js--encoded-path');
+	$(document).on('click', '.js--encoded-path', function(e) {
+		e.preventDefault();
+		return false;
+	});
 },
 methods: {
 	initProperties: function() {
@@ -247,6 +288,7 @@ methods: {
 	},
 	saveItemChanges() {
 		
+		console.log(this.item);
 		let itemId = this.item.id;
 		let itemData = {
 			title: this.item.title,
@@ -319,7 +361,9 @@ methods: {
 
 				if((itemValue == "" || itemValue == "null") && originalValue == null) {
 					// ignore this as is not really "dirty"
-				} else if(itemValue != originalValue) {
+				} else if(
+					itemValue != originalValue &&
+					JSON.stringify(itemValue) != JSON.stringify(originalValue)) {
 					return true;
 				}
 			}
@@ -330,22 +374,7 @@ methods: {
 });
 
 </script>
-
-		<script>
-			admin.item = {!! $item !!};
-			admin.originalItem = {!! $item !!};
-			admin.properties = {!! $item->properties->sortBy('order_column')->values() !!};
-			admin.message = "{!! $item->title !!}";
-			admin.initProperties();
-			// parse deleted_at date to true if existing for isDirty to detect property
-			if(admin.item.deleted_at != null) admin.item.deleted_at = true;
-			if(admin.originalItem.deleted_at != null) admin.originalItem.deleted_at = true;
-			new ClipboardJS('.js--encoded-path');
-			$(document).on('click', '.js--encoded-path', function(e) {
-				e.preventDefault();
-				return false;
-			});
-		</script>
+		
 @stop
 
 <?php
@@ -379,15 +408,34 @@ methods: {
 
 @section('content')
 
-<style media="screen">
+@isset($language_errors)
+
+	<div class="[ c-admin-form-v2 ] [ grid ]">
+	<div class="[ o-wrap o-wrap--size-small ]">		
+		<div class="[ grid__item ] [ one-whole ]">
+			@foreach($language_errors as $error)
+			<p><strong>Configuration error</strong></p>
+			<p>{!! Item::convertToHtml($error) !!}</p>
+			@endforeach
+		</div>
+	</div>
+	</div>
+
+@else
+
+<style>
 	.grid {
 		letter-spacing: inherit;
+	}
+
+	[v-cloak] {
+  		display: none;
 	}
 </style>
 
 {{-- Vue Component --}}
 
-<div class="[ c-admin ] [ u-pad-b-12x ]">
+<div v-cloak class="[ c-admin ] [ u-pad-b-12x ]">
 
 	<div class="[ c-admin-form-v2 ] [ grid ]">
 
@@ -401,24 +449,34 @@ methods: {
 
 		{{ Form::model($item, array('route' => array('item.edit', $item->id))) }}
 
-		<div class="[ o-wrap o-wrap--size-small ]">
-			<div class="[ grid__item ] [ one-whole ]">
-				<p>{{ Form::text('title', null, ['placeholder' => 'Title', 'v-model' => 'item.title']) }}</p>
+		@foreach($translations as $translation)
+			@php
+				$language_label = "";
+				if(count($translations) > 1) {
+					$language_label = " · $translation";
+				}
+			@endphp
+			<div class="[ o-wrap o-wrap--size-small ]">
+				<div class="[ grid__item ] [ one-whole ]">
+					<p>{{ Form::text('title', null, [
+						'placeholder' => 'Title'.$language_label,
+						'v-model' => 'item.title.'.$translation
+						]) }}</p>
+				</div>
 			</div>
-		</div>
 
-		<div class="[ grid__item ] [ one-whole ]">
+			<div class="[ grid__item ] [ one-whole ]">
 			<p class="[ unwrapped wide ]">{{ Form::textarea('text', null, [
-				'placeholder' => 'Text',
+				'placeholder' => 'Text'.$language_label,
 				'ref' => 'editor',
 				'v-on:keyup' => 'textareaKeyupHandler',
-				'v-model' => 'item.text',
+				'v-model' => 'item.text.'.$translation,
 				'@focus' => 'updateTextareaFocus',
 				'@blur' => 'updateTextareaFocus',
 				'v-bind:class' => '{ "u-opacity--high" : !isTextareaFocused }'
 				]) }}</p>
-		</div>
-
+		</div>			
+		@endforeach
 
 		<div class="[ o-wrap o-wrap--size-600 ]">
 
@@ -546,5 +604,7 @@ methods: {
 	</div>
 
 </div>
+
+@endisset
 
 @endsection
