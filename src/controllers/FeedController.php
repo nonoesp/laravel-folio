@@ -28,6 +28,9 @@ class FeedController extends Controller
 		if ($item) {
 			$cacheDuration = $item->intProperty('feed-cache-duration', $cacheDuration);
 			$cacheKey = $item->stringProperty('feed-key', $cacheKey);
+			if ($locale = $item->stringProperty('locale')) {
+				app()->setLocale($locale);
+			}
 		}
 		// Cache the feed for X minutes (second parameter is optional)
 		$feed->setCache($cacheDuration, $cacheKey);
