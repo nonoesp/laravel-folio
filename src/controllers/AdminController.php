@@ -178,8 +178,7 @@ class AdminController extends Controller
 		return view('folio::admin.item-add');
 	}
 
-	public function postItemCreate() {
-
+	public function setLocateToFirstTranslation() {
 		// Initial values default to English
 		// or first value of folio.translations config array (if valid)
 		$default_locale = 'en';
@@ -188,6 +187,11 @@ class AdminController extends Controller
 			$default_locale = $translations[0];
 		}
 		app()->setLocale($default_locale);
+	}
+
+	public function postItemCreate() {
+
+		$this->setLocateToFirstTranslation();
 
 		$item = new Item();
 		$item->title = Input::get('title');
@@ -344,6 +348,8 @@ class AdminController extends Controller
 	 */
 	
 	public function postItemUpdateAjax(Request $request, $id) {
+
+		$this->setLocateToFirstTranslation();
 
 		$item = Item::withTrashed()->find($id);
 

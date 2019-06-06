@@ -1,3 +1,4 @@
+Makefile
 .git/
 vendor/
 node_modules/

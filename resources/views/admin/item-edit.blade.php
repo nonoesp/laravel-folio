@@ -288,7 +288,6 @@ methods: {
 	},
 	saveItemChanges() {
 		
-		console.log(this.item);
 		let itemId = this.item.id;
 		let itemData = {
 			title: this.item.title,
@@ -313,8 +312,8 @@ methods: {
 
 			// Force cleanup dirty originalItem
 			if(response.ok) {
-				this.originalItem.title = this.item.title;
-				this.originalItem.text = this.item.text;
+				this.originalItem.title = JSON.parse(JSON.stringify(this.item.title));
+				this.originalItem.text = JSON.parse(JSON.stringify(this.item.text));
 				this.originalItem.video = this.item.video;
 				this.originalItem.published_at = this.item.published_at;
 				this.originalItem.image = this.item.image;
