@@ -62,6 +62,7 @@ class FolioServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 \Nonoesp\Folio\Commands\BackupDatabase::class,
+                \Nonoesp\Folio\Commands\MigrateTemplate::class,
             ]);
         }
     }
