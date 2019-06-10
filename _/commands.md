@@ -156,3 +156,36 @@ php artisan folio:toJSON
 - `src/controllers/AdminController.php`
 - `resources/views/admin/item-edit.blade.php`
 - `resources/views/admin/item-list.blade.php`
+
+## Export item properties
+
+```php
+Route::get('export/{id}', function($id) {
+  // Get item
+  $item = Item::find($id);
+  // Encode properties as JSON
+  $json = json_encode($item->properties);
+  // Save file as props.json
+  $filename = $item->id.'.json';
+  if ($item->hasProperty('export-name')) {
+    filename = $item->stringProperty('export-name');    
+  }
+  Storage::put($filename, $json);
+});
+```
+
+## Import item properties
+
+```php
+// Load item properties from JSON
+$contents = File::get(storage_path('app/props.json'));
+// Add each property to item with provided id
+foreach(json_decode($contents) as $prop) {
+    $property = new Property();
+    $property->item_id = $id;
+    $property->label = $prop->label;
+    $property->name = $prop->name;
+    $property->value = $prop->value;
+    $property->save();
+}
+```

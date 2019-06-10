@@ -1,6 +1,10 @@
 
 ## Release Notes
 
+### 5.8.*
+
+- Add item translations (including properties).
+
 ### 5.5.*
 
 - Add package auto-discovery.
