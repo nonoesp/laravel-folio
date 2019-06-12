@@ -95,7 +95,7 @@ class MigrateTemplate extends Command
             $this->info('- - - - - - - - - - - - ');
 
         } catch (ProcessFailedException $exception) {
-            return $this->error('The backup process has failed.');
+            return $this->error('The migration process has failed.');
         }
     }
 

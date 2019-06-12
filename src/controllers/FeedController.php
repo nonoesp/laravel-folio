@@ -141,20 +141,28 @@ class FeedController extends Controller
 					// $image = '<p><img src="'.$item_image.'" alt="'.$item->title.'"></p>';
 				}
 
+				// Item->htmlText()
+				$itemHTMLText = $item->htmlText([
+					'veilImages' => false,
+					'parseExternalLinks' => $request->root(),
+					'stripTags' => ['norss', 'nofeed']
+				]);
+
 				// Text
-				$html = str_replace([
-					'<img',
-					'src="/',
-					'href="/',
-					'<hr />',
-				], [
-					'<img width="100%"',
-					'src="'.$request->root().'/',
-					'href="'.$request->root().'/',
-					'<br />',
-				],
-				$image.
-				$item->htmlText(false, $request->root()));
+				$html = str_replace(
+					[
+						'<img',
+						'src="/',
+						'href="/',
+						'<hr />',
+					], [
+						'<img width="100%"',
+						'src="'.$request->root().'/',
+						'href="'.$request->root().'/',
+						'<br />',
+					],
+					$image.$itemHTMLText
+				);
 
 				$html = str_replace(
 					["<p><img", "/></p>"],
@@ -167,7 +175,7 @@ class FeedController extends Controller
 					'author' => $default_author,
 					'url' => $URL,
 					'pubdate' => $item->published_at,
-					'description' => \Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']),
+					'description' => \Thinker::limitMarkdownText($itemHTMLText, 159, ['sup']),
 					'content' => $html,
 				];
 

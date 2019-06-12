@@ -63,6 +63,7 @@ class FolioServiceProvider extends ServiceProvider
             $this->commands([
                 \Nonoesp\Folio\Commands\BackupDatabase::class,
                 \Nonoesp\Folio\Commands\MigrateTemplate::class,
+                \Nonoesp\Folio\Commands\TextAndTitleToJSON::class,
             ]);
         }
     }
