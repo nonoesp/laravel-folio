@@ -261,5 +261,13 @@ class FolioController extends Controller
 		}
 
 	}
+
+	public function getUserProfile(Request $request, $domain, $handle) {
+		$user = User::where('twitter', '=', $handle)->first();
+		if(!$user) {
+			return response()->view('errors.404', [], 404);
+		}
+		return view('folio::profile', ['user' => $user]);
+	}
 	
 }
