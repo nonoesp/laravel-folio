@@ -182,7 +182,7 @@ class FolioController extends Controller
 	}
 
 	public static function showItem($domain, Request $request, $slug) {
-		
+
 		if(
 			$item = Item::withTrashed()->whereSlug($slug)->first() or
 			$item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
