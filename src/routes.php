@@ -26,7 +26,10 @@ use Hashids;
 * Create a domain pattern if provided in config.php
 * Otherwise allow the current domain (i.e., any domain)
 */
-if(config('folio.domain-pattern') == null) {
+if(
+	config('folio.domain-pattern') == null or
+	config('folio.domain-pattern') == ''
+	) {
 	Route::pattern('foliodomain', Request::getHost());
 } else {
 	Route::pattern('foliodomain', config('folio.domain-pattern'));
@@ -36,7 +39,10 @@ if(config('folio.domain-pattern') == null) {
 * A pattern to allow (only) items to be domain specific
 * and be rendered on another domain
 */
-if(config('folio.domain-pattern-items') == null) {
+if(
+	config('folio.domain-pattern-items') == null or
+	config('folio.domain-pattern-items') == ''
+	) {
 	Route::pattern('foliodomainitems', Request::getHost());
 } else {
 	Route::pattern('foliodomainitems', config('folio.domain-pattern').'|'.config('folio.domain-pattern-items'));
@@ -53,6 +59,7 @@ Route::group([
 
 	// Item
 	if($path_type = Folio::isFolioURI()) { // Check this is an actual item route
+
 		Route::get($path.'{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
 					where('slug', '[A-Za-z0-9.\-\/]+');
 		Route::get('{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
