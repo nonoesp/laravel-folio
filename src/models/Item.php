@@ -104,7 +104,11 @@ class Item extends Model implements Feedable
 	}
 
 	public function domain() {
-		return $this->stringProperty('domain', config('folio.main-domain'));
+		$domain = $this->stringProperty('domain', config('folio.main-domain'));
+		if ($domain == null) {
+			return \Request::getHost();
+		}
+		return $domain;
 	}
 
 	// The public path of the item
