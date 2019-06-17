@@ -27,9 +27,10 @@
         "jquery": "3.1.1",
         "laravel-mix": "1.6.1",
         "validate-js": "2.0.1",
-        "vue": "2.1.10",
+        "vue": "2.6.10",
         "vue-focus": "2.1.0",
         "vue-resource": "1.0.3",
+        "vuedraggable": "^2.21.0",
         "webpack": "3.8.1"
     }
 }

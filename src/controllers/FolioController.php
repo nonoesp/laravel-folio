@@ -183,64 +183,81 @@ class FolioController extends Controller
 
 	public static function showItem($domain, Request $request, $slug) {
 		
-			if($item = Item::withTrashed()->whereSlug($slug)->first() or
-			   $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
-			   $item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first() ) {
-					$item->timestamps = false;
-					$item->visits++;
-					$item->save();
+		if(
+			$item = Item::withTrashed()->whereSlug($slug)->first() or
+			$item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
+			$item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first()
+		) {
+			// Count item visit without altering updated_at
+			$item->timestamps = false;
+			$item->visits++;
+			$item->save();
+
+			$domain = $item->domain();
+			if($domain != $request->getHost()) {
+				return \Redirect::to('//'.$domain.'/'.$request->path());
+			}
 		
-			  if($item->trashed() or \Date::now() < $item->published_at) {
-				if(($user = Auth::user() and $user->is_admin) or session('temporary-token')) {
-				  // private and visible (auth ok)
-				  session(['temporary-token' => false]);
-				  
-						if($user = Auth::user() and $user->is_admin) {
-							if($item->trashed()) {
-								$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
-												'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
-												trans('folio::base.this-page-is-hidden');
-							} else {
-  								$date = new \Date($item->published_at);
-								$date = ucWords($date->format('F').' '.$date->format('j, Y'));
-								$is_blog = $item->is_blog ? 'blog' : '<span style="text-decoration: line-through;">blog</span>';
-								$is_rss = $item->rss ? 'rss' : '<span style="text-decoration: line-through;">rss</span>';
-								$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
-								'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
-								trans('folio::base.scheduled-for').' '.$date.' &nbsp;·&nbsp; '.$is_blog.' &nbsp;·&nbsp; '.$is_rss;
-							}
+				if(
+					$item->trashed() or
+					\Date::now() < $item->published_at
+				) {
+					if(($user = Auth::user() and $user->is_admin) or session('temporary-token')) {
+					// private and visible (auth ok)
+					session(['temporary-token' => false]);
+					
+					if(
+						$user = Auth::user() and
+						$user->is_admin
+					) {
+						if($item->trashed()) {
+							$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
+											'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
+											trans('folio::base.this-page-is-hidden');
 						} else {
-					  $notification = trans('folio::base.preview-of-unpublished-page');
-				  }
+							$date = new \Date($item->published_at);
+							$date = ucWords($date->format('F').' '.$date->format('j, Y'));
+							$is_blog = $item->is_blog ? 'blog' : '<span style="text-decoration: line-through;">blog</span>';
+							$is_rss = $item->rss ? 'rss' : '<span style="text-decoration: line-through;">rss</span>';
+							$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
+							'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
+							trans('folio::base.scheduled-for').' '.$date.' &nbsp;·&nbsp; '.$is_blog.' &nbsp;·&nbsp; '.$is_rss;
+						}
+					} else {
+						$notification = trans('folio::base.preview-of-unpublished-page');
+					}
 
-				  $request->session()->flash('notification', $notification);
+					$request->session()->flash('notification', $notification);
 				} else {
-				  // private and hidden (no auth)
-				  return response()->view('errors.404', [], 404);
+					// private and hidden (no auth)
+					return response()->view('errors.404', [], 404);
 				}
-			  } else {
-				// public
-			  }
+			} else {
+			// public
+			}
 
-			  // Get the template view for this item
-			  $itemTemplateView = $item->templateView();
+			// Get the template view for this item
+			$itemTemplateView = $item->templateView();
 
-			  // Set to default Folio item view if empty or non-existing
-			  if(!$itemTemplateView || !view()->exists($itemTemplateView)) {
-					$itemTemplateView = config('folio.view.item');
-			  } else {
+			// Set to default Folio item view if empty or non-existing
+			if(
+				!$itemTemplateView ||
+				!view()->exists($itemTemplateView)
+			) {
+				$itemTemplateView = config('folio.view.item');
+			} else {
 				// Template view $itemTemplateView is good to go!
-				}
-				
-				// Return XML feed directy if Item is-feed
-				if($item->boolProperty('is-feed')) {
-					return \Nonoesp\Folio\Controllers\FeedController::makeFeed($request, $domain, $item);
-				}
+			}
+
+			// Return XML feed directy if Item is-feed
+			if($item->boolProperty('is-feed')) {
+				return \Nonoesp\Folio\Controllers\FeedController::makeFeed($request, $domain, $item);
+			}
 
 			return view($itemTemplateView, ['item' => $item]);
-			}
+		}
 		
-			}
+	}
 
 	public function showItemWithId($domain, $id) {
 		$item = Item::withTrashed()->find($id);
@@ -260,6 +277,14 @@ class FolioController extends Controller
       echo view('folio::partial.c-item-li')->with(['item' => Item::find($id)]);
 		}
 
+	}
+
+	public function getUserProfile(Request $request, $domain, $handle) {
+		$user = User::where('twitter', '=', $handle)->first();
+		if(!$user) {
+			return response()->view('errors.404', [], 404);
+		}
+		return view('folio::profile', ['user' => $user]);
 	}
 	
 }

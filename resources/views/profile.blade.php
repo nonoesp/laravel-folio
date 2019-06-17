@@ -1,18 +1,21 @@
-@extends(Config::get("folio.view.layout"))
+@extends(config('folio.view.layout'))
 
 <?php
 
 	// Settings
-	$header_classes = 'c-header--relative';
+	$header_classes = ['c-header--relative'];
+	$header_hidden = true;
 
 	// User Items
 	$items = Item::where('user_id', '=', $user->id)->orderBy('id', 'DESC')->take(5)->get();
 
-	$user_thumbnail = view('folio::partial.c-user-picture')->with(["user" => $user,
-	         													  	 "size" => 75,
-	         													  	 "margin_top" => "-15",
-	         													  	 "margin_bottom" => "15",
-	         													  	 "shouldLink" => false]);
+	$user_thumbnail = view('folio::partial.c-user-picture')->with([
+		"user" => $user,
+		"size" => 75,
+		"margin_top" => "-15",
+		"margin_bottom" => "15",
+		"shouldLink" => false
+	]);
 ?>
 
 
@@ -89,8 +92,6 @@
   </div>
 
 @stop
-
-
 
 @section('footer')
 

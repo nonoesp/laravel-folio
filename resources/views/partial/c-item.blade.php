@@ -84,7 +84,9 @@
 						<p class="u-text-align--center">
 							Access to see this content.
 							<br><br>
-							<a href="/twitter/login" class="u-a--box-shadow-reset">{{ Form::button('Sign in with Twitter', array('class' => 'button--twitter-hero')) }}</a>
+							<a href="/twitter/login" class="u-a--box-shadow-reset">
+								{{ Form::button('Sign in with Twitter', ['class' => 'button--twitter-hero']) }}
+							</a>
 						</p>
 					@endif
 
@@ -94,7 +96,7 @@
 
 			@if ($item_type == 'SUMMARY_ITEM_TYPE')
 				<p>
-					{{ Thinker::limitMarkdownText($item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]), 275, array('figcaption')) }}
+					{{ Thinker::limitMarkdownText($item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]), 275, ['figcaption']) }}
 					{{ Html::link(Folio::path().$item->slug, trans('folio::base.continue-reading')) }}
 				</p>
 			@endif

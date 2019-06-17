@@ -297,7 +297,16 @@ class AdminController extends Controller
 
 		return response()->json([
 			'success' => true
-	]);
+		]);
+	}
+
+	function postPropertySort() {
+		$ids = Input::get('ids');
+		Property::setNewOrder($ids);
+
+		return response()->json([
+			'success' => true
+		]);
 	}
 
 	// Items API

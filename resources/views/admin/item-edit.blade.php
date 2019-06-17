@@ -15,7 +15,7 @@ if(!$translations) $translations = ['en'];
 foreach($translations as $translation) {
 	if(!in_array($translation, ResourceBundle::getLocales(''))) {
 		$language_errors = [
-'**'.$translation.'** is not a valid locale.  
+'**'.$translation.'** is not a valid locale.
 Provide valid `translations` in `config/folio.php`.
 
 For instance, you can specify English and Spanish.
@@ -65,7 +65,7 @@ window.onbeforeunload = function() {
  * Wether the user requested to save.
  * (User to not warn the user the file has unsaved changes.)
  */
-var isSaving = false; 
+var isSaving = false;
 
 /*
  * CTRL+S & COMMAND+S
@@ -131,11 +131,11 @@ var debounced_property_sync = _.debounce(
 
 		var data = property;
 		property.is_updating = true;
-		
+
 		property.old_value = property.value;
 		property.old_label = property.label;
 		property.old_name = property.name;
-		
+
 		model.$forceUpdate();
 		VueResource.Http.post('/api/property/update', data).then((response) => {
 				// success
@@ -148,8 +148,11 @@ var debounced_property_sync = _.debounce(
 
 var editing_property = -1;
 
+const draggable = window.draggable;
+
 const admin = new Vue({
 el: '.c-admin',
+name: 'Admin',
 data: {
 	item: '',
 	originalItem: '',
@@ -168,6 +171,9 @@ watch: {
 		},
 		deep: true
 	}
+},
+components: {
+	draggable
 },
 mounted() {
 	//this.adjustTextareaHeight(this.$refs.editor, 0);
@@ -227,7 +233,7 @@ methods: {
 			// success
 		}, (response) => {
 			// error
-		});		
+		});
 	},
 	delete_property: function(property) {
 		if(confirm("Are you sure you want to delete this property? This cannot be undone.")) {
@@ -287,7 +293,7 @@ methods: {
 		return event.srcElement;
 	},
 	saveItemChanges() {
-		
+
 		let itemId = this.item.id;
 		let itemData = {
 			title: this.item.title,
@@ -354,7 +360,7 @@ methods: {
 		for(var i in this.item) {
 
 			if(trackedFields.includes(i)) {
-			
+
 				let itemValue = this.item[i];
 				let originalValue = this.originalItem[i];
 
@@ -368,12 +374,23 @@ methods: {
 			}
 		}
 		return false;
+	},
+	sortProperties() {
+		let property_ids = JSON.parse(JSON.stringify(this.properties));
+		property_ids = property_ids.map((element, index) => { return element.id; });
+
+		VueResource.Http.post('/api/property/sort', {ids: property_ids})
+			.then((response) => {
+				// success
+			}, (response) => {
+				// error
+			});
 	}
 }
 });
 
 </script>
-		
+
 @stop
 
 <?php
@@ -410,7 +427,7 @@ methods: {
 @isset($language_errors)
 
 	<div class="[ c-admin-form-v2 ] [ grid ]">
-	<div class="[ o-wrap o-wrap--size-small ]">		
+	<div class="[ o-wrap o-wrap--size-small ]">
 		<div class="[ grid__item ] [ one-whole ]">
 			@foreach($language_errors as $error)
 			<p><strong>Configuration error</strong></p>
@@ -439,7 +456,7 @@ methods: {
 	<div class="[ c-admin-form-v2 ] [ grid ]">
 
 		@if( Request::isMethod('post') )
-		<div class="[ o-wrap o-wrap--size-small ]">		
+		<div class="[ o-wrap o-wrap--size-small ]">
 			<div class="[ grid__item ] [ one-whole ]">
 				<p>Changes saved.</p>
 			</div>
@@ -474,7 +491,7 @@ methods: {
 				'@blur' => 'updateTextareaFocus',
 				'v-bind:class' => '{ "u-opacity--high" : !isTextareaFocused }'
 				]) }}</p>
-		</div>			
+		</div>
 		@endforeach
 
 		<div class="[ o-wrap o-wrap--size-600 ]">
@@ -503,7 +520,7 @@ methods: {
 
 			<div class="[ grid__item ] [ one-whole ]">
 				<p><label for="hidden">{{ Form::checkbox('is_hidden', null, $item->trashed(), ['id' => 'is_hidden', 'v-model' => 'item.deleted_at']) }} Hidden</label></p>
-			</div>			
+			</div>
 
 			{{-- Blog Feed --}}
 
@@ -515,14 +532,15 @@ methods: {
 
 			<div class="[ grid__item ] [ one-whole ]">
 				<p><label for="rss">{{ Form::checkbox('rss', null, null, ['id' => 'rss', 'v-model' => 'item.rss']) }} RSS Feed</label></p>
-			</div>			
+			</div>
 
 			{{-- Properties --}}
-				
+
 				<div v-if="properties.length" class="[ grid__item ] [ u-pad-b-1x ]">
 					<strong>Properties</strong>
 				</div>
 
+				<draggable v-model="properties" @end="sortProperties">
 				<div v-for="(property, index) in properties" class="[ grid__item one-whole ] [ c-admin__property ]">
 
 						<div class="[ grid grid--narrow ]">
@@ -530,8 +548,7 @@ methods: {
 							[ c-admin-form__label u-text-align--right c-admin--font-light ]
 							[ one-half portable--one-whole ]
 							[ u-hidden-portable ]">
-								{{-- <span>@{{ property.id }} · @{{ property.order_column }}
-								@{{ index }}</span> --}}
+								{{-- <span>@{{ property.id }} · @{{ property.order_column }} · @{{ index }}</span> --}}
 								{{-- <span class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
 									<i class="fa fa-trash-o"></i>
 								</span>												 --}}
@@ -566,16 +583,22 @@ methods: {
 								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
 									<i class="fa fa-trash-o"></i>
 								</span>
+								<span v-bind:data-id="property.id"
+								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+									<i class="fa fa-bars"></i>
+								</span>								
+								{{--
 								<span @click="movePropertyUp(property)" v-bind:data-id="property.id"
 								v-if="index != 0"
 								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
 									<i class="fa fa-angle-up"></i>
-								</span>				
+								</span>
 								<span @click="movePropertyDown(property)" v-bind:data-id="property.id"
 								v-if="index != properties.length - 1"
 								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
 									<i class="fa fa-angle-down"></i>
-								</span>								
+								</span>
+								--}}
 								<span v-if="property.is_updating">
 									<i class="fa fa-refresh fa-spin fa-fw"></i>
 									<span class="sr-only">Loading...</span>
@@ -584,6 +607,7 @@ methods: {
 				--></div>
 
 				</div>
+				</draggable>
 
 
 			<div class="[ grid__item ] [ u-pad-b-2x u-pad-t-0x ] [ c-admin--font-light ] ">

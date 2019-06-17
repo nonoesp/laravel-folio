@@ -79,12 +79,14 @@ class Folio {
 		return Config::get('folio.admin-path-prefix').'/';
 	}
 
-	public static function isAvailableURI() {
-		if(!in_array(Request::path(), config('folio.protected_uris'))) {
+	public static function isReservedURI($uri = null) {
+    if (!$uri) {
+      $uri = Request::path();
+    }
+		if(in_array($uri, config('folio.reserved-uris'))) {
 			return true;
-		} else {
-			return false;
 		}
+    return false;
 	}
 
 	/*

@@ -103,13 +103,21 @@ class Item extends Model implements Feedable
 		//}
 	}
 
+	public function domain() {
+		return $this->stringProperty('domain', config('folio.main-domain'));
+	}
+
 	// The public path of the item
 	// (Returns 404 if the post is hidden or scheduled for the future)
 	public function path() {
+		$path = Folio::path().$this->slug;
 		if($this->slug[0] == "/") {
-			return substr($this->slug, 1, strlen($this->slug)-1);
+			$path = substr($this->slug, 1, strlen($this->slug)-1);
 		}
-		return Folio::path().$this->slug;
+		if ($this->domain() != \Request::getHost()) {
+			$path = '//'.$this->domain().'/'.$path;
+		}		
+		return $path;
 	}
 
 	// An encoded path that provides access to hidden items
