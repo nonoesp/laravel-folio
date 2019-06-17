@@ -193,8 +193,7 @@ class FolioController extends Controller
 			$item->visits++;
 			$item->save();
 
-			$domain = $item->stringProperty('domain', config('folio.main-domain'));
-				
+			$domain = $item->domain();
 			if($domain != $request->getHost()) {
 				return \Redirect::to('//'.$domain.'/'.$request->path());
 			}
