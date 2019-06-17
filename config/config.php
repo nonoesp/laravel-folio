@@ -32,6 +32,11 @@ return [
 	],
 
 	/*
+	 * Translations that will show up when editing items. Defaults to ['en'].
+	 */
+	'translations' => ['en'],
+
+	/*
      * The path for Folio to search for custom templates.
 	 * eg. 'template' with search for templates on /resources/views/template.
      */
@@ -44,6 +49,14 @@ return [
      */
 	'domain-pattern' => null,
 	
+	// Pattern of domains accepted by Folio (only to render items)
+	'domain-pattern-items' => 'sketch.nono.ma|sketch.nono.localhost|expensed.me',
+
+	// Main domain to redirect items that are loaded from an unset accepted domain
+	// If null - there's no domain redirection
+	// If existent - redirection happens if no $item->domain() exists
+	'main-domain' => env('FOLIO_DOMAIN', null),
+
 	/*
 	 * Prefix for database tables
      */	

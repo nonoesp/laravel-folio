@@ -90,7 +90,7 @@ if(isset($collection)) {
           $og_title .= ' (#'.$item->stringProperty('podcast-episode').')';
           $site_title = $og_title.' · '.config('folio.title');
         }
-        $og_description = Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']);
+        $og_description = Thinker::limitMarkdownText($item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]), 159, ['sup']);
         $og_description = $item->stringProperty('meta-description', $og_description);
         $og_type = 'article';
         $og_url = $item->permalink();

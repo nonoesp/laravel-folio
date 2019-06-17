@@ -178,11 +178,29 @@ class AdminController extends Controller
 		return view('folio::admin.item-add');
 	}
 
+	public function setLocateToFirstTranslation() {
+		// Initial values default to English
+		// or first value of folio.translations config array (if valid)
+		$default_locale = 'en';
+		$translations = config('folio.translations');
+		if($translations && in_array($translations[0], \ResourceBundle::getLocales(''))) {
+			$default_locale = $translations[0];
+		}
+		app()->setLocale($default_locale);
+	}
+
 	public function postItemCreate() {
+
+		$this->setLocateToFirstTranslation();
 
 		$item = new Item();
 		$item->title = Input::get('title');
-		if($item->title == "") $item->title = "Untitled";
+		if($item->title == "") {
+			$item->title = "Untitled";
+		}
+		if($item->text == "") {
+			$item->text = "";
+		}
 		
 		$item->is_blog = false;
 
@@ -279,7 +297,16 @@ class AdminController extends Controller
 
 		return response()->json([
 			'success' => true
-	]);
+		]);
+	}
+
+	function postPropertySort() {
+		$ids = Input::get('ids');
+		Property::setNewOrder($ids);
+
+		return response()->json([
+			'success' => true
+		]);
 	}
 
 	// Items API
@@ -330,6 +357,8 @@ class AdminController extends Controller
 	 */
 	
 	public function postItemUpdateAjax(Request $request, $id) {
+
+		$this->setLocateToFirstTranslation();
 
 		$item = Item::withTrashed()->find($id);
 

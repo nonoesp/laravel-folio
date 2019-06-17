@@ -3,7 +3,7 @@
 <br>
 
 <h3>grahamcampbell/markdown</h3>
-{!! Markdown::convertToHtml('This is a Markdown *test*—go **bold** letters') !!}
+{!! Item::convertToHtml('This is a Markdown *test*—go **bold** letters') !!}
 
 <h3>jenssegers/date</h3>
 {{ Date::now()->format('M d,   Y') }}

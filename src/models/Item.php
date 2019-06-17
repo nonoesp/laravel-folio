@@ -5,12 +5,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Folio;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
+use Spatie\Regex\Regex;
 
 class Item extends Model implements Feedable
 {
 	use \Mpociot\Versionable\VersionableTrait;
 	use SoftDeletes;
 	use \Conner\Tagging\Taggable;
+	use \Spatie\Translatable\HasTranslations;
+
+	/**
+	 * @var array
+	 */
+	public $translatable = ['title', 'text'];
 
 	/**
 	 * @var string
@@ -96,13 +103,25 @@ class Item extends Model implements Feedable
 		//}
 	}
 
+	public function domain() {
+		$domain = $this->stringProperty('domain', config('folio.main-domain'));
+		if ($domain == null) {
+			return \Request::getHost();
+		}
+		return $domain;
+	}
+
 	// The public path of the item
 	// (Returns 404 if the post is hidden or scheduled for the future)
 	public function path() {
+		$path = Folio::path().$this->slug;
 		if($this->slug[0] == "/") {
-			return substr($this->slug, 1, strlen($this->slug)-1);
+			$path = substr($this->slug, 1, strlen($this->slug)-1);
 		}
-		return Folio::path().$this->slug;
+		if ($this->domain() != \Request::getHost()) {
+			$path = '//'.$this->domain().'/'.$path;
+		}		
+		return $path;
 	}
 
 	// An encoded path that provides access to hidden items
@@ -229,12 +248,45 @@ class Item extends Model implements Feedable
      */
 	public function propertyArray($key) {
 
-		$propertyArray = $this->properties()->where('name', $key)->get();
-		if($propertyArray->count()) {
-		  return $propertyArray;
+		$properties = $this->properties()->where('name', $key)->get();
+		if($properties->count()) {
+		  return $properties;
 		}
 		return NULL;
 
+	}
+
+	public function propertiesWithPrefix($prefix) {
+
+		$matching_properties = [];
+		$currentLocale = app()->getLocale();
+
+		foreach($this->properties()->get() as $property) {
+
+		// Discard if property is localization, otherwise add
+		$parts = explode("--", $property->name);
+		$parts_count = count($parts);
+		$last_part = $parts[$parts_count - 1];
+		if ($parts_count > 1 && in_array($last_part, \ResourceBundle::getLocales(''))) {
+			// (0) This property is a localization
+		} else {
+
+			// Not a localization
+			// (1) Find localization or (2) add original property
+
+			if (substr($property->name, 0, strlen($prefix)) === $prefix) {
+			$localizedKey = $property->name.'--'.$currentLocale;
+			if ($this->hasProperty($localizedKey)) {
+				array_push($matching_properties, $this->property($localizedKey));
+			} else {
+				array_push($matching_properties, $property);
+			}
+			}
+		}
+
+		}
+
+		return $matching_properties;
 	}
 
 	// Cast the value of a property to a boolean
@@ -250,7 +302,19 @@ class Item extends Model implements Feedable
 		return $default;
 	}
 
+	public function hasProperty($key) {
+		foreach($this->properties as $p) {
+			if ($p->name === $key) return true;
+		}
+		return;
+	}
+
 	public function stringProperty($key, $default = null) {
+
+		$currentLocale = app()->getLocale();
+		$localizedKey = $key.'--'.$currentLocale;
+		$key = $this->hasProperty($localizedKey) ? $localizedKey : $key;
+
 		if($p = $this->property($key)) {
 			if($p->value != '') {
 				return $p->value;
@@ -467,8 +531,14 @@ class Item extends Model implements Feedable
 	 * the correct parser. Each Item can set its own parser
 	 * by specifying the custom property 'markdown-parser' to
 	 * commonmark, vtalbot, or michelf
+	 * 
+	 * $options = [
+	 * 	veilImages: boolean;
+	 *  parseExternalLinks: boolean;
+	 *  stripTags: string[];
+	 * ]
 	 */
-	public function htmlText($veilImages = true, $parseExternalLinks = false) {
+	public function htmlTextLegacy($veilImages = true, $parseExternalLinks = false) {
 		$markdown_parser = $this->stringProperty('markdown-parser', 'default');
 		if($this->hasExcerptTag()) {
 			$text = explode(config('folio.excerpt-tag'), $this->text)[1];
@@ -479,6 +549,71 @@ class Item extends Model implements Feedable
         if ($parseExternalLinks) {
             $html = Item::parseExternalLinks($html);
         }
+		return $html;
+	}
+
+	public function htmlText($options = []) {
+
+		// Option defaults
+		$veilImages = true;
+		$parseExternalLinks = false;
+		$stripTags = [];
+
+		if(array_key_exists('veilImages', $options)) {
+			$veilImages = $options['veilImages'];
+		}
+		if(array_key_exists('parseExternalLinks', $options)) {
+			$parseExternalLinks = $options['parseExternalLinks'];
+		}
+		if(array_key_exists('stripTags', $options)) {
+			$stripTags = $options['stripTags'];
+		}				
+
+		// Does the text have an excerpt to trim?
+		$text = $this->text;
+		if($this->hasExcerptTag()) {
+			$text = explode(config('folio.excerpt-tag'), $this->text)[1];
+		}
+		
+		// Strip HTML tags
+		// e.g., <norss></norss> <rss></rss> <nopodcast> </nopodcast>
+		if (is_array($stripTags) and count($stripTags)) {
+
+			// Remove tags from raw text · $text
+			foreach ($stripTags as $tag) {
+				$tagPattern = "/<".$tag."[^>]*>(.|\n)*?<\/".$tag.">/";
+				if(Regex::match($tagPattern, $text)->hasMatch()) {
+					// We wrap with <p></p> to avoid leaving an empty paragraph (because we are stripping
+					// the HTML output of Markdown)
+					$text = Regex::replace($tagPattern, '', $text)->result();
+				}
+			}
+
+			// Parse Markdown to HTML · $text → $html
+			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
+			$html = Item::convertToHtml($text, $markdown_parser, $veilImages);
+
+			// Remove tags from Markdown text · $html
+			foreach ($stripTags as $tag) {
+				$tagPattern = "/<".$tag."[^>]*>(.|\n)*?<\/".$tag.">/";
+				if(Regex::match($tagPattern, $html)->hasMatch()) {
+					// We wrap with <p></p> to avoid leaving an empty paragraph (because we are stripping
+					// the HTML output of Markdown)
+					$html = Regex::replace($tagPattern, '', $html)->result();
+				}
+			}
+
+		} else {
+			// Parse Markdown to HTML
+			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
+			$html = Item::convertToHtml($text, $markdown_parser, $veilImages);
+		}
+
+		// Parse external links
+		if ($parseExternalLinks) {
+			$html = Item::parseExternalLinks($html);
+		}
+
 		return $html;
 	}
 	
