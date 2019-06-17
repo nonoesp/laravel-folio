@@ -83,7 +83,8 @@ class Folio {
     if (!$uri) {
       $uri = Request::path();
     }
-		if(in_array($uri, config('folio.reserved-uris'))) {
+    $reserved_uris = config('folio.reserved-uris');
+		if($reserved_uris and in_array($uri, config('folio.reserved-uris'))) {
 			return true;
 		}
     return false;
