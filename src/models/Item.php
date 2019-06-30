@@ -629,22 +629,31 @@ class Item extends Model implements Feedable
 		return count(explode(config('folio.excerpt-tag'), $this->text)) > 1;
 	}
 	
-	public function htmlTextExcerpt($veilImages = true, $parseExternalLinks = false) {
-		if($this->hasMoreTag()) {
-			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
-			$textExcerpt = explode(config('folio.more-tag'), $this->text)[0];
-			$html = Item::convertToHtml($textExcerpt, $markdown_parser, $veilImages);
-		} else if($this->hasExcerptTag()) {
-			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
-			$textExcerpt = explode(config('folio.excerpt-tag'), $this->text)[0];
-			$html = Item::convertToHtml($textExcerpt, $markdown_parser, $veilImages);
-		} else {
-            return $this->htmlText();
-        }
-        if ($parseExternalLinks) {
-            $html = Item::parseExternalLinks($html);
-        }
-        return $html;
+	public function htmlTextExcerpt($options = []) {
+
+		// Replace item text temporarily if more-tag or excerpt-tag
+		
+		if($this->hasExcerpt()) {
+			// Get more-tag or excerpt-tag
+			$tag = config('folio.more-tag');
+			if ($this->hasExcerptTag()) {
+				$tag = config('folio.excerpt-tag');
+			}
+			// Get excerpt text
+			$textExcerpt = explode($tag, $this->text)[0];
+			// Remember actual item text
+			$fullItemText = $this->text;
+			// Replace temporarily
+			$this->text = $textExcerpt;
+			$excerptHtml = $this->htmlText($options);
+			// Revert to actual item text
+			$this->text = $fullItemText;
+			// Return excerpt text as HTML
+			return $excerptHtml;
+		}
+
+		// Fallback to Item full text if no more-tag or excerpt-tag were found
+		return $this->htmlText($options);
     }
     
     /**
