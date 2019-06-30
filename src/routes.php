@@ -22,31 +22,35 @@ use Hashids;
 	// SubscriptionController (outside controller to allow cross-domain subscription)
 	Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create');
 
-/*
-* Create a domain pattern if provided in config.php
-* Otherwise allow the current domain (i.e., any domain)
-*/
-if(
-	config('folio.domain-pattern') == null or
-	config('folio.domain-pattern') == ''
+	/*
+	* Create a domain pattern if provided in config.php
+	* Otherwise allow the current domain (i.e., any domain)
+	*/
+	$domainPattern = config('folio.domain-pattern');
+	if(
+		$domainPattern == null or
+		$domainPattern == '' or
+		!$domainPattern
 	) {
-	Route::pattern('foliodomain', Request::getHost());
-} else {
-	Route::pattern('foliodomain', config('folio.domain-pattern'));
-}
+		Route::pattern('foliodomain', Request::getHost());
+	} else {
+		Route::pattern('foliodomain', config('folio.domain-pattern'));
+	}
 
-/*
-* A pattern to allow (only) items to be domain specific
-* and be rendered on another domain
-*/
-if(
-	config('folio.domain-pattern-items') == null or
-	config('folio.domain-pattern-items') == ''
+	/*
+	* A pattern to allow (only) items to be domain specific
+	* and be rendered on another domain
+	*/
+	$domainPatternItems = config('folio.domain-pattern-items');
+	if(
+		$domainPatternItems == null or
+		$domainPatternItems == '' or
+		!$domainPatternItems
 	) {
-	Route::pattern('foliodomainitems', Request::getHost());
-} else {
-	Route::pattern('foliodomainitems', config('folio.domain-pattern').'|'.config('folio.domain-pattern-items'));
-}
+		Route::pattern('foliodomainitems', Request::getHost());
+	} else {
+		Route::pattern('foliodomainitems', config('folio.domain-pattern').'|'.config('folio.domain-pattern-items'));
+	}
 
 // DOMAIN-PATTERN + DOMAIN-PATTERN-ITEMS
 
@@ -169,5 +173,8 @@ Route::group([
 	// SubscriptionController
 	Route::post('subscriber/delete', 'Nonoesp\Folio\Controllers\SubscriptionController@delete');
 	Route::post('subscriber/restore', 'Nonoesp\Folio\Controllers\SubscriptionController@restore');
+
+	// Logs
+	Route::get('admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 }); // close folio admin
