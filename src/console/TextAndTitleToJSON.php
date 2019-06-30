@@ -10,7 +10,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class TextAndTitleToJSON extends Command
 {
-    protected $signature = 'folio:toJSON';
+    protected $signature = 'folio:toJSON {locale?}';
 
 	protected $description = 'Migrate title and text fields to JSON format for localization support.';
 	
@@ -24,7 +24,11 @@ class TextAndTitleToJSON extends Command
         try {
             
             $items = \Item::withTrashed()->get();
-            app()->setLocale('en');
+            $locale = 'en';
+            if ($this->argument('locale')) {
+                $locale = $this->argument('locale');
+            }
+            app()->setLocale($locale);
             foreach($items as $item) {
                 $this->info("Migrated item $item->id.");
                 $item->title = $item->title_plain;

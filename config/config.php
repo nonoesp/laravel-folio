@@ -50,7 +50,8 @@ return [
 	'domain-pattern' => null,
 	
 	// Pattern of domains accepted by Folio (only to render items)
-	'domain-pattern-items' => 'sketch.nono.ma|sketch.nono.localhost|expensed.me',
+	// e.g. 'sketch.nono.ma|sketch.nono.localhost|expensed.me'
+	'domain-pattern-items' => null,
 
 	// Main domain to redirect items that are loaded from an unset accepted domain
 	// If null - there's no domain redirection
