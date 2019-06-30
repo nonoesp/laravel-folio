@@ -142,7 +142,7 @@ class FeedController extends Controller
 				}
 
 				// Item->htmlText()
-				$itemHTMLText = $item->htmlText([
+				$itemHTMLText = $item->htmlTextExcerpt([
 					'veilImages' => false,
 					'parseExternalLinks' => $request->root(),
 					'stripTags' => ['norss', 'nofeed']
