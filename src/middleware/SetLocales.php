@@ -25,6 +25,12 @@ class SetLocales
         $browser_lang = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
         if($browser_lang) {
             App::setLocale($browser_lang);
+            // If app locale is Folio's second locale
+            // Set app.fallback_locale to Folio's first locale
+            $folioLocales = config('folio.translations');
+            if ($folioLocales and count($folioLocales) > 1 and App::getLocale() == $folioLocales[1]) {
+                config(['app.fallback_locale' => $folioLocales[0]]);
+            }            
         }
 
         // Date
