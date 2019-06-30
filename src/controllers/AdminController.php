@@ -362,7 +362,6 @@ class AdminController extends Controller
 
 		$item = Item::withTrashed()->find($id);
 
-		//$item->title = request('title');
 		$item->text = request('text');
 		$item->video = request('video');
 		$item->published_at = request('published_at');
