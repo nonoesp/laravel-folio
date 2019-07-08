@@ -27,7 +27,7 @@
         "nonoesp/thinker": "^1.1",
         "jenssegers/date": "^3.5",
         "laravelium/feed": "dev-master",
-        "graham-campbell/markdown": "^10.3",
+        "graham-campbell/markdown": "^11.0",
         "webuni/commonmark-attributes-extension": "dev-master",
         "laravelcollective/html": "5.8.*",
         "vinkla/hashids": "^6.0.0",
