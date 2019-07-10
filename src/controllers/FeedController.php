@@ -148,6 +148,13 @@ class FeedController extends Controller
 					'stripTags' => ['norss', 'nofeed']
 				]);
 
+				// Item description (can be set as Mailchimp's preview text)
+				$itemDescription = \Thinker::limitMarkdownText($itemHTMLText, 159, ['sup']);
+				// Override description with custom properties
+				if ($item->stringProperty('feed-description')) {
+					$itemDescription = $item->stringProperty('feed-description');
+				}
+
 				// Text
 				$html = str_replace(
 					[
@@ -175,7 +182,7 @@ class FeedController extends Controller
 					'author' => $default_author,
 					'url' => $URL,
 					'pubdate' => $item->published_at,
-					'description' => \Thinker::limitMarkdownText($itemHTMLText, 159, ['sup']),
+					'description' => $itemDescription,
 					'content' => $html,
 				];
 
