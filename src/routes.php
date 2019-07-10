@@ -68,7 +68,17 @@ Route::group([
 					where('slug', '[A-Za-z0-9.\-\/]+');
 		Route::get('{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
 					where('slug', '[A-Za-z0-9.\-\/]+');
-	}	
+	}
+
+	// // Item (redirects)
+	// $redirectItems = Item::whereHas('properties', function($q) {
+	// 	$q->where('name', 'redirect');
+	// })->get();
+
+	// foreach($items as $item) {
+	// 	// 
+	// 	echo $item->title.'<br/>';
+	// }
 
 }); // close folio general domain pattern group
 
