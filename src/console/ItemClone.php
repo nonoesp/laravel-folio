@@ -12,7 +12,7 @@ class ItemClone extends Command
 {
     protected $signature = 'folio:clone {id} {newName?}';
 
-	protected $description = 'Empty existing tags and retag all items.';
+	protected $description = 'Clone an existing item (and, optionally, provide a title for the copy).';
 	
     public function __construct()
     {
