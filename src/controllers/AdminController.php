@@ -345,11 +345,22 @@ class AdminController extends Controller
 	}
 
 	// Subscribers
-
 	public function getSubscribers() {
 		$subscribers = Subscriber::orderBy('id', 'DESC')->get();
 		return view('folio::admin.subscribers')->withSubscribers($subscribers);
 	}
+
+	// Visits
+	public function getVisits() {
+		$items = Item::orderBy('visits', 'DESC')->get();
+		return view('folio::admin.visits')->withItems($items);
+	}	
+
+	// Redirections
+	public function getRedirections() {
+		$redirections = Property::orderBy('item_id', 'DESC')->whereName('redirect')->get();
+		return view('folio::admin.redirections')->withRedirections($redirections);
+	}		
 
 	/**
 	 *  Ajax Item Update

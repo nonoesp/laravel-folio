@@ -91,27 +91,60 @@ class Folio {
 	}
 
 	/*
-	 * Returns true when the current URI belongs to the package or not.
+	 * Whether the current path is an Item redirection.
+	 */  
+  public static function pathIsItemRedirection() {
+
+    // Abort when there's no access to Items database table
+    if (\Schema::hasTable(Folio::table('item_properties')) == false) {
+      return false;
+    }
+
+    // Get current path
+    $path = Request::path();
+
+    // Get 'item-redirection-property-name'
+    $itemRedirectionPropertyName = config('folio.item-redirection-property-name');
+    if(empty($itemRedirectionPropertyName)) {
+      $itemRedirectionPropertyName = 'redirect';
+    }
+
+    $redirection = DB::table(Folio::table('item_properties'))->whereName($itemRedirectionPropertyName)->whereValue($path)->first();
+
+    if ($redirection) {
+      return $redirection->item_id;
+    }
+
+    return false;
+  }
+
+	/*
+	 * Whether the current URI is a Folio URI. (Maybe rename URI for path?)
 	 */
 	public static function isFolioURI() {
 
+    // Abort when there's no access to Items database table
     if (\Schema::hasTable(Folio::table('items')) == false) {
       return false;
     }
 
-		$path = Request::path();
+    // Get current path
+    $path = Request::path();
 
+    // Look for Items with current slug
 		if($folio_path = Folio::path()) {
       // path-prefix set in config
 			if(substr($path,0,strlen($folio_path)) == $folio_path) {
         // {path-prefix}/{slug}
+        // path-prefix != ''
 				$slug = str_replace($folio_path, "", $path);
         if($item = DB::table(Folio::table('items'))->whereSlug($slug)->first()) {
   				return true;
         }
 			}
 		} else if($item = DB::table(Folio::table('items'))->whereSlug($path)->first()) {
-      // path-prefix = ''
+      // {slug}
+      // path-prefix == ''
 			return true;
 		}
     if($item = DB::table(Folio::table('items'))->whereSlug('/'.$path)->first()) {

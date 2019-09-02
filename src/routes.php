@@ -68,7 +68,18 @@ Route::group([
 					where('slug', '[A-Za-z0-9.\-\/]+');
 		Route::get('{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
 					where('slug', '[A-Za-z0-9.\-\/]+');
-	}	
+	}
+
+	// Item redirections
+	if ($folioRedirectionItemId = Folio::pathIsItemRedirection()) {
+		
+		$itemURL = '/'.Folio::permalinkPrefix().$folioRedirectionItemId;
+
+		Route::get(Request::path(), function() use ($itemURL) {
+			return Redirect::to($itemURL);
+		});
+
+	}
 
 }); // close folio general domain pattern group
 
@@ -146,9 +157,8 @@ Route::group([
 	Route::post('item/update/{id}', 'Nonoesp\Folio\Controllers\AdminController@postItemUpdateAjax');
 
 	Route::get($admin_path.'subscribers', 'Nonoesp\Folio\Controllers\AdminController@getSubscribers');
-
-	// Visits
 	Route::get($admin_path.'visits', 'Nonoesp\Folio\Controllers\AdminController@getVisits');
+	Route::get($admin_path.'redirections', 'Nonoesp\Folio\Controllers\AdminController@getRedirections');
 
 	Route::get($admin_path, function() use ($admin_path) {
 		return redirect()->to($admin_path.'items');
