@@ -206,6 +206,13 @@ return [
 	'excerpt-tag' => '<!--excerpt-->',
 
 	/*
+	 * Item property name to specify a redirection path that will
+	 * redirect to the item.
+	 * 
+	 */
+	'item-redirection-property-name' => 'redirect',
+
+	/*
 	 * The amount of published items to display in Folio's home page.
 	 * (The rest will be passed as a JavaScript JSON object for "load more".)
 	 */		
