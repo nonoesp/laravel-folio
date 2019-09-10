@@ -412,7 +412,7 @@ methods: {
 		  '<i class="fa fa-times"></i>' => $item->destroyPath(),
 		  '<i class="fa fa-history"></i>' => $item->versionsPath(),
 		  '<i class="fa fa-link"></i>' => [
-			  $item->encodedPath(),
+			  '//'.$item->encodedPath(true),
 			  'js--encoded-path',
 			  'data-clipboard-text="'.$item->encodedPath(true).'"'],
 		  '<i class="fa fa-eye"></i>' => [
