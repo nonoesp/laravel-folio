@@ -98,9 +98,10 @@ class FeedController extends Controller
 			$feed->setCustomView($feedCustomView);
 
 			foreach ($items as $item) {
-				// Link
-				$URL = URL::to($request->root().'/'.$item->path());
+				// Link for this RSS item
+				$URL = $item->URL();
 				$itemURL = $URL;
+				// Use external link if provided
 				if($item->link) {
 					$URL = $item->link;
 				}
