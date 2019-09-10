@@ -113,22 +113,35 @@ class Item extends Model implements Feedable
 
 	// The public path of the item
 	// (Returns 404 if the post is hidden or scheduled for the future)
-	public function path() {
+	public function path($absolute = false) {
 		$path = Folio::path().$this->slug;
 		if($this->slug[0] == "/") {
 			$path = substr($this->slug, 1, strlen($this->slug)-1);
 		}
-		if ($this->domain() != \Request::getHost()) {
+		if (
+			$absolute or
+			$this->domain() != \Request::getHost()
+			) {
 			$path = '//'.$this->domain().'/'.$path;
 		}		
 		return $path;
+	}
+
+	// The public URL of the item
+	public function URL() {
+		$protocol = 'http:';
+		if (\Request::secure())
+		{
+			$protocol = 'https:';
+		}
+		return $protocol.$this->path(true);
 	}
 
 	// An encoded path that provides access to hidden items
 	public function encodedPath($absolute = false) {
 		$path = '/e/'.\Hashids::encode($this->id);
 		if($absolute) {
-			return \Request::root().$path;
+			return $this->domain().$path;
 		}
 		return $path;
 	}
