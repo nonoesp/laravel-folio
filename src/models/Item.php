@@ -127,6 +127,7 @@ class Item extends Model implements Feedable
 		return $path;
 	}
 
+	// The public URL of the item
 	public function URL() {
 		$protocol = 'http:';
 		if (\Request::secure())
