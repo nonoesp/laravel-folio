@@ -127,6 +127,21 @@ class Item extends Model implements Feedable
 		return $path;
 	}
 
+	public function sharePath($absolute = true) {
+		$slug = $this->slug;
+		if($this->slug[0] == "/") {
+			$slug = substr($this->slug, 1, strlen($this->slug)-1);
+		}
+		$path = 'share/'.$slug;
+		if (
+			$absolute or
+			$this->domain() != \Request::getHost()
+			) {
+			$path = '//'.$this->domain().'/'.$path;
+		}		
+		return $path;
+	}
+
 	// The public URL of the item
 	public function URL() {
 		$protocol = 'http:';
@@ -883,5 +898,16 @@ class Item extends Model implements Feedable
 
 	public static function formatDate($date, $format = 'F j, Y') {
 		return ucWords(\Date::parse($date)->format($format));
+	}
+
+	public static function bySlug($slug) {
+		if (
+			$item = Item::withTrashed()->whereSlug($slug)->first() or
+			$item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
+			$item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first()
+		) {
+			return $item;
+		}
+		return null;
 	}
 }

@@ -183,10 +183,10 @@ class FolioController extends Controller
 
 	public static function showItem($domain, Request $request, $slug) {
 
-		if(
-			$item = Item::withTrashed()->whereSlug($slug)->first() or
-			$item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
-			$item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first()
+		if($item = Item::bySlug($slug)
+		// $item = Item::withTrashed()->whereSlug($slug)->first() or
+		// $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
+		// $item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first()
 		) {
 			// Count item visit without altering updated_at
 			$item->timestamps = false;
