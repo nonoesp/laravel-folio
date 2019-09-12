@@ -13,12 +13,12 @@ class SubscriptionController extends Controller
 {
   public function create(Request $request)
   {
-    $email = \Input::get('email');
-    $name = \Input::get('name');
-    $source = \Input::get('source');
-    $medium = \Input::get('medium');
-    $campaign = \Input::get('campaign');
-    $path = \Input::get('path');
+    $email = $request->input('email');
+    $name = $request->input('name');
+    $source = $request->input('source');
+    $medium = $request->input('medium');
+    $campaign = $request->input('campaign');
+    $path = $request->input('path');
     $ip = Thinker::clientIp();
 
     $subscriber = new Subscriber();
@@ -81,8 +81,8 @@ class SubscriptionController extends Controller
   }
 
   // Soft delete an existing subscriber
-  public function delete() {
-    $id = \Input::get('id');
+  public function delete(Request $request) {
+    $id = $request->input('id');
     if($subscriber = Subscriber::find($id)) {
       $subscriber->delete();
     } else {
@@ -91,8 +91,8 @@ class SubscriptionController extends Controller
   }
 
   // Restore a soft-deleted subscriber
-  public function restore() {
-    $id = \Input::get('id');
+  public function restore(Request $request) {
+    $id = $request->input('id');
     if($subscriber = Subscriber::onlyTrashed()->find($id)) {
       $subscriber->restore();
     } else {

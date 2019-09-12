@@ -31,12 +31,12 @@ class UploadController extends Controller
 
 		  if(Request::isMethod('post')) {
 
-		    $img_name = Input::get('name');
+		    $img_name = $request->input('name');
 		    if($img_name == '') {
 		      $img_name = request()->file('photo')->getClientOriginalName();
 		    }
 		    $img_URL = $mediaPath.$img_name;
-		    $shouldReplace = Input::get('shouldReplace');
+		    $shouldReplace = $request->input('shouldReplace');
 
 		    if(file_exists(public_path($img_URL))) {
 		      $img_exists = true;
@@ -44,7 +44,7 @@ class UploadController extends Controller
 
 		    if(!$img_exists || $img_exists && $shouldReplace) {
 		      if(Input::hasFile('photo')) {
-		        $max_width = Input::get('max_width');
+		        $max_width = $request->input('max_width');
 						$img = Image::make(Input::file('photo'));      
 
 		        // Downsize image if wider than $max_width
