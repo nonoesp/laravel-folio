@@ -241,13 +241,13 @@ class FolioController extends Controller
 		return redirect(Folio::path().$item->slug);
 	}
 
-	public function getItemsWithIds() {
+	public function getItemsWithIds(Request $request) {
 
 		// Set Item Type
-		\Input::get('item_type') ? $item_type = \Input::get('item_type') : $item_type = 'DEFAULT_ITEM_TYPE';
+		$request->input('item_type') ? $item_type = $request->input('item_type') : $item_type = 'DEFAULT_ITEM_TYPE';
 
 		// Echo Items
-		foreach(\Input::get('ids') as $id) {
+		foreach($request->input('ids') as $id) {
       echo view('folio::partial.c-item-li')->with(['item' => Item::find($id)]);
 		}
 

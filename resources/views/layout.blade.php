@@ -9,6 +9,8 @@
 	$fb_app_id_default = config('folio.social.facebook.app_id');
 
 	$apple_touch_icon_default = '/apple-touch-icon.png';
+
+	if(!isset($item)) $item = null;
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +103,8 @@
 	@if(!$header_hidden)
 				{!! view($header_view, [
 					'classes' => $header_classes,
-					'data' => $header_data
+					'data' => $header_data,
+					'item' => $item,
 				]) !!}
 	@endif
 

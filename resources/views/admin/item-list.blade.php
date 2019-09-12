@@ -210,7 +210,7 @@ admin.sort_tags();
 		<div v-cloak v-for="item in items" class="[ u-visible-vue ] [ admin-list-item ]" v-if="!item.hidden" ref="items">
 			<p v-bind:class="{ 'u-opacity--half': item.deleted_at }">
 				<a v-bind:href="edit_href(item)">
-					@{{ item.title }}
+					@{{ item.title.en || item.title[Object.keys(item.title)[0]] }}
 				</a>
 				<i v-if=" item.deleted_at" @click="toggle_item(item)"
 					 class="[ fa fa-toggle-off fa--social ] [ u-cursor-pointer admin-list-optionLink is-invisible ]"></i>

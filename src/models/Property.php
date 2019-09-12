@@ -21,4 +21,9 @@ class Property extends Model implements Sortable
 	{
 		return $this->hasOne('Item');
 	}
+
+	// spatie/sortable
+	public function buildSortQuery() {
+		return static::query()->where('item_id', $this->item_id);
+	}	
 }

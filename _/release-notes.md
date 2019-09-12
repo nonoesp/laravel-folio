@@ -1,6 +1,13 @@
 
 ## Release Notes
 
+### 5.8.*
+
+- Add item translations (including properties).
+- Add per-item specific domain (and `domain-pattern-items`).
+- `protected_uris` → `reserved-uris`.
+- Add tag-stripping to `htmlText` (and convert parameters to `$options` Array).
+
 ### 5.5.*
 
 - Add package auto-discovery.

@@ -68,13 +68,13 @@
 			@if ($item_type == 'DEFAULT_ITEM_TYPE')
 
 				@if ($item->isPublic())
-					{!! $item->htmlText() !!}
+					{!! $item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]) !!}
 				@else
 					@if($twitter_handle = Authenticate::isUserLoggedInTwitter())
 						<?php /*@if($item->visibleFor($twitter_handle) OR Auth::user()->is_admin)*/ ?>
 						@if($item->visibleFor($twitter_handle))
 							{{--Visible for @twitter_handle--}}
-							{!! $item->htmlText() !!}
+							{!! $item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]) !!}
 						@else
 							{{--Not visible for this @twitter_handle--}}
 							<p>Oh, this content doesn't seem to be visible for {{ "@".$twitter_handle }}.</p>
@@ -84,7 +84,9 @@
 						<p class="u-text-align--center">
 							Access to see this content.
 							<br><br>
-							<a href="/twitter/login" class="u-a--box-shadow-reset">{{ Form::button('Sign in with Twitter', array('class' => 'button--twitter-hero')) }}</a>
+							<a href="/twitter/login" class="u-a--box-shadow-reset">
+								{{ Form::button('Sign in with Twitter', ['class' => 'button--twitter-hero']) }}
+							</a>
 						</p>
 					@endif
 
@@ -94,7 +96,7 @@
 
 			@if ($item_type == 'SUMMARY_ITEM_TYPE')
 				<p>
-					{{ Thinker::limitMarkdownText($item->htmlText(), 275, array('figcaption')) }}
+					{{ Thinker::limitMarkdownText($item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]), 275, ['figcaption']) }}
 					{{ Html::link(Folio::path().$item->slug, trans('folio::base.continue-reading')) }}
 				</p>
 			@endif

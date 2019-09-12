@@ -2,7 +2,7 @@
 @extends('folio::admin.layout')
 
 <?php
-$settings_title = Config::get('folio.title');
+$settings_title = config('folio.title');
 if($settings_title == '') {
 	$settings_title = "Folio";
 }

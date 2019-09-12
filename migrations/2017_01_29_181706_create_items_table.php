@@ -19,8 +19,10 @@ class CreateItemsTable extends Migration
               $table->timestamps();
               $table->softDeletes();
               $table->dateTime('published_at')->nullable();
-              $table->string('title')->nullable();
-              $table->text('text')->nullable();
+              $table->longText('title')->nullable();
+              // $table->json('title')->nullable(); // only supported by mysql 5.7
+              $table->longText('text')->nullable();
+              // $table->json('text')->nullable(); // only supported by mysql 5.7
               $table->string('image')->nullable();
               $table->string('image_src')->nullable();
               $table->string('video')->nullable();

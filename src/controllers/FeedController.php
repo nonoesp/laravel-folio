@@ -28,6 +28,9 @@ class FeedController extends Controller
 		if ($item) {
 			$cacheDuration = $item->intProperty('feed-cache-duration', $cacheDuration);
 			$cacheKey = $item->stringProperty('feed-key', $cacheKey);
+			if ($locale = $item->stringProperty('locale')) {
+				app()->setLocale($locale);
+			}
 		}
 		// Cache the feed for X minutes (second parameter is optional)
 		$feed->setCache($cacheDuration, $cacheKey);
@@ -63,6 +66,7 @@ class FeedController extends Controller
 				$feedTitle = $item->stringProperty('feed-title', $feedTitle);
 				$feedDescription = $item->stringProperty('feed-description', $feedDescription);
 				$feedLogo = $item->stringProperty('feed-logo', $feedLogo);
+				$feedLink = $item->stringProperty('feed-link', $feedLink);
 				$feedLang = $item->stringProperty('feed-lang', $feedLang);
 
 				// Try to use Item's template
@@ -94,9 +98,10 @@ class FeedController extends Controller
 			$feed->setCustomView($feedCustomView);
 
 			foreach ($items as $item) {
-				// Link
-				$URL = URL::to($request->root().'/'.$item->path());
+				// Link for this RSS item
+				$URL = $item->URL();
 				$itemURL = $URL;
+				// Use external link if provided
 				if($item->link) {
 					$URL = $item->link;
 				}
@@ -106,7 +111,10 @@ class FeedController extends Controller
 				$item_image = $item->image;
 				$item_image_src = $item->image_src;
 
-				if ($item->stringProperty('rss-image')) {
+				// Override cover image with custom properties
+				if ($item->stringProperty('feed-image')) {
+					$item_image = $item->stringProperty('feed-image');
+				} else if ($item->stringProperty('rss-image')) {
 					$item_image = $item->stringProperty('rss-image');
 				}
 
@@ -118,10 +126,11 @@ class FeedController extends Controller
 				// And image_src is global or falls back to default
 				if ($item_image_src == '' && $item->image) {
 					$item_image_src = $item_image;
-				} else if ($item->image_src && substr($item->image_src, 0, 1) == '/') {
-					$item_image_src = $request->root().$item->image_src;
-				} else {
-					$item_image_src = config('folio.feed.default-image-src');
+				} else if ($item_image_src && substr($item_image_src, 0, 1) == '/') {
+					$item_image_src = $request->root().$item_image_src;
+				} else if($item_image_src == '') {
+					// Disabled to avoid displaying placeholder image in all posts
+					// $item_image_src = config('folio.feed.default-image-src');
 				}
 
 				if ($item->video) {
@@ -129,36 +138,72 @@ class FeedController extends Controller
 						.'<img src="'.$item->videoThumbnail()
 						.'" alt="'.$item->title.'"></a></p>';
 				} else if ($item->image) {
-					$image = '<p><img src="'.$item_image.'" alt="'.$item->title.'"></p>';
+					// Disable to avoid displaying image twice and control location in Mailchimp template
+					// $image = '<p><img src="'.$item_image.'" alt="'.$item->title.'"></p>';
+				}
+
+				// Item->htmlText()
+				$itemHTMLText = $item->htmlTextExcerpt([
+					'veilImages' => false,
+					'parseExternalLinks' => $request->root(),
+					'stripTags' => ['norss', 'nofeed']
+				]);
+
+				// Item description (can be set as Mailchimp's preview text)
+				$itemDescription = \Thinker::limitMarkdownText($itemHTMLText, 159, ['sup']);
+				// Override description with custom properties
+				if ($item->stringProperty('feed-description')) {
+					$itemDescription = $item->stringProperty('feed-description');
 				}
 
 				// Text
-				$html = str_replace([
-					'<img',
-					'src="/',
-					'href="/',
-					'<hr />',
-				], [
-					'<img width="100%"',
-					'src="'.$request->root().'/',
-					'href="'.$request->root().'/',
-					'<br />',
-				],
-				$image.$item->htmlText(false, $request->root()));
+				$html = str_replace(
+					[
+						'<img',
+						'src="/',
+						'href="/',
+						'<hr />',
+					], [
+						'<img width="100%"',
+						'src="'.$request->root().'/',
+						'href="'.$request->root().'/',
+						'<br />',
+					],
+					$image.$itemHTMLText
+				);
 
 				$html = str_replace(
 					["<p><img", "/></p>"],
 					["<p class=\"rss__img-wrapper\"><img", "/></p>"],
 					$html);		
 
-				$feed->add(
-					$item->title,
-					$default_author,
-					$URL,
-					$item->published_at,
-					\Thinker::limitMarkdownText($item->htmlText(), 159, ['sup']),
-					$html,
-					['url'=>$item_image_src,'type'=>'image/jpeg']);
+				// add item as array with custom tags
+				$feedItem = [
+					'title' => $item->title,
+					'author' => $default_author,
+					'url' => $URL,
+					'pubdate' => $item->published_at,
+					'description' => $itemDescription,
+					'content' => $html,
+				];
+
+				if ($item_image) {
+					$feedItem['media:content'] = [
+						'url' => $item_image,
+						'medium' => 'image',
+						// 'height' => '768',
+						// 'width' => '1024'
+					];
+					$feedItem['enclosure'] = [
+						'url' => $item_image,
+						'type' => 'image/jpeg',
+						// 'height' => '768',
+						// 'width' => '1024'
+					];
+				}
+
+				$feed->addItem($feedItem);
+
 				}
 		}
 

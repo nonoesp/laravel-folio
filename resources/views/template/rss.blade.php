@@ -39,8 +39,8 @@
             @if (!empty($item['category']))
             <category>{!! $item['category'] !!}</category>
             @endif
-            <link>{!! $item['link'] !!}</link>
-            <guid isPermaLink="true">{!! $item['link'] !!}</guid>
+            <link>{!! $item['url'] !!}</link>
+            <guid isPermaLink="true">{!! $item['url'] !!}</guid>
             <description><![CDATA[{!! $item['description'] !!}]]></description>
             @if (!empty($item['content']))
             <content:encoded><![CDATA[{!! $item['content'] !!}]]></content:encoded>
