@@ -2,9 +2,8 @@
 
 namespace Nonoesp\Folio\Controllers;
 
-use Request;
+use Illuminate\Http\Request;
 use Form;
-use Input;
 use Image;
 use File;
 
@@ -27,13 +26,13 @@ class UploadController extends Controller
 		  $img_exists = false;
 		  $img_uploaded = false;
 		  $img_URL = "";
-			$img_name = "";
+		  $img_name = "";
 
-		  if(Request::isMethod('post')) {
+		  if($request->isMethod('post')) {
 
 		    $img_name = $request->input('name');
 		    if($img_name == '') {
-		      $img_name = request()->file('photo')->getClientOriginalName();
+		      $img_name = $request->file('photo')->getClientOriginalName();
 		    }
 		    $img_URL = $mediaPath.$img_name;
 		    $shouldReplace = $request->input('shouldReplace');
@@ -43,9 +42,9 @@ class UploadController extends Controller
 		    }
 
 		    if(!$img_exists || $img_exists && $shouldReplace) {
-		      if(Input::hasFile('photo')) {
+		      if($request->hasFile('photo')) {
 		        $max_width = $request->input('max_width');
-						$img = Image::make(Input::file('photo'));      
+				$img = Image::make($request->file('photo'));      
 
 		        // Downsize image if wider than $max_width
 		        if($img->width() > $max_width) {
@@ -56,14 +55,12 @@ class UploadController extends Controller
 		        }
 		        $img->save(public_path($img_URL));
 		      } else {
-
-						return view('folio::admin.upload.form')->with([
-							'message' => 'Invalid image provided.</br>It was either empty of bigger than the limit configured in your server.'
-							]);
-
-					}
+					return view('folio::admin.upload.form')->with([
+						'message' => 'Invalid image provided.</br>It was either empty of bigger than the limit configured in your server.'
+						]);
+				}
     
-		      if(Input::hasFile('photo')) {
+		      if($request->hasFile('photo')) {
 		      	$img_uploaded = true;
 		      }      
 		    } else {
