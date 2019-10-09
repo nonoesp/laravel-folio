@@ -106,7 +106,7 @@ class Item extends Model implements Feedable
 	public function domain() {
 		$domain = $this->stringProperty('domain', config('folio.main-domain'));
 		if ($domain == null) {
-			return \Request::getHost();
+			return \Request::getHttpHost();
 		}
 		return $domain;
 	}
@@ -120,7 +120,7 @@ class Item extends Model implements Feedable
 		}
 		if (
 			$absolute or
-			$this->domain() != \Request::getHost()
+			$this->domain() != \Request::getHttpHost()
 			) {
 			$path = '//'.$this->domain().'/'.$path;
 		}		
@@ -135,7 +135,7 @@ class Item extends Model implements Feedable
 		$path = 'share/'.$slug;
 		if (
 			$absolute or
-			$this->domain() != \Request::getHost()
+			$this->domain() != \Request::getHttpHost()
 			) {
 			$path = '//'.$this->domain().'/'.$path;
 		}		
