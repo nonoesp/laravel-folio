@@ -28,22 +28,32 @@ class ItemClone extends Command
             $item = \Item::find($id);
             // Clone if item exists
             if ($item) {
-                $this->info('Cloning '.$item->title.'..');
+                $this->info('Cloning Item '.$item->id.' - '.$item->title.'..');
                 $item->load('properties');
                 $new_item = $item->replicate();
+                $new_item->slug = null;
                 if ($this->argument('newName')) {
                     $new_item->title = $this->argument('newName');
                 } else {
                     $new_item->title = $new_item->title.' (copy)';
                 }
                 $new_item->save();
-        
+                $new_item->delete();
+                
+                // Clone custom properties
                 foreach($item->properties as $property) {
                     $new_property = $property->replicate();
                     $new_property->item_id = $new_item->id;
                     $new_property->save();
                     $this->info(' · '.$property->label.' · '.$property->name.' · '.$property->value);
                 }
+
+                // Success!
+                $this->info('Cloned succesfully!');
+                // We can output the Item's id after saving
+                $this->info('id - '.$new_item->id);
+                $this->info('title - '.$new_item->title);
+                $this->info('Edit at '.$new_item->editPath(true));
             } else {
                 $this->error('There\'s no item '.$id);
             }

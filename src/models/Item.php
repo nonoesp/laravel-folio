@@ -172,8 +172,12 @@ class Item extends Model implements Feedable
 	}	
 
 	// The admin path to edit this item
-	public function editPath() {
-		return '/'.config('folio.admin-path-prefix').'/item/edit/'.$this->id;
+	public function editPath($absolute = false) {
+		$path = '/'.config('folio.admin-path-prefix').'/item/edit/'.$this->id;
+		if ($absolute) {
+			return $this->domain().$path;
+		}
+		return $path;
 	}
 
 	// The admin path to review the history versions of this item
