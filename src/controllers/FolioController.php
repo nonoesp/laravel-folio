@@ -215,8 +215,7 @@ class FolioController extends Controller
 											'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
 											trans('folio::base.this-page-is-hidden');
 						} else {
-							$date = new \Date($item->published_at);
-							$date = ucWords($date->format('F').' '.$date->format('j, Y'));
+							$date = Item::formatDate($item->published_at, 'l, F j, Y');
 							$is_blog = $item->is_blog ? 'blog' : '<span style="text-decoration: line-through;">blog</span>';
 							$is_rss = $item->rss ? 'rss' : '<span style="text-decoration: line-through;">rss</span>';
 							$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
