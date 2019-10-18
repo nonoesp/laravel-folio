@@ -25,7 +25,7 @@ class ItemClone extends Command
             // Item id
             $id = $this->argument('id');
             // Find item by id
-            $item = \Item::find($id);
+            $item = \Item::withTrashed()->find($id);
             // Clone if item exists
             if ($item) {
                 $this->info('Cloning Item '.$item->id.' - '.$item->title.'..');
