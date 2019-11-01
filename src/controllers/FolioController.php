@@ -183,6 +183,7 @@ class FolioController extends Controller
 
 	public static function showItem($domain, Request $request, $slug) {
 
+		// return 'a';
 		if($item = Item::bySlug($slug)
 		// $item = Item::withTrashed()->whereSlug($slug)->first() or
 		// $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
@@ -193,9 +194,13 @@ class FolioController extends Controller
 			$item->visits++;
 			$item->save();
 
-			$domain = $item->domain();
-			if($domain != $request->getHost()) {
-				return \Redirect::to('//'.$domain.'/'.$request->path());
+			// $domain returns domain without port, e.g. localhost
+			// \Request::getHttpHost() returns domain with port (e.g., localhost:8000)
+			// $itemDomain returns domain with port
+			// We compare $itemDomain to \Request::getHttpHost()
+			$itemDomain = $item->domain();
+			if($itemDomain != \Request::getHttpHost()) {
+				return \Redirect::to('//'.$itemDomain.'/'.$request->path());
 			}
 		
 				if(
