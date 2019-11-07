@@ -1,6 +1,4 @@
 <?php
-	//$folio_typekit = config('folio.typekit');
-	//$folio_css = config('folio.css');
 	if(!isset($folio_typekit)) { $folio_typekit = config('folio.typekit'); }
 	$og_title_default = config('folio.title');
 	$og_description_default = config('folio.description');
@@ -14,7 +12,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" @isset($html_theme_class) class="{{ $html_theme_class }}" @endisset>
 
 <!-- This site is built with github.com/nonoesp/laravel-folio -->
 

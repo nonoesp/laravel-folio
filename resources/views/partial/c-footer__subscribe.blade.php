@@ -8,6 +8,9 @@ if(!isset($campaign) && request()->has('utm_campaign')) {
 if(!isset($medium) && request()->has('utm_medium')) {
       $medium = request()->input('utm_medium');
 }
+if(!isset($subscribe_button_text)) {
+    $subscribe_button_text = trans('folio::base.subscribe_button_text');
+}
 ?>
 
 <footer class="[ c-footer ] [ c-subscribe ] [ js--subscribe ] ">
@@ -39,7 +42,7 @@ if(!isset($medium) && request()->has('utm_medium')) {
                 @if(isset($button_text))
                     {{ Form::submit($button_text, ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
                 @else
-                    {{ Form::submit(trans('folio::base.subscribe_button_text'), ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
+                    {{ Form::submit($subscribe_button_text, ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
                 @endif
            </div>
 
