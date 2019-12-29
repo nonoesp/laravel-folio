@@ -102,9 +102,9 @@ if(isset($collection)) {
 {{--  --}}    <meta property="article:modified_time" content="{{ $item->updated_at }}" />
 {{--  --}}    <meta property="article:published_time" content="{{ $item->published_at }}" />
 {{--  --}}    <meta property="article:publisher" content="{{ config('folio.social.facebook.publisher') }}" />{{--
-      --}}    @foreach($item->tagNames() as $tag)
+      --}}    @foreach($item->tagNames() as $tagName)
 
-{{--  --}}    <meta property="article:tag" content="{{ strtolower($tag) }}" />@endforeach
+{{--  --}}    <meta property="article:tag" content="{{ strtolower($tagName) }}" />@endforeach
 {{--  --}}
         @stop
 
@@ -136,8 +136,8 @@ if(isset($collection)) {
             $header_data['sis_navigation_hidden'] = true;
             $header_data['color'] = 'white';
         }
+        
     }
-
     // ------------------------------------------------------------------------
     // (B) Multiple Item Settings
     else if ($folio_type == 'MULTIPLE_WRITING_TYPE') {

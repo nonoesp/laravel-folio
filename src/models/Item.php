@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Folio;
+use Thinker;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Spatie\Regex\Regex;
@@ -914,4 +915,13 @@ class Item extends Model implements Feedable
 		}
 		return null;
 	}
+
+	public function description() {
+        if ($description = $this->stringProperty('meta-description')) {
+            return $description;
+        }
+        return Thinker::limitMarkdownText($this->htmlText([
+            'stripTags' => ['rss', 'podcast', 'feed']
+        ]), 159, ['sup']);
+    }
 }
