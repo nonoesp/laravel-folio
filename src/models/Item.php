@@ -418,6 +418,29 @@ class Item extends Model implements Feedable
 		return !count($this->recipients()->get());
 	}
 
+
+	public function cardImage($forceAbsolute = true) {
+
+		// Fallback on images to grab the main thumbnail
+		if ($this->stringProperty('card-image')) {
+			$thumbnail = $this->stringProperty('card-image');
+		} else if($this->image_src) {
+			$thumbnail = $this->image_src;
+		} else if($this->image) {
+			$thumbnail = $this->image;
+		} else if($this->videoThumbnail()) {
+			$thumbnail = $this->videoThumbnail();
+		} else {
+			$thumbnail = config('folio.image-src');
+		}
+
+		// Make path absolute (add domain) when thumbnail is relative
+		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
+			return \Request::root().$thumbnail;
+		}
+		return $thumbnail;
+	}
+
 	// TODO: Add tests (https://websanova.com/blog/laravel/creating-a-new-package-in-laravel-5-part-5-unit-testing)
 	/**
 	 * Retrieve the thumbnail corresponding to this image
@@ -435,12 +458,12 @@ class Item extends Model implements Feedable
 			$thumbnail = config('folio.image-src');
 		}
 
-			// Make path absolute (add domain) when thumbnail is relative
-			if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
-				return \Request::root().$thumbnail;
-			} else {
-				return $thumbnail;
-			}
+		// Make path absolute (add domain) when thumbnail is relative
+		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
+			return \Request::root().$thumbnail;
+		} else {
+			return $thumbnail;
+		}
 	}
 
 	/**
@@ -923,5 +946,36 @@ class Item extends Model implements Feedable
         return Thinker::limitMarkdownText($this->htmlText([
             'stripTags' => ['rss', 'podcast', 'feed']
         ]), 159, ['sup']);
-    }
+	}
+	
+	/**
+	 * Get the estimated reading time of this item's text.
+	 */
+	public function readTime() {
+		return Item::ReadingTime($this->text);
+	}
+
+	/**
+	 * Get the estimated reading time of an input string.
+	 * 
+	 * CONFIG
+	 * Can be configured by publishing mtownsend/read-time's config files.
+	 * php artisan vendor:publish --provider="Mtownsend\ReadTime\Providers\ReadTimeServiceProvider" --tag="read-time-config"
+	 * 
+	 * LOCALIZE
+	 * And localized publishing its translation files.
+	 * php artisan vendor:publish --provider="Mtownsend\ReadTime\Providers\ReadTimeServiceProvider" --tag="read-time-language-files"
+	 */
+
+	public static function ReadingTime(string $text) {
+
+		$readtime = new \Mtownsend\ReadTime\ReadTime($text);
+		$readtime->setTranslation([
+			// 'min' => trans('read-time::read-time.min'),
+			// 'minute' => trans('read-time::read-time.minute'),
+			// 'read' => trans('read-time::read-time.read'),
+		]);
+		return $readtime->abbreviated()
+						->get();
+	}
 }
