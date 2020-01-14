@@ -28,12 +28,21 @@
             <?php
             $date = new Date($version->updated_at);
             $date = ucWords($date->format('F').' '.$date->format('j, Y').$date->format(' H:i:s'));
+            $text_languages = json_decode($version->getModel()->text);
             ?>
             <div class="[ u-pad-b-1x u-pad-t-2x ] [ c-admin--font-light ] ">
                 {{ $date }}
 			</div>
             
-            <textarea>{!! $version->getModel()->text; !!}</textarea>
+            @foreach ($text_languages as $lang => $text)
+
+                
+                {!! $lang !!}<br/>
+                <textarea>{!! $text !!}</textarea>
+                <br/>
+
+            @endforeach
+
             <br/>
         @endforeach
 
