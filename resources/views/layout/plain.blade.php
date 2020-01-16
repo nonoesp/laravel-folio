@@ -6,14 +6,17 @@
      * Provides minimal metadata and things based on Items.
      */
 
-	//$folio_typekit = config('folio.typekit');
-	//$folio_css = config('folio.css');
 	if(!isset($folio_typekit)) { $folio_typekit = config('folio.typekit'); }
 	$og_title_default = config('folio.title');
 	$og_description_default = config('folio.description');
 	$og_image_default = config('folio.image-src');
 	$og_url_default = Request::root().'/'.Request::path();
 	$fb_app_id_default = config('folio.social.facebook.app_id');
+
+	$folio_css = config('folio.css');
+	if ($folio_css == '') {
+		$folio_css = '/nonoesp/folio/css/folio.css';
+	}	
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +30,7 @@
 	<title>{{ $site_title ?? config('folio.title') }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="{{ $folio_css ?? config('folio.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ mix($folio_css) }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">

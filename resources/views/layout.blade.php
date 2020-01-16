@@ -9,6 +9,11 @@
 	$apple_touch_icon_default = '/apple-touch-icon.png';
 
 	if(!isset($item)) $item = null;
+
+	$folio_css = config('folio.css');
+	if ($folio_css == '') {
+		$folio_css = '/nonoesp/folio/css/folio.css';
+	}	
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +27,7 @@
 	<title>{{ $site_title ?? config('folio.title') }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="{{ $folio_css ?? config('folio.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ mix($folio_css) }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">

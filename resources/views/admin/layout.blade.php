@@ -1,8 +1,12 @@
 <?php
 	$folio_typekit = config('folio.typekit');
-	$folio_css = config('folio.css');
 	if($folio_typekit == '') $folio_typekit = null;
-	if($folio_css == '') $folio_css = null;
+
+	$folio_css = config('folio.css');
+	if ($folio_css == '') {
+		$folio_css = '/nonoesp/folio/css/folio.css';
+	}
+	
 	if(isset($remove_wrap) && $remove_wrap == true) {
 		$remove_wrap = true;
 	} else {
@@ -19,7 +23,7 @@
 	<title>{{ $site_title ?? 'Admin' }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="{{ $folio_css ?? '/nonoesp/folio/css/folio.css?default' }}">
+	<link rel="stylesheet" type="text/css" href="{{ mix($folio_css) }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
