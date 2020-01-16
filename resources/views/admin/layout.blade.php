@@ -63,7 +63,7 @@
 
 	</div>
 
-{{--<script type="text/javascript" src="/js/vendor/jquery.min.js"></script>--}}<!--
+<!--
 -->@yield('scripts')<!--
 --></body>
 </html>
