@@ -437,6 +437,8 @@ class Item extends Model implements Feedable
 		// Make path absolute (add domain) when thumbnail is relative
 		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
 			return \Request::root().$thumbnail;
+		} else if (!$forceAbsolute && count(explode(\Request::root(), $thumbnail)) > 1) {
+			return str_replace(\Request::root(), "", $thumbnail);
 		}
 		return $thumbnail;
 	}
@@ -553,6 +555,19 @@ class Item extends Model implements Feedable
 						'<img src="/img/veil.gif" data-src="$1" alt="$2" \/>',
 						'<img class="$1" src="/img/veil.gif" data-src="$2" alt="$3" \/>'
 						); 
+
+				// Use imgix?
+				if (config('folio.imgix')) {
+
+					$imgixDomain = config('imgix.domain');
+					$protocol = config('imgix.useHttps') ? 'https' : 'http';
+					$imgixPrefix = $protocol.'://'.$imgixDomain;
+
+					$replace = array( 
+						'<img src="/img/veil.gif" data-src="'.$imgixPrefix.'$1" alt="$2" \/>',
+						'<img class="$1" src="/img/veil.gif" data-src="'.$imgixPrefix.'$2" alt="$3" \/>'
+						); 
+				}
 
 				$html = preg_replace ($search, $replace, $html); 
 			}
