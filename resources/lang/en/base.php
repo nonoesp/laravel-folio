@@ -14,7 +14,7 @@ return [
 
 	// folio.subscribe.js
 	'subscribe' => 'Subscribe',
-	'subscribe_button_text' => 'Sign Me Up',
+	'subscribe_button_text' => 'Sign Up',
 	'newsletter' => 'Newsletter',
 	'follow' => 'Follow',	
   	'to_receive_our_updates' => 'Receive our publications via email.',
