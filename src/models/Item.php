@@ -942,13 +942,24 @@ class Item extends Model implements Feedable
 	}
 
 	public function description() {
-        if ($description = $this->stringProperty('meta-description')) {
-            return $description;
+		return $this->summary([
+			'limit' => 159,
+			'property' => 'meta-description',
+		]);
+	}
+
+	public function summary($params = ['limit' => 159, 'property' => 'summary']) {
+
+		$limit = Item::arrayValueOrDefault($params, 'limit', 159);
+		$property = Item::arrayValueOrDefault($params, 'property', 'summary');
+
+        if ($summary = $this->stringProperty($property)) {
+            return $summary;
         }
         return Thinker::limitMarkdownText($this->htmlText([
             'stripTags' => ['rss', 'podcast', 'feed']
-        ]), 159, ['sup']);
-	}
+        ]), $limit , ['sup']);
+	}	
 	
 	/**
 	 * Get the estimated reading time of this item's text.
