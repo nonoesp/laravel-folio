@@ -461,6 +461,8 @@ class Item extends Model implements Feedable
 		// Make path absolute (add domain) when thumbnail is relative
 		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
 			return \Request::root().$thumbnail;
+		} else if (!$forceAbsolute && count(explode(\Request::root(), $thumbnail)) > 1) {
+			return str_replace(\Request::root(), "", $thumbnail);
 		} else {
 			return $thumbnail;
 		}
