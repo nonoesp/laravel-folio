@@ -270,4 +270,28 @@ class Folio {
     return $permalink_prefix;
   }
 
+  /**
+   * Get the Google Analytics id corresponding to a domain.
+   */
+  public static function googleAnalytics(string $domain = null) {
+
+    $gaConfig = config('folio.google-analytics');
+    if (!isset($domain)) {
+      $domain = Request::getHttpHost();
+    }
+
+    if ($gaConfig) {
+      if (is_array($gaConfig)) {
+        // array
+        if (array_key_exists($domain, $gaConfig)) {
+          return $gaConfig[$domain];
+        }
+      } else {
+        // string
+        return $gaConfig;
+      }
+    }
+    return null;
+  }
+
 }
