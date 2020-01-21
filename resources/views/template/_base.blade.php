@@ -67,6 +67,7 @@ if(isset($collection)) {
     $cover_data['description'] = config('folio.cover.footline');
     $cover_data['subtitle'] = Thinker::array_rand_value(config('folio.cover.subtitles'));
     $cover_data['class'] = 'is-header u-background-grey ';
+    $cover_data['show_arrow'] = false;
     $cover_active = true;
     if(!isset($cover_hidden)) $cover_hidden = false;
 
