@@ -71,7 +71,7 @@
 						?>
 						<li>
 							<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} 
-							@if($isExternal) u-is-external u-is-external--top-right ]" target="_blank" @else ]" @endif>
+							@if($isExternal) u-is-external-v2 u-is-external--top-right ]" target="_blank" @else ]" @endif>
 								{!! trans('folio.'.$title) !!}
 							</a>
 						</li>
