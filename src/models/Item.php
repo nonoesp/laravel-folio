@@ -627,20 +627,10 @@ class Item extends Model implements Feedable
 
 	public function htmlText($options = []) {
 
-		// Option defaults
-		$veilImages = true;
-		$parseExternalLinks = false;
-		$stripTags = [];
-
-		if(array_key_exists('veilImages', $options)) {
-			$veilImages = $options['veilImages'];
-		}
-		if(array_key_exists('parseExternalLinks', $options)) {
-			$parseExternalLinks = $options['parseExternalLinks'];
-		}
-		if(array_key_exists('stripTags', $options)) {
-			$stripTags = $options['stripTags'];
-		}				
+		// Deconstruct options or fallback to default values
+		$veilImages = Item::arrayValueOrDefault($options, 'veilImages', true);
+		$parseExternalLinks = Item::arrayValueOrDefault($options, 'parseExternalLinks', false);
+		$stripTags = Item::arrayValueOrDefault($options, 'stripTags', []);
 
 		// Does the text have an excerpt to trim?
 		$text = $this->text;
