@@ -460,6 +460,8 @@ class Item extends Model implements Feedable
 			$thumbnail = config('folio.image-src');
 		}
 
+		$thumbnail = Item::imgix($thumbnail);
+
 		// Make path absolute (add domain) when thumbnail is relative
 		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
 			return \Request::root().$thumbnail;
@@ -468,6 +470,17 @@ class Item extends Model implements Feedable
 		} else {
 			return $thumbnail;
 		}
+	}
+
+	public static function imgix($imagePath) {
+		if (config('folio.imgix') && substr($imagePath, 0, 1) == '/') {
+			return imgix($imagePath);
+		}
+		return $imagePath;		
+	}
+
+	public function image() {
+		return Item::imgix($this->image);
 	}
 
 	/**
