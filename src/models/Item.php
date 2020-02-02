@@ -472,15 +472,15 @@ class Item extends Model implements Feedable
 		}
 	}
 
-	public static function imgix($imagePath) {
+	public static function imgix($imagePath, $imgixOptions = []) {
 		if (config('folio.imgix') && substr($imagePath, 0, 1) == '/') {
-			return imgix($imagePath);
+			return imgix($imagePath, $imgixOptions);
 		}
 		return $imagePath;		
 	}
 
-	public function image() {
-		return Item::imgix($this->image);
+	public function image($imgixOptions = []) {
+		return Item::imgix($this->image, $imgixOptions);
 	}
 
 	/**
