@@ -10,6 +10,8 @@
 --}} @elseif(isset($image)) style="background-image:url('{!! $image !!}')" {{--
 --}} @elseif(isset($background_color)) style="background-color:{{$background_color}}" @endif></div>
 
+	<div class="c-cover__fade"></div>
+
 	<div class="c-cover__title">
 		<span class="[ c-cover__title-a ]">{!! $title !!}</span>
 		<br>
