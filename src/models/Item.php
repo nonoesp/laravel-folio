@@ -472,15 +472,65 @@ class Item extends Model implements Feedable
 		}
 	}
 
-	public static function imgix($imagePath, $imgixOptions = []) {
-		if (config('folio.imgix') && substr($imagePath, 0, 1) == '/') {
+	/**
+	 * Get Item's imgix options.
+	 * 
+	 * 
+	 * @param array $defaultOptions
+	 * @param array $overrideOptions
+	 * @return array
+	 */
+	public function imgixOptions($defaultOptions = [], $overrideOptions = []) {
+		
+		// Start from $defaultOptions
+		$imgixOptions = $defaultOptions;
+
+		// Get $itemOptions
+		$itemOptions = [
+			'w' => $this->intProperty('imgix-w'),
+			'h' => $this->intProperty('imgix-h'),
+			'q' => $this->intProperty('imgix-q'),
+			's' => $this->intProperty('imgix-s'),
+			'fit' => $this->stringProperty('imgix-fit'),
+		];
+		// ..removing empty keys
+		foreach ($itemOptions as $key=>$value) {
+			if ($value == null) {
+				unset($itemOptions[$key]);
+			}
+		}
+
+		// Inject $itemOptions
+		foreach ($itemOptions as $key=>$value) {
+			if ($value != null) {
+				$imgixOptions[$key] = $value;
+			}
+		}
+
+		// Inject $overrideOptions
+		foreach ($overrideOptions as $key=>$value) {
+			if ($value != null) {
+				$imgixOptions[$key] = $value;
+			}
+	}		
+
+		return $imgixOptions;
+	}
+
+	public function imgix($imagePath, $imgixOptions = []) {
+
+		// Should we try 
+		$imgix_active = $this->boolProperty('imgix', config('folio.imgix'));
+		$isRelativePath = substr($imagePath, 0, 1) == '/';
+
+		if ($imgix_active && $isRelativePath) {
 			return imgix($imagePath, $imgixOptions);
 		}
 		return $imagePath;		
 	}
 
 	public function image($imgixOptions = []) {
-		return Item::imgix($this->image, $imgixOptions);
+		return $this->imgix($this->image, $imgixOptions);
 	}
 
 	/**
