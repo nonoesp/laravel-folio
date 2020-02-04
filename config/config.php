@@ -152,7 +152,7 @@ return [
 		'title' => '',
 		'subtitles' => ['Folio for Laravel','Making the web simple.'],
 		'footline' => 'Folio for Laravel.',
-		'class' => 'is-cool some-class'		
+		'class' => 'is-cool some-class'
 	],
 
 	/*

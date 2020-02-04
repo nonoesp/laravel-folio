@@ -1,7 +1,14 @@
 
-<section class="[ c-cover {!! $class ?? 'c-cover--header' !!} @if($show_arrow) js--scroll-over @endif ]"{{--
---}} @if(isset($image)) style="background-image:url('{!! $image !!}')" @endif{{--
---}} @if(isset($background_color)) style="background-color:{{$background_color}}" @endif>
+<section class="[ c-cover {!! $class ?? 'c-cover--header' !!} {{--
+--}} @if($show_arrow) js--scroll-over @endif{{--
+--}} ]">
+
+	<div class="[ c-cover__image {{--
+--}} @if(isset($isLazy)) lazy @endif{{--
+--}} ]"
+--}} @if(isset($image) && isset($isLazy)) data-src="{{ $image }}" {{--
+--}} @elseif(isset($image)) style="background-image:url('{!! $image !!}')" {{--
+--}} @elseif(isset($background_color)) style="background-color:{{$background_color}}" @endif></div>
 
 	<div class="c-cover__title">
 		<span class="[ c-cover__title-a ]">{!! $title !!}</span>
