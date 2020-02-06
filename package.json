@@ -20,7 +20,7 @@
     },
     "homepage": "https://github.com/nonoesp/laravel-folio",
     "dependencies": {
-        "axios": "0.15.3",
+        "axios": "0.18.1",
         "bourbon": "4.2.7",
         "core-scss": "github:nonoesp/core-scss",
         "font-awesome": "4.7.0",
