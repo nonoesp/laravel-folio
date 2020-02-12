@@ -419,15 +419,16 @@ class Item extends Model implements Feedable
 	}
 
 
-	public function cardImage($forceAbsolute = true) {
+	public function cardImage($imgixOptions = [], $forceAbsolute = true) {
 
 		// Fallback on images to grab the main thumbnail
 		if ($this->stringProperty('card-image')) {
-			$thumbnail = $this->stringProperty('card-image');
-		} else if($this->image_src) {
-			$thumbnail = $this->image_src;
+			$thumbnail = $this->imgix($this->stringProperty('card-image'), $imgixOptions);
+			
 		} else if($this->image) {
-			$thumbnail = $this->image;
+			$thumbnail = $this->image($imgixOptions);
+		} else if($this->image_src) {
+			$thumbnail = $this->image_src($imgixOptions);
 		} else if($this->videoThumbnail()) {
 			$thumbnail = $this->videoThumbnail();
 		} else {
@@ -532,6 +533,10 @@ class Item extends Model implements Feedable
 	public function image($imgixOptions = []) {
 		return $this->imgix($this->image, $imgixOptions);
 	}
+
+	public function image_src($imgixOptions = []) {
+		return $this->imgix($this->image_src, $imgixOptions);
+	}	
 
 	/**
 	 * Returns the URL of the video thumbnail from the provider.
