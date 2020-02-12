@@ -7,6 +7,7 @@
 	$fb_app_id_default = config('folio.social.facebook.app_id');
 
 	$apple_touch_icon_default = '/apple-touch-icon.png';
+	$apple_app_id = config('folio.apple-app-id');
 
 	if(!isset($item)) $item = null;
 
@@ -16,10 +17,16 @@
 	}
 
 	// Folio CSS
-	$folio_css = config('folio.css');
-	if ($folio_css == '') {
-		$folio_css = '/nonoesp/folio/css/folio.css';
-	}	
+	$folio_css = config('folio.css') ? config('folio.css') : '/nonoesp/folio/css/folio.css';
+
+	// Try to pass CSS through Laravel mix to bust the cache
+	try {
+		$folio_css = mix($folio_css);
+	}
+	catch (Exception $e) {
+		// Graceful fallback to CSS without cache busting
+		$folio_css = '/nonoesp/folio/css/folio.css?mix-busting-failed';
+	}
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +40,7 @@
 	<title>{{ $site_title ?? config('folio.title') }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
-	<link rel="stylesheet" type="text/css" href="{{ mix($folio_css) }}">
+	<link rel="stylesheet" type="text/css" href="{{ $folio_css }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
@@ -57,6 +64,11 @@
 	<meta name="apple-mobile-web-app-title" content="{{ config('folio.title-short') }}" />
 	<link rel="apple-touch-icon-precomposed" href="{{ $apple_touch_icon ?? $apple_touch_icon_default }}" />
 	<link rel="apple-touch-icon" href="{{ $apple_touch_icon ?? $apple_touch_icon_default }}" />
+
+@if($apple_app_id)
+	<!-- Apple Podcast id -->
+	<meta name="apple-itunes-app" content="app-id={{ $apple_app_id }}">
+@endif
 
 	<!-- Tags -->
 	<meta name="description" content="{{ $og_description ?? $og_description_default }}" />
