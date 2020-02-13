@@ -7,14 +7,14 @@
 	$fb_app_id_default = config('folio.social.facebook.app_id');
 
 	$apple_touch_icon_default = '/apple-touch-icon.png';
-	$apple_app_id = config('folio.apple-app-id');
 
 	if(!isset($item)) $item = null;
 
+	// Apple App id
+	if (!isset($apple_app_id)) $apple_app_id = config('folio.apple-app-id');
+
 	// Google Analytics
-	if (!isset($google_analytics)) {
-		$google_analytics = Folio::googleAnalytics();
-	}
+	if (!isset($google_analytics)) $google_analytics = Folio::googleAnalytics();
 
 	// Folio CSS
 	$folio_css = config('folio.css') ? config('folio.css') : '/nonoesp/folio/css/folio.css';
@@ -64,8 +64,8 @@
 	<meta name="apple-mobile-web-app-title" content="{{ config('folio.title-short') }}" />
 	<link rel="apple-touch-icon-precomposed" href="{{ $apple_touch_icon ?? $apple_touch_icon_default }}" />
 	<link rel="apple-touch-icon" href="{{ $apple_touch_icon ?? $apple_touch_icon_default }}" />
-
 @if($apple_app_id)
+
 	<!-- Apple Podcast id -->
 	<meta name="apple-itunes-app" content="app-id={{ $apple_app_id }}">
 @endif
