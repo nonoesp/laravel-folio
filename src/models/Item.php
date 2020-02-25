@@ -448,7 +448,8 @@ class Item extends Model implements Feedable
 	/**
 	 * Retrieve the thumbnail corresponding to this image
 	 */
-	public function thumbnail($forceAbsolute = true) {
+	// TODO - change the order of inputs
+	public function thumbnail($forceAbsolute = true, $imgixOptions = []) {
 
 		// Fallback on images to grab the main thumbnail
 		if($this->image_src) {
@@ -461,7 +462,7 @@ class Item extends Model implements Feedable
 			$thumbnail = config('folio.image-src');
 		}
 
-		$thumbnail = Item::imgix($thumbnail);
+		$thumbnail = Item::imgix($thumbnail, $imgixOptions);
 
 		// Make path absolute (add domain) when thumbnail is relative
 		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
@@ -525,6 +526,7 @@ class Item extends Model implements Feedable
 		$isRelativePath = substr($imagePath, 0, 1) == '/';
 
 		if ($imgix_active && $isRelativePath) {
+			if (count(explode(".gif", $imagePath)) > 1) $imgixOptions = [];
 			return imgix($imagePath, $imgixOptions);
 		}
 		return $imagePath;		
