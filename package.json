@@ -13,7 +13,7 @@
         "type": "git",
         "url": "git+https://github.com/nonoesp/laravel-folio.git"
     },
-    "author": "Nono Martínez Alonso, nono.ma",
+    "author": "Nono Martínez Alonso, Nono.MA",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/nonoesp/laravel-folio/issues"
