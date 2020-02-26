@@ -19,7 +19,7 @@
 
           @else
 
-            Developed with
+            Designed with
             <i class="[ fa fa-heart ]"></i>
             by
             {!! Html::link('https://nono.ma', 'Nono.MA', ['target' => '_blank']) !!}.
