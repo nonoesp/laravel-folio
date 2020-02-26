@@ -13,7 +13,7 @@ $translations = config('folio.translations');
 if(!$translations) $translations = ['en'];
 
 foreach($translations as $translation) {
-	if(!in_array($translation, \ResourceBundle::getLocales(''))) {
+	if (!\Symfony\Component\Intl\Locales::exists($translation)) {
 		$language_errors = [
 '**'.$translation.'** is not a valid locale.
 Provide valid `translations` in `config/folio.php`.

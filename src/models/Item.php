@@ -296,26 +296,28 @@ class Item extends Model implements Feedable
 
 		foreach($this->properties()->get() as $property) {
 
-		// Discard if property is localization, otherwise add
-		$parts = explode("--", $property->name);
-		$parts_count = count($parts);
-		$last_part = $parts[$parts_count - 1];
-		if ($parts_count > 1 && in_array($last_part, \ResourceBundle::getLocales(''))) {
-			// (0) This property is a localization
-		} else {
+			// Discard if property is localization, otherwise add
+			$parts = explode("--", $property->name);
+			$parts_count = count($parts);
+			$last_part = $parts[$parts_count - 1];
+			if ($parts_count > 1 && \Symfony\Component\Intl\Locales::exists($last_part)) {
+				
+				// (0) This property is a localization
 
-			// Not a localization
-			// (1) Find localization or (2) add original property
-
-			if (substr($property->name, 0, strlen($prefix)) === $prefix) {
-			$localizedKey = $property->name.'--'.$currentLocale;
-			if ($this->hasProperty($localizedKey)) {
-				array_push($matching_properties, $this->property($localizedKey));
 			} else {
-				array_push($matching_properties, $property);
+
+				// Not a localization
+				// (1) Find localization or (2) add original property
+
+				if (substr($property->name, 0, strlen($prefix)) === $prefix) {
+					$localizedKey = $property->name.'--'.$currentLocale;
+					if ($this->hasProperty($localizedKey)) {
+						array_push($matching_properties, $this->property($localizedKey));
+					} else {
+						array_push($matching_properties, $property);
+					}
+				}
 			}
-			}
-		}
 
 		}
 
