@@ -41,7 +41,8 @@
         "spatie/laravel-feed": "~2.4",
         "mpociot/versionable": "dev-master",
         "nonoesp/authenticate": "~6.0.3",
-        "mtownsend/read-time": "^1.1"
+        "mtownsend/read-time": "^1.1",
+        "symfony/intl": "^5.1@dev"
     },
     "require-dev": {
         "orchestra/testbench": "~3.0"
