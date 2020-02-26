@@ -22,7 +22,7 @@
             Developed with
             <i class="[ fa fa-heart ]"></i>
             by
-            {!! Html::link('https://nono.ma', 'Nono.MA', ['target' => '_blank']) !!}
+            {!! Html::link('https://nono.ma', 'Nono.MA', ['target' => '_blank']) !!}.
 
           @endif
         </p>
