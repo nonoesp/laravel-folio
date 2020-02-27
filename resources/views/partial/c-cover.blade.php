@@ -1,3 +1,6 @@
+<?php
+	if(!isset($show_arrow)) $show_arrow = false;
+?>
 
 <section class="[ c-cover {!! $class ?? 'c-cover--header' !!} {{--
 --}} @if($show_arrow) js--scroll-over @endif{{--
