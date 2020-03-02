@@ -42,7 +42,8 @@
         "mpociot/versionable": "dev-master",
         "nonoesp/authenticate": "~6.0.3",
         "mtownsend/read-time": "^1.1",
-        "symfony/intl": "^5.1@dev"
+        "symfony/intl": "^5.1@dev",
+        "nasyrov/laravel-imgix": "dev-master"
     },
     "require-dev": {
         "orchestra/testbench": "~3.0"
