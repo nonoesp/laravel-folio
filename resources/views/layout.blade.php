@@ -106,14 +106,18 @@
 
 <body>
 
+	@if(Auth::check() && config('folio.debug.load-time'))
+		{!! view('folio::partial.o-notification', [
+			'notification' => 'This page took '. (microtime(true) - LARAVEL_START) .' seconds to render',
+			'classes' => ['o-notification--light'],
+		]) !!}
+	@endif
+
 	@if($notification = Request::session()->get('notification'))
-		<?php
-			$notification_data = [
-				'notification' => $notification,
-				'classes' => ['o-notification--light'],
-			];
-		?>
-		{!! view('folio::partial.o-notification', $notification_data) !!}
+		{!! view('folio::partial.o-notification', [
+			'notification' => $notification,
+			'classes' => ['o-notification--light'],
+		]) !!}
 	@endif
 
 	{{-- Header --}}
