@@ -13,7 +13,7 @@ Display your web content with custom templates.
 
 ## Installation
 
-Install using composer:
+Require using Composer:
 
 ```bash
 composer require nonoesp/folio:dev-master
@@ -21,9 +21,9 @@ composer require nonoesp/folio:dev-master
 
 Most packages should be auto-discovered by Laravel.
 
-## Middleware
+### Middleware
 
-Run the following to installed a set of middlewares required by **Folio**.
+Publish the required middleware.
 
 ```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=middleware
@@ -58,78 +58,49 @@ You need to publish the config file of `thujon/twitter` and add your Twitter cre
 php artisan vendor:publish --provider="Thujohn\Twitter\TwitterServiceProvider"
 ``` -->
 
-## Migrations
+### Migrations
 
-First, make sure you remove Laravel's default migration files from `database/migrations` as they can collide
-with Folio's migrations.
-
-Let's create the tables required by **Folio** in your database.
-
-First, make sure your database connection is setup properly in you `.env` file.
-
-Publish `rtconner/tagging` migrations:
+- Remove Laravel's default migration files from `database/migrations` as they can collide with Folio's migrations.
+- Setup your database connection in the `.env` file.
+- Publish `rtconner/tagging` migrations:
 
 ```bash
 php artisan vendor:publish --provider="Conner\Tagging\Providers\TaggingServiceProvider"
 ```
 
+- Run the migrations
+
 ```bash
 php artisan migrate --path=vendor/mpociot/versionable/src/migrations
-```
-
-Then, run the migrations:
-
-```bash
 php artisan migrate
 ```
 
-(You can always remove the tables by resetting: `php artisan migrate:reset`.
-	But be *careful* as it will remove the contents of your tables.)
+(Note: You can revert the migrations with `php artisan migrate:reset` but beware that the contents of those tables will also be removed.)
 
-## Config
+## Configuration
 
-Publish configuration file to `config/folio.php`.
+Folio supports optional configuration.
+
+To get started, publish the configuration file to `config/folio.php`.
 
 ```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=config
 ```
 
-## Publish Development Assets
-
-If you want to customize and compile your own stylesheets,
-**Folio** also contains SCSS files with numerous variables
-you can tweak and development JavaScript files.
-You just need to install a dependencies with `npm`,
-publish the development assets,
-and generate CSS and JavaScript with Laravel Mix.
+## Compiling Web Assets
 
 Publish the development assets with:
-
-If you haven't done so, publish `nonoesp/folio` development assets.
 
 ```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets
 ```
 
-### Install Dependencies (with npm)
+This will copy Folio stylesheets and JavaScript files to the resources folder, in `sass` and `js`, respectively.
 
-First, let's install all our asset dependencies (some of them are SCSS dependencies and others are JavaScript).
-
-```bash
-npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery validate-js vuedraggable
-```
-
-### Compile Assets (with Laravel Mix)
-
-Run `npm install` to make sure Laravel Mix is setup properly.
-
-Your `webpack.mix.js` file should look like this.
-(You can omit the `.js` or the `.sass` part, just keep whatever you are compiling.)
+Next, copy the following code into `webpack.mix.js`.
 
 ```javascript
 const mix = require('laravel-mix');
-
-// ...
 
 mix.sass('resources/sass/folio.scss', 'public/nonoesp/folio/css')
 // .sourceMaps()
@@ -144,27 +115,47 @@ mix.sass('resources/sass/folio.scss', 'public/nonoesp/folio/css')
        'axios'
    ]);
 
+// Use versioning and cache busting in production (i.e. npm run prod)
 if (mix.inProduction()) {
    mix.version();
 }
 
 mix.copy('node_modules/folio-scss/vendor/icons-links-gwern', 'public/img/icons');
 
+// BrowserSync when watching (i.e. npm run watch)
 mix.browserSync({
    proxy: 'localhost:8000',
    files: []
 });
 ```
 
-## Customize Translations
+Install all asset dependencies with `npm`.
+
+```bash
+npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery validate-js vuedraggable
+```
+
+Then run `npm install` to make sure Laravel Mix is setup properly.
+
+```bash
+npm install
+```
+
+Build the assets with:
+
+```bash
+npm run prod
+```
+
+You can use `npm run dev` for development.
+
+## Publish Translations
 
 ```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=lang
 ```
 
-## Customize Views
-
-You can publish **Folio** views and customize them. (If you customize a few views and want to get updates from future version for others, you will need to remove the ones you haven't modify and re-publish the views of the package. This won't override your customized view, just the one you delete from your `resources/views/nonoesp/`.)
+## Publish Views
 
 ```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
@@ -172,18 +163,31 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 
 ## Subscribers Notifications
 
-TODO: Explain you need to set a mail driver (amazon ses) and config `config/mail.php` and `config/services.php` and `config/folio.php`.
-
-## Helper Functions
-
-### Show a Folio URL outside Folio
-
-This sample route displays an item with an explicit `slug` without need to have a matching route or domain.
+Optionally, setup Amazon SES in `config/services.php` to email subscriber notifications.
 
 ```php
-Route::get('/', function ($domain, Request $request) {
-    return \Nonoesp\Folio\Controllers\FolioController::showItem($domain, $request, 'sketches');
-});
+	// Amazon SES
+	'ses' => [
+        'key' => 'your-api-key',
+    	'secret' => 'your-secret',
+    	'region' => 'us-east-1',
+	],
+```
+
+Then activate notifications in `config/folio.php` set `folio.subscribers.should-notify` to `true` and specify
+
+```php
+'subscribers' => [
+    'should-notify' => true,
+    'from' => [
+        'email' => 'from@email.com',
+        'name' => 'John McFrom'
+    ],
+    'to' => [
+        'email' => ['to@email.com'],
+        'name' => ['Jane McTo']
+    ]
+],
 ```
 
 ## License
@@ -197,5 +201,3 @@ Hi. I'm [Nono Martínez Alonso](https://nono.ma/about) (Nono.MA), a computationa
 I host [Getting Simple](https://gettingsimple.com)—a podcast about how you can live a meaningful, creative, simple life—[sketch](https://sketch.nono.ma) things that call my attention, and [write](https://gettingsimple.com/writing) about enjoying a slower life.
 
 If you find Folio useful in any way, reach out on Twitter at [@nonoesp](https://twitter.com/nonoesp). Cheers!
-
-[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://www.paypal.me/nonoesp)
