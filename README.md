@@ -158,9 +158,28 @@ const mix = require('laravel-mix');
 // ...
 
 mix.sass('resources/sass/folio.scss', 'public/nonoesp/folio/css');
-mix.js('resources/js/folio.js', 'public/nonoesp/folio/js')
-   .extract(['vue', 'vue-resource', 'vue-focus', 'jquery', 'validate-js', 'lodash', 'axios']);
+// .sourceMaps()
+   .js('resources/js/folio.js', 'public/nonoesp/folio/js')
+   .extract([
+       'vue',
+       'vue-resource',
+       'vue-focus',
+       'jquery',
+       'validate-js',
+       'lodash',
+       'axios'
+   ]);
 
+if (mix.inProduction()) {
+   mix.version();
+}
+
+mix.copy('node_modules/folio-scss/vendor/icons-links-gwern', 'public/img/icons');
+
+mix.browserSync({
+   proxy: 'localhost:8000',
+   files: []
+});
 ```
 
 ## Customize Translations
