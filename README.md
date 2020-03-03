@@ -157,7 +157,7 @@ const mix = require('laravel-mix');
 
 // ...
 
-mix.sass('resources/sass/folio.scss', 'public/nonoesp/folio/css');
+mix.sass('resources/sass/folio.scss', 'public/nonoesp/folio/css')
 // .sourceMaps()
    .js('resources/js/folio.js', 'public/nonoesp/folio/js')
    .extract([
