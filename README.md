@@ -56,7 +56,7 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 php artisan vendor:publish --provider="Nonoesp\Authenticate\AuthenticateServiceProvider" --tag=middleware
 ```
 
-Then add the following to `app/Html/Kernel.php`:
+Then add the following to `app/Http/Kernel.php`:
 
 ```php
 protected $middleware = [
@@ -76,13 +76,13 @@ protected $routeMiddleware = [
 ];
 ```
 
-### Sign in with Twitter
+<!-- ### Sign in with Twitter
 
 You need to publish the config file of `thujon/twitter` and add your Twitter credentials to `config/ttwitter.php`. (You can create a Twitter app at <https://apps.twitter.com/>.)
 
 ```bash
 php artisan vendor:publish --provider="Thujohn\Twitter\TwitterServiceProvider"
-```
+``` -->
 
 ## Migrations
 
