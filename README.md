@@ -137,10 +137,9 @@ npm install
 ```
 
 - Build with:
-
-- `npm run prod` · to build for production
-- `npm run dev` · to build for development
-- `npm run watch` · to rebuild on changes with BrowserSync
+  - `npm run prod` · to build for production
+  - `npm run dev` · to build for development
+  - `npm run watch` · to rebuild on changes with BrowserSync
 
 ## Publish Translations
 
