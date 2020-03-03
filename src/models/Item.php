@@ -60,20 +60,6 @@ class Item extends Model implements Feedable
 	}
 
 	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	//protected $table = 'users';
-
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	//protected $hidden = array('is_', 'remember_token');
-
-	/**
 	 * The feed representation of an Item.
 	 */
 	public function toFeedItem()
@@ -89,7 +75,9 @@ class Item extends Model implements Feedable
 	
 	public function templateView() {
 
-		if(!$this->template) return null;
+		if (!$this->template) {
+            return null;
+        }
 
 		$dir = config('folio.templates-path');
 		$template_name = str_replace("/","",$this->template);
@@ -97,12 +85,8 @@ class Item extends Model implements Feedable
 			$dir = 'folio::template';
 		}
 
-		$view = $dir.'.'.$template_name;
-
-		//if(view()->exists($view)) {
-			return $view;
-		//}
-	}
+		return $dir.'.'.$template_name;
+    }
 
 	public function domain() {
 		$domain = $this->stringProperty('domain', config('folio.main-domain'));
@@ -120,9 +104,9 @@ class Item extends Model implements Feedable
 			$path = substr($this->slug, 1, strlen($this->slug)-1);
 		}
 		if (
-			$absolute or
+			$absolute ||
 			$this->domain() != \Request::getHttpHost()
-			) {
+		) {
 			$path = '//'.$this->domain().'/'.$path;
 		}		
 		return $path;
@@ -135,9 +119,9 @@ class Item extends Model implements Feedable
 		}
 		$path = 'share/'.$slug;
 		if (
-			$absolute or
+			$absolute ||
 			$this->domain() != \Request::getHttpHost()
-			) {
+		) {
 			$path = '//'.$this->domain().'/'.$path;
 		}		
 		return $path;
@@ -213,8 +197,7 @@ class Item extends Model implements Feedable
 							orderBy('published_at', 'DESC')->
 							first()) {
 				return $prev;
-			}
-			if ($loop) {
+			} else if ($loop) {
 				return Item::withAnyTag($tags)->
 				published()->
 				orderBy('published_at', 'DESC')->
@@ -230,8 +213,7 @@ class Item extends Model implements Feedable
 							orderBy('published_at', 'ASC')->
 							first()) {
 				return $next;
-			}
-			if ($loop) {
+			} else if ($loop) {
 				return Item::withAnyTag($tags)->
 						published()->
 						orderBy('published_at', 'ASC')->
@@ -360,7 +342,7 @@ class Item extends Model implements Feedable
 
 	public function intProperty($key, $default = null) {
 		if($p = $this->property($key)) {
-			if($p->value != '') {
+			if ($p->value != '') {
 				return intval($p->value);
 			}
 		}
@@ -405,7 +387,7 @@ class Item extends Model implements Feedable
 
 	public function visibleFor($twitter_handle) {
 		$twitter_handle = strtolower(str_replace("@", "", $twitter_handle));
-		if(in_array($twitter_handle, $this->recipientsArray() )) {
+		if (in_array($twitter_handle, $this->recipientsArray() )) {
 			return true;
 		} else {
 			return false;
@@ -712,7 +694,7 @@ class Item extends Model implements Feedable
 		
 		// Strip HTML tags
 		// e.g., <norss></norss> <rss></rss> <nopodcast> </nopodcast>
-		if (is_array($stripTags) and count($stripTags)) {
+		if (is_array($stripTags) && count($stripTags)) {
 
 			// Remove tags from raw text · $text
 			foreach ($stripTags as $tag) {

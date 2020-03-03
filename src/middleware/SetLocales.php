@@ -28,7 +28,11 @@ class SetLocales
             // If app locale is Folio's second locale
             // Set app.fallback_locale to Folio's first locale
             $folioLocales = config('folio.translations');
-            if ($folioLocales and count($folioLocales) > 1 and App::getLocale() == $folioLocales[1]) {
+            if (
+                $folioLocales &&
+                count($folioLocales) > 1 &&
+                App::getLocale() == $folioLocales[1]
+            ) {
                 config(['app.fallback_locale' => $folioLocales[0]]);
             }            
         }
