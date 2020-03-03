@@ -7,7 +7,7 @@ use Item, User, Thinker, Recipient, Property, Subscriber;
 use Nonoesp\Folio\Folio;
 use View;
 use Config;
-use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
+use Authenticate; // nonoesp/authenticate
 use Input;
 use Redirect;
 use Date;
@@ -80,37 +80,31 @@ class AdminController extends Controller
 				if($item->slug_title != $request->input('slug_title')) {
 					// Slug has been edited
 					$item->slug_title = $request->input('slug_title');
-				// 	$item->slug = Thinker::uniqueSlugWithTableAndTitle(Folio::table('items'), $item->slug_title);
 				}
 			}
 
 		  	$item->published_at = $request->input('published_at');
 		  	$item->image = $request->input('image');
 		  	$item->image_src = $request->input('image_src');
-			if(Thinker::IsInstagramPostURL($item->image)) {
+            
+              if(Thinker::IsInstagramPostURL($item->image)) {
 				$item->image = Thinker::InstagramImageURL($item->image);
 			}
-			if(Thinker::IsInstagramPostURL($item->image_src)) {
+            
+            if(Thinker::IsInstagramPostURL($item->image_src)) {
 				$item->image_src = Thinker::InstagramImageURL($item->image_src);
-			}
+            }
+            
 		  	$item->video = $request->input('video');
-				$item->link = $request->input('link');
+            $item->link = $request->input('link');
 
-				// Update Properties (before tags)
-				// foreach(Folio::itemPropertyArray($item) as $key=>$value) {
-				// 	$property = Property::updateOrCreate(
-				// 		['item_id' => $item->id, 'name' => $key],
-				// 		['value' => $request->input($key)]
-				// 	);
-				// }
+            // Template
+            $item->template = $request->input('template');
+            if($item->template == "null") {
+                $item->template = null;
+            }
 
-				// Template
-				$item->template = $request->input('template');
-				if($item->template == "null") {
-					$item->template = null;
-				}
-
-				// Tags
+            // Tags
 		  	$item->tags_str = $request->input('tags_str');
 		  	if ($item->tags_str != '') {
 		    	$item->retag(explode(",", $item->tags_str));
@@ -118,7 +112,8 @@ class AdminController extends Controller
 		    	$item->untag();
 			}
 			
-			$is_hidden = $request->input('is_hidden');
+            $is_hidden = $request->input('is_hidden');
+            
 			if($is_hidden && !$item->trashed()) {
 			 	$item->delete();
 			} else if(!$is_hidden && $item->trashed()) {
@@ -134,7 +129,7 @@ class AdminController extends Controller
 		    {
 				foreach($item->recipientsArray() as $recipient)
 				{
-				$item->recipients()->save(new Recipient(["twitter" => $recipient]));
+				    $item->recipients()->save(new Recipient(["twitter" => $recipient]));
 				}
 		    }
 		 	$item->text = $request->input('text');
@@ -272,9 +267,7 @@ class AdminController extends Controller
 	}
 
 	function postPropertyCreate(Request $request) {
-		$key = $request->input('name');
-		$value = $request->input('value');
-		$label = $request->input('label');
+
 		$item_id = $request->input('item_id');
 		$property = new Property();
 		$property->item_id = $item_id;
@@ -364,9 +357,7 @@ class AdminController extends Controller
 
 	/**
 	 *  Ajax Item Update
-	 * TODO: Use CRUD to bind the model from Vue.js to Eloquent?
 	 */
-	
 	public function postItemUpdateAjax(Request $request, $id) {
 
 		$this->setLocaleToFirstTranslation();
@@ -436,7 +427,7 @@ class AdminController extends Controller
 		{
 			foreach($item->recipientsArray() as $recipient)
 			{
-			$item->recipients()->save(new Recipient(["twitter" => $recipient]));
+			    $item->recipients()->save(new Recipient(["twitter" => $recipient]));
 			}
 		}
 

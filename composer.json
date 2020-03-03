@@ -3,11 +3,17 @@
     "description": "Create webs to publish your content with custom templates.",
     "license": "MIT",
     "authors": [{
-        "name": "Nono Martínez Alonso",
+        "name": "Nono Martínez Alonso, Nono.MA",
         "email": "mundowarezweb@gmail.com",
         "role": "Developer",
         "homepage": "https://nono.ma"
     }],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/jozeflambrecht/twitter"
+        }  
+    ],
     "autoload": {
         "classmap": [
             "src/controllers",
@@ -46,7 +52,6 @@
         "nasyrov/laravel-imgix": "dev-master"
     },
     "require-dev": {
-        "orchestra/testbench": "~3.0"
     },
     "extra": {
         "laravel": {
