@@ -234,18 +234,22 @@ return [
 		'show' => '30', // maximum amount of articles to display
 		'logo' => '', // (optional) URL to your feed's logo
 		'default-image-src' => 'http://your-default.com/image.jpg',
-		'default-author' => 'Nono Martínez Alonso'
+		'default-author' => 'Nono Martínez Alonso',
 	],
 
 	'social' => [
 		'twitter' => [
-			'handle' => '@nonoesp'
+			'handle' => '@nonoesp',
 		],
 		'facebook' => [
 			'app_id' => 'your-app-id',
 			'author' => 'http://facebook.com/author-username',
 			'publisher' => 'http://facebook.com/publisher-username',
-		]
-	]
+        ],
+    ],
+
+    'debug' => [
+        'load-time' => false,
+    ],
 
 ];

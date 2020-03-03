@@ -4,14 +4,12 @@ Display your web content with custom templates.
 
 ## Live Examples
 
-- [nono.ma](https://nono.ma)
-- [gettingsimple.com](https://gettingsimple.com)
-- [gettingsimple.com/podcast](https://gettingsimple.com/podcast)
-- [lourdes.ac](https://lourdes.ac)
-- [ar-ma.net](https://ar-ma.net)
-- [gettingarchitecturedone.com](http://gettingarchitecturedone.com/writing)
-- [robotexmachina.com](http://robotexmachina.com)
-- [nacho.ma](https://nacho.ma)
+- [Nono.MA](https://nono.ma)
+- [Getting Simple](https://gettingsimple.com)
+- [Lourdes.AC](https://lourdes.ac)
+- [AR-MA](https://ar-ma.net)
+- [Getting Architecture Done](http://gettingarchitecturedone.com/writing)
+- [Nacho.MA](https://nacho.ma)
 
 ## Installation
 
@@ -21,31 +19,7 @@ Install using composer:
 composer require nonoesp/folio:dev-master
 ```
 
-Most packages will be auto-discovered by Laravel.
-
-## Laravel
-
-Next, add (some) providers that are still not auto-discoverable to the `providers` array of `config/app.php`:
-
-```php
-    'providers' => [
-        // nonoesp/folio dependencies
-        // Conner\Tagging\Providers\TaggingServiceProvider::class,
-        // Thujohn\Twitter\TwitterServiceProvider::class,
-    ],
-```
-
-Then, add the class aliases to the `aliases` array of `config/app.php`:
-
-```php
-    'aliases' => [
-        // nonoesp/folio dependencies
-        // 'Input' => Illuminate\Support\Facades\Input::class,
-        // 'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
-        // 'Twitter'   => Thujohn\Twitter\Facades\Twitter::class,
-        'User' => 'App\User',		
-    ],
-```
+Most packages should be auto-discovered by Laravel.
 
 ## Middleware
 

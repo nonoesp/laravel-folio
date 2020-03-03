@@ -57,7 +57,8 @@
                 "Item": "Nonoesp\\Folio\\Models\\Item",
                 "Property": "Nonoesp\\Folio\\Models\\Property",
                 "Recipient": "Nonoesp\\Folio\\Models\\Recipient",
-                "Subscriber": "Nonoesp\\Folio\\Models\\Subscriber"
+                "Subscriber": "Nonoesp\\Folio\\Models\\Subscriber",
+                "User": "App\\User"
             }
         }
     }
