@@ -831,8 +831,6 @@ class Item extends Model implements Feedable
 		if($collectionTags = $this->property('collection')) {
 			// Get a clean array of lowercase strings of collection tag names
 			$collections = explode(",", strtolower(str_replace(', ',',',$collectionTags->value)));
-			// Wether to show items that are not marked as blog in this collection
-			$collectionShowAll = $this->boolProperty('collection-show-all');
 			return $collections;
 		}
 		return null;
@@ -873,7 +871,7 @@ class Item extends Model implements Feedable
 		$collection = [];
 
 		$shouldShowTrashed = false;
-		if ($user = \Auth::user() and $user->is_admin or $showHidden) {
+		if ($user = \Auth::user() && $user->is_admin || $showHidden) {
 			$shouldShowTrashed = true;
 		}
 
