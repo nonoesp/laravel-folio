@@ -75,7 +75,7 @@ php artisan migrate --path=vendor/mpociot/versionable/src/migrations
 php artisan migrate
 ```
 
-(Note: You can revert the migrations with `php artisan migrate:reset` but beware that the contents of those tables will also be removed.)
+*Note: Revert migrations with `php artisan migrate:reset`, but tables and contents will be removed.*
 
 ## Configuration
 
@@ -87,9 +87,9 @@ To get started, publish the configuration file to `config/folio.php`.
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=config
 ```
 
-## Compiling Web Assets
+## Compile Web Assets
 
-Publish the development assets with:
+- Publish the assets with:
 
 ```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets
@@ -97,7 +97,7 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 
 This will copy Folio stylesheets and JavaScript files to the resources folder, in `sass` and `js`, respectively.
 
-Next, copy the following code into `webpack.mix.js`.
+- Copy the following code into `webpack.mix.js`.
 
 ```javascript
 const mix = require('laravel-mix');
@@ -129,25 +129,18 @@ mix.browserSync({
 });
 ```
 
-Install all asset dependencies with `npm`.
+- Install dependencies with `npm`.
 
 ```bash
 npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery validate-js vuedraggable
-```
-
-Then run `npm install` to make sure Laravel Mix is setup properly.
-
-```bash
 npm install
 ```
 
-Build the assets with:
+- Build with:
 
-```bash
-npm run prod
-```
-
-You can use `npm run dev` for development.
+- `npm run prod` · to build for production
+- `npm run dev` · to build for development
+- `npm run watch` · to rebuild on changes with BrowserSync
 
 ## Publish Translations
 
@@ -163,7 +156,9 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 
 ## Subscribers Notifications
 
-Optionally, setup Amazon SES in `config/services.php` to email subscriber notifications.
+Optionally, you can receive new subscriber notifications via email.
+
+- Setup Amazon SES in `config/services.php`:
 
 ```php
 	// Amazon SES
@@ -174,7 +169,7 @@ Optionally, setup Amazon SES in `config/services.php` to email subscriber notifi
 	],
 ```
 
-Then activate notifications in `config/folio.php` set `folio.subscribers.should-notify` to `true` and specify
+- The activate notifications in `config/folio.php`:
 
 ```php
 'subscribers' => [
