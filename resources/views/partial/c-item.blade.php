@@ -19,21 +19,13 @@
     $date = new Date($item->published_at);
     $date = ucWords($date->format('F').' '.$date->format('j, Y'));
 
-		// Class
-		$class_specified = '';
-		if(isset($class) && $class != '') $class_specified = '[ '.$class.' ]';
-		$class_is_tagged = '';
-		if($item->tagNames()) $class_is_tagged = '[ is-tagged ]';
-		$class_categories = '';
-		if($categories = Folio::itemCategoryClass($item, 'c-item')) $class_categories = '[ '.$categories.']';
-
-		// Author
-		// $user_thumbnail = NULL;
-		// $user = NULL;
-		// if($item->user_id) {
-		// 	$user = User::find($item->user_id);
-		// 	$user_thumbnail = view('partial.c-user-picture')->with(["user" => $user, "size" => 36]);
-		// }
+    // Class
+    $class_specified = '';
+    if(isset($class) && $class != '') $class_specified = '[ '.$class.' ]';
+    $class_is_tagged = '';
+    if($item->tagNames()) $class_is_tagged = '[ is-tagged ]';
+    $class_categories = '';
+    if($categories = Folio::itemCategoryClass($item, 'c-item')) $class_categories = '[ '.$categories.']';
 ?>
 
 <article class="[ grid ] [ c-item ] {{ $class_is_tagged }} {{ $class_specified }} {{ $class_categories }}"><!--
