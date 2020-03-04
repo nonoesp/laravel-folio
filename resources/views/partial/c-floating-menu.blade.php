@@ -12,19 +12,28 @@
     @if(isset($buttons))
 
       <div class="[ c-floating-menu ]">
-        @foreach($buttons as $label=>$path)
-          @if(is_array($path))
-            <a href="{{ $path[0] }}"
-               class="[ c-floating-menu__item {{$path[1] ?? ''}} ]"
-               {!! $path[2] ?? '' !!}>
-          @else
-            <a href="{{ $path }}" class="[ c-floating-menu__item ]">
-          @endif
-            <div class="[ c-floating-menu__item-button c-floating-menu__item-button u-text-align--center ]">
-              {!! $label !!}
-            </div>
-          </a>
-        @endforeach
+
+        <div class="c-floating-menu__buttons js--floating-menu__buttons">
+            @foreach($buttons as $label=>$path)
+            @if(is_array($path))
+              <a href="{{ $path[0] }}"
+                 class="[ c-floating-menu__item {{$path[1] ?? ''}} ]"
+                 {!! $path[2] ?? '' !!}>
+            @else
+              <a href="{{ $path }}" class="[ c-floating-menu__item ]">
+            @endif
+              <div class="[ c-floating-menu__item-button c-floating-menu__item-button u-text-align--center ]
+                          [ js--floating-menu-item ]">
+                {!! $label !!}
+              </div>
+            </a>
+          @endforeach
+        </div>
+
+        <div class="c-floating-menu__status js--floating-menu__status"
+        style="display: none; padding: 9px; background-color: white;">
+            Status..
+        </div>
       </div>
   
     @endif

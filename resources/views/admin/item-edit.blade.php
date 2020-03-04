@@ -312,7 +312,8 @@ methods: {
 			is_blog: this.item.is_blog,
 		};
 
-		$(".js--save").html('Saving..');
+        $(".js--save").html('Saving..');
+        this.setFloatingMenuState('Saving..');
 
 		VueResource.Http.post('/item/update/' + itemId, itemData).then((response) => {
 
@@ -334,11 +335,21 @@ methods: {
 				this.originalItem.is_blog = this.item.is_blog;
 
 				$(".js--item-path").attr('href', response.body.path);
-				$(".js--save").html('Save');
+                $(".js--save").html('Save');
+                this.setFloatingMenuState();
 			}
 
 		});
-	},
+    },
+    setFloatingMenuState(state) {
+        if (state) {
+            $(".js--floating-menu__buttons").hide();
+            $(".js--floating-menu__status").show().html(state);
+        } else {
+            $(".js--floating-menu__buttons").show();
+            $(".js--floating-menu__status").hide();
+        }
+    },
 	isDirty() {
 		var trackedFields = [
 			'title',
@@ -616,7 +627,7 @@ methods: {
 
 			<div class="[ grid__item ] [ one-whole ]">
 				<p>{{ Form::button('Save', [
-					'v-on:click' => 'save()',
+					'v-on:click' => 'this.save()',
 					'v-bind:disabled'=>"!isDirty()",
 					'class' => 'js--save'
 					]) }}</p>
