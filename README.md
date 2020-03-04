@@ -158,6 +158,10 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 - TODO - Create `storage/public/uploads` folder.
 - TODO - Symlink uploads folder to `public/img/u`.
 
+```
+ln -s global/path/to/storage/app/public/uploads global/path/to/public/img/u
+```
+
 ## Subscribers Notifications
 
 Optionally, you can receive new subscriber notifications via email.
