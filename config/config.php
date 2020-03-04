@@ -111,16 +111,13 @@ return [
 	'google-analytics' => '',
 
 	/*
-	 * The folder of a folder where media (images) are uploaded to.
-	 * TODO: Include in uploader settings.
-	 */				
-	'media-upload-path' => '/img/u/',
-
-	/*
-	 * Settings for the media uploaded.
-	 */			
+    * Settings for the media uploaded.
+    */			
 	'uploader' => [
-		'max_width' => 1500
+        'public-folder' => '/img/u/',
+        'disk' => 'public',
+        'uploads-folder' => 'uploads',
+        'allowed-file-types' => ['png', 'jpg', 'jpeg'],
 	],
 
 	'subscribers' => [

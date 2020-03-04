@@ -27,7 +27,7 @@
         "laravelium/feed": "~6.0",
         "graham-campbell/markdown": "^11.1.0",
         "webuni/commonmark-attributes-extension": "1.0.0",
-        "laravelcollective/html": "~6.0",
+        "laravelcollective/html": "^6.0",
         "vinkla/hashids": "^7.0.0",
         "intervention/image": "^2.5",
         "aws/aws-sdk-php": "~3.0",

@@ -75,8 +75,9 @@ class Folio {
 	 * Returns a string with the admin path.
 	 */
 
-	public static function adminPath() {
-		return Config::get('folio.admin-path-prefix').'/';
+	public static function adminPath($path = null) {
+        $adminPath = config('folio.admin-path-prefix').'/';
+        return $path ? $adminPath.$path : $adminPath;
 	}
 
 	public static function isReservedURI($uri = null) {
@@ -84,7 +85,7 @@ class Folio {
       $uri = Request::path();
     }
     $reserved_uris = config('folio.reserved-uris');
-		if($reserved_uris and in_array($uri, config('folio.reserved-uris'))) {
+		if($reserved_uris && in_array($uri, config('folio.reserved-uris'))) {
 			return true;
 		}
     return false;

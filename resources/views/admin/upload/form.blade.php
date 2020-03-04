@@ -19,62 +19,63 @@
 
 <script type="text/javascript">
 
-/*
- * CTRL+S & COMMAND+S
- * Keyboard shortcut to save edits by submitting the form.
- */
-Mousetrap.bindGlobal(['ctrl+c', 'command+c'], function(e) {
-	$(".js--image-path").focus();
-	e.preventDefault();
-	return false;
-});
+    /*
+    * CTRL+S & COMMAND+S
+    * Keyboard shortcut to save edits by submitting the form.
+    */
+    Mousetrap.bindGlobal(['ctrl+c', 'command+c'], function(e) {
+        $(".js--image-path").focus();
+        e.preventDefault();
+        return false;
+    });
 
-/*
- * esc (escape key)
- * Keyboard shortcut to escape text editing mode.
- */
-Mousetrap.bindGlobal('esc', function(e) {
-	admin.inputFile = null;
-	admin.file = null;
-	e.preventDefault();
-	return false;
-});
+    /*
+    * esc (escape key)
+    * Keyboard shortcut to escape text editing mode.
+    */
+    Mousetrap.bindGlobal('esc', function(e) {
+        admin.inputFile = null;
+        admin.file = null;
+        e.preventDefault();
+        return false;
+    });
 
-var admin = new Vue({
-el: '.c-admin',
-data: {
-	inputName: '',
-	placeholderName: 'your-file-name.jpg',
-	file: null,
-	inputFile: '',
-},
-watch: {
-	file: {
-		handler: function(value, old) {
-			admin.placeholderName = this.file != null ? this.file.name : 'your-file-name.jpg';
-		}
-	}
-},
-mounted() {
+    var admin = new Vue({
+    el: '.c-admin',
+    data: {
+        inputName: '',
+        placeholderName: 'your-file-name.jpg',
+        file: null,
+        inputFile: '',
+    },
+    watch: {
+        file: {
+            handler: function(value, old) {
+                admin.placeholderName = this.file != null ? this.file.name : 'your-file-name.jpg';
+            }
+        }
+    },
+    mounted() {
 
-},
-methods: {
-	fileSelected: (e) => {
-		admin.file = e.target.files[0];
-	}
-}
-});
+    },
+    methods: {
+        fileSelected: (e) => {
+            admin.file = e.target.files[0];
+            admin.inputName = admin.file.name;
+        }
+    }
+    });
 
-</script>
+    </script>
 
-		<script>
-			new ClipboardJS('.js--image-path');
-			$(document).on('click', '.js--image-path', function(e) {
-				e.preventDefault();
-				e.target.select();
-				return false;
-			});
-		</script>
+    <script>
+        new ClipboardJS('.js--image-path');
+        $(document).on('click', '.js--image-path', function(e) {
+            e.preventDefault();
+            e.target.select();
+            return false;
+        });
+    </script>
 @stop
 
 @section('content')
@@ -105,52 +106,65 @@ methods: {
 				<p>{!! $message !!}</p>
 			@endif
 
-			@if(isset($img_exists) && $img_exists == true)
-				<p>
-					@if(!$img_uploaded)
-						An image with this name already exists.
-						</br>					
-						Choose Replace if that is what you want.
-					@else
-						The image has been replaced.
-					@endif
-				</p>
-			@endif
+            @if(isset($errors))
+                @foreach($errors as $error)
+                    <p style="color:#d63e3c">{!! $error !!}</p>
+                @endforeach
+            @endif
+
+            @if(isset($messages))
+                @foreach($messages as $message)
+                    <p>{!! $message !!}</p>
+                @endforeach
+                </br>
+            @endif            
 			
-			@if(isset($img_uploaded) && $img_uploaded == true)
+			@if(isset($imgUploaded) && $imgUploaded == true)
 				<p>
 				<input
 					type="text" 
-					value="{{$img_URL}}" 
+					value="{{ $imgURL }}" 
 					class="js--image-path" 
-					data-clipboard-text="{{$img_URL}}"
+					data-clipboard-text="{{$imgURL}}"
 					style="height:50px;font-size:1.2em;padding:0.7em;cursor:context-menu;"
 					spellcheck="false"
 				/>
 				</p>
 				<p>
-					<img src="{{ $img_URL }}" style="max-width: 100%">
+                    @isset($fileType)
+                        @if(in_array($fileType, ['mp4']))
+                            <video width="100%" controls>
+                                <source src="{{ $imgURL }}" type="video/{{ $fileType }}">
+                            Your browser does not support the video tag.
+                            </video>
+                        @else
+                            <img src="{{ $imgURL }}" style="max-width: 100%">
+                        @endif
+                    @endisset
 				</p>
 			@endif
 
 			</br>
 		@endif
 
-		{{ Form::open(array('url' => Folio::adminPath().'upload', 'method' => 'POST', 'files' => true)) }}
+		{{ Form::open([
+            'url' => Folio::adminPath('upload'),
+            'method' => 'POST',
+            'files' => true])
+        }}
 
 		<div class="grid">
 
 			<div class="[ grid__item ]">{{ Form::label('Image file') }}</div>
 			<div class="[ grid__item ]">{{ Form::file('photo', [
 				'@change' => 'fileSelected',
-				'v-model' => 'inputFile',
 			]) }}</div>
 			<div v-if="file">
 			<div class="[ grid__item ]">{{ Form::label('Name') }}</div>
-			<div class="[ grid__item ]">{{ Form::text('name', $img_name, ['v-bind:placeholder' => "placeholderName", 'v-model' => 'inputName']) }}</div>
-			<br />
-			<div class="[ grid__item ]">{{ Form::label('Maximum width (image will be resized if larger)', 'Maximum width in pixels (image will be resized if larger)')}}</div>
-			<div class="[ grid__item ]">{{ Form::text('max_width', config('folio.uploader.max_width'), ['placeholder' => 'Width']) }}</div>
+			<div class="[ grid__item ]">{{ Form::text('name', $filename, ['v-bind:placeholder' => "placeholderName", 'v-model' => 'inputName']) }}</div>
+			{{-- <br /> --}}
+			{{-- <div class="[ grid__item ]">{{ Form::label('Maximum width (image will be resized if larger)', 'Maximum width in pixels (image will be resized if larger)')}}</div> --}}
+			{{-- <div class="[ grid__item ]">{{ Form::text('max_width', config('folio.uploader.max_width'), ['placeholder' => 'Width']) }}</div> --}}
 			<div class="[ grid__item ]">
 				{{ Form::checkbox('shouldReplace', 'Replace', false, ['id' => 'shouldReplace']) }}
 				{{ Form::label('shouldReplace', 'Overwrite (replace image if an image with the same name already exists)') }}</div>

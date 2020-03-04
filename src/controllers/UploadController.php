@@ -12,68 +12,99 @@ class UploadController extends Controller
 
     public function getUploadForm(Request $request)
 	{
+        $errors = [];
+        $messages = [];
 
-		$mediaPath = config('folio.media-upload-path');
+        $uploaderPublicFolder = config('folio.uploader.public-folder');
+        $uploaderDisk = config('folio.uploader.disk');
+        $uploaderUploadsFolder = config('folio.uploader.uploads-folder');
+        $uploaderAllowedFileTypes = config('folio.uploader.allowed-file-types');
 
-		if(!File::exists(public_path($mediaPath))) {
+        $formFilename = 'photo';
+
+        $imgExists = false;
+        $imgUploaded = false;
+        $imgURL = null;
+        $filename = null;
+        $fileType = null;        
+
+        if(!\Storage::disk($uploaderDisk)
+                    ->exists($uploaderUploadsFolder)) {
 			// path does not exist
 			return view('folio::admin.notification', [
 				'title' => 'Upload',
-				'message' => "Media folder not found at <code>".$mediaPath."</code>."
+				'message' => "Uploads folder not found at <code>$uploaderUploadsFolder</code> in <code>$uploaderDisk</code> disk."
 			]);
 		}
 
-		  $img_exists = false;
-		  $img_uploaded = false;
-		  $img_URL = "";
-		  $img_name = "";
+            if($request->isMethod('post')) {
 
-		  if($request->isMethod('post')) {
+            $filename = $request->input('name');
+            $imgURL = $uploaderPublicFolder.$filename;
 
-		    $img_name = $request->input('name');
-		    if($img_name == '') {
-		      $img_name = $request->file('photo')->getClientOriginalName();
-		    }
-		    $img_URL = $mediaPath.$img_name;
-		    $shouldReplace = $request->input('shouldReplace');
+            // Validate extension is allowed
+            $fileType = $request->file($formFilename)->extension();
+            if (!in_array($fileType, $uploaderAllowedFileTypes)) {
+                array_push($errors, "The <strong>$fileType</strong> extension is not allowed.<br/>You might enable this in <code>folio.uploader.allowed-file-types</code>.");
+                return view('folio::admin.upload.form', [
+                    'errors' => $errors,
+                    'filename' => $filename,
+                ]);
+            } else {
+                // array_push($messages, "File type is <strong>$fileType</strong>");
+            }
 
-		    if(file_exists(public_path($img_URL))) {
-		      $img_exists = true;
-		    }
+            // Validate image does not exist (or replace is active)
+            $shouldReplace = $request->input('shouldReplace');
+            $imgExists = \Storage::disk($uploaderDisk)
+                                    ->exists($uploaderUploadsFolder.'/'.$filename);
+            if ($imgExists && !$shouldReplace) {
+                array_push($errors, "A upload named <strong>$filename</strong> already exists. Choose Overwrite if that's what you want.");
+                return view('folio::admin.upload.form', [
+                    'errors' => $errors,
+                    'filename' => $filename,
+                ]);
+            }
 
-		    if(!$img_exists || $img_exists && $shouldReplace) {
-		      if($request->hasFile('photo')) {
-		        $max_width = $request->input('max_width');
-				$img = Image::make($request->file('photo'));      
+            if($filename == '') {
+                $filename = $request->file($formFilename)->getClientOriginalName();
+            }
 
-		        // Downsize image if wider than $max_width
-		        if($img->width() > $max_width) {
-		          $img->resize($max_width, null, function ($constraint) {
-		            $constraint->aspectRatio();
-		            $constraint->upsize();
-		          });
-		        }
-		        $img->save(public_path($img_URL));
-		      } else {
-					return view('folio::admin.upload.form')->with([
-						'message' => 'Invalid image provided.</br>It was either empty of bigger than the limit configured in your server.'
-						]);
-				}
-    
-		      if($request->hasFile('photo')) {
-		      	$img_uploaded = true;
-		      }      
-		    } else {
-		      // Image was not uploaded because it existed.
-		    }
-		  }
+            // Confirm we're overwriting
+            if ($imgExists) {
+                array_push($messages, 'The file has been replaced.');
+            }
 
-		return view('folio::admin.upload.form')->with([
-			'img_exists' => $img_exists,
-			'img_uploaded' => $img_uploaded,
-			'img_URL' => $img_URL,
-			'img_name' => $img_name,
-			]);
+            // Store file
+            if($request->hasFile($formFilename)) {
+                $request->file($formFilename)
+                        ->storeAs(
+                            $uploaderUploadsFolder,
+                            $filename,
+                            $uploaderDisk
+                        );  
+            } else {
+                array_push($errors, 'Invalid image provided.</br>It was either empty of bigger than the limit configured in your server.');
+                return view('folio::admin.upload.form', [
+                    'errors' => $errors,
+                    'filename' => $filename,
+                ]);
+            }
+
+            if($request->hasFile($formFilename)) {
+                $imgUploaded = true;
+            }
+        }
+
+        return view('folio::admin.upload.form')->with([
+            'errors' => $errors,
+            'messages' => $messages,
+            'imgExists' => $imgExists,
+            'imgUploaded' => $imgUploaded,
+            'imgURL' => $imgURL,
+            'filename' => $filename,
+            'fileType' => $fileType,
+            ]);
 	}
 
 	public function getMediaList()
@@ -81,10 +112,18 @@ class UploadController extends Controller
 		return view('folio::admin.upload.list');
 	}
 
-	public function postDeleteMedia($name)
+	public function postDeleteMedia($filename)
 	{
-		unlink(public_path(config('folio.media-upload-path').$name));
-  		return redirect()->to('/admin/upload/list');
+        // Get uploads disk and folder name
+        $uploaderDisk = config('folio.uploader.disk');
+        $uploaderUploadsFolder = config('folio.uploader.uploads-folder');
+        
+        // Delete file
+        \Storage::disk($uploaderDisk)
+               ->delete("$uploaderUploadsFolder/$filename");
+
+        // Return to uploads list
+  		return redirect()->to(\Folio::adminPath('upload/list'));
 	}
 
 }
