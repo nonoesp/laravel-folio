@@ -1,7 +1,8 @@
 @extends('folio::admin.layout')
 
 <?php
-	$site_title = 'Upload — '.config('folio.title');
+    $site_title = 'Upload — '.config('folio.title');
+    $supportedFileTypes = config('folio.uploader.allowed-file-types');
 ?>
 
 @section('title', 'Upload an Image')
@@ -47,6 +48,7 @@
         placeholderName: 'your-file-name.jpg',
         file: null,
         inputFile: '',
+        supportedFileTypes: {!! json_encode($supportedFileTypes) !!},
     },
     watch: {
         file: {
@@ -62,6 +64,23 @@
         fileSelected: (e) => {
             admin.file = e.target.files[0];
             admin.inputName = admin.file.name;
+        },
+        deactivateUploadFilter: (e) => {
+            const nameParts = admin.inputName.split('.');
+            const extension = nameParts.reverse()[0];
+
+            if (
+                // File has no extension
+                nameParts.length < 2 ||
+                // File name ends in dot
+                extension == '' ||
+                // Extension is not supported
+                !admin.supportedFileTypes.includes(extension.toLowerCase())
+            ) {
+                return true;
+            }
+
+            return false;
         }
     }
     });
@@ -159,18 +178,43 @@
 			<div class="[ grid__item ]">{{ Form::file('photo', [
 				'@change' => 'fileSelected',
 			]) }}</div>
-			<div v-if="file">
-			<div class="[ grid__item ]">{{ Form::label('Name') }}</div>
-			<div class="[ grid__item ]">{{ Form::text('name', $filename, ['v-bind:placeholder' => "placeholderName", 'v-model' => 'inputName']) }}</div>
-			{{-- <br /> --}}
-			{{-- <div class="[ grid__item ]">{{ Form::label('Maximum width (image will be resized if larger)', 'Maximum width in pixels (image will be resized if larger)')}}</div> --}}
-			{{-- <div class="[ grid__item ]">{{ Form::text('max_width', config('folio.uploader.max_width'), ['placeholder' => 'Width']) }}</div> --}}
-			<div class="[ grid__item ]">
-				{{ Form::checkbox('shouldReplace', 'Replace', false, ['id' => 'shouldReplace']) }}
-				{{ Form::label('shouldReplace', 'Overwrite (replace image if an image with the same name already exists)') }}</div>
-			</div>
-			<div class="[ grid__item ]">{{ Form::label('') }}</div>
-			<div class="[ grid__item ]]">{{ Form::submit('Upload', [':disabled'=>'!file']) }}</div>
+
+            <div v-if="file">
+
+                <div class="[ grid__item ]">{{ Form::label('Name') }}</div>
+                <div class="[ grid__item ]">{{ Form::text('name', $filename, ['v-bind:placeholder' => "placeholderName", 'v-model' => 'inputName']) }}</div>
+                
+                <div class="[ grid__item ]" v-show="!file || this.deactivateUploadFilter()">
+                    <p class="u-opacity--high">
+                        Please specify a supported file extension
+                        ·
+                        
+                        @foreach($supportedFileTypes as $fileType){{--
+                        --}}@php
+                            if(!$loop->first && !$loop->last) {
+                                echo ", ";
+                            }
+                            if($loop->last) {
+                                echo ", or ";
+                            }
+                            echo $fileType;
+                            if($loop->last) {
+                                echo ".";
+                            }                            
+                        @endphp{{--
+                        --}}@endforeach
+                    </p>
+                </div>
+
+                <div class="[ grid__item ]">
+                    {{ Form::checkbox('shouldReplace', 'Replace', false, ['id' => 'shouldReplace']) }}
+                    {{ Form::label('shouldReplace', 'Overwrite (replace image if an image with the same name already exists)') }}
+                </div>
+                
+            </div>
+
+            <div class="[ grid__item ]">{{ Form::label('') }}</div>
+			<div class="[ grid__item ]]">{{ Form::submit('Upload', [':disabled'=>'!file || this.deactivateUploadFilter()']) }}</div>
 
 		</div>
 
