@@ -11,36 +11,52 @@
 </head>
 
 <style media="screen">
-html,body{
-    font-size:1em;
-}
-  .o-wrap {
-    max-width:640px;
-      //margin:auto;
-  }
-  img {width:100%;}
+    html,body{
+        font-size:1em;
+    }
+    .o-wrap {
+        max-width:640px;
+        //margin:auto;
+    }
+    
+    img {
+        width:100%;
+    }
 
-      .c-floating-menu {
-      position:fixed;
-      top:0;
-      right:0;
-      width:150px;
-      height:80px;
-      padding:1.5em 1.5em;
-      z-index:300;
-      cursor:pointer;
+    .header,
+    .header:hover {
+        font-family: system-ui, sans-serif;
+        text-decoration: none;
+        color: #666;
+        text-transform:uppercase;
+        letter-spacing: 0.07em;
+        font-size: 0.8rem;
+    }
+
+    .c-floating-menu {
+        font-family:system-ui, sans-serif;
+        letter-spacing: 0.07em;
+        font-size: 0.8rem;
+        position:fixed;
+        top:0;
+        right:0;
+        width:150px;
+        height:80px;
+        padding:1.5em 1.5em;
+        z-index:300;
+        cursor:pointer;
     }
 
     .c-float-menu__item {
-      float:right;
-      font-size:80%;
-      color:rgba(0,0,0,0.50);
-      font-weight:600;
-      text-transform:uppercase;
-      background-color:white;
-      padding:0 1em;
-      border-radius:25px;
-      text-decoration:none;
+        float:right;
+        font-size:80%;
+        color:rgba(0,0,0,0.50);
+        font-weight:600;
+        text-transform:uppercase;
+        background-color:white;
+        padding:0 1em;
+        border-radius:25px;
+        text-decoration:none;
     }
 </style>
 
@@ -53,7 +69,7 @@ html,body{
 @endif
 
 {{--  Header  --}}
-<a href="/">{{ config('folio.title-short') }}</a>
+<a class="header" href="/">{{ config('folio.title-short') }}</a>
 
 <br/><br/>
 
