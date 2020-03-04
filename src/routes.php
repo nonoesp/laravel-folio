@@ -123,6 +123,21 @@ Route::group([
 		// Debug: Hello, Folio!
 		Route::get('debug/folio', 'Nonoesp\Folio\Controllers\FolioController@helloFolio');
 
+		// Redirect - New item
+		Route::get('new', function() {
+			return redirect()->route('item.create');
+		});
+
+		// Redirect - Upload
+		Route::get('upload', function() {
+			return redirect()->route('uploader.form');
+		});
+
+		// Redirect - Uploads list
+		Route::get('uploads', function() {
+			return redirect()->route('uploader.list');
+		});
+
 	}
 
 }); // close folio general domain pattern group
@@ -146,7 +161,7 @@ Route::group([
 	Route::get($admin_path.'items/{tag}', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
 	Route::any($admin_path.'item/edit/{id}', ['as' => 'item.edit', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemEdit']);
 	Route::any($admin_path.'item/versions/{id}', ['as' => 'item.version', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemVersions']);
-	Route::get($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@getItemCreate');
+	Route::get($admin_path.'item/add', ['as' => 'item.create', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@getItemCreate']);
 	Route::post($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@postItemCreate');
 	Route::get($admin_path.'item/delete/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemDelete');
 	Route::get($admin_path.'item/restore/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemRestore');
@@ -176,8 +191,8 @@ Route::group([
 	Route::post('/api/item/restore', 'Nonoesp\Folio\Controllers\AdminController@postItemRestore');
 
 	// UploadController
-	Route::any($admin_path.'upload', 'Nonoesp\Folio\Controllers\UploadController@getUploadForm');
-	Route::get($admin_path.'upload/list', 'Nonoesp\Folio\Controllers\UploadController@getMediaList');
+	Route::any($admin_path.'upload', ['as' => 'uploader.form', 'uses' => 'Nonoesp\Folio\Controllers\UploadController@getUploadForm']);
+	Route::get($admin_path.'upload/list', ['as' => 'uploader.list', 'uses' => 'Nonoesp\Folio\Controllers\UploadController@getMediaList']);
 	Route::get($admin_path.'upload/delete/{name}', 'Nonoesp\Folio\Controllers\UploadController@postDeleteMedia');
 	
 	// SubscriptionController
