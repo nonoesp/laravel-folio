@@ -82,11 +82,19 @@ Mousetrap.bindGlobal(['ctrl+s', 'command+s'], function(e) {
  * Keyboard shortcut to escape text editing mode.
  */
 Mousetrap.bindGlobal('esc', function(e) {
-	let textarea = $('textarea')[0];
-	textarea.blur();
-	admin.adjustTextareaHeight(textarea, 150);
+
+    e.preventDefault();
+
+    // new
+    const textareas = $('textarea');
+    $(textareas).each((index, element) => {
+        console.log(element);
+        element.blur();
+        admin.adjustTextareaHeight(element, 150);
+    });
+	
 	$(document).scrollTop(0);
-	e.preventDefault();
+    
 	return false;
 });
 
