@@ -623,15 +623,30 @@ methods: {
 
 			<div class="[ grid__item ] [ u-pad-b-2x u-pad-t-0x ] [ c-admin--font-light ] ">
 					<p @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</p>
-			</div>
+            </div>
 
-			<div class="[ grid__item ] [ one-whole ]">
-				<p>{{ Form::button('Save', [
-					'v-on:click' => 'this.save()',
-					'v-bind:disabled'=>"!isDirty()",
-					'class' => 'js--save'
-					]) }}</p>
-			</div>
+            <div style="background-color:white;position:fixed;bottom:0;right:0;left:0;height:55px;">
+
+                {{-- Save --}}
+                <div style="background-color:white;position:absolute;bottom:0;right:0;width:17rem;padding-top:10px;padding-left:40px;padding-right:10px">
+                    <p>{{ Form::button('Save', [
+                        'v-on:click' => 'this.save()',
+                        'v-bind:disabled'=>"!isDirty()",
+                        'class' => 'js--save',
+                        'style' => 'margin:0;'
+                        ]) }}</p>
+                </div>
+
+                {{-- Unsaved changes --}}
+                <div
+                style="background-color:white;position:absolute;bottom:0;left:0;padding-left:16px;padding-bottom:0px;width:10rem;color:#666;">
+                    <p v-show="!!isDirty()">Unsaved changes.</p>
+                    <p v-show="!isDirty()">Saved.</p>
+                </div>     
+
+            </div>
+
+
 
 		{{ Form::close() }}
 
