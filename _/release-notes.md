@@ -1,6 +1,10 @@
 
 ## Release Notes
 
+### 6.x
+
+- Remove recipients.
+
 ### 5.8.*
 
 - Add item translations (including properties).

@@ -56,33 +56,10 @@
 			@endif
 		@endif
 
-		{{-- Text --}}
+			{{-- Text --}}
 			@if ($item_type == 'DEFAULT_ITEM_TYPE')
 
-				@if ($item->isPublic())
-					{!! $item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]) !!}
-				@else
-					@if($twitter_handle = Authenticate::isUserLoggedInTwitter())
-						<?php /*@if($item->visibleFor($twitter_handle) OR Auth::user()->is_admin)*/ ?>
-						@if($item->visibleFor($twitter_handle))
-							{{--Visible for @twitter_handle--}}
-							{!! $item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]) !!}
-						@else
-							{{--Not visible for this @twitter_handle--}}
-							<p>Oh, this content doesn't seem to be visible for {{ "@".$twitter_handle }}.</p>
-						@endif
-					@else
-						{{--Need to log in in Twitter to access content--}}
-						<p class="u-text-align--center">
-							Access to see this content.
-							<br><br>
-							<a href="/twitter/login" class="u-a--box-shadow-reset">
-								{{ Form::button('Sign in with Twitter', ['class' => 'button--twitter-hero']) }}
-							</a>
-						</p>
-					@endif
-
-				@endif
+				{!! $item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]) !!}
 
 			@endif
 
