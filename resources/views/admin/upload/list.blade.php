@@ -25,12 +25,6 @@
 
 	<div class="o-wrap o-wrap--size-1000">
 
-	<div class="admin-form grid">
-
-        <div class="grid__item one-whole u-mar-b-3x u-mar-t-3x u-font-size--g">
-            <strong>Images</strong>
-        </div>        
-
         @php
             $uploaderPublicFolder = config('folio.uploader.public-folder');
             $uploaderDisk = config('folio.uploader.disk');
@@ -39,9 +33,10 @@
 
             $filenames = Storage::disk($uploaderDisk)->files($uploaderUploadsFolder);
             $videos = [];
+            $images = [];
         @endphp
 
-		@foreach($filenames as $filename)
+        @foreach($filenames as $filename)
             @php
                 $basename = basename($filename);
                 // Omit dot files
@@ -57,68 +52,97 @@
                     array_push($videos, $filename);
                     continue;
                 }
-                
-                // Construct file path
-                $filePath = $uploaderPublicFolder.$basename;
-
-                // Construct image path
-				$imageHighRes = $filePath;
-				if (config('folio.imgix')) {
-					$imageHighRes = imgix($filePath);
-					$image = imgix($filePath, ['w' => 300, 'q' => 90]);
-				} else {
-                    $image = $filePath;
-                }
-			@endphp
-
-				<div class="[ grid__item one-sixth lap--one-quarter palm--one-third ]">
-					<p>
-                        @if($isVideo)
-                            <video width="100%" controls>
-                                <source src="{{ $filePath }}" type="video/{{ $extension }}">
-                            Your browser does not support the video tag.
-                            </video>
-                        @else
-                            <a href="{{ $imageHighRes }}" target="_blank">
-                                <img src="{{ $image }}" style="width:100%">
-                            </a>
-                        @endif
-                        <br>{{ $basename }} · <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath().'upload/delete/'.$basename }}">╳</a>
-					</p>
-				</div>
+                array_push($images, $filename);
+            @endphp
         @endforeach
+
+        @if(count($images))
+
+            <div class="admin-form grid">
+
+                <div class="grid__item one-whole u-mar-b-3x u-mar-t-3x u-font-size--g">
+                    <strong>Images</strong>
+                </div>        
+
+                @foreach($images as $filename)
+                    @php
+                        $basename = basename($filename);
+                        
+                        // Construct file path
+                        $filePath = $uploaderPublicFolder.$basename;
+
+                        // Construct image path
+                        $imageHighRes = $filePath;
+                        if (config('folio.imgix')) {
+                            $imageHighRes = imgix($filePath);
+                            $image = imgix($filePath, ['w' => 300, 'q' => 90]);
+                        } else {
+                            $image = $filePath;
+                        }
+                    @endphp
+
+                        <div class="[ grid__item one-sixth lap--one-quarter palm--one-third ]">
+                            <p>
+                                @if($isVideo)
+                                    <video width="100%" controls>
+                                        <source src="{{ $filePath }}" type="video/{{ $extension }}">
+                                    Your browser does not support the video tag.
+                                    </video>
+                                @else
+                                    <a href="{{ $imageHighRes }}" target="_blank">
+                                        <img src="{{ $image }}" style="width:100%">
+                                    </a>
+                                @endif
+                                <br>{{ $basename }} · <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath().'upload/delete/'.$basename }}">╳</a>
+                            </p>
+                        </div>
+                @endforeach
+            
+            </div>
         
-	</div>
-    <div class="admin-form grid">
+        @endif
 
-        <div class="grid__item one-whole u-mar-b-3x u-mar-t-3x u-font-size--g">
-            <strong>Videos</strong>
+
+        @if(count($videos))
+
+            <div class="admin-form grid">
+
+                <div class="grid__item one-whole u-mar-b-3x u-mar-t-3x u-font-size--g">
+                    <strong>Videos</strong>
+                </div>
+
+                @foreach($videos as $filename)
+                    @php
+                        $basename = basename($filename);
+                        // Determine if it's a video or an image
+                        $extension = explode('.', $basename);
+                        $extension = $extension[count($extension) - 1];
+
+                        // Construct file path
+                        $filePath = $uploaderPublicFolder.$basename;
+                    @endphp
+
+                        <div class="[ grid__item one-whole lap--one-quarter palm--one-third ]">
+                            <p>
+                                <a href="{{ $filePath }}" target="_blank">
+                                    {{ $basename }}
+                                </a>
+                                · <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath("upload/delete/$basename") }}">╳</a>
+                            </p>
+                        </div>
+                @endforeach        
+
+            </div>
+
+        @endif
+
+	</div>
+
+    @if(!count($images) && !count($videos))
+        <div class="o-wrap o-wrap--size-550">
+            No images or videos has been uploaded yet.
         </div>
-
-		@foreach($videos as $filename)
-            @php
-                $basename = basename($filename);
-                // Determine if it's a video or an image
-                $extension = explode('.', $basename);
-                $extension = $extension[count($extension) - 1];
-
-                // Construct file path
-                $filePath = $uploaderPublicFolder.$basename;
-			@endphp
-
-				<div class="[ grid__item one-whole lap--one-quarter palm--one-third ]">
-					<p>
-                        <a href="{{ $filePath }}" target="_blank">
-                            {{ $basename }}
-                        </a>
-                        · <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath("upload/delete/$basename") }}">╳</a>
-					</p>
-				</div>
-		@endforeach        
-
-	</div>
-
-	</div>
+    @endif
 
 @endsection
 

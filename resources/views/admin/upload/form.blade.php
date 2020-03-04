@@ -5,7 +5,7 @@
     $supportedFileTypes = config('folio.uploader.allowed-file-types');
 ?>
 
-@section('title', 'Upload an Image')
+@section('title', 'Upload a File')
 
 @section('scripts')
 
@@ -112,7 +112,7 @@
 	<div class="[ admin-form ]">
 	
 		<p>
-			<a href="/{{ Folio::adminPath() }}upload/list">View All Images</a>
+			<a href="/{{ Folio::adminPath() }}upload/list">View All Files</a>
 		</p>
 
 	</div>
@@ -174,7 +174,7 @@
 
 		<div class="grid">
 
-			<div class="[ grid__item ]">{{ Form::label('Image file') }}</div>
+			<div class="[ grid__item ]">{{ Form::label('File') }}</div>
 			<div class="[ grid__item ]">{{ Form::file('photo', [
 				'@change' => 'fileSelected',
 			]) }}</div>

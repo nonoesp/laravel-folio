@@ -153,6 +153,11 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
 ```
 
+## File Uploader
+
+- TODO - Create `storage/public/uploads` folder.
+- TODO - Symlink uploads folder to `public/img/u`.
+
 ## Subscribers Notifications
 
 Optionally, you can receive new subscriber notifications via email.

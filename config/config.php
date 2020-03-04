@@ -111,7 +111,7 @@ return [
 	'google-analytics' => '',
 
 	/*
-    * Settings for the media uploaded.
+    * Settings for the file uploader.
     */			
 	'uploader' => [
         'public-folder' => '/img/u/',
