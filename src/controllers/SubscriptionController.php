@@ -48,7 +48,7 @@ class SubscriptionController extends Controller
       array_push($data, $ip);
     }
 
-    if(config('folio.subscribers.should-notify') == true) {
+    if(config('folio.subscribers.should-notify')) {
       Mail::send('folio::email.new-subscriber',
       ['email' => $email, 'path' => $path, 'data' => $data],
       function ($m) use ($email) {
@@ -58,7 +58,7 @@ class SubscriptionController extends Controller
       });
     }
 
-    if(config('folio.should-add-to-mailchimp') == true) {
+    if(config('folio.should-add-to-mailchimp')) {
       \Newsletter::subscribeOrUpdate(
         $email, [
           // Here we need to reference the merge tags (e.g. 'NAME')
