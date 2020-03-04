@@ -87,8 +87,8 @@ Mousetrap.bindGlobal('esc', function(e) {
 
     // new
     const textareas = $('textarea');
+    $('.o-textarea').removeClass('o-textarea--fullscreen');
     $(textareas).each((index, element) => {
-        console.log(element);
         element.blur();
         admin.adjustTextareaHeight(element, 150);
     });
@@ -105,6 +105,34 @@ Mousetrap.bindGlobal('esc', function(e) {
 Mousetrap.bindGlobal('command+i', function(e) {
 	console.log('admin.isDirty(): ' + admin.isDirty());
 	e.preventDefault();
+	return false;
+});
+
+/*
+ * alt+f
+ * Keyboard shortcut to edit full screen.
+ */
+Mousetrap.bindGlobal('alt+f', function(e) {
+    
+    e.preventDefault();
+
+    if ($('.o-textarea--fullscreen').length) {
+        $('.o-textarea').removeClass('o-textarea--fullscreen');
+        return false;
+    }
+
+    let focused = document.activeElement;
+    if (!$(focused).is('textarea')) {
+        focused = $('textarea')[0];
+    }
+
+    const oText = $(focused).closest('.js--o-textarea');
+    $('.o-textarea').removeClass('o-textarea--fullscreen');
+    $(oText).addClass('o-textarea--fullscreen');
+
+    // Force -webkit-fill-available
+    this.adjustTextareaHeight(target, 0);
+
 	return false;
 });
 
@@ -268,7 +296,10 @@ methods: {
 		this.adjustTextareaHeight(target, 0);
 	},
 	adjustTextareaHeight: function(textarea, height) {
-		if(height == 0) {
+        if ($('.o-textarea--fullscreen').length) {
+            //
+            textarea.style.height = '-webkit-fill-available';
+        } else if(height == 0) {
 			this.isTextAreaExpanded = true;
 			var scrollTop = document.documentElement.scrollTop;
 			textarea.style.height = "1px";
@@ -465,7 +496,53 @@ methods: {
 
 	[v-cloak] {
   		display: none;
-	}
+    }
+    
+    .o-textarea {
+    }
+
+    .o-textarea--fullscreen {
+        position: fixed;
+        background-color: #fafafa;
+        z-index: 10;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0;
+        margin-bottom: 20px;
+    }
+
+    .o-textarea--fullscreen .o-textarea__title * {
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    .o-textarea--fullscreen .o-textarea__title {
+        position: fixed;
+        top: 0;
+        background-color:white;
+        padding-top: 20px;
+        width: 100%;
+        left:0;
+        text-align: center;
+    }
+
+    .o-textarea--fullscreen .o-textarea__textarea {
+        position: fixed;
+        left:0;
+        right:0;
+        top:110px;
+        bottom:55px;
+        max-width: 60rem;
+        margin:auto;
+    }
+
+    .o-textarea--fullscreen .o-textarea__textarea textarea {
+        position: relative;
+        width: 70rem!important;
+        height: 100%;
+    }    
+    
 </style>
 
 {{-- Vue Component --}}
@@ -484,24 +561,27 @@ methods: {
 
 		{{ Form::model($item, array('route' => array('item.edit', $item->id))) }}
 
-		@foreach($translations as $translation)
+        @foreach($translations as $translation)
+            <div class="o-textarea js--o-textarea">
+
 			@php
 				$language_label = "";
 				if(count($translations) > 1) {
 					$language_label = " · $translation";
 				}
 			@endphp
-			<div class="[ o-wrap o-wrap--size-small ]">
-				<div class="[ grid__item ] [ one-whole ]">
+			<div class="[ o-wrap o-wrap--size-small ] ">
+				<div class="[ grid__item ] [ one-whole ] o-textarea__title">
 					<p>{{ Form::text('title', null, [
 						'placeholder' => 'Title'.$language_label,
 						'v-model' => 'item.title.'.$translation
-						]) }}</p>
+                        ]) }}
+                    </p>
 				</div>
 			</div>
 
-			<div class="[ grid__item ] [ one-whole ]">
-			<p class="[ unwrapped wide ]">{{ Form::textarea('text', null, [
+			<div class="[ grid__item ] [ one-whole ] o-textarea__textarea">
+			<p>{{ Form::textarea('text', null, [
 				'placeholder' => 'Text'.$language_label,
 				'ref' => 'editor',
 				'v-on:keyup' => 'textareaKeyupHandler',
@@ -509,8 +589,11 @@ methods: {
 				'@focus' => 'updateTextareaFocus',
 				'@blur' => 'updateTextareaFocus',
 				'v-bind:class' => '{ "u-opacity--high" : !isTextareaFocused }'
-				]) }}</p>
-		</div>
+                ]) }}
+            </p>
+        </div>
+     </div>
+        
 		@endforeach
 
 		<div class="[ o-wrap o-wrap--size-600 ]">
@@ -633,7 +716,7 @@ methods: {
 					<p @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</p>
             </div>
 
-            <div style="background-color:white;position:fixed;bottom:0;right:0;left:0;height:55px;">
+            <div style="background-color:white;position:fixed;bottom:0;right:0;left:0;height:55px;z-index:200">
 
                 {{-- Save --}}
                 <div style="background-color:white;position:absolute;bottom:0;right:0;width:17rem;padding-top:10px;padding-left:40px;padding-right:10px">
