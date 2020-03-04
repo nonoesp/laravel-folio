@@ -110,6 +110,11 @@ return [
 	 */				
 	'google-analytics' => '',
 
+	/**
+	 * Whether to use imgix.net as image cdn.
+	 */
+	'imgix' => false,
+
 	/*
     * Settings for the file uploader.
     */			

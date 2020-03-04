@@ -82,18 +82,13 @@
                     @endphp
 
                         <div class="[ grid__item one-sixth lap--one-quarter palm--one-third ]">
-                            <p>
-                                @if($isVideo)
-                                    <video width="100%" controls>
-                                        <source src="{{ $filePath }}" type="video/{{ $extension }}">
-                                    Your browser does not support the video tag.
-                                    </video>
-                                @else
-                                    <a href="{{ $imageHighRes }}" target="_blank">
-                                        <img src="{{ $image }}" style="width:100%">
-                                    </a>
-                                @endif
-                                <br>{{ $basename }} · <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath().'upload/delete/'.$basename }}">╳</a>
+                                <a href="{{ $imageHighRes }}" target="_blank">
+                                    <img src="{{ $image }}" style="width:100%">
+                                </a>
+                                <br/>
+                                {{ $basename }}
+                                ·
+                                <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath().'upload/delete/'.$basename }}">╳</a>
                             </p>
                         </div>
                 @endforeach
@@ -127,7 +122,8 @@
                                 <a href="{{ $filePath }}" target="_blank">
                                     {{ $basename }}
                                 </a>
-                                · <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath("upload/delete/$basename") }}">╳</a>
+                                ·
+                                <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath("upload/delete/$basename") }}">╳</a>
                             </p>
                         </div>
                 @endforeach        
