@@ -31,7 +31,6 @@
         "vinkla/hashids": "^7.0.0",
         "aws/aws-sdk-php": "~3.0",
         "spatie/laravel-newsletter": "^4.6",
-        "doctrine/dbal": "^2.9",
         "michelf/php-markdown": "^1.8",
         "spatie/eloquent-sortable": "^3.7",
         "spatie/laravel-translatable": "^4.2",
