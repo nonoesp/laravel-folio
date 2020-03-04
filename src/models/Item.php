@@ -871,8 +871,8 @@ class Item extends Model implements Feedable
 		$collection = [];
 
 		$shouldShowTrashed = false;
-		if ($user = \Auth::user() && $user->is_admin || $showHidden) {
-			$shouldShowTrashed = true;
+		if ($user = \Auth::user()) {
+			$shouldShowTrashed = $user->is_admin || $showHidden;
 		}
 
 		$published = function($query) { $query->published(); };

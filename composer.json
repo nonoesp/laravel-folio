@@ -21,7 +21,7 @@
     "minimum-stability": "dev",
     "require": {
         "php": "^7.2",
-        "illuminate/support": "~6.0",
+        "illuminate/support": "^6.0",
         "rtconner/laravel-tagging": "~3.2",
         "jenssegers/date": "^3.5",
         "laravelium/feed": "~6.0",
