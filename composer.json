@@ -41,7 +41,8 @@
         "nonoesp/authenticate": "^6.0",
         "mtownsend/read-time": "^1.1",
         "symfony/intl": "^5.1@dev",
-        "nasyrov/laravel-imgix": "dev-master"
+        "nasyrov/laravel-imgix": "dev-master",
+        "spatie/dropbox-api": "^1.12"
     },
     "require-dev": {
     },
