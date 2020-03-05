@@ -120,8 +120,9 @@ Route::group([
 		// Feed
 		Route::get(config('folio.feed.route'), ['as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FeedController@makeFeed']);
 
-		// Debug: Hello, Folio!
-		Route::get('debug/folio', 'Nonoesp\Folio\Controllers\FolioController@helloFolio');
+		// Debug
+		Route::get('debug/folio', 'Nonoesp\Folio\Controllers\DebugController@helloFolio');
+		Route::get('debug/load-time', 'Nonoesp\Folio\Controllers\DebugController@loadTime');
 
 		// Redirect - New item
 		Route::get('new', function() {
