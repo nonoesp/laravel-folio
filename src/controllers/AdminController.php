@@ -354,6 +354,11 @@ class AdminController extends Controller
 			}
 		}
 
+		// Disable versioning if set to false
+		if(!$item->boolProperty('versioning', true)) {
+			$item->disableVersioning();
+		}
+
 		$item->save();
 
 		return response()->json([
