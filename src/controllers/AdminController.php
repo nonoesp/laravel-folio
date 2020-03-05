@@ -268,7 +268,7 @@ class AdminController extends Controller
 		$text_languages = json_decode($version->text);
 
 		foreach ($item->getTranslations('text') as $lang => $text) {
-			$item->forgetAllTranslations($lang);
+			$item->forgetAllTranslations('text', $lang);
 		}
 
 		foreach ($text_languages as $lang => $text) {
