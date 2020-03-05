@@ -63,6 +63,13 @@ return [
      */	
 	'db-prefix' => 'folio_',
 
+	/**
+	 * Sitemap
+	 * string or null
+	 * Can be generated with `php artisan folio:sitemap`
+	 */
+	'sitemap' => null,
+
 	/*
      * Wether subscribers should be added to Mailchimp or not.
 	 * Mailchimp configuration should be added to .env for Spatie\Newsletter as follows:
