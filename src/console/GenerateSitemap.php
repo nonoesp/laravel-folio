@@ -60,6 +60,7 @@ class GenerateSitemap extends Command
 
                         $urlType = 'FREE';
 
+                        // Sample to get Urls by segment
                         // if ($url->segment(1) === 'contact') {
                         //     return;
                         // }
@@ -109,13 +110,10 @@ class GenerateSitemap extends Command
                     })
                     ->getSitemap();
             
-            $sitemap->add(Url::create('/manually-created')
-            ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
-            ->setPriority(0.12));
-
-            $sitemap->add(Url::create('/says/where-is-your-manual')
-            ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
-            ->setPriority(0.14));            
+            // Sample to manually add a Url
+            // $sitemap->add(Url::create('/manually-created')
+            // ->setChangeFrequency(Url::CHANGE_FREQUENCY_YEARLY)
+            // ->setPriority(0.9));
 
             // Save sitemap
             $sitemap->writeToFile($filepath);
