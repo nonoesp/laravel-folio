@@ -18,7 +18,7 @@ class GenerateSitemap extends Command
 
 	protected $description = 'Generate a sitemap of the site';
 
-    protected $defaultFilepath = 'sitemap.xml';
+    protected $defaultFilepath = 'public/sitemap.xml';
 
 	protected $process;
 	
