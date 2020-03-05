@@ -43,7 +43,8 @@
         "symfony/intl": "^5.1@dev",
         "nasyrov/laravel-imgix": "dev-master",
         "spatie/dropbox-api": "^1.12",
-        "spatie/laravel-sitemap": "dev-master"
+        "spatie/laravel-sitemap": "dev-master",
+        "rezozero/commonmark-ext-footnotes": "dev-master"
     },
     "require-dev": {
     },
