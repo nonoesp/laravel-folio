@@ -42,7 +42,8 @@
         "mtownsend/read-time": "^1.1",
         "symfony/intl": "^5.1@dev",
         "nasyrov/laravel-imgix": "dev-master",
-        "spatie/dropbox-api": "^1.12"
+        "spatie/dropbox-api": "^1.12",
+        "spatie/laravel-sitemap": "dev-master"
     },
     "require-dev": {
     },
