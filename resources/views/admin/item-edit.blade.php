@@ -116,8 +116,20 @@ Mousetrap.bindGlobal('alt+f', function(e) {
     
     e.preventDefault();
 
+    makeFullscreen();
+
+	return false;
+});
+
+const makeFullscreen = () => {
+
     if ($('.o-textarea--fullscreen').length) {
         $('.o-textarea').removeClass('o-textarea--fullscreen');
+		$("textarea").each((index, element) => {
+			// Force -webkit-fill-available
+			admin.adjustTextareaHeight(element, 0);
+		});
+		setTimeout(() => { $("textarea").select(); }, 50);
         return false;
     }
 
@@ -130,11 +142,14 @@ Mousetrap.bindGlobal('alt+f', function(e) {
     $('.o-textarea').removeClass('o-textarea--fullscreen');
     $(oText).addClass('o-textarea--fullscreen');
 
-    // Force -webkit-fill-available
-    this.adjustTextareaHeight(target, 0);
+	// Force -webkit-fill-available
+	if (typeof target != 'undefined') {
+		this.adjustTextareaHeight(target, 0);
+	}
 
-	return false;
-});
+	// Deselect if selected by double-clicking
+	$("textarea").select();
+}
 
 var save = function(e) {
 	if(e) {
@@ -228,6 +243,11 @@ created() {
 		e.preventDefault();
 		return false;
 	});
+
+	$(document).on('dblclick', '.o-textarea', function(e) {
+		makeFullscreen();
+	});
+
 },
 methods: {
 	initProperties: function() {
@@ -509,7 +529,6 @@ methods: {
         bottom:0;
         left:0;
         right:0;
-        margin-bottom: 20px;
     }
 
     .o-textarea--fullscreen .o-textarea__title * {
@@ -532,7 +551,6 @@ methods: {
         left:0;
         right:0;
         top:110px;
-        bottom:55px;
         max-width: 60rem;
         margin:auto;
     }
@@ -542,6 +560,28 @@ methods: {
         width: 70rem!important;
         height: 100%;
     }    
+
+	.o-label-saved {
+		position:absolute;
+		bottom:0;
+		left:0;
+		margin-left:10px;
+		margin-bottom:11px;
+		padding-bottom:0;
+		border-radius:3px;
+		padding:2px 8px;
+		color:#666;
+		background-color:transparent;
+	}
+
+	@media all and (max-width:750px) {
+		.o-label-saved {
+			background-color: white;
+			margin-left:0;
+			margin-bottom:0;
+			padding: 5px 18px 13px;
+		}
+	}
     
 </style>
 
@@ -716,23 +756,24 @@ methods: {
 					<p @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</p>
             </div>
 
-            <div style="background-color:white;position:fixed;bottom:0;right:0;left:0;height:55px;z-index:200">
+            <div style="background-color:transparent;position:fixed;bottom:0;right:0;left:0;height:55px;z-index:200">
 
                 {{-- Save --}}
-                <div v-if="isDirty()" style="background-color:white;position:absolute;bottom:0;right:0;width:10rem;padding-top:10px;padding-left:40px;padding-right:10px">
+                <div v-if="isDirty()" style="background-color:transparent;position:absolute;bottom:0;right:0;width:10rem;padding-top:10px;padding-left:40px;padding-right:10px">
                     <p>{{ Form::button('Save', [
                         'v-on:click' => 'this.save()',
                         'v-bind:disabled'=>"!isDirty()",
                         'class' => 'js--save',
-                        'style' => 'margin:0;'
+                        'style' => 'margin:0;background-color:white;'
                         ]) }}</p>
                 </div>
 
                 {{-- Unsaved changes --}}
-                <div
-                style="background-color:white;position:absolute;bottom:0;left:0;padding-left:16px;padding-bottom:0px;width:10rem;color:#666;">
-                    <p v-show="!!isDirty()">Unsaved changes.</p>
-                    <p v-show="!isDirty()">Saved.</p>
+                <div class="o-label-saved">
+                    <p style="margin:0">
+						<span v-if="!!isDirty()">Unsaved changes.</span>
+						<span v-if="!isDirty()">Saved.</span>
+					</p>
                 </div>     
 
             </div>
