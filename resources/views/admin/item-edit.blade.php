@@ -250,6 +250,27 @@ created() {
 
 },
 methods: {
+	wordCountFromText(t){
+		t = t.replace(/(^\s*)|(\s*$)/gi,"");
+		t = t.replace(/[ ]{2,}/gi," ");
+		t = t.replace(/\n /,"\n");
+		return t.split(' ').length;
+	},
+	wordCount: function(e) {
+
+		const textarea = $("textarea:focus");
+		if (typeof textarea !== 'undefined') {
+			const text = textarea.val();
+			if (typeof text !== 'undefined') {
+				if (text === '') {
+					return 0;
+				}
+				return this.wordCountFromText(text);
+			}
+		}
+		
+		return 0;
+	},
 	initProperties: function() {
 		for(var i in this.properties) {
 			var p = this.properties[i];
@@ -771,6 +792,7 @@ methods: {
                 {{-- Unsaved changes --}}
                 <div class="o-label-saved">
                     <p style="margin:0">
+						<span v-if="!!wordCount()">@{{ wordCount() }} words</br></span>
 						<span v-if="!!isDirty()">Unsaved changes.</span>
 						<span v-if="!isDirty()">Saved.</span>
 					</p>
