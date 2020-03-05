@@ -51,13 +51,13 @@
 			<div class="admin-title u-borderBottom">@yield('title', 'Admin')</div>
 		</div>
 
-		@if($remove_wrap == false)
+		@if(!$remove_wrap)
 			<div class="[ o-wrap o-wrap--size-small ]">
 		@endif
 
 			@yield('content')
 
-		@if($remove_wrap == false)
+		@if(!$remove_wrap)
 			</div>
 		@endif
 

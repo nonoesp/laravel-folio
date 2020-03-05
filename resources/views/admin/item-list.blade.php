@@ -6,6 +6,7 @@
 		$settings_title = "Folio";
 	}
 	$site_title = 'Items | '. $settings_title;
+	$remove_wrap = true;
 ?>
 
 @section('scripts')
@@ -40,7 +41,9 @@ data: {
 	items: {!! $items !!},
 	tags: {!! $existing_tags !!},
 	date: '{{Date::now()}}',
-	unfiltered: true
+	unfiltered: true,
+	initialLimit: 0,
+	limit: 0,
 },
 watch: {
 	tags: {
@@ -191,23 +194,43 @@ admin.sort_tags();
 		{{-- Tag Cloud --}}
 
 		<div v-cloak class="[ u-visible-vue ] [ c-admin__existing-tags ] [ u-pad-b-2x ]">
-			<ul>
+			<div class="o-wrap o-wrap--size-600 u-mar-b-3x">
+				<ul>
 				<li @click="display_all_tags()"
-						v-bind:class="{ 'u-opacity--low': !unfiltered }"
-						class="u-cursor-pointer">
-					All
+							v-bind:class="{ 'u-opacity--low': !unfiltered }"
+							class="u-cursor-pointer">
+						All
 				</li>
-				<li v-for="tag in orderedTags" class="u-cursor-pointer"
-				   @click="filter_by_tag(tag)"
-					 v-bind:class="{ 'u-opacity--low': !tag.selected }">
-					 @{{ tag.slug }} · @{{ tag.count }}
+				<li v-if="limit < 9999"
+					class="u-cursor-pointer u-opacity--low"
+					@click="limit = 9999">
+					<span v-if="limit > 0">Show All Tags</span>
+					<span v-if="limit == 0">Show Tags</span>
+				</li>					
+				<li v-if="limit == 9999"
+					class="u-cursor-pointer u-opacity--low"
+					@click="limit = initialLimit">
+						<span v-if="initialLimit == 0">Hide Tags</span>
+						<span v-if="initialLimit > 0">See Less Tags</span>
+				</li>
+				</ul>
+			</div>
+			<div v-if="limit > 0" class="o-wrap o-wrap--full u-text-align--center">
+			<ul>
+				<li v-for="(tag, index) in orderedTags" v-if="index < limit"
+				class="u-cursor-pointer"
+				@click="filter_by_tag(tag)"
+				v-bind:class="{ 'u-opacity--low': !tag.selected }">
+					@{{ tag.slug }} · @{{ tag.count }}
 				</li>
 			<ul>
+			</div>
 		</div>
 
 		{{-- Item List --}}
 
 		<div v-cloak v-for="item in items" class="[ u-visible-vue ] [ admin-list-item ]" v-if="!item.hidden" ref="items">
+			<div class="o-wrap o-wrap--size-600">
 			<p v-bind:class="{ 'u-opacity--half': item.deleted_at }">
 				<a v-bind:href="edit_href(item)">
 					@{{ item.title.en || item.title[Object.keys(item.title)[0]] }}
@@ -220,6 +243,7 @@ admin.sort_tags();
 			<p v-if="item.published_at > date" class="admin-list-itemDetails">
 				Scheduled for <span style="text-transform:capitalize">@{{ human_date(item) }}</span>
 			</p>
+			</div>
 		</div>
 
 	</div>
