@@ -49,6 +49,7 @@ class Item extends Model implements Feedable
 		'link',
 		'template',
 		'visits',
+		'recipients_str',
 		'rss',
 		'is_blog'
 	];
@@ -221,6 +222,11 @@ class Item extends Model implements Feedable
 			return;
 	}
 
+	public function recipients()
+	{
+		return $this->hasMany('Recipient');
+	}
+
 	public function properties()
 	{
 		return $this->hasMany('Property');
@@ -350,7 +356,7 @@ class Item extends Model implements Feedable
 
 	public function scopePublic($query)
 	{
-		return $query;
+		return $query->has('recipients', '=', 0);
 	}
 
 	public function scopeRSS($query)
@@ -367,6 +373,35 @@ class Item extends Model implements Feedable
 	{
 		return $query->where('published_at', '>', date("Y-m-d H:i:s"));
 	}
+
+	public function scopeVisibleFor($query, $handle)
+	{
+		$query->public()
+    		  ->orWhereHas('recipients', function($q) use ($handle)
+    			{
+					$q->where("twitter", "=", $handle);
+    			});
+	}
+
+	// Helpers to Check Visibility of Private Content
+
+	public function visibleFor($twitter_handle) {
+		$twitter_handle = strtolower(str_replace("@", "", $twitter_handle));
+		if (in_array($twitter_handle, $this->recipientsArray() )) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function recipientsArray() {
+		return explode(",", strtolower(str_replace([" ", "@"], "", $this->recipients_str)));
+	}
+
+	public function isPublic() {
+		return !count($this->recipients()->get());
+	}
+
 
 	public function cardImage($imgixOptions = [], $forceAbsolute = true) {
 

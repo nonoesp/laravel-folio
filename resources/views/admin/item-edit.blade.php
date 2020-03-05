@@ -344,6 +344,7 @@ methods: {
 			link: this.item.link,
 			slug_title: this.item.slug_title,
 			tags_str: this.item.tags_str,
+			recipients_str: this.item.recipients_str,
 			template: this.item.template,
 			deleted_at: this.item.deleted_at,
 			rss: this.item.rss,
@@ -366,6 +367,7 @@ methods: {
 				this.originalItem.link = this.item.link;
 				this.originalItem.slug_title = this.item.slug_title;
 				this.originalItem.tags_str = this.item.tags_str;
+				this.originalItem.recipients_str = this.item.recipients_str;
 				this.originalItem.template = this.item.template;
 				this.originalItem.deleted_at = this.item.deleted_at;
 				this.originalItem.rss = this.item.rss;
@@ -398,6 +400,7 @@ methods: {
 			'link',
 			'slug_title',
 			'tags_str',
+			'recipients_str',
 			'template',
 			'deleted_at',
 			'rss',
@@ -449,6 +452,7 @@ methods: {
 		['name' => 'link', 'placeholder' => 'External Link', 'label' => 'External Link'],
 		['name' => 'slug_title', 'placeholder' => 'Explicit URL slug (prefix with / to make absolute, i.e. \'/terms\')', 'label' => 'URL slug'],
 		['name' => 'tags_str', 'placeholder' => 'Tags (e.g. writing, project)', 'label' => 'Tags'],
+		['name' => 'recipients_str', 'placeholder' => 'Recipients (Twitter handles)', 'label' => 'Recipients'],
 	];
 ?>
 

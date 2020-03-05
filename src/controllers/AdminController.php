@@ -120,8 +120,18 @@ class AdminController extends Controller
 				$item->restore();
 			}
 
+		    $item->recipients_str = $request->input('recipients_str');
 		    $item->rss = ($request->input('rss') ? true : false);
 			$item->is_blog = ($request->input('is_blog') ? true : false);
+			$item->recipients()->delete();
+			
+		    if($item->recipients_str != NULL)
+		    {
+				foreach($item->recipientsArray() as $recipient)
+				{
+				    $item->recipients()->save(new Recipient(["twitter" => $recipient]));
+				}
+		    }
 		 	$item->text = $request->input('text');
 			$item->save();
 		}
@@ -409,6 +419,16 @@ class AdminController extends Controller
 			$item->retag(explode(",", $item->tags_str));
 		} else {
 			$item->untag();
+		}
+
+		// Recipients
+		$item->recipients()->delete();
+		if($item->recipients_str != NULL)
+		{
+			foreach($item->recipientsArray() as $recipient)
+			{
+			    $item->recipients()->save(new Recipient(["twitter" => $recipient]));
+			}
 		}
 
 		$item->save();
