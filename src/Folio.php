@@ -122,15 +122,22 @@ class Folio {
 	/*
 	 * Whether the current URI is a Folio URI. (Maybe rename URI for path?)
 	 */
-	public static function isFolioURI() {
+	public static function isFolioURI($path = null) {
 
     // Abort when there's no access to Items database table
     if (\Schema::hasTable(Folio::table('items')) == false) {
       return false;
     }
 
-    // Get current path
-    $path = Request::path();
+    if ($path) {
+      // Remove first / if provided
+      if ($path[0] == '/') {
+        $path = substr($path, 1, strlen($path) - 1);
+      }
+    } else {
+      // Get current path
+      $path = Request::path();
+    }
 
     // Look for Items with current slug
 		if($folio_path = Folio::path()) {

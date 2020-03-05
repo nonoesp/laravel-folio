@@ -61,6 +61,7 @@ class FolioServiceProvider extends ServiceProvider
         // Commands
         if ($this->app->runningInConsole()) {
             $this->commands([
+                \Nonoesp\Folio\Commands\GenerateSitemap::class,
                 \Nonoesp\Folio\Commands\BackupDatabase::class,
                 \Nonoesp\Folio\Commands\MigrateTemplate::class,
                 \Nonoesp\Folio\Commands\TextAndTitleToJSON::class,
