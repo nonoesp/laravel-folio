@@ -575,7 +575,11 @@ class Item extends Model implements Feedable
 
 	public static function convertToHtml($text, $markdown_parser = 'default', $veilImages = 'true') {
 
-		if($markdown_parser == "commonmark") {
+		if(
+			$markdown_parser == "commonmark" ||
+			$markdown_parser == "default" ||
+			$markdown_parser == "vtalbot"
+			) {
 
 			// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 			$environment = \League\CommonMark\Environment::createCommonMarkEnvironment();
@@ -627,12 +631,13 @@ class Item extends Model implements Feedable
 				$html = preg_replace ($search, $replace, $html); 
 			}
 		
-		} else if($markdown_parser == "vtalbot") {
+		// } else if($markdown_parser == "vtalbot") {
 
-			$html = \VTalbot\Markdown\Facades\Markdown::convertToHtml($text);
-			$html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
+			// Deprecated (at least for now)
+			// $html = \VTalbot\Markdown\Facades\Markdown::convertToHtml($text);
+			// $html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
 
-		} else {
+		} else if($markdown_parser == "michelf") {
 
 			$html = \Michelf\MarkdownExtra::defaultTransform($text);
 			$html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
