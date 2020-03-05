@@ -719,7 +719,7 @@ methods: {
             <div style="background-color:white;position:fixed;bottom:0;right:0;left:0;height:55px;z-index:200">
 
                 {{-- Save --}}
-                <div style="background-color:white;position:absolute;bottom:0;right:0;width:17rem;padding-top:10px;padding-left:40px;padding-right:10px">
+                <div v-if="isDirty()" style="background-color:white;position:absolute;bottom:0;right:0;width:10rem;padding-top:10px;padding-left:40px;padding-right:10px">
                     <p>{{ Form::button('Save', [
                         'v-on:click' => 'this.save()',
                         'v-bind:disabled'=>"!isDirty()",
