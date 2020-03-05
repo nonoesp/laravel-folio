@@ -16,6 +16,36 @@
 		  ]]) !!}
 @stop
 
+@section('scripts')
+<script type="text/javascript" src="{{ mix('/nonoesp/folio/js/manifest.js') }}"></script>
+<script type="text/javascript" src="{{ mix('/nonoesp/folio/js/vendor.js') }}"></script>
+<script type="text/javascript" src="{{ mix('/nonoesp/folio/js/folio.js') }}"></script>
+<script type="text/javascript">
+    
+    VueResource.Http.headers.common['X-CSRF-TOKEN'] = $('meta[name="csrf-token"]').attr('content');
+    
+    const admin = new Vue({
+        el: '.c-admin',
+        name: 'Admin',
+        data: {
+	        item_id: {{ $item->id }}
+        },
+        methods: {
+	        revert: function(version_id) {
+                if(confirm("Want to revert?")) {
+                    VueResource.Http.post('/api/item/revert', {id: this.item_id, version_id }).then((response) => {
+                        // success
+                    }, (response) => {
+                        // error
+                    });                    
+                }
+	        }
+        }
+    });
+</script>
+
+@endsection
+
 @section('content')
 
 	<div class="[ c-admin ] [ u-pad-b-12x ]">
@@ -26,22 +56,37 @@
 
         @foreach($item->versions->reverse() as $key=>$version)
             <?php
-            $date = new Date($version->updated_at);
-            $date = ucWords($date->format('F').' '.$date->format('j, Y').$date->format(' H:i:s'));
-            $text_languages = json_decode($version->getModel()->text);
-
+                $date = Item::formatDate($version->updated_at, 'l, F j, Y H:i:s');
+                $text_languages = json_decode($version->getModel()->text);
             ?>
-            <div class="[ u-pad-b-1x u-pad-t-2x ] [ c-admin--font-light ] ">
-                {{ $date }}
+
+            <div class="[ u-pad-t-2x ]">
+                <strong>Version {{ $version->version_id }}</strong>
+                ·
+                <span @click="revert({{ $version->version_id }})" style="cursor:pointer">
+                    Revert
+                </span>
+			</div>
+
+            <div class="[ u-pad-b-1x ] [ c-admin--font-light ] ">
+                {{ $date }} · {{ config('app.timezone' )}}
 			</div>
             
+            <div class="grid">
             @foreach ($text_languages as $lang => $text)
                 
-                {{ $lang }}<br/>
-                <textarea>{{ $text }}</textarea>
-                <br/>
+                <div class="grid__item one-half">
+                    <div class="u-mar-b-1x u-mar-t-1x"
+                    style="color:#666;text-transform:uppercase;font-size:0.7rem;
+                    font-weight:600;
+                    letter-spacing:0.03em">
+                        {{ \Symfony\Component\Intl\Locales::getNames()[$lang] }}
+                    </div>
+                    <textarea>{{ $text }}</textarea>
+                </div>
 
             @endforeach
+            </div>
 
             <br/>
         @endforeach

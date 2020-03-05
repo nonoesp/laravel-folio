@@ -189,6 +189,7 @@ Route::group([
 	Route::post('/api/item/update', 'Nonoesp\Folio\Controllers\AdminController@postItemUpdate');
 	Route::post('/api/item/delete', 'Nonoesp\Folio\Controllers\AdminController@postItemDelete');
 	Route::post('/api/item/restore', 'Nonoesp\Folio\Controllers\AdminController@postItemRestore');
+	Route::post('/api/item/revert', 'Nonoesp\Folio\Controllers\AdminController@postItemRevertToVersion');
 
 	// UploadController
 	Route::any($admin_path.'upload', ['as' => 'uploader.form', 'uses' => 'Nonoesp\Folio\Controllers\UploadController@getUploadForm']);

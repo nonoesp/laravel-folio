@@ -260,6 +260,34 @@ class AdminController extends Controller
 		]);
 	}
 
+	function postItemRevertToVersion(Request $request) {
+		$item = Item::withTrashed()->find($request->input('id'));
+		$versionId = $request->input('version_id');
+
+		$version = \Mpociot\Versionable\Version::find($versionId)->getModel();
+		$text_languages = json_decode($version->text);
+
+		foreach ($item->getTranslations('text') as $lang => $text) {
+			$item->forgetAllTranslations($lang);
+		}
+
+		foreach ($text_languages as $lang => $text) {
+			\App::setLocale($lang);
+			if ($text != null) {
+				$item->text = $text;
+			}
+		}
+
+		$item->save();
+
+		return response()->json([
+			'success' => true,
+			'item' => $item,
+			'version_id' => $versionId,
+			'text' => $item->getTranslations('text'),
+		]);
+	}
+
 	// Subscribers
 	public function getSubscribers() {
 		$subscribers = Subscriber::orderBy('id', 'DESC')->get();
