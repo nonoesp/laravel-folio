@@ -18,6 +18,24 @@ class DebugController extends Controller
      */
     public function loadTime(Request $request, $domain) {
 	    return view('folio::debug.load-time');
-	}
+    }
+
+    /**
+     * An informal test of some dependencies and features.
+     */
+    public function time(Request $request, $domain) {
+	    return view('folio::debug.time');
+    }
+    
+    /**
+     * An informal test of some dependencies and features.
+     */    
+    public function templateStats(Request $request, $domain) {
+
+        return view('folio::debug.template-stats', [
+            'template_groups' => \Folio::templates()
+          ]);
+          
+    }
 	
 }

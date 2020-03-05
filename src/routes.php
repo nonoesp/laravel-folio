@@ -123,18 +123,19 @@ Route::group([
 		// Debug
 		Route::get('debug/folio', 'Nonoesp\Folio\Controllers\DebugController@helloFolio');
 		Route::get('debug/load-time', 'Nonoesp\Folio\Controllers\DebugController@loadTime');
+		Route::get('debug/templates', 'Nonoesp\Folio\Controllers\DebugController@templateStats');
+		Route::get('time', 'Nonoesp\Folio\Controllers\DebugController@time');
 
-		// Redirect - New item
+		// Redirects
+		// TODO - refactor with name route as variable
 		Route::get('new', function() {
 			return redirect()->route('item.create');
 		});
 
-		// Redirect - Upload
 		Route::get('upload', function() {
 			return redirect()->route('uploader.form');
 		});
-
-		// Redirect - Uploads list
+		
 		Route::get('uploads', function() {
 			return redirect()->route('uploader.list');
 		});
