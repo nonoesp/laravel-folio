@@ -16,6 +16,9 @@
 	// Google Analytics
 	if (!isset($google_analytics)) $google_analytics = Folio::googleAnalytics();
 
+	// Sitemap
+	if (!isset($sitemap)) $sitemap = config('folio.sitemap');
+
 	// Folio CSS
 	$folio_css = config('folio.css') ? config('folio.css') : '/nonoesp/folio/css/folio.css';
 
@@ -97,6 +100,10 @@
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" href="/{{ config('folio.feed.route') }}" />
 
+@if($sitemap)
+	<!-- Sitemap -->
+	<meta name="sitemap" content="{{ $sitemap }}" />
+@endif
 @if(!Auth::check() && $google_analytics)
 	<!-- Google Analytics -->
 	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{{ $google_analytics }}', 'auto');ga('send', 'pageview');</script>
