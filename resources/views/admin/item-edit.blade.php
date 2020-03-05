@@ -218,7 +218,7 @@ created() {
 	this.item = {!! $item !!};
 	this.originalItem = {!! $item !!};
 	this.properties = {!! $item->properties->sortBy('order_column')->values() !!};
-	this.message = "{!! $item->title !!}";
+	this.message = {!! json_encode($item->title) !!};
 	this.initProperties();
 	// parse deleted_at date to true if existing for isDirty to detect property
 	if(this.item.deleted_at != null) this.item.deleted_at = true;
