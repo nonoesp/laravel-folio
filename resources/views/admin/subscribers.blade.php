@@ -94,10 +94,13 @@ if($settings_title == '') {
 						<p class="u-font-size--a u-opacity--low -u-hidden-palm -u-text-align--right" style="margin-top:-0.8em">
 						
 									<?php
-										$data = [];
+										$data = [];				
 										if($path = $subscriber->path) {
 											array_push($data, $path);
 										}
+										if($host = $subscriber->host) {
+											array_push($data, $host);
+										}																
 										if($source = $subscriber->source) {
 											array_push($data, $source);
 										}

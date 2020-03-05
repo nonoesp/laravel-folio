@@ -29,6 +29,7 @@ class SubscriptionController extends Controller
     $subscriber->campaign = $campaign;
     $subscriber->path = $path;
     $subscriber->ip = $ip;
+    $subscriber->host = $request->root();
     $subscriber->save();
 
     $data = [];
@@ -76,7 +77,8 @@ class SubscriptionController extends Controller
         'source' => $subscriber->source,
         'medium' => $subscriber->medium,
         'campaign' => $subscriber->campaign,
-        'path' => $subscriber->path
+        'path' => $subscriber->path,
+        'host' => $subscriber->host,
     ]);
   }
 
