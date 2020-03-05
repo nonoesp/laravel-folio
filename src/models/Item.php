@@ -577,7 +577,6 @@ class Item extends Model implements Feedable
 
 		if(
 			$markdown_parser == "commonmark" ||
-			$markdown_parser == "default" ||
 			$markdown_parser == "vtalbot"
 			) {
 
@@ -637,7 +636,10 @@ class Item extends Model implements Feedable
 			// $html = \VTalbot\Markdown\Facades\Markdown::convertToHtml($text);
 			// $html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
 
-		} else if($markdown_parser == "michelf") {
+		} else if(
+			$markdown_parser == "default" ||
+			$markdown_parser == "michelf"
+			) {
 
 			$html = \Michelf\MarkdownExtra::defaultTransform($text);
 			$html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
