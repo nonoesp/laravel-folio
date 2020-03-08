@@ -123,7 +123,6 @@ Route::group([
 		// Debug
 		Route::get('debug/folio', 'Nonoesp\Folio\Controllers\DebugController@helloFolio');
 		Route::get('debug/load-time', 'Nonoesp\Folio\Controllers\DebugController@loadTime');
-		Route::get('debug/templates', 'Nonoesp\Folio\Controllers\DebugController@templateStats');
 		Route::get('time', 'Nonoesp\Folio\Controllers\DebugController@time');
 
 		// Redirects
@@ -204,5 +203,8 @@ Route::group([
 
 	// Logs
 	Route::get('admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+	// Debug
+	Route::get('debug/templates', 'Nonoesp\Folio\Controllers\DebugController@templateStats');
 
 }); // close folio admin
