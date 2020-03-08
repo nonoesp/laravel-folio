@@ -620,7 +620,7 @@ methods: {
 		</div>
 		@endif
 
-		{{ Form::model($item, array('route' => array('item.edit', $item->id))) }}
+		{{ Form::model($item, ['route' => ['item.edit', $item->id]]) }}
 
         @foreach($translations as $translation)
             <div class="o-textarea js--o-textarea">

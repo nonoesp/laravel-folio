@@ -38,7 +38,7 @@
 
 			<p><label for="is_blog">{{ Form::checkbox('is_blog', null, true, ['id' => 'is_blog']) }} Blog Feed</label></p>
 
-			<p><label for="rss">{{ Form::checkbox('rss', null, null, array('id' => 'rss')) }} RSS Feed</label></p>  --}}
+			<p><label for="rss">{{ Form::checkbox('rss', null, null, ['id' => 'rss']) }} RSS Feed</label></p>  --}}
 
 			<p>{{ Form::submit('Create') }}</p>
 

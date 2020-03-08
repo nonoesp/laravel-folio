@@ -110,7 +110,7 @@ Route::group([
 		Route::get('@{handle}', 'Nonoesp\Folio\Controllers\FolioController@getUserProfile');
 
 		Route::post('items', 'Nonoesp\Folio\Controllers\FolioController@getItemsWithIds');
-		Route::get($path, array('as' => 'folio', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@showHome'));
+		Route::get($path, ['as' => 'folio', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@showHome']);
 		Route::get($path.'tag/{tag}', 'Nonoesp\Folio\Controllers\FolioController@showItemTag');
 
 		// Permalinks
