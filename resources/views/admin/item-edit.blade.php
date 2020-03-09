@@ -134,9 +134,9 @@ const makeFullscreen = () => {
     }
 
     let focused = document.activeElement;
-    if (!$(focused).is('textarea')) {
+    if (!$(focused).is('textarea') && !$(focused).hasClass('js--o-textarea__title-input')) {
         focused = $('textarea')[0];
-    }
+	}
 
     const oText = $(focused).closest('.js--o-textarea');
     $('.o-textarea').removeClass('o-textarea--fullscreen');
@@ -244,7 +244,7 @@ created() {
 		return false;
 	});
 
-	$(document).on('dblclick', '.js--o-textarea__title', function(e) {
+	$(document).on('dblclick', '.js--o-textarea__title-input', function(e) {
 		makeFullscreen();
 	});
 
@@ -632,10 +632,11 @@ methods: {
 				}
 			@endphp
 			<div class="[ o-wrap o-wrap--size-small ] ">
-				<div class="[ grid__item ] [ one-whole ] o-textarea__title js--o-textarea__title">
+				<div class="[ grid__item ] [ one-whole ] o-textarea__title">
 					<p>{{ Form::text('title', null, [
-						'placeholder' => 'Title'.$language_label,
-						'v-model' => 'item.title.'.$translation
+							'placeholder' => 'Title'.$language_label,
+							'v-model' => 'item.title.'.$translation,
+							'class' => 'o-textarea__title-input js--o-textarea__title-input',
                         ]) }}
                     </p>
 				</div>
