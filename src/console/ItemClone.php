@@ -31,12 +31,16 @@ class ItemClone extends Command
                 $this->info('Cloning Item '.$item->id.' - '.$item->title.'..');
                 $item->load('properties');
                 $new_item = $item->replicate();
-                $new_item->slug = null;
+                // New title?
                 if ($this->argument('newName')) {
                     $new_item->title = $this->argument('newName');
                 } else {
                     $new_item->title = $new_item->title.' (copy)';
                 }
+                // Slug
+                $new_item->slug_title = null;
+                $new_item->slug = \Nonoesp\Thinker\Thinker::uniqueSlugWithTableAndTitle(\Folio::table('items'), $new_item->title);
+                // Save                
                 $new_item->save();
                 $new_item->delete();
                 

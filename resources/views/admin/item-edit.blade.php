@@ -129,7 +129,7 @@ const makeFullscreen = () => {
 			// Force -webkit-fill-available
 			admin.adjustTextareaHeight(element, 0);
 		});
-		setTimeout(() => { $("textarea").select(); }, 50);
+		//setTimeout(() => { $("textarea").select(); }, 50);
         return false;
     }
 
@@ -148,7 +148,7 @@ const makeFullscreen = () => {
 	}
 
 	// Deselect if selected by double-clicking
-	$("textarea").select();
+	//$("textarea").select();
 }
 
 var save = function(e) {
