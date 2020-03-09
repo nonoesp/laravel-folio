@@ -244,7 +244,7 @@ created() {
 		return false;
 	});
 
-	$(document).on('dblclick', '.o-textarea', function(e) {
+	$(document).on('dblclick', '.js--o-textarea__title', function(e) {
 		makeFullscreen();
 	});
 
@@ -632,7 +632,7 @@ methods: {
 				}
 			@endphp
 			<div class="[ o-wrap o-wrap--size-small ] ">
-				<div class="[ grid__item ] [ one-whole ] o-textarea__title">
+				<div class="[ grid__item ] [ one-whole ] o-textarea__title js--o-textarea__title">
 					<p>{{ Form::text('title', null, [
 						'placeholder' => 'Title'.$language_label,
 						'v-model' => 'item.title.'.$translation
