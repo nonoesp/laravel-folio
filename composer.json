@@ -56,7 +56,7 @@
             "providers": [
                 "Nonoesp\\Folio\\FolioServiceProvider",
                 "Nonoesp\\Folio\\Providers\\DropboxServiceProvider",
-                "Nonoesp\\Folio\\Providers\\DigitalOceanServiceProvider"
+                "Nonoesp\\Folio\\Providers\\SpacesServiceProvider"
             ],
             "aliases": {
                 "Folio": "Nonoesp\\Folio\\Facades\\Folio",

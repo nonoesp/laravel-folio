@@ -8,7 +8,10 @@ use Aws\S3\S3Client;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
 use Storage;
 
-class DigitalOceanServiceProvider extends ServiceProvider
+/**
+ * Digital Ocean Spaces
+ */
+class SpacesServiceProvider extends ServiceProvider
 {
     /**
      * Register any application services.
@@ -27,7 +30,7 @@ class DigitalOceanServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Storage::extend('digitalocean', function ($app, $config) {
+        Storage::extend('spaces', function ($app, $config) {
             $client = new S3Client([
                 'credentials' => [
                     'key'    => $config['key'],
