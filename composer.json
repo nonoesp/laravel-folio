@@ -46,6 +46,7 @@
         "spatie/laravel-sitemap": "dev-master",
         "rezozero/commonmark-ext-footnotes": "dev-master",
         "spatie/flysystem-dropbox": "dev-master",
+        "league/flysystem-aws-s3-v3": "^1.0@dev",
         "spatie/laravel-backup": "dev-master"
     },
     "require-dev": {
