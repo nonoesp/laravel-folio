@@ -54,7 +54,8 @@
         "laravel": {
             "providers": [
                 "Nonoesp\\Folio\\FolioServiceProvider",
-                "Nonoesp\\Folio\\Providers\\DropboxServiceProvider"
+                "Nonoesp\\Folio\\Providers\\DropboxServiceProvider",
+                "Nonoesp\\Folio\\Providers\\DigitalOceanServiceProvider"
             ],
             "aliases": {
                 "Folio": "Nonoesp\\Folio\\Facades\\Folio",
