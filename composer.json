@@ -51,7 +51,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Nonoesp\\Folio\\FolioServiceProvider"
+                "Nonoesp\\Folio\\FolioServiceProvider",
+                "Nonoesp\\Folio\\Providers\\DropboxServiceProvider",
             ],
             "aliases": {
                 "Folio": "Nonoesp\\Folio\\Facades\\Folio",
