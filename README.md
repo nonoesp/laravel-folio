@@ -193,6 +193,21 @@ Optionally, you can receive new subscriber notifications via email.
 ],
 ```
 
+## Backups
+
+Folio uses `spatie/laravel-backup` to do full app backups containing a database dump and/or all local files.
+
+- Obtain an authorization token at https://www.dropbox.com/developers/apps
+- Add the `dropbox` filesystem.
+- Publish
+
+```php
+        'dropbox' => [
+            'driver' => 'dropbox',
+            'authorization_token' => 'your-token'
+        ],
+```
+
 ## License
 
 Folio is licensed under the [MIT license](http://opensource.org/licenses/MIT).
