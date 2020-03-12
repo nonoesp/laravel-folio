@@ -603,6 +603,12 @@ methods: {
 			padding: 5px 18px 13px;
 		}
 	}
+
+	input {
+		-webkit-transition: background-color 1000ms linear;
+    	-ms-transition: background-color 1000ms linear;
+    	transition: background-color 1000ms linear;
+	}
     
 </style>
 
@@ -704,7 +710,7 @@ methods: {
 					<strong>Properties</strong>
 				</div>
 
-				<draggable v-model="properties" @end="sortProperties">
+				<draggable v-model="properties" @end="sortProperties" :options="{handle:'.js--dragger'}">
 				<div v-for="(property, index) in properties" class="[ grid__item one-whole ] [ c-admin__property ]">
 
 						<div class="[ grid grid--narrow ]">
@@ -715,15 +721,24 @@ methods: {
 								{{-- <span>@{{ property.id }} · @{{ property.order_column }} · @{{ index }}</span> --}}
 								{{-- <span class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
 									<i class="fa fa-trash-o"></i>
-								</span>												 --}}
+								</span>--}}
 							</div>
 							<!--
-						--><div class="[ grid__item three-twelfths  ] [ u-text-align--right ]">
+						--><div class="[ grid__item three-twelfths  ] [ u-text-align--right ]" style="position:relative;">
+						
+								<span v-bind:data-id="property.id"
+								class="[ c-admin__property-trash ] [ u-cursor-pointer ]
+								[ js--dragger ] [ u-opacity--low ]"
+								style="position:absolute;left:-10px;">
+									<i class="fa fa-bars"></i>
+								</span>	
+
 								<input type="text"
 								placeholder="Label"
 								v-model="property.label"
 								@keyup="sync_properties(property)"
 								v-bind:data-id="property.id" data-field="label"
+								v-bind:style="{backgroundColor: property.is_updating ? '#999' : 'transparent'}"
 								class="u-text-align--right">
 							</div><!--
 							--><div class="[ grid__item three-twelfths ]">
@@ -732,25 +747,33 @@ methods: {
 								v-model="property.name"
 								@keyup="sync_properties(property)"
 								v-bind:data-id="property.id" data-field="name"
+								v-bind:style="{backgroundColor: property.is_updating ? '#999' : 'transparent'}"
 								class="u-text-align--right">
 									{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
 							</div><!--
-							--><div class="[ grid__item five-twelfths ]">
+							--><div class="[ grid__item five-twelfths ]" style="position:relative">
 									<input type="text" v-model="property.value"
 									placeholder="Value"
 									@keyup="sync_properties(property)"
-									v-bind:data-id="property.id" data-field="value">
+									v-bind:data-id="property.id" data-field="value"
+									v-bind:style="{backgroundColor: property.is_updating ? '#999' : 'transparent'}">
+
+									{{--
+									<div v-if="property.is_updating"
+									class="[ u-opacity--low ]"
+									style="position:absolute;right:-50px;display:inline-block">
+									<i class="fa fa-refresh fa-spin fa-fw"></i>
+									<span class="sr-only">Loading...</span>
+									</div>
+									--}}
+
 							</div><!--
 							--><div
-							class="[ grid__item one-twelfth ] [ u-opacity--low ]">
-								<span @click="delete_property(property)" v-bind:data-id="property.id"
+							class="[ grid__item one-twelfth ] [ u-opacity--low ]" style="position:relative">
+								<div @click="delete_property(property)" v-bind:data-id="property.id"
 								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
 									<i class="fa fa-trash-o"></i>
-								</span>
-								<span v-bind:data-id="property.id"
-								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
-									<i class="fa fa-bars"></i>
-								</span>								
+								</div>							
 								{{--
 								<span @click="movePropertyUp(property)" v-bind:data-id="property.id"
 								v-if="index != 0"
@@ -763,10 +786,6 @@ methods: {
 									<i class="fa fa-angle-down"></i>
 								</span>
 								--}}
-								<span v-if="property.is_updating">
-									<i class="fa fa-refresh fa-spin fa-fw"></i>
-									<span class="sr-only">Loading...</span>
-								</span>
 							</div><!--
 				--></div>
 
