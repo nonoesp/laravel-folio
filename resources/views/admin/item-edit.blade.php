@@ -605,7 +605,7 @@ methods: {
 	}
 
 	input.is-updating {
-		background-color: #ffe6a2;
+		background-color: #ffefc2;
 		-webkit-transition: none;
     	-ms-transition: none;
     	transition: none;
