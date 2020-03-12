@@ -19,6 +19,8 @@ use Hashids;
 /* FolioController
 /*----------------------------------------------------------------*/
 
+	// ALL DOMAINS
+
 	// SubscriptionController (outside controller to allow cross-domain subscription)
 	Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create');
 
@@ -43,105 +45,14 @@ use Hashids;
 	*/
 	$domainPatternItems = config('folio.domain-pattern-items');
 	if(
-		$domainPatternItems == null or
-		$domainPatternItems == '' or
+		$domainPatternItems == null ||
+		$domainPatternItems == '' ||
 		!$domainPatternItems
 	) {
 		Route::pattern('foliodomainitems', Request::getHost());
 	} else {
 		Route::pattern('foliodomainitems', config('folio.domain-pattern').'|'.config('folio.domain-pattern-items'));
 	}
-
-// DOMAIN-PATTERN + DOMAIN-PATTERN-ITEMS
-
-Route::group([
-	'domain' => '{foliodomainitems}',
-	'middleware' => config("folio.middlewares")
-], function () {
-
-	$path = Folio::path();
-
-	// Item
-	if($path_type = Folio::isFolioURI()) { // Check this is an actual item route
-
-		Route::get($path.'{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
-					where('slug', '[A-Za-z0-9.\-\/]+');
-		Route::get('{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
-					where('slug', '[A-Za-z0-9.\-\/]+');
-	}
-
-	// Item redirections
-	if ($folioRedirectionItemId = Folio::pathIsItemRedirection()) {
-		
-		$itemURL = '/'.Folio::permalinkPrefix().$folioRedirectionItemId;
-
-		Route::get(Request::path(), function() use ($itemURL) {
-			return Redirect::to($itemURL);
-		});
-
-	}
-
-}); // close folio general domain pattern group
-
-
-// DOMAIN-PATTERN + DOMAIN-PATTERN-ITEMS
-
-Route::group([
-	'domain' => '{foliodomain}',
-	'middleware' => config("folio.middlewares")
-], function () {
-
-	$path = Folio::path();
-
-	Route::get('/e/{hash}', function($domain, $hash) use ($path) {
-		$decode = Hashids::decode($hash);
-		if(count($decode)) {
-			$item = Item::withTrashed()->find($decode[0]);
-			if($item) {
-				session(['temporary-token' => true]);
-				return Redirect::to($item->path());
-			}
-		}
-		return response()->view('errors.404', [], 404);
-	});
-
-	if(!Folio::isReservedURI()) {
-
-		Route::get('@{handle}', 'Nonoesp\Folio\Controllers\FolioController@getUserProfile');
-
-		Route::post('items', 'Nonoesp\Folio\Controllers\FolioController@getItemsWithIds');
-		Route::get($path, ['as' => 'folio', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@showHome']);
-		Route::get($path.'tag/{tag}', 'Nonoesp\Folio\Controllers\FolioController@showItemTag');
-
-		// Permalinks
-		Route::get(Folio::permalinkPrefix().'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
-		Route::get('disqus/'.'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
-
-		// Feed
-		Route::get(config('folio.feed.route'), ['as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FeedController@makeFeed']);
-
-		// Debug
-		Route::get('debug/folio', 'Nonoesp\Folio\Controllers\DebugController@helloFolio');
-		Route::get('debug/load-time', 'Nonoesp\Folio\Controllers\DebugController@loadTime');
-		Route::get('time', 'Nonoesp\Folio\Controllers\DebugController@time');
-
-		// Redirects
-		// TODO - refactor with name route as variable
-		Route::get('new', function() {
-			return redirect()->route('item.create');
-		});
-
-		Route::get('upload', function() {
-			return redirect()->route('uploader.form');
-		});
-		
-		Route::get('uploads', function() {
-			return redirect()->route('uploader.list');
-		});
-
-	}
-
-}); // close folio general domain pattern group
 
 /*----------------------------------------------------------------*/
 /* AdminController
@@ -208,3 +119,91 @@ Route::group([
 	Route::get('debug/templates', 'Nonoesp\Folio\Controllers\DebugController@templateStats');
 
 }); // close folio admin
+
+// DOMAIN-PATTERN + DOMAIN-PATTERN-ITEMS
+
+Route::group([
+	'domain' => '{foliodomainitems}',
+	'middleware' => config("folio.middlewares")
+], function () {
+
+	$path = Folio::path();
+
+	// Item
+	if($path_type = Folio::isFolioURI()) { // Check this is an actual item route
+
+		Route::get($path.'{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
+			   where('slug', '[A-Za-z0-9.\-\/]+');
+		Route::get('{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
+			   where('slug', '[A-Za-z0-9.\-\/]+');
+	}
+
+	// Item redirections
+	if ($folioRedirectionItemId = Folio::pathIsItemRedirection()) {
+		
+		$itemURL = '/'.Folio::permalinkPrefix().$folioRedirectionItemId;
+
+		Route::get(Request::path(), function() use ($itemURL) {
+			return redirect($itemURL);
+		});
+
+	}
+
+	// Redirects from config/redirects.php
+	$path = \Request::path();
+	$redirects = config('redirects');
+	if ($redirects && array_key_exists($path, $redirects)) {
+		$to = $redirects[$path];
+		if (substr($to, 0, 1) === '{') {
+			$to = route(str_replace(['{','}'],'',$to));
+		}
+		Route::redirect($path, $to);
+	}
+
+}); // close folio general domain pattern group
+
+
+// FOLIO-DOMAIN-PATTERN
+
+Route::group([
+	'domain' => '{foliodomain}',
+	'middleware' => config("folio.middlewares")
+], function () {
+
+	$path = Folio::path();
+
+	Route::get('/e/{hash}', function($domain, $hash) use ($path) {
+		$decode = Hashids::decode($hash);
+		if(count($decode)) {
+			$item = Item::withTrashed()->find($decode[0]);
+			if ($item) {
+				session(['temporary-token' => true]);
+				return redirect($item->path());
+			}
+		}
+		return response()->view('errors.404', [], 404);
+	});
+
+	if(!Folio::isReservedURI()) {
+
+		Route::get('@{handle}', 'Nonoesp\Folio\Controllers\FolioController@getUserProfile');
+
+		Route::post('items', 'Nonoesp\Folio\Controllers\FolioController@getItemsWithIds');
+		Route::get($path, ['as' => 'folio', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@showHome']);
+		Route::get($path.'tag/{tag}', 'Nonoesp\Folio\Controllers\FolioController@showItemTag');
+
+		// Permalinks
+		Route::get(Folio::permalinkPrefix().'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
+		Route::get('disqus/'.'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
+
+		// Feed
+		Route::get(config('folio.feed.route'), ['as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FeedController@makeFeed']);
+
+		// Debug
+		Route::get('debug/folio', 'Nonoesp\Folio\Controllers\DebugController@helloFolio');
+		Route::get('debug/load-time', 'Nonoesp\Folio\Controllers\DebugController@loadTime');
+		Route::get('time', 'Nonoesp\Folio\Controllers\DebugController@time');
+
+	}
+
+}); // close folio general domain pattern group
