@@ -613,9 +613,10 @@ methods: {
 	}
 
 	input {
-		-webkit-transition: all 250ms linear;
-    	-ms-transition: all 250ms linear;
-    	transition: all 250ms linear;
+		-webkit-transition: 250ms linear;
+    	-ms-transition: 250ms linear;
+    	transition: 250ms linear;
+		transition-property: background-color,border;
 	}
     
 </style>
