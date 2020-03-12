@@ -604,10 +604,18 @@ methods: {
 		}
 	}
 
+	input.is-updating {
+		background-color: #ffe6a2;
+		-webkit-transition: none;
+    	-ms-transition: none;
+    	transition: none;
+		border-color: white;
+	}
+
 	input {
-		-webkit-transition: background-color 1000ms linear;
-    	-ms-transition: background-color 1000ms linear;
-    	transition: background-color 1000ms linear;
+		-webkit-transition: all 250ms linear;
+    	-ms-transition: all 250ms linear;
+    	transition: all 250ms linear;
 	}
     
 </style>
@@ -738,7 +746,7 @@ methods: {
 								v-model="property.label"
 								@keyup="sync_properties(property)"
 								v-bind:data-id="property.id" data-field="label"
-								v-bind:style="{backgroundColor: property.is_updating ? '#999' : 'transparent'}"
+								v-bind:class="{'is-updating': property.is_updating}"
 								class="u-text-align--right">
 							</div><!--
 							--><div class="[ grid__item three-twelfths ]">
@@ -747,7 +755,7 @@ methods: {
 								v-model="property.name"
 								@keyup="sync_properties(property)"
 								v-bind:data-id="property.id" data-field="name"
-								v-bind:style="{backgroundColor: property.is_updating ? '#999' : 'transparent'}"
+								v-bind:class="{'is-updating': property.is_updating}"
 								class="u-text-align--right">
 									{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
 							</div><!--
@@ -756,7 +764,7 @@ methods: {
 									placeholder="Value"
 									@keyup="sync_properties(property)"
 									v-bind:data-id="property.id" data-field="value"
-									v-bind:style="{backgroundColor: property.is_updating ? '#999' : 'transparent'}">
+									v-bind:class="{'is-updating': property.is_updating}">
 
 									{{--
 									<div v-if="property.is_updating"
