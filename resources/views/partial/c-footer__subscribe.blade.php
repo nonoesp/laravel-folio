@@ -6,7 +6,14 @@ if(!isset($campaign) && request()->has('utm_campaign')) {
       $campaign = request()->input('utm_campaign');
 }
 if(!isset($medium) && request()->has('utm_medium')) {
-      $medium = request()->input('utm_medium');
+    $medium = request()->input('utm_medium');
+}
+if(!isset($newsletter_list)) {
+    if(request()->has('list')) {
+        $newsletter_list = request()->input('list');
+    } else if(config('folio.subscribers.default-list')) {
+        $newsletter_list = config('folio.subscribers.default-list');
+    }
 }
 if(!isset($subscribe_button_text)) {
     $subscribe_button_text = trans('folio::base.subscribe_button_text');
@@ -34,6 +41,10 @@ if(!isset($subscribe_button_text)) {
            @if(isset($campaign))
                {{ Form::hidden('campaign', $campaign, ['class' => 'js--subscribe__campaign']) }}
            @endif
+
+           @if(isset($newsletter_list))
+               {{ Form::hidden('newsletter_list', $newsletter_list, ['class' => 'js--subscribe__newsletter-list']) }}
+           @endif           
 
            <div class="[ grid__item desk--two-thirds ]">
                {{ Form::email('email', null, ['placeholder' => trans('folio::base.your-email-address'), 'class' => '[ js--subscribe__email ] [ u-case-input-lower ]', 'name' => 'EMAIL']) }}

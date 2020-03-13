@@ -17,6 +17,7 @@ $(document).on('click', '.js--subscribe__submit', function(event) {
     let source = subscribeContainer.find(".js--subscribe__source").val();
     let medium = subscribeContainer.find(".js--subscribe__medium").val();
     let campaign = subscribeContainer.find(".js--subscribe__campaign").val();
+    let newsletter_list = subscribeContainer.find(".js--subscribe__newsletter-list").val();
     let path = window.location.pathname;
 
     if (FormValidator.prototype._hooks.valid_email({ value: email })) {
@@ -30,11 +31,12 @@ $(document).on('click', '.js--subscribe__submit', function(event) {
             url: '/subscriber/create',
             type: 'POST',
             data: {
-                email: email,
-                source: source,
-                medium: medium,
-                campaign: campaign,
-                path: path
+                email,
+                source,
+                medium,
+                campaign,
+                newsletter_list,
+                path
             },
             dataType: "json",
             headers: {
@@ -74,18 +76,22 @@ function handleInvalidEmail(container) {
 
 function handleSubscribeResponse(response, container) {
     clearTimeout(timer);
+
+    const form = container.find(".js--subscribe__form");
+    const label = container.find(".js--subscribe__label");
+    form.hide();
+
     if (response.success == true) {
 
-        let form = container.find(".js--subscribe__form");
-        let label = container.find(".js--subscribe__label");
-
-        form.hide();
         label.html(trans.thanks_for_subscribing).addClass('u-text-align--center');
 
-        timer = setTimeout(() => {
-            restoreSubscriptionForm(container);
-        }, 5000);
+    } else {
+        label.html(trans.something_is_not_working_well).addClass('u-text-align--center');
     }
+
+    timer = setTimeout(() => {
+        restoreSubscriptionForm(container);
+    }, 5000);    
 }
 
 function restoreSubscriptionForm(container) {

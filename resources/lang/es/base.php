@@ -21,6 +21,7 @@ return [
   	'to_receive_our_updates' => 'Recibe nuestras publicaciones en tu email.',
   	'email_is_not_valid' => 'Este email no parece ser válido.',
   	'thanks_for_subscribing' => 'Gracias por suscribirte!',
+	'something_is_not_working_well' => 'Hmm. Algo está fallando.',
 
 	'writing' => 'Escritos',
 	'about-me' => 'Acerca de',

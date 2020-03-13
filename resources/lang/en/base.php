@@ -20,6 +20,7 @@ return [
   	'to_receive_our_updates' => 'Receive our publications via email.',
   	'email_is_not_valid' => 'Something is not right with that email.',
   	'thanks_for_subscribing' => 'Thanks for subscribing!',
+  	'something_is_not_working_well' => 'Hmm. Something is not working well.',
 
 	'writing' => 'Writing',
 	'about-me' => 'About',

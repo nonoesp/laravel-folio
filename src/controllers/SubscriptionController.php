@@ -18,6 +18,7 @@ class SubscriptionController extends Controller
     $source = $request->input('source');
     $medium = $request->input('medium');
     $campaign = $request->input('campaign');
+    $newsletter_list = $request->input('newsletter_list');
     $path = $request->input('path');
     $ip = Thinker::clientIp();
 
@@ -27,6 +28,7 @@ class SubscriptionController extends Controller
     $subscriber->source = $source;
     $subscriber->medium = $medium;
     $subscriber->campaign = $campaign;
+    $subscriber->newsletter_list = $newsletter_list;
     $subscriber->path = $path;
     $subscriber->ip = $ip;
     $subscriber->host = $request->root();
@@ -45,11 +47,28 @@ class SubscriptionController extends Controller
     if($campaign = $subscriber->campaign) {
       array_push($data, $campaign);
     }
+    if($newsletter_list = $subscriber->newsletter_list) {
+      array_push($data, $newsletter_list);
+    }
     if($ip = $subscriber->ip) {
       array_push($data, $ip);
     }
 
-    if(config('folio.subscribers.should-notify')) {
+    // Build JSON response
+    $response = [
+      'success' => true,
+      'error' => '',
+      'email' => $subscriber->email,
+      'name' => $subscriber->name,
+      'source' => $subscriber->source,
+      'medium' => $subscriber->medium,
+      'campaign' => $subscriber->campaign,
+      'newsletter_list' => $subscriber->newsletter_list,
+      'path' => $subscriber->path,
+      'host' => $subscriber->host
+    ];
+
+    if(config('folio.subscribers.notify-admins')) {
       Mail::send('folio::email.new-subscriber',
       ['email' => $email, 'path' => $path, 'data' => $data],
       function ($m) use ($email) {
@@ -59,27 +78,70 @@ class SubscriptionController extends Controller
       });
     }
 
-    if(config('folio.should-add-to-mailchimp')) {
-      \Newsletter::subscribeOrUpdate(
-        $email, [
-          // Here we need to reference the merge tags (e.g. 'NAME')
-          // and pass a valid string (even if empty) for it to work
-          //'NAME'=> $name,
-          //'LASTNAME'=> $lastname,
-          'IP' => $ip
-          ]);
+    if(config('folio.subscribers.add-to-newsletter')) {
+
+      $lists = explode(",", str_replace(' ', '', $newsletter_list));
+      $valid_lists = [];
+      
+      // Ensure there are valid lists
+      foreach($lists as $list) {
+        $list_id = config("newsletter.lists.$list.id");
+        if ($list_id) {
+          // List id exists
+          array_push($valid_lists, $list);
+        }
+      }
+
+      // Fallback to default list if no valid lists
+      if (!count($valid_lists)) {
+        $valid_lists = [config('newsletter.defaultListName')];
+      }
+
+      $subscribed_lists = [];
+      $subscribed_lists_confirmed = [];
+
+      // Subscribe to valid lists
+      foreach($valid_lists as $list) {
+        // $list_id = config("newsletter.lists.$list.id");
+
+        // Not subscribed yet to this list?
+        if (!in_array($list, $subscribed_lists)) {
+          
+          // Remember we already subscribed
+          array_push($subscribed_lists, $list);
+
+          try {
+            // Subscribe
+            \Newsletter::subscribeOrUpdate(
+              $email,
+              [
+                // Here we need to reference the merge tags (e.g. 'NAME')
+                // and pass a valid string (even if empty) for it to work
+                //'NAME'=> $name,
+                //'LASTNAME'=> $lastname,
+                'IP' => $ip
+              ],
+              $list);
+
+              array_push($subscribed_lists_confirmed, $list);
+
+          }
+          catch (\Spatie\Newsletter\Exceptions\InvalidNewsletterList $e) {
+              // [ERROR] Invalid newsletter list
+              $response['success'] = false;
+              $response['error'] = 'InvalidNewsletterList · '.$list;
+              return response()->json($response);              
+          }
+                
+        }
+
+      }
+
+      $response["newsletter_list_subscribed"] = join(",", $subscribed_lists_confirmed);
+      
     }
     
-    return response()->json([
-        'success' => true,
-        'email' => $subscriber->email,
-        'name' => $subscriber->name,
-        'source' => $subscriber->source,
-        'medium' => $subscriber->medium,
-        'campaign' => $subscriber->campaign,
-        'path' => $subscriber->path,
-        'host' => $subscriber->host,
-    ]);
+    return response()->json($response);
   }
 
   // Soft delete an existing subscriber

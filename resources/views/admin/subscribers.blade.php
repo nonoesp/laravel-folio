@@ -110,17 +110,21 @@ if($settings_title == '') {
 										if($campaign = $subscriber->campaign) {
 											array_push($data, $campaign);
 										}
+										if($newsletter_list = $subscriber->newsletter_list) {
+											$lists = join(" · ", explode(",", str_replace(' ', '', $newsletter_list)));
+											array_push($data, "<strong>$lists</strong>");
+										}
 										if($ip = $subscriber->ip) {
 											array_push($data, $ip);
 										}
 									?>
 									
 									@if(count($data))
-										{{ join(" · ", $data) }}
+										{!! join(" · ", $data) !!}
 										·
 									@endif
 
-									<span class="o-hide-button" onclick="admin.hide({{$subscriber->id}})">hide</span>
+									<span class="o-hide-button" onclick="admin.hide({{ $subscriber->id }})">hide</span>
 						</p>
 
 					</li>
