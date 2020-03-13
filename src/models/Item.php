@@ -607,31 +607,42 @@ class Item extends Model implements Feedable
 
 			if($veilImages) {
 
-				$search = array( 
+				$search = [
 					'/<img src="(.*?)" alt="(.*?)" \/>/is',
-					'/<img class="(.*?)" src="(.*?)" alt="(.*?)" \/>/is'
-					); 
+					'/<img class="(.*?)" src="(.*?)" alt="(.*?)" \/>/is',
+				]; 
 
-				$replace = array( 
-						'<img src="/img/veil.gif" data-src="$1" alt="$2" \/>',
-						'<img class="$1" src="/img/veil.gif" data-src="$2" alt="$3" \/>'
-						); 
-
-				// Use imgix?
-				if (config('folio.imgix')) {
-
-					$imgixDomain = config('imgix.domain');
-					$protocol = config('imgix.useHttps') ? 'https' : 'http';
-					$imgixPrefix = $protocol.'://'.$imgixDomain;
-
-					$replace = array( 
-						'<img src="/img/veil.gif" data-src="'.$imgixPrefix.'$1" alt="$2" \/>',
-						'<img class="$1" src="/img/veil.gif" data-src="'.$imgixPrefix.'$2" alt="$3" \/>'
-						); 
-				}
+				$replace = [
+						'<img src="/img/veil.gif" data-src="$1" alt="$2" />',
+						'<img class="$1" src="/img/veil.gif" data-src="$2" alt="$3" />',
+				];
 
 				$html = preg_replace ($search, $replace, $html); 
 			}
+
+			// Use imgix?
+			if (config('folio.imgix')) {
+
+				$imgixDomain = config('imgix.domain');
+				$protocol = config('imgix.useHttps') ? 'https' : 'http';
+				$imgixPrefix = $protocol.'://'.$imgixDomain;
+
+				$search = [
+					'/<img src="\/(.*?)" alt="(.*?)" \/>/is',
+					'/<img class="(.*?)" src="\/(.*?)" alt="(.*?)" \/>/is',
+					'/<img src="(.*?)" data-src="\/(.*?)" alt="(.*?)" \/>/is',
+					'/<img class="(.*?)" src="(.*?)" data-src="\/(.*?)" alt="(.*?)" \/>/is',			
+				]; 
+
+				$replace = [
+					'<img src="'.$imgixPrefix.'/$1" alt="$2" />',
+					'<img class="$1" src="'.$imgixPrefix.'/$2" alt="$3" />',
+					'<img src="$1" data-src="'.$imgixPrefix.'/$2" alt="$3" />',
+					'<img class="$1" src="/$2" data-src="'.$imgixPrefix.'/$3" alt="$4" />',				
+				]; 
+
+				$html = preg_replace ($search, $replace, $html);
+			}			
 		
 		// } else if($markdown_parser == 'vtalbot) {
 
