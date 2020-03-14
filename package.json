@@ -22,7 +22,7 @@
     "dependencies": {
         "axios": "0.18.1",
         "bourbon": "4.2.7",
-        "core-scss": "github:nonoesp/core-scss",
+        "folio-scss": "github:nonoesp/folio-scss",
         "font-awesome": "4.7.0",
         "jquery": "3.4.0",
         "laravel-mix": "1.6.1",
