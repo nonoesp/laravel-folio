@@ -205,25 +205,29 @@ Route::group([
 // ██║  ██║    ███████╗    ██████╔╝    ██║    ██║  ██║    ███████║
 // ╚═╝  ╚═╝    ╚══════╝    ╚═════╝     ╚═╝    ╚═╝  ╚═╝    ╚══════╝
 
-// Redirects from config/redirects.php
-$path = \Request::path();
-$redirects = config('redirects');
+if (config('redirects')) {
 
-// Look for current host specific redirects
-foreach ($redirects as $key => $to) {
-	if (Str::is('{*}', $key)) {
-		$hosts = explode("|", preg_replace('/{(.*?)}/is', '$1', $key));
-		if (in_array(\Request::getHost(), $hosts) && is_array($to)) {
-			$redirects = array_merge($redirects, $redirects[$key]);
+	// Redirects from config/redirects.php
+	$path = \Request::path();
+	$redirects = config('redirects');
+
+	// Look for current host specific redirects
+	foreach ($redirects as $key => $to) {
+		if (Str::is('{*}', $key)) {
+			$hosts = explode("|", preg_replace('/{(.*?)}/is', '$1', $key));
+			if (in_array(\Request::getHost(), $hosts) && is_array($to)) {
+				$redirects = array_merge($redirects, $redirects[$key]);
+			}
 		}
 	}
-}
 
-// Catch global (and current host) redirects
-if ($redirects && array_key_exists($path, $redirects)) {
-	$to = $redirects[$path];
-	if (substr($to, 0, 1) === '{') {
-		$to = route(str_replace(['{','}'],'',$to));
+	// Catch global (and current host) redirects
+	if ($redirects && array_key_exists($path, $redirects)) {
+		$to = $redirects[$path];
+		if (substr($to, 0, 1) === '{') {
+			$to = route(str_replace(['{','}'],'',$to));
+		}
+		Route::redirect($path, $to);
 	}
-	Route::redirect($path, $to);
+
 }
