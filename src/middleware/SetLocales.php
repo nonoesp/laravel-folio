@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace Nonoesp\Folio\Middleware;
 
 use Closure;
 use App;

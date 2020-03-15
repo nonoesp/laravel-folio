@@ -26,8 +26,9 @@ Most packages should be auto-discovered by Laravel.
 Publish the required middleware.
 
 ```bash
-php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=middleware
-php artisan vendor:publish --provider="Nonoesp\Authenticate\AuthenticateServiceProvider" --tag=middleware
+// TODO - Remove!
+// php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=middleware
+// php artisan vendor:publish --provider="Nonoesp\Authenticate\AuthenticateServiceProvider" --tag=middleware
 ```
 
 Then add the following to `app/Http/Kernel.php`:
@@ -35,17 +36,17 @@ Then add the following to `app/Http/Kernel.php`:
 ```php
 protected $middleware = [
         /// nonoesp/folio
-        \App\Http\Middleware\SetLocales::class,
+        \Nonoesp\Folio\Middleware\SetLocales::class,
         /// nonoesp/authenticate
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,			
-        \App\Http\Middleware\RememberLogin::class,        
+        \Nonoesp\Authenticate\Middleware\RememberLogin::class,        
         /// ...
 ];
 
 protected $routeMiddleware = [
         /// nonoesp/authenticate
-        'login' => \App\Http\Middleware\RequireLogin::class,
+        'login' => \Nonoesp\Authenticate\Middleware\RequireLogin::class,
         /// ...
 ];
 ```
