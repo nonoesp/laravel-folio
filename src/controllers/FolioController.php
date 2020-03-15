@@ -3,19 +3,16 @@
 namespace Nonoesp\Folio\Controllers;
 
 use Illuminate\Http\Request;
-use Item, User; // Must be defined in your aliases
+
 use Nonoesp\Folio\Folio;
-use View;
-use Config;
-use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
-use App;
-use Markdown;
+use Item, User;
+use Authenticate; // nonoesp/authenticate
 use Auth;
 
 class FolioController extends Controller
 {
 	// This is an informal test of some dependencies and features.
-  public function helloFolio($domain) {
+  	public function helloFolio($domain) {
 		return view('folio::debug.test')->with(['amount' => 2]);
 	}
 
@@ -25,9 +22,9 @@ class FolioController extends Controller
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
 		// Config variables
-		$published_show = Config::get("folio.published-show");
-		$expected_show = Config::get("folio.expected-show");
-
+		$published_show = config("folio.published-show");
+		$expected_show = config("folio.expected-show");
+		
 		$published_existing = Item::published()
 							->blog()
     				   		->visibleFor($twitter_handle)
@@ -50,31 +47,31 @@ class FolioController extends Controller
 
 		// Get Items + Items ids
 
-    	$left = Item::published()
-					   ->blog()
-    				   ->visibleFor($twitter_handle)
-    				   ->count() - $published_show;
+		$left = Item::published()
+					->blog()
+					->visibleFor($twitter_handle)
+					->count() - $published_show;
 
     	$items = Item::published()
-						   ->blog()
-    					   ->visibleFor($twitter_handle)
-    					   ->orderBy('published_at', 'DESC')
-    					   ->skip(0)
-    					   ->take($published_show)
-    					   ->get();
+					->blog()
+					->visibleFor($twitter_handle)
+					->orderBy('published_at', 'DESC')
+					->skip(0)
+					->take($published_show)
+					->get();
 
 		$ids_array = array();
 
   		  if ($left > 0)
   		  {
 			$ids = Item::published()
-						  ->blog()
-	    				  ->visibleFor($twitter_handle)
-			              ->select('id','published_at')
-	    				  ->orderBy('published_at', 'DESC')
-	    				  ->skip($published_show)
-	    				  ->take($left)
-	    				  ->get();
+						->blog()
+						->visibleFor($twitter_handle)
+						->select('id','published_at')
+						->orderBy('published_at', 'DESC')
+						->skip($published_show)
+						->take($left)
+						->get();
 
 			foreach($ids as $id)
 			{
@@ -90,13 +87,12 @@ class FolioController extends Controller
 								->take($expected_show)
 								->get();
 
-		return view(config('folio.view.collection'))
-         ->with([
-           'collection' => $items,
-           'ids' => $ids_array,
-           'items_expected' => $items_expected,
-		   'header_description' => trans('folio.slogan')
-         ]);
+		return view(config('folio.view.collection'), [
+			'collection' => $items,
+			'ids' => $ids_array,
+			'items_expected' => $items_expected,
+			'header_description' => trans('folio.slogan'),
+		]);
 	}
 
 	// Simplify making showHome a generic function, then call it directly from route or from Controller function
@@ -106,8 +102,8 @@ class FolioController extends Controller
 		$twitter_handle = Authenticate::isUserLoggedInTwitter();
 
 		// Config variables
-		$published_show = Config::get("folio.published-show");
-		$expected_show = Config::get("folio.expected-show");
+		$published_show = config("folio.published-show");
+		$expected_show = config("folio.expected-show");
 
 		$published_existing = Item::withAnyTag($tag)
     					    ->published()
@@ -277,7 +273,7 @@ class FolioController extends Controller
 
 		// Echo Items
 		foreach($request->input('ids') as $id) {
-      echo view('folio::partial.c-item-li')->with(['item' => Item::find($id)]);
+      		echo view('folio::partial.c-item-li')->with(['item' => Item::find($id)]);
 		}
 
 	}
