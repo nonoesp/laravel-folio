@@ -16,12 +16,83 @@ use Input;
 use Hashids;
 use \Illuminate\Support\Str;
 
-// ██████╗     ███████╗    ██████╗     ██╗    ██████╗     ███████╗
-// ██╔══██╗    ██╔════╝    ██╔══██╗    ██║    ██╔══██╗    ██╔════╝
-// ██████╔╝    █████╗      ██║  ██║    ██║    ██████╔╝    ███████╗
-// ██╔══██╗    ██╔══╝      ██║  ██║    ██║    ██╔══██╗    ╚════██║
-// ██║  ██║    ███████╗    ██████╔╝    ██║    ██║  ██║    ███████║
-// ╚═╝  ╚═╝    ╚══════╝    ╚═════╝     ╚═╝    ╚═╝  ╚═╝    ╚══════╝
+// ███████╗     ██████╗     ██╗         ██╗     ██████╗ 
+// ██╔════╝    ██╔═══██╗    ██║         ██║    ██╔═══██╗
+// █████╗      ██║   ██║    ██║         ██║    ██║   ██║
+// ██╔══╝      ██║   ██║    ██║         ██║    ██║   ██║
+// ██║         ╚██████╔╝    ███████╗    ██║    ╚██████╔╝
+// ╚═╝          ╚═════╝     ╚══════╝    ╚═╝     ╚═════╝ 
+
+/*----------------------------------------------------------------*/
+/* AdminController
+/*----------------------------------------------------------------*/
+
+// DOMAIN-PATTERN + DOMAIN-PATTERN-ITEMS
+
+Route::group([
+	'middleware' => config("folio.middlewares-admin")
+], function() {
+	
+	$admin_path = Folio::adminPath();
+
+	Route::get($admin_path, 'Nonoesp\Folio\Controllers\AdminController@getDashboard');
+
+	// Items
+	Route::get($admin_path.'items', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
+	Route::get($admin_path.'items/{tag}', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
+	Route::any($admin_path.'item/edit/{id}', ['as' => 'item.edit', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemEdit']);
+	Route::any($admin_path.'item/versions/{id}', ['as' => 'item.version', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemVersions']);
+	Route::get($admin_path.'item/add', ['as' => 'item.create', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@getItemCreate']);
+	Route::post($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@postItemCreate');
+	Route::get($admin_path.'item/delete/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemDelete');
+	Route::get($admin_path.'item/restore/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemRestore');
+	Route::get($admin_path.'item/destroy/{id}', 'Nonoesp\Folio\Controllers\AdminController@ItemDestroy');
+	Route::get($admin_path.'item/force-delete/{id}', 'Nonoesp\Folio\Controllers\AdminController@ItemForceDelete');
+
+	// Item Update with Ajax
+	Route::post('item/update/{id}', 'Nonoesp\Folio\Controllers\AdminController@postItemUpdateAjax');
+
+	Route::get($admin_path.'subscribers', 'Nonoesp\Folio\Controllers\AdminController@getSubscribers');
+	Route::get($admin_path.'visits', 'Nonoesp\Folio\Controllers\AdminController@getVisits');
+	Route::get($admin_path.'redirections', 'Nonoesp\Folio\Controllers\AdminController@getRedirections');
+
+	Route::get($admin_path, function() use ($admin_path) {
+		return redirect()->to($admin_path.'items');
+	});
+
+	// Properties (API)
+	Route::post('/api/property/update', 'Nonoesp\Folio\Controllers\AdminController@postPropertyUpdate');
+	Route::post('/api/property/delete', 'Nonoesp\Folio\Controllers\AdminController@postPropertyDelete');
+	Route::post('/api/property/create', 'Nonoesp\Folio\Controllers\AdminController@postPropertyCreate');
+	Route::post('/api/property/swap', 'Nonoesp\Folio\Controllers\AdminController@postPropertySwap');
+	Route::post('/api/property/sort', 'Nonoesp\Folio\Controllers\AdminController@postPropertySort');
+
+	Route::post('/api/item/update', 'Nonoesp\Folio\Controllers\AdminController@postItemUpdate');
+	Route::post('/api/item/delete', 'Nonoesp\Folio\Controllers\AdminController@postItemDelete');
+	Route::post('/api/item/restore', 'Nonoesp\Folio\Controllers\AdminController@postItemRestore');
+	Route::post('/api/item/revert', 'Nonoesp\Folio\Controllers\AdminController@postItemRevertToVersion');
+
+	// UploadController
+	Route::any($admin_path.'upload', ['as' => 'uploader.form', 'uses' => 'Nonoesp\Folio\Controllers\UploadController@getUploadForm']);
+	Route::get($admin_path.'upload/list', ['as' => 'uploader.list', 'uses' => 'Nonoesp\Folio\Controllers\UploadController@getMediaList']);
+	Route::get($admin_path.'upload/delete/{name}', 'Nonoesp\Folio\Controllers\UploadController@postDeleteMedia');
+	
+	// SubscriptionController
+	Route::post('subscriber/delete', 'Nonoesp\Folio\Controllers\SubscriptionController@delete');
+	Route::post('subscriber/restore', 'Nonoesp\Folio\Controllers\SubscriptionController@restore');
+
+	// Logs
+	Route::get('admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+	// Debug
+	Route::get('debug/templates', 'Nonoesp\Folio\Controllers\DebugController@templateStats');
+
+}); // close folio admin
+
+/*----------------------------------------------------------------*/
+/* Redirects
+/* Defined after admin to have access to named routes.
+/*----------------------------------------------------------------*/
 
 if (config('redirects')) {
 
@@ -42,20 +113,13 @@ if (config('redirects')) {
 	// Catch global (and current host) redirects
 	if ($redirects && array_key_exists($path, $redirects)) {
 		$to = $redirects[$path];
-		if (substr($to, 0, 1) === '{') {
+		if (Str::is('{*}', $to)) {
 			$to = route(str_replace(['{','}'],'',$to));
 		}
 		Route::redirect($path, $to);
 	}
 
 }
-
-// ███████╗     ██████╗     ██╗         ██╗     ██████╗ 
-// ██╔════╝    ██╔═══██╗    ██║         ██║    ██╔═══██╗
-// █████╗      ██║   ██║    ██║         ██║    ██║   ██║
-// ██╔══╝      ██║   ██║    ██║         ██║    ██║   ██║
-// ██║         ╚██████╔╝    ███████╗    ██║    ╚██████╔╝
-// ╚═╝          ╚═════╝     ╚══════╝    ╚═╝     ╚═════╝ 
 
 /*----------------------------------------------------------------*/
 /* FolioController
@@ -95,72 +159,6 @@ if (config('redirects')) {
 	} else {
 		Route::pattern('foliodomainitems', config('folio.domain-pattern').'|'.config('folio.domain-pattern-items'));
 	}
-
-/*----------------------------------------------------------------*/
-/* AdminController
-/*----------------------------------------------------------------*/
-
-// DOMAIN-PATTERN + DOMAIN-PATTERN-ITEMS
-
-Route::group([
-	'middleware' => config("folio.middlewares-admin")
-], function() {
-	
-	$admin_path = Folio::adminPath();
-
-	Route::get($admin_path, 'Nonoesp\Folio\Controllers\AdminController@getDashboard');
-
-	// Items
-	Route::get($admin_path.'items', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
-	Route::get($admin_path.'items/{tag}', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
-	Route::any($admin_path.'item/edit/{id}', ['as' => 'item.edit', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemEdit']);
-	Route::any($admin_path.'item/versions/{id}', ['as' => 'item.version', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemVersions']);
-	Route::get($admin_path.'item/add', ['as' => 'item.create', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@getItemCreate']);
-	Route::post($admin_path.'item/add', 'Nonoesp\Folio\Controllers\AdminController@postItemCreate');
-	Route::get($admin_path.'item/delete/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemDelete');
-	Route::get($admin_path.'item/restore/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemRestore');
-	Route::get($admin_path.'item/destroy/{id}', 'Nonoesp\Folio\Controllers\AdminController@ItemDestroy');
-	Route::get($admin_path.'item/force-delete/{id}', 'Nonoesp\Folio\Controllers\AdminController@ItemForceDelete');
-
-	// Item Update with Ajax (new)
-	Route::post('item/update/{id}', 'Nonoesp\Folio\Controllers\AdminController@postItemUpdateAjax');
-
-	Route::get($admin_path.'subscribers', 'Nonoesp\Folio\Controllers\AdminController@getSubscribers');
-	Route::get($admin_path.'visits', 'Nonoesp\Folio\Controllers\AdminController@getVisits');
-	Route::get($admin_path.'redirections', 'Nonoesp\Folio\Controllers\AdminController@getRedirections');
-
-	Route::get($admin_path, function() use ($admin_path) {
-		return redirect()->to($admin_path.'items');
-	});
-
-	// Properties (API)
-	Route::post('/api/property/update', 'Nonoesp\Folio\Controllers\AdminController@postPropertyUpdate');
-	Route::post('/api/property/delete', 'Nonoesp\Folio\Controllers\AdminController@postPropertyDelete');
-	Route::post('/api/property/create', 'Nonoesp\Folio\Controllers\AdminController@postPropertyCreate');
-	Route::post('/api/property/swap', 'Nonoesp\Folio\Controllers\AdminController@postPropertySwap');
-	Route::post('/api/property/sort', 'Nonoesp\Folio\Controllers\AdminController@postPropertySort');
-
-	Route::post('/api/item/update', 'Nonoesp\Folio\Controllers\AdminController@postItemUpdate');
-	Route::post('/api/item/delete', 'Nonoesp\Folio\Controllers\AdminController@postItemDelete');
-	Route::post('/api/item/restore', 'Nonoesp\Folio\Controllers\AdminController@postItemRestore');
-	Route::post('/api/item/revert', 'Nonoesp\Folio\Controllers\AdminController@postItemRevertToVersion');
-
-	// UploadController
-	Route::any($admin_path.'upload', ['as' => 'uploader.form', 'uses' => 'Nonoesp\Folio\Controllers\UploadController@getUploadForm']);
-	Route::get($admin_path.'upload/list', ['as' => 'uploader.list', 'uses' => 'Nonoesp\Folio\Controllers\UploadController@getMediaList']);
-	Route::get($admin_path.'upload/delete/{name}', 'Nonoesp\Folio\Controllers\UploadController@postDeleteMedia');
-	
-	// SubscriptionController
-	Route::post('subscriber/delete', 'Nonoesp\Folio\Controllers\SubscriptionController@delete');
-	Route::post('subscriber/restore', 'Nonoesp\Folio\Controllers\SubscriptionController@restore');
-
-	// Logs
-	Route::get('admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-
-	// Debug
-	Route::get('debug/templates', 'Nonoesp\Folio\Controllers\DebugController@templateStats');
-
-}); // close folio admin
 
 // DOMAIN-PATTERN + DOMAIN-PATTERN-ITEMS
 
@@ -233,7 +231,7 @@ Route::group([
 		// Debug
 		Route::get('debug/folio', 'Nonoesp\Folio\Controllers\DebugController@helloFolio');
 		Route::get('debug/load-time', 'Nonoesp\Folio\Controllers\DebugController@loadTime');
-		Route::get('time', 'Nonoesp\Folio\Controllers\DebugController@time');
+		Route::get('debug/time', 'Nonoesp\Folio\Controllers\DebugController@time');
 
 	}
 
