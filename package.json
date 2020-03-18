@@ -25,6 +25,7 @@
         "folio-scss": "github:nonoesp/folio-scss",
         "font-awesome": "4.7.0",
         "jquery": "3.4.0",
+        "jquery-lazy": "^1.7.10",
         "laravel-mix": "1.6.1",
         "validate-js": "2.0.1",
         "vue": "2.6.10",

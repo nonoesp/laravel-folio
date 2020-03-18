@@ -7,6 +7,7 @@ window._ = require('lodash');
  */
 
 window.$ = window.jQuery = require('jquery');
+window.jQuery.Lazy = require('jquery-lazy');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
