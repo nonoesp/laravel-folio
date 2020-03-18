@@ -50,6 +50,7 @@
 
 @if($folio_typekit)
 	<!-- TypeKit -->
+	<link rel="dns-prefetch" href="http://use.typekit.com">
 	<script type="text/javascript" src="//use.typekit.net/{{ $folio_typekit }}.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 @endif
@@ -100,12 +101,24 @@
 	<!-- RSS -->
 	<link rel="alternate" type="application/atom+xml" href="/{{ config('folio.feed.route') }}" />
 
+@if(!Auth::check() && $google_analytics)
+	<!-- DNS Prefetch · Google Fonts -->
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+@endif
+
+@if(config('folio.imgix') && config('imgix.domain'))
+	<!-- DNS Prefetch · Imgix -->
+	<link rel="dns-prefetch" href="//{{ config('imgix.domain') }}">
+@endif
+
 @if($sitemap)
 	<!-- Sitemap -->
 	<meta name="sitemap" content="{{ $sitemap }}" />
 @endif
 @if(!Auth::check() && $google_analytics)
 	<!-- Google Analytics -->
+	<link rel="dns-prefetch" href="//www.google-analytics.com">
 	<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', '{{ $google_analytics }}', 'auto');ga('send', 'pageview');</script>
 @endif
 @yield('metadata')
