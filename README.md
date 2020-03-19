@@ -111,6 +111,7 @@ mix.sass('resources/sass/folio.scss', 'public/nonoesp/folio/css')
        'vue-resource',
        'vue-focus',
        'jquery',
+       'jquery-lazy',
        'validate-js',
        'lodash',
        'axios'

@@ -9,6 +9,17 @@ window._ = require('lodash');
 window.$ = window.jQuery = require('jquery');
 window.jQuery.Lazy = require('jquery-lazy');
 
+$(function() {
+    // lazy-loading
+    $(".lazy").Lazy({
+      afterLoad: function(element) {
+          $(element).addClass('lazy--visible');
+      }
+    });
+    // data-src > src
+    $("img").unveil(1000);
+});
+
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
  * using reactive data binding and reusable components. Vue's API is clean
