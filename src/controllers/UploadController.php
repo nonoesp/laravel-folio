@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Form;
 use Image;
 use File;
+use Illuminate\Support\Str;
+use Illuminate\Support\Arr;
 
 class UploadController extends Controller
 {
@@ -38,8 +40,13 @@ class UploadController extends Controller
 		}
 
             if($request->isMethod('post')) {
-
-            $filename = $request->input('name');
+                
+                $input_filename = $request->input('name');
+                $input_filename = str_replace(['ñ'], ['n'], $input_filename);
+                $extension = Arr::last(explode('.', $input_filename));
+                $filename_without_extension = substr($input_filename, 0, strlen($input_filename) - strlen($extension));
+                $filename = Str::slug($filename_without_extension).'.'.Str::lower($extension);
+            
             $imgURL = $uploaderPublicFolder.$filename;
 
             // Validate extension is allowed

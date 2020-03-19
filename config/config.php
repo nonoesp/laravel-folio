@@ -97,7 +97,7 @@ return [
 	/*
 	 * A thumbnail for your site.
 	 * Default og_image.
-	 */			
+	 */
 	'image-src' => 'http://domain.com/img/image_src.jpg',
 
 	/*

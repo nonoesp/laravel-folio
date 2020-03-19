@@ -416,7 +416,7 @@ class Item extends Model implements Feedable
 		} else if($this->videoThumbnail()) {
 			$thumbnail = $this->videoThumbnail();
 		} else {
-			$thumbnail = config('folio.image-src');
+			$thumbnail = '/img/veil.gif';
 		}
 
 		// Make path absolute (add domain) when thumbnail is relative
