@@ -706,6 +706,10 @@ class Item extends Model implements Feedable
 
 	public function htmlText($options = []) {
 
+		if (!$this->text) {
+			return '';
+		}
+
 		// Deconstruct options or fallback to default values
 		$veilImages = Item::arrayValueOrDefault($options, 'veilImages', true);
 		$parseExternalLinks = Item::arrayValueOrDefault($options, 'parseExternalLinks', false);
