@@ -30,7 +30,7 @@ class DebugController extends Controller
     /**
      * An informal test of some dependencies and features.
      */    
-    public function templateStats(Request $request, $domain) {
+    public function templateStats(Request $request) {
 
         return view('folio::debug.template-stats', [
             'template_groups' => \Folio::templates()
