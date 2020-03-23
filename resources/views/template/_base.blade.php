@@ -84,9 +84,11 @@ if(isset($collection)) {
     // (A) Single Item Settings
     if ($folio_type == 'SINGLE_WRITING_TYPE') {
 
+
+
         // 4.1. General
-        $site_title = $item->title.' · '.config('folio.title');
-        $og_title = $item->title;
+        $site_title = isset($site_title) ? $site_title : $item->title.' · '.config('folio.title');
+        $og_title = isset($og_title) ? $og_title : $item->title;        
         if($item->stringProperty('podcast-episode')) {
           $og_title .= ' (#'.$item->stringProperty('podcast-episode').')';
           $site_title = $og_title.' · '.config('folio.title');
