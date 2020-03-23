@@ -31,4 +31,6 @@ return [
 	'this-page-is-hidden' => 'Esta página está oculta.',
 	'preview-of-unpublished-page' => 'Previsualización de una página no publicada.',
 
+	// errors
+	'invalid-credentials' => 'Email o contraseña no válidos',
 ];

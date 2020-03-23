@@ -7,7 +7,6 @@ use Item, User, Thinker, Recipient, Property, Subscriber;
 use Nonoesp\Folio\Folio;
 use View;
 use Config;
-use Authenticate; // nonoesp/authenticate
 use Input;
 use Redirect;
 use Date;

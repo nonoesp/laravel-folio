@@ -204,7 +204,7 @@ return [
 	'protected_uris' => ['example', 'profile', 'about', 'magic'], // are not overriden by folio
 
 	'middlewares' => ['web'], // folio routes
-	'middlewares-admin' => ['login', 'web'], // folio admin routes
+	'middlewares-admin' => ['web', 'auth'], // folio admin routes
 
 	/*
 	 * The HTML tags to use on Item's text field to specify where a

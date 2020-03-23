@@ -7,7 +7,6 @@ use Item, User;
 use Nonoesp\Folio\Folio;
 use View;
 use Config;
-use Authenticate; // nonoesp/authenticate
 use App;
 use Markdown;
 use Auth;

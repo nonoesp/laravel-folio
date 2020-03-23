@@ -30,4 +30,7 @@ return [
 	'this-page-is-hidden' => 'This page is hidden.',
 	'preview-of-unpublished-page' => 'This is a preview of an unpublished page.',
 
+	// errors
+	'invalid-credentials' => 'Invalid email or password',
+
 ];

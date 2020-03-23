@@ -62,7 +62,7 @@
 				@if ($item->isPublic())
 					{!! $item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]) !!}
 				@else
-					@if($twitter_handle = Authenticate::isUserLoggedInTwitter())
+					@if($twitter_handle = Auth::check() ? Auth::user()->twitter : null)
 						<?php /*@if($item->visibleFor($twitter_handle) OR Auth::user()->is_admin)*/ ?>
 						@if($item->visibleFor($twitter_handle))
 							{{--Visible for @twitter_handle--}}
