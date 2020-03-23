@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use Nonoesp\Folio\Folio;
 use Item, User;
-use Authenticate; // nonoesp/authenticate
+; // nonoesp/authenticate
 use Auth;
 
 class FolioController extends Controller
@@ -19,7 +19,8 @@ class FolioController extends Controller
 	public function showHome($domain) {
 
 		// Get user's Twitter handle (or visitor)
-		$twitter_handle = Authenticate::isUserLoggedInTwitter();
+		// $twitter_handle = Authenticate::isUserLoggedInTwitter();
+		$twitter_handle = Auth::check() ? Auth::user()->twitter : null;
 
 		// Config variables
 		$published_show = config("folio.published-show");
@@ -99,7 +100,8 @@ class FolioController extends Controller
 	public static function showItemTag($domain, $tag) {
 
 		// Get user's Twitter handle (or visitor)
-		$twitter_handle = Authenticate::isUserLoggedInTwitter();
+		// $twitter_handle = Authenticate::isUserLoggedInTwitter();
+		$twitter_handle = Auth::check() ? Auth::user()->twitter : null;
 
 		// Config variables
 		$published_show = config("folio.published-show");

@@ -23,45 +23,20 @@ Most packages should be auto-discovered by Laravel.
 
 ### Middleware
 
-Publish the required middleware.
-
-```bash
-// TODO - Remove!
-// php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=middleware
-// php artisan vendor:publish --provider="Nonoesp\Authenticate\AuthenticateServiceProvider" --tag=middleware
-```
-
-Then add the following to `app/Http/Kernel.php`:
+Add the following middleware to `app/Http/Kernel.php`:
 
 ```php
-protected $middleware = [
-        /// nonoesp/folio
-        \Nonoesp\Folio\Middleware\SetLocales::class,
-        /// nonoesp/authenticate
-        \Illuminate\Session\Middleware\StartSession::class,
-        \Illuminate\View\Middleware\ShareErrorsFromSession::class,			
-        \Nonoesp\Authenticate\Middleware\RememberLogin::class,        
-        /// ...
-];
-
-protected $routeMiddleware = [
-        /// nonoesp/authenticate
-        'login' => \Nonoesp\Authenticate\Middleware\RequireLogin::class,
-        /// ...
-];
+    protected $middlewareGroups = [
+        'web' => [
+            /// nonoesp/folio
+            \Nonoesp\Folio\Middleware\SetLocales::class,
+        ],
+    ];
 ```
-
-<!-- ### Sign in with Twitter
-
-You need to publish the config file of `thujon/twitter` and add your Twitter credentials to `config/ttwitter.php`. (You can create a Twitter app at <https://apps.twitter.com/>.)
-
-```bash
-php artisan vendor:publish --provider="Thujohn\Twitter\TwitterServiceProvider"
-``` -->
 
 ### Migrations
 
-- Remove Laravel's default migration files from `database/migrations` as they can collide with Folio's migrations.
+- Remove Laravel's default migration files from `database/migrations` as they can collide with Folio's migrations. (`TODO` - Check if this is necessary or Folio's `users` table works.)
 - Setup your database connection in the `.env` file.
 - Publish `rtconner/tagging` migrations:
 
@@ -125,16 +100,13 @@ if (mix.inProduction()) {
 mix.copy('node_modules/folio-scss/vendor/icons-links-gwern', 'public/img/icons');
 
 // BrowserSync when watching (i.e. npm run watch)
-mix.browserSync({
-   proxy: 'localhost:8000',
-   files: []
-});
+// mix.browserSync('localhost:8000');
 ```
 
 - Install dependencies with `npm`.
 
 ```bash
-npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery validate-js vuedraggable
+npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery jquery-lazy validate-js vuedraggable
 npm install
 ```
 
@@ -157,8 +129,9 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 
 ## File Uploader
 
-- TODO - Create `storage/public/uploads` folder.
-- TODO - Symlink uploads folder to `public/img/u`.
+- Create `storage/public/uploads` folder.
+- TODO: Give permissions to `uploads` folder.
+- Symlink uploads folder to `public/img/u`.
 
 ```
 ln -s global/path/to/storage/app/public/uploads global/path/to/public/img/u

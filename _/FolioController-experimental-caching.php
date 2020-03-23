@@ -3,11 +3,11 @@
 namespace Nonoesp\Folio\Controllers;
 
 use Illuminate\Http\Request;
-use Item, User; // Must be defined in your aliases
+use Nonoesp\Models\Item;
+use User; // Must be defined in your aliases
 use Nonoesp\Folio\Folio;
 use View;
 use Config;
-use Authenticate; // Must be installed (nonoesp/authenticate) and defined in your aliases
 use App;
 use Markdown;
 use Auth;
@@ -31,7 +31,8 @@ class FolioController extends Controller
 		// }
 
 		// Get user's Twitter handle (or visitor)
-		$twitter_handle = Authenticate::isUserLoggedInTwitter();
+		//$twitter_handle = Authenticate::isUserLoggedInTwitter();
+		$twitter_handle = Auth::check() ? Auth::user()->twitter : null;
 
 		// Config variables
 		$published_show = Config::get("folio.published-show");
@@ -125,7 +126,8 @@ class FolioController extends Controller
 	public function showItemTag($tag) {
 
 		// Get user's Twitter handle (or visitor)
-		$twitter_handle = Authenticate::isUserLoggedInTwitter();
+		// $twitter_handle = Authenticate::isUserLoggedInTwitter();
+		$twitter_handle = Auth::check() ? Auth::user()->twitter : null;
 
 		// Config variables
 		$published_show = Config::get("folio.published-show");

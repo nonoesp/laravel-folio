@@ -9,7 +9,6 @@ use Redirect;
 use Config;
 use Request;
 use Markdown;
-use Authenticate; // nonoesp/authenticate
 use Recipient;
 use Property;
 use Input;
@@ -22,6 +21,18 @@ use \Illuminate\Support\Str;
 // ██╔══╝      ██║   ██║    ██║         ██║    ██║   ██║
 // ██║         ╚██████╔╝    ███████╗    ██║    ╚██████╔╝
 // ╚═╝          ╚═════╝     ╚══════╝    ╚═╝     ╚═════╝ 
+
+/*----------------------------------------------------------------*/
+/* LoginController
+/*----------------------------------------------------------------*/
+
+Route::group(['middleware' => 'web'], function () {
+
+	Route::view('login', 'folio::login.login')->middleware(\Nonoesp\Folio\Middleware\RedirectIfAuthenticated::class);
+	Route::post('login', 'Nonoesp\Folio\Controllers\LoginController@login')->name('login');
+	Route::post('logout', 'Nonoesp\Folio\Controllers\LoginController@logout')->name('logout');
+
+});
 
 /*----------------------------------------------------------------*/
 /* AdminController
@@ -38,7 +49,7 @@ Route::group([
 	Route::get($admin_path, 'Nonoesp\Folio\Controllers\AdminController@getDashboard');
 
 	// Items
-	Route::get($admin_path.'items', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
+	Route::get($admin_path.'items', 'Nonoesp\Folio\Controllers\AdminController@getItemList')->name('admin.items');
 	Route::get($admin_path.'items/{tag}', 'Nonoesp\Folio\Controllers\AdminController@getItemList');
 	Route::any($admin_path.'item/edit/{id}', ['as' => 'item.edit', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemEdit']);
 	Route::any($admin_path.'item/versions/{id}', ['as' => 'item.version', 'uses' => 'Nonoesp\Folio\Controllers\AdminController@ItemVersions']);
