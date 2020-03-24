@@ -631,14 +631,14 @@ class Item extends Model implements Feedable
 					'/<img src="\/(.*?)" alt="(.*?)" \/>/is',
 					'/<img class="(.*?)" src="\/(.*?)" alt="(.*?)" \/>/is',
 					'/<img src="(.*?)" data-src="\/(.*?)" alt="(.*?)" \/>/is',
-					'/<img class="(.*?)" src="(.*?)" data-src="\/(.*?)" alt="(.*?)" \/>/is',			
-				]; 
+					'/<img class="(.*?)" src="(.*?)" data-src="\/(.*?)" alt="(.*?)" \/>/is'
+				];
 
 				$replace = [
 					'<img src="'.$imgixPrefix.'/$1" alt="$2" />',
 					'<img class="$1" src="'.$imgixPrefix.'/$2" alt="$3" />',
 					'<img src="$1" data-src="'.$imgixPrefix.'/$2" alt="$3" />',
-					'<img class="$1" src="/$2" data-src="'.$imgixPrefix.'/$3" alt="$4" />',				
+					'<img class="$1" src="$2" data-src="'.$imgixPrefix.'/$3" alt="$4" />',
 				]; 
 
 				$html = preg_replace ($search, $replace, $html);
