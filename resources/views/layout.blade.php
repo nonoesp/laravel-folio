@@ -37,7 +37,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @isset($html_theme_class) class="{{ $html_theme_class }}" @endisset>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"{{ isset($html_theme_class) ? ' class="'.$html_theme_class.'"' : null }}>
 
 <!-- This site is built with github.com/nonoesp/laravel-folio -->
 
