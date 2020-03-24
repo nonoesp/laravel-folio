@@ -4,8 +4,12 @@
 
 	// Meta tags
 	$og_author = isset($og_author) ? $og_author : config('folio.meta.author');
-	$og_title_default = config('folio.title');
-	$og_description_default = config('folio.description');
+
+	$og_description = isset($og_description) ? $og_description : config('folio.meta.description');
+	$og_description = $og_description ? $og_description : config('folio.description');
+
+	$og_title = isset($og_title) ? $og_title : config('folio.title');
+
 	$og_image_default = config('folio.image-src');
 	$og_url_default = Request::root().'/'.Request::path();
 	$fb_app_id_default = config('folio.social.facebook.app_id');
@@ -90,7 +94,7 @@
 	<meta property="fb:app_id" content="{{ $fb_app_id ?? $fb_app_id_default }}" />
 	<meta property="og:url" content="{{ $og_url ?? $og_url_default }}" />
 	<meta property="og:image" content="{{ $og_image ?? $og_image_default }}" />
-	<meta property="og:title" content="{{ $og_title ?? $og_title_default }}" />
+	<meta property="og:title" content="{{ $og_title }}" />
 	<meta property="og:description" content="{{ $og_description ?? $og_description_default }}" />
 	<meta property="og:type" content="{{ $og_type ?? 'profile' }}" />
 	<meta property="og:image:width" content="1200" />
@@ -100,7 +104,7 @@
 	<!-- Twitter Card -->
 	<meta name="twitter:site" content="{{ config('folio.social.twitter.handle') }}" />
 	<meta name="twitter:creator" content="{{ config('folio.social.twitter.handle') }}" />
-	<meta name="twitter:title" content="{{ $og_title ?? $og_title_default }}" />
+	<meta name="twitter:title" content="{{ $og_title }}" />
 	<meta name="twitter:description" content="{{ $og_description ?? $og_description_default }}" />
 	<meta name="twitter:image" content="{{ $og_image ?? $og_image_default }}" />
 	<meta name="twitter:card" content="summary_large_image" />

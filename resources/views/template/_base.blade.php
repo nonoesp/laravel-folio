@@ -39,12 +39,12 @@ if(isset($collection)) {
     // $tag
 
     // 1. Defaults
-    if(!isset($site_title)) {
-      $site_title = config('folio.title');
-    }
-    if(!isset($og_description)) {
-      $og_description = config('folio.description');
-    }
+    // if(!isset($site_title)) {
+      // $site_title = config('folio.title');
+    // }
+    // if(!isset($og_description)) {
+    //   $og_description = config('folio.description');
+    // }
     if(!isset($header_view)) {
       $header_view = config('folio.header.view');
     }
@@ -83,8 +83,6 @@ if(isset($collection)) {
     // ------------------------------------------------------------------------
     // (A) Single Item Settings
     if ($folio_type == 'SINGLE_WRITING_TYPE') {
-
-
 
         // 4.1. General
         $site_title = isset($site_title) ? $site_title : $item->title.' · '.config('folio.title');
