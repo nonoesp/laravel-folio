@@ -191,6 +191,15 @@ return [
 			'data' => []
 		],
 
+	/**
+	 * Default metadata
+	 */
+	'meta' => [
+		'author' => '', // e.g. John Doe
+		'description' => '', // e.g. A site built with Folio.
+		'image' => '', // http://domain.com/img/image_src.jpg
+	],
+
 	'media_links' => [
 		'rss' => '/feed.xml',
 		'facebook' => 'http://facebook.com/nonoesp',

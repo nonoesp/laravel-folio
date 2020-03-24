@@ -5,6 +5,7 @@
 	$og_image_default = config('folio.image-src');
 	$og_url_default = Request::root().'/'.Request::path();
 	$fb_app_id_default = config('folio.social.facebook.app_id');
+	$og_author = config('folio.meta.author');
 
 	$apple_touch_icon_default = '/apple-touch-icon.png';
 
@@ -33,7 +34,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en" @isset($html_theme_class) class="{{ $html_theme_class }}" @endisset>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" @isset($html_theme_class) class="{{ $html_theme_class }}" @endisset>
 
 <!-- This site is built with github.com/nonoesp/laravel-folio -->
 
@@ -78,6 +79,9 @@
 	<!-- Tags -->
 	<meta name="description" content="{{ $og_description ?? $og_description_default }}" />
 	<link rel="image_src" href="{{ $og_image ?? $og_image_default }}" />
+@if($og_author)
+	<meta name="author" content="{{ $og_author ?? null }}" />
+@endif
 
 	<!-- Open Graph meta data -->
 	<meta property="fb:app_id" content="{{ $fb_app_id ?? $fb_app_id_default }}" />
