@@ -8,7 +8,8 @@
 	$og_description = isset($og_description) ? $og_description : config('folio.meta.description');
 	$og_description = $og_description ? $og_description : config('folio.description');
 
-	$og_title = isset($og_title) ? $og_title : config('folio.title');
+	$site_title = isset($site_title) ? $site_title : config('folio.title');
+	$og_title = isset($og_title) ? $og_title : $site_title;
 
 	$og_image_default = config('folio.image-src');
 	$og_url_default = Request::root().'/'.Request::path();

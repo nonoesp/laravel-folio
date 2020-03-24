@@ -156,10 +156,6 @@ if(isset($collection)) {
         }
     }
 
-    if(!isset($og_title)) {
-      $og_title = $site_title;
-    }
-
     if(isset($keep_header_data)) {
       foreach($keep_header_data as $key=>$val) {
         $header_data[$key] = $val;
