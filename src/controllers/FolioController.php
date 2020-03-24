@@ -3,10 +3,8 @@
 namespace Nonoesp\Folio\Controllers;
 
 use Illuminate\Http\Request;
-
 use Nonoesp\Folio\Folio;
 use Item, User;
-; // nonoesp/authenticate
 use Auth;
 
 class FolioController extends Controller
