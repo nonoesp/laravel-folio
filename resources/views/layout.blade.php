@@ -1,11 +1,14 @@
 <?php
-	if(!isset($folio_typekit)) { $folio_typekit = config('folio.typekit'); }
+
+	$folio_typekit = isset($folio_typekit) ? $folio_typekit : config('folio.typekit');
+
+	// Meta tags
+	$og_author = isset($og_author) ? $og_author : config('folio.meta.author');
 	$og_title_default = config('folio.title');
 	$og_description_default = config('folio.description');
 	$og_image_default = config('folio.image-src');
 	$og_url_default = Request::root().'/'.Request::path();
 	$fb_app_id_default = config('folio.social.facebook.app_id');
-	$og_author = config('folio.meta.author');
 
 	$apple_touch_icon_default = '/apple-touch-icon.png';
 
