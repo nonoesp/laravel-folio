@@ -91,8 +91,10 @@ if(isset($collection)) {
           $og_title .= ' (#'.$item->stringProperty('podcast-episode').')';
           $site_title = $og_title.' · '.config('folio.title');
         }
-        $og_description = Thinker::limitMarkdownText($item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]), 159, ['sup']);
-        $og_description = $item->stringProperty('meta-description', $og_description);
+        if (!isset($og_description)) {
+          $og_description = Thinker::limitMarkdownText($item->htmlText(['stripTags' => ['rss', 'podcast', 'feed']]), 159, ['sup']);
+          $og_description = $item->stringProperty('meta-description', $og_description);
+        }
         $og_type = 'article';
         $og_url = $item->permalink();
         $apple_touch_icon = $item->stringProperty('apple-touch-icon');
@@ -152,7 +154,7 @@ if(isset($collection)) {
 
         // Master Item
         if (isset($item)) {
-            $og_description = $item->stringProperty('meta-description', $og_description);
+            $og_description = $item->stringProperty('meta-description', isset($og_description) ? $og_description : null);
         }
     }
 
