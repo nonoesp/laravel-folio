@@ -97,7 +97,7 @@ if (mix.inProduction()) {
    mix.version();
 }
 
-mix.copy('node_modules/folio-scss/vendor/icons-links-gwern', 'public/img/icons');
+// mix.copy('node_modules/folio-scss/vendor/icons-links-gwern', 'public/img/icons');
 
 // BrowserSync when watching (i.e. npm run watch)
 // mix.browserSync('localhost:8000');
