@@ -46,6 +46,7 @@
         "vinkla/hashids": "^8.0",
         "nasyrov/laravel-imgix": "7.x-dev",
         "mpociot/versionable": "dev-patch-1",
+        "laravel/ui": "^2.0",
         "nonoesp/thinker": "^7.0"
     },
     "require-dev": {
