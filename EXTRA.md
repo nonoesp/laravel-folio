@@ -27,3 +27,26 @@ Route::get('ip', function() {
   return view('errors.layout', ['headline' => $name, 'text' => $ip]);
 })->middleware('auth');
 ```
+
+## Load domain-specific .env file if it exists
+
+```php
+/*
+|--------------------------------------------------------------------------
+| Load domain-specific .env file if it exists
+|--------------------------------------------------------------------------
+*/
+
+if(isset($_SERVER['HTTP_HOST']) && !empty($_SERVER['HTTP_HOST'])){
+    $domain = $_SERVER['HTTP_HOST'];
+} //
+
+if (isset($domain)) {
+    $dotenv = \Dotenv\Dotenv::create(base_path(), '.env.'.$domain);
+    try {
+        $dotenv->overload();
+    } catch (\Dotenv\Exception\InvalidPathException $e) {
+        // No custom .env file found for this domain
+    }
+}
+```
