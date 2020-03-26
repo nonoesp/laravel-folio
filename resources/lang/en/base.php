@@ -9,7 +9,7 @@ return [
 	'load-more' => 'load more',
 	'continue-reading' => 'Read&nbsp;More…',
 	'receive-our-posts' => 'Receive our publications via email.',
-	'newsletter-privacy' => 'By clicking above to submit this form, you acknowledge that the information you provide will be transferred to MailChimp for processing in accordance with their <a href="https://mailchimp.com/legal/privacy/">Privacy Policy</a> and <a href="https://mailchimp.com/legal/terms/">Terms</a>.',
+	'newsletter-privacy' => 'Subject to MailChimp\'s <a href="https://mailchimp.com/legal/privacy/" style="opacity:0.6">Privacy&nbsp;Policy</a>&nbsp;&&nbsp;<a href="https://mailchimp.com/legal/terms/" style="opacity:0.6">Terms</a>.',		
 	'your-email-address' => 'Your email address',
 
 	// folio.subscribe.js
