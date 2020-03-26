@@ -8,6 +8,20 @@
         "role": "Developer",
         "homepage": "https://nono.ma"
     }],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://gitlab.com/baijunyao/Feed"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/stojankukrika/versionable"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/nonoesp/laravel-imgix"
+        }
+    ],     
     "autoload": {
         "classmap": [
             "src/controllers",
@@ -38,6 +52,7 @@
         "spatie/laravel-sitemap": "^5.7",
         "spatie/flysystem-dropbox": "^1.2",
         "spatie/laravel-backup": "^6.8",
+        "spatie/laravel-searchable": "dev-master",
         "rap2hpoutre/laravel-log-viewer": "^1.4",
         "rezozero/commonmark-ext-footnotes": "^0.1",
         "rtconner/laravel-tagging": "~4.0",
@@ -46,10 +61,10 @@
         "vinkla/hashids": "^8.0",
         "nasyrov/laravel-imgix": "7.x-dev",
         "mpociot/versionable": "dev-patch-1",
-        "laravel/ui": "^2.0",
-        "nonoesp/thinker": "^7.0"
+        "laravel/ui": "^2.0"
     },
     "require-dev": {
+        "phpunit/phpunit": "^8.5"
     },
     "extra": {
         "laravel": {
@@ -64,6 +79,7 @@
                 "Property": "Nonoesp\\Folio\\Models\\Property",
                 "Recipient": "Nonoesp\\Folio\\Models\\Recipient",
                 "Subscriber": "Nonoesp\\Folio\\Models\\Subscriber",
+                "Thinker": "Nonoesp\\Folio\\Models\\Thinker",
                 "User": "App\\User"
             }
         }
