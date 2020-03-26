@@ -69,7 +69,7 @@
                         $basename = basename($filename);
                         
                         // Construct file path
-                        $filePath = $uploaderPublicFolder.$basename;
+                        $filePath = $uploaderPublicFolder.'/'.$basename;
 
                         // Construct image path
                         $imageHighRes = $filePath;
@@ -114,7 +114,7 @@
                         $extension = $extension[count($extension) - 1];
 
                         // Construct file path
-                        $filePath = $uploaderPublicFolder.$basename;
+                        $filePath = $uploaderPublicFolder.'/'.$basename;
                     @endphp
 
                         <div class="[ grid__item one-whole lap--one-quarter palm--one-third ]">

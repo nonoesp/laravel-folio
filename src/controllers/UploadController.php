@@ -47,7 +47,7 @@ class UploadController extends Controller
                 $filename_without_extension = substr($input_filename, 0, strlen($input_filename) - strlen($extension));
                 $filename = Str::slug($filename_without_extension).'.'.Str::lower($extension);
             
-            $imgURL = $uploaderPublicFolder.$filename;
+            $imgURL = $uploaderPublicFolder.'/'.$filename;
 
             // Validate extension is allowed
             $fileType = $request->file($formFilename)->extension();
