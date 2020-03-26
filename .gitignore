@@ -1,9 +1,20 @@
+# Created by https://www.gitignore.io/api/composer
+# Edit at https://www.gitignore.io/?templates=composer
+
+### Composer ###
+composer.phar
+/vendor/
+
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+composer.lock
+
+# End of https://www.gitignore.io/api/composer
+
+.phpunit.result.cache
+
 Makefile
 .git/
-vendor/
 node_modules/
-composer.phar
-composer.lock
 .DS_Store
-sy.sh
 Makefile
