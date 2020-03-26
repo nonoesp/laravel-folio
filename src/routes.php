@@ -105,71 +105,75 @@ Route::group([
 /* Defined after admin to have access to named routes.
 /*----------------------------------------------------------------*/
 
-if (config('redirects')) {
+Route::group(['middleware' => ['web']], function () {
 
-	// Redirects from config/redirects.php
-	$path = \Request::path();
-	$redirects = config('redirects');
+	if (config('redirects')) {
 
-	// Look for current host specific redirects
-	foreach ($redirects as $key => $to) {
-		if (Str::is('{*}', $key)) {
-			$hosts = explode("|", preg_replace('/{(.*?)}/is', '$1', $key));
-			if (in_array(\Request::getHost(), $hosts) && is_array($to)) {
-				$redirects = array_merge($redirects, $redirects[$key]);
+		// Redirects from config/redirects.php
+		$path = \Request::path();
+		$redirects = config('redirects');
+
+		// Look for current host specific redirects
+		foreach ($redirects as $key => $to) {
+			if (Str::is('{*}', $key)) {
+				$hosts = explode("|", preg_replace('/{(.*?)}/is', '$1', $key));
+				if (in_array(\Request::getHost(), $hosts) && is_array($to)) {
+					$redirects = array_merge($redirects, $redirects[$key]);
+				}
 			}
 		}
-	}
 
-	// Catch global (and current host) redirects
-	if ($redirects && array_key_exists($path, $redirects)) {
-		$to = $redirects[$path];
-		if (Str::is('{*}', $to)) {
-			$to = route(str_replace(['{','}'],'',$to));
+		// Catch global (and current host) redirects
+		if ($redirects && array_key_exists($path, $redirects)) {
+			$to = $redirects[$path];
+			if (Str::is('{*}', $to)) {
+				$to = route(str_replace(['{','}'],'',$to));
+			}
+			Route::redirect($path, $to);
 		}
-		Route::redirect($path, $to);
+
 	}
 
-}
+});
 
 /*----------------------------------------------------------------*/
 /* FolioController
 /*----------------------------------------------------------------*/
 
-	// ALL DOMAINS
+// ALL DOMAINS
 
-	// SubscriptionController (outside controller to allow cross-domain subscription)
-	Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create');
+// SubscriptionController (outside controller to allow cross-domain subscription)
+Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create');
 
-	/*
-	* Create a domain pattern if provided in config.php
-	* Otherwise allow the current domain (i.e., any domain)
-	*/
-	$domainPattern = config('folio.domain-pattern');
-	if(
-		$domainPattern == null or
-		$domainPattern == '' or
-		!$domainPattern
-	) {
-		Route::pattern('foliodomain', Request::getHost());
-	} else {
-		Route::pattern('foliodomain', config('folio.domain-pattern'));
-	}
+/*
+* Create a domain pattern if provided in config.php
+* Otherwise allow the current domain (i.e., any domain)
+*/
+$domainPattern = config('folio.domain-pattern');
+if(
+	$domainPattern == null ||
+	$domainPattern == '' ||
+	!$domainPattern
+) {
+	Route::pattern('foliodomain', Request::getHost());
+} else {
+	Route::pattern('foliodomain', config('folio.domain-pattern'));
+}
 
-	/*
-	* A pattern to allow (only) items to be domain specific
-	* and be rendered on another domain
-	*/
-	$domainPatternItems = config('folio.domain-pattern-items');
-	if(
-		$domainPatternItems == null ||
-		$domainPatternItems == '' ||
-		!$domainPatternItems
-	) {
-		Route::pattern('foliodomainitems', Request::getHost());
-	} else {
-		Route::pattern('foliodomainitems', config('folio.domain-pattern').'|'.config('folio.domain-pattern-items'));
-	}
+/*
+* A pattern to allow (only) items to be domain specific
+* and be rendered on another domain
+*/
+$domainPatternItems = config('folio.domain-pattern-items');
+if(
+	$domainPatternItems == null ||
+	$domainPatternItems == '' ||
+	!$domainPatternItems
+) {
+	Route::pattern('foliodomainitems', Request::getHost());
+} else {
+	Route::pattern('foliodomainitems', config('folio.domain-pattern').'|'.config('folio.domain-pattern-items'));
+}
 
 // DOMAIN-PATTERN + DOMAIN-PATTERN-ITEMS
 
