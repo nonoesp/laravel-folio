@@ -32,8 +32,32 @@ class InstallCommand extends Command
     {
         $this->ensureDirectoriesExist();
         $this->symlinkUploadsFolder();
-
+        $this->publishImageAssets();
+        
         $this->info('Folio was installed successfully.');
+    }
+
+    /**
+     * Copy Folio image resources.
+     */
+    protected function publishImageAssets() {
+
+        // https://github.com/laravel/ui/blob/2.x/src/AuthCommand.php#L93-L104
+
+        $destination = public_path('img/folio');
+        $imageResourcesPath = __DIR__.'/../../resources/images/';
+        $imagePaths =  \File::glob($imageResourcesPath.'*');
+        foreach ($imagePaths as $index=>$origin) {
+            $filename = str_replace($imageResourcesPath, '', $origin);
+            $target = $destination.'/'.$filename;
+
+            if (\File::exists($target)) {
+                continue;
+            }
+
+            copy($origin, $target);
+        }
+
     }
 
     /**
@@ -49,7 +73,11 @@ class InstallCommand extends Command
 
         if (! is_dir($directory = public_path('img'))) {
             mkdir($directory, 0755, true);
-        }        
+        }
+        
+        if (! is_dir($directory = public_path('img/folio'))) {
+            mkdir($directory, 0755, true);
+        }
     }
 
     /**
@@ -57,10 +85,9 @@ class InstallCommand extends Command
      */
     protected function symlinkUploadsFolder()
     {
-        $uploadsFolder = storage_path('app/public/'.config('folio.uploader.uploads-folder'));
         $publicFolder = public_path(config('folio.uploader.public-folder'));
-        $this->info($uploadsFolder.' → '.$publicFolder);
         if (! is_dir($publicFolder)) {
+            $uploadsFolder = storage_path('app/public/'.config('folio.uploader.uploads-folder'));
             symlink($uploadsFolder, $publicFolder);
         } else {
             $this->comment('Symlink already exists.');
