@@ -4,11 +4,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Folio;
 use Thinker;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Spatie\Regex\Regex;
 
-class Item extends Model implements Feedable
+class Item extends Model implements Feedable, Searchable
 {
 	use \Mpociot\Versionable\VersionableTrait;
 	use SoftDeletes;
@@ -57,6 +59,17 @@ class Item extends Model implements Feedable
 	public function __construct() {
 	    parent::__construct();
 	    $this->table = config('folio.db-prefix').'items';
+	}
+
+	public function getSearchResult(): SearchResult
+	{
+		$url = $this->path();
+
+		return new \Spatie\Searchable\SearchResult(
+		   $this,
+		   $this->title,
+		   $url
+		);
 	}
 
 	/**
