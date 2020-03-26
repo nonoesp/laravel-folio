@@ -302,4 +302,15 @@ class Folio {
     return null;
   }
 
+  /**
+   * Returns the path to an upload in the public folder.
+   */
+  public static function Upload($filename = null) {
+    $uploadsDir = config('folio.uploader.public-folder');
+    if ($filename) {
+      return $uploadsDir.'/'.$filename;
+    }
+    return $uploadsDir;
+  }
+
 }
