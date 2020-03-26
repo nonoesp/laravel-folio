@@ -126,10 +126,10 @@ return [
     * Settings for the file uploader.
     */			
 	'uploader' => [
-        'public-folder' => '/img/u/',
+        'public-folder' => '/img/u',
         'disk' => 'public',
         'uploads-folder' => 'uploads',
-        'allowed-file-types' => ['png', 'jpg', 'jpeg'],
+        'allowed-file-types' => ['png', 'jpg', 'jpeg', 'gif', 'mp4'],
 	],
 
 	'subscribers' => [
