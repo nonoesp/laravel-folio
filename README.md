@@ -21,6 +21,10 @@ composer require nonoesp/folio:dev-master
 
 Most packages should be auto-discovered by Laravel.
 
+```bash
+php artisan folio:install
+```
+
 ### Middleware
 
 Add the following middleware to `app/Http/Kernel.php`:

@@ -68,6 +68,7 @@ class FolioServiceProvider extends ServiceProvider
                 \Nonoesp\Folio\Commands\ItemPropertiesImport::class,
                 \Nonoesp\Folio\Commands\ItemRetag::class,
                 \Nonoesp\Folio\Commands\ItemClone::class,
+                \Nonoesp\Folio\Commands\InstallCommand::class,
             ]);
         }
     }
