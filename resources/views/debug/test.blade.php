@@ -11,7 +11,7 @@
 
 <h2>Folio debug</h2>
 
-<h3>nonoesp/thinker</h3>
+<h3>Thinker</h3>
 {{ Thinker::title('My Name Is Peter I Have An Ipad') }}
 <br>
 
