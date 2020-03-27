@@ -25,6 +25,8 @@ Most packages should be auto-discovered by Laravel.
 php artisan folio:install
 ```
 
+- `TODO` List things this command does for you.
+
 ### Middleware
 
 Add the following middleware to `app/Http/Kernel.php`:
@@ -129,16 +131,6 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 
 ```bash
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
-```
-
-## File Uploader
-
-- Create `storage/public/uploads` folder.
-- TODO: Give permissions to `uploads` folder.
-- Symlink uploads folder to `public/img/u`.
-
-```
-ln -s global/path/to/storage/app/public/uploads global/path/to/public/img/u
 ```
 
 ## Subscribers Notifications
