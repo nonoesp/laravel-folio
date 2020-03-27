@@ -429,7 +429,7 @@ class Item extends Model implements Feedable, Searchable
 		} else if($this->videoThumbnail()) {
 			$thumbnail = $this->videoThumbnail();
 		} else {
-			$thumbnail = '/img/veil.gif';
+			$thumbnail = Folio::asset('images/veil.gif');
 		}
 
 		// Make path absolute (add domain) when thumbnail is relative
@@ -620,14 +620,16 @@ class Item extends Model implements Feedable, Searchable
 
 			if($veilImages) {
 
+				$veilPath = Folio::asset('images/veil.gif');
+
 				$search = [
 					'/<img src="(.*?)" alt="(.*?)" \/>/is',
 					'/<img class="(.*?)" src="(.*?)" alt="(.*?)" \/>/is',
 				]; 
 
 				$replace = [
-						'<img src="/img/veil.gif" data-src="$1" alt="$2" />',
-						'<img class="$1" src="/img/veil.gif" data-src="$2" alt="$3" />',
+						'<img src="'.$veilPath.'" data-src="$1" alt="$2" />',
+						'<img class="$1" src="'.$veilPath.'" data-src="$2" alt="$3" />',
 				];
 
 				$html = preg_replace ($search, $replace, $html); 
