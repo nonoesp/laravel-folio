@@ -13,15 +13,15 @@
 	<title>{{ $site_title ?? 'Admin' }}</title>
 
 	<!--Icon-->
-	<link rel="shortcut icon" href="/img/favicon.png" type="image/png" />
-	<link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon.png" />
-	<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
-	<link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-ipad.png" />
-	<link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-@2x.png" />
+	<link rel="shortcut icon" href="/favicon.png" type="image/png" />
+	<link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-ipad.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-@2x.png" />
 	<meta name="apple-mobile-web-app-title" content="{{ config('folio.title') }}" />
 
 	<!--Stylesheets-->
-	<link rel="stylesheet" type="text/css" href="{{ $folio_css ?? '/folio/css/folio.css?default' }}">
+	<link rel="stylesheet" type="text/css" href="{{ $folio_css ?? Folio::asset('css/folio.css?default') }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">
