@@ -124,6 +124,13 @@
 	<link rel="dns-prefetch" href="//{{ config('imgix.domain') }}">
 @endif
 
+@if(config('folio.prefetch'))
+	<!-- DNS Prefetch · Folio -->
+@foreach(config('folio.prefetch') as $prefetchURL)
+	<link rel="dns-prefetch" href="//{{ $prefetchURL }}">
+@endforeach
+@endif
+
 @if($sitemap)
 	<!-- Sitemap -->
 	<meta name="sitemap" content="{{ $sitemap }}" />
