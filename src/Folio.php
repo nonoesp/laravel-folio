@@ -303,7 +303,7 @@ class Folio {
   }
 
   /**
-   * Returns the path to an upload in the public folder.
+   * Returns the path to an upload in the 'uploader.public-folder' directory.
    */
   public static function upload($path = null) {
     $uploadsDir = config('folio.uploader.public-folder');
@@ -313,6 +313,24 @@ class Folio {
     return $uploadsDir;
   }
 
+  /**
+   * Returns the URL to an upload.
+   */
+  public static function uploadURL($path = null) {
+    $upload = Folio::upload($path);
+    if (config('folio.imgix')) {
+      return imgix($upload);
+    }
+    $protocol = 'http://';
+    if (\Request::secure()) {
+      $protocol = 'https://';
+    }
+    return $protocol.\Request::getHttpHost().$upload;
+  }
+
+  /**
+   * Returns the path to an asset in the 'assets-folder' directory.
+   */
   public static function asset($path = null) {
     $assetsDir = config('folio.assets-folder');
     if ($path) {
