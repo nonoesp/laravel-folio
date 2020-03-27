@@ -1,6 +1,7 @@
 <?php namespace Nonoesp\Folio\Models;
 
 use Illuminate\Support\Str;
+use \Nonoesp\Folio\Folio;
 
 class Thinker {
 

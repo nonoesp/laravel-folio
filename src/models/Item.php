@@ -563,17 +563,19 @@ class Item extends Model implements Feedable, Searchable
 	 * Returns the URL of the custom video thumbnail specified
 	 * on this Item with the custom property video-thumbnail.
 	 */	
-	public function customVideoThumbnail($forceAbsolute = true) {
-		$thumbnail = null;
-		if($vt = $this->stringProperty('video-thumbnail')) {
-			$thumbnail = $vt;
+	public function customVideoThumbnail($forceAbsolute = false) {
+		if($videoThumbnail = $this->stringProperty('video-thumbnail')) {
+			// Make path absolute (add domain) when thumbnail is relative
+			if($videoThumbnail && $forceAbsolute && substr($videoThumbnail, 0, 1) == '/') {
+				return \Request::root().$thumbnail;
+			}
+			if (config('folio.imgix')) {
+				return imgix($videoThumbnail);
+			}
+			return $videoThumbnail;			
 		}
-		// Make path absolute (add domain) when thumbnail is relative
-		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
-			return \Request::root().$thumbnail;
-		} else {
-			return $thumbnail;
-		}
+
+		return null;
 	}
 
 	/**
