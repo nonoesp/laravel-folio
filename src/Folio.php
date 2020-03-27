@@ -305,12 +305,20 @@ class Folio {
   /**
    * Returns the path to an upload in the public folder.
    */
-  public static function Upload($filename = null) {
-    $uploadsDir = config('folio.uploader.public-folder');
+  public static function Upload($path = null) {
+    $path = config('folio.uploader.public-folder');
     if ($filename) {
-      return $uploadsDir.'/'.$filename;
+      return $uploadsDir.'/'.$path;
     }
     return $uploadsDir;
+  }
+
+  public static function asset($path = null) {
+    $assetsDir = config('folio.assets-folder');
+    if ($path) {
+      return $assetsDir.'/'.$path;
+    }
+    return $assetsDir;
   }
 
 }

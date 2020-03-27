@@ -132,6 +132,11 @@ return [
         'allowed-file-types' => ['png', 'jpg', 'jpeg', 'gif', 'mp4'],
 	],
 
+	/**
+	 * Asset directory path.
+	 */
+	'assets-folder' => '/folio',
+
 	'subscribers' => [
 		/*
 	 	* Wether Folio should send a "new subscriber" notification e-mail.
