@@ -104,7 +104,7 @@ return [
 	 * Path of your Folio stylesheets.
 	 * By default, this matches where Folio assets are deployed.
 	 */		
-	'css' => '/nonoesp/folio/css/folio.css',
+	'css' => '/folio/css/folio.css',
 
 	/*
 	 * Your typekit id. (Optional)

@@ -118,9 +118,9 @@
 
 @yield('footer')
 
-<script src="{{ mix('/nonoesp/folio/js/manifest.js') }}"></script>
-<script src="{{ mix('/nonoesp/folio/js/vendor.js') }}"></script>
-<script src="{{ mix('/nonoesp/folio/js/folio.js') }}"></script>
+<script src="{{ mix('/folio/js/manifest.js') }}"></script>
+<script src="{{ mix('/folio/js/vendor.js') }}"></script>
+<script src="{{ mix('/folio/js/folio.js') }}"></script>
 <script>
 	var trans = {!! json_encode(trans('folio::base')) !!};
 </script>

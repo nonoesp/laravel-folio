@@ -44,7 +44,7 @@ class InstallCommand extends Command
 
         // https://github.com/laravel/ui/blob/2.x/src/AuthCommand.php#L93-L104
 
-        $destination = public_path('img/folio');
+        $destination = public_path('folio/images');
         $imageResourcesPath = __DIR__.'/../../resources/images/';
         $imagePaths =  \File::glob($imageResourcesPath.'*');
         foreach ($imagePaths as $index=>$origin) {
@@ -71,11 +71,11 @@ class InstallCommand extends Command
             mkdir($directory, 0755, true);
         }
 
-        if (! is_dir($directory = public_path('img'))) {
+        if (! is_dir($directory = public_path('folio'))) {
             mkdir($directory, 0755, true);
         }
-        
-        if (! is_dir($directory = public_path('img/folio'))) {
+    
+        if (! is_dir($directory = public_path('folio/images'))) {
             mkdir($directory, 0755, true);
         }
     }

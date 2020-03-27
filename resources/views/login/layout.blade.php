@@ -21,7 +21,7 @@
 	<meta name="apple-mobile-web-app-title" content="{{ config('folio.title') }}" />
 
 	<!--Stylesheets-->
-	<link rel="stylesheet" type="text/css" href="{{ $folio_css ?? '/nonoesp/folio/css/folio.css?default' }}">
+	<link rel="stylesheet" type="text/css" href="{{ $folio_css ?? '/folio/css/folio.css?default' }}">
 
 	<!-- CSRF Token -->
 	<meta name="csrf-token" content="{{ csrf_token() }}">

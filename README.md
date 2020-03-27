@@ -82,9 +82,9 @@ This will copy Folio stylesheets and JavaScript files to the resources folder, i
 ```javascript
 const mix = require('laravel-mix');
 
-mix.sass('resources/sass/folio.scss', 'public/nonoesp/folio/css')
+mix.sass('resources/sass/folio.scss', 'public/folio/css')
 // .sourceMaps()
-   .js('resources/js/folio.js', 'public/nonoesp/folio/js')
+   .js('resources/js/folio.js', 'public/folio/js')
    .extract([
        'vue',
        'vue-resource',
@@ -101,7 +101,7 @@ if (mix.inProduction()) {
    mix.version();
 }
 
-// mix.copy('node_modules/folio-scss/vendor/icons-links-gwern', 'public/img/icons');
+// mix.copy('node_modules/folio-scss/vendor/icons-links-gwern', 'public/folio/icons');
 
 // BrowserSync when watching (i.e. npm run watch)
 // mix.browserSync('localhost:8000');

@@ -29,7 +29,7 @@
 	if (!isset($sitemap)) $sitemap = config('folio.sitemap');
 
 	// Folio CSS
-	$folio_css = config('folio.css') ? config('folio.css') : '/nonoesp/folio/css/folio.css';
+	$folio_css = config('folio.css') ? config('folio.css') : '/folio/css/folio.css';
 
 	// Try to pass CSS through Laravel mix to bust the cache
 	try {
@@ -37,7 +37,7 @@
 	}
 	catch (Exception $e) {
 		// Graceful fallback to CSS without cache busting
-		$folio_css = '/nonoesp/folio/css/folio.css?mix-busting-failed';
+		$folio_css = '/folio/css/folio.css?mix-busting-failed';
 	}
 ?>
 
@@ -182,9 +182,9 @@
 
 @yield('footer')
 
-<script src="{{ mix('/nonoesp/folio/js/manifest.js') }}"></script>
-<script src="{{ mix('/nonoesp/folio/js/vendor.js') }}"></script>
-<script src="{{ mix('/nonoesp/folio/js/folio.js') }}"></script>
+<script src="{{ mix('/folio/js/manifest.js') }}"></script>
+<script src="{{ mix('/folio/js/vendor.js') }}"></script>
+<script src="{{ mix('/folio/js/folio.js') }}"></script>
 <script>
 	var trans = {!! json_encode(trans('folio::base')) !!};
 </script>

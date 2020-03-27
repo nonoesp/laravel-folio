@@ -40,9 +40,9 @@ Or you can just leave it empty (defaults to `en`).
 
 @section('scripts')
 
-	<script type="text/javascript" src="{{ mix('/nonoesp/folio/js/manifest.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('/nonoesp/folio/js/vendor.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('/nonoesp/folio/js/folio.js') }}"></script>
+	<script type="text/javascript" src="{{ mix('/folio/js/manifest.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/folio/js/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/folio/js/folio.js') }}"></script>
 	<!-- Mousetrap for handling keyboard shortcuts -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.1/mousetrap.min.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.1/plugins/global-bind/mousetrap-global-bind.min.js"></script>

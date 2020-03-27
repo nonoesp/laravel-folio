@@ -11,9 +11,9 @@
 
 @section('scripts')
 
-    <script type="text/javascript" src="{{ mix('/nonoesp/folio/js/manifest.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('/nonoesp/folio/js/vendor.js') }}"></script>
-    <script type="text/javascript" src="{{ mix('/nonoesp/folio/js/folio.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/folio/js/manifest.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/folio/js/vendor.js') }}"></script>
+    <script type="text/javascript" src="{{ mix('/folio/js/folio.js') }}"></script>
 
 		<?php
 		foreach($items as $item) {
