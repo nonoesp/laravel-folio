@@ -3,6 +3,7 @@
 namespace Nonoesp\Folio\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 class InstallCommand extends Command
@@ -78,6 +79,34 @@ class InstallCommand extends Command
         if (! is_dir($directory = public_path('folio/images'))) {
             mkdir($directory, 0755, true);
         }
+
+        $this->ensurePublicUploadsSymlinkDirectoryExists();
+    }
+
+    /**
+     * Ensure public uploads symlink containing folder exists;
+     */
+    protected function ensurePublicUploadsSymlinkDirectoryExists() {
+
+        $uploadsPublicFolder = config('folio.uploader.public-folder');
+        $uploadsPublicFolder = Str::finish(Str::start($uploadsPublicFolder, '/'), '/');
+
+        // Ensure folder exists for symlinking
+        $path = '';
+        $fragments = explode('/', $uploadsPublicFolder);
+        $index = 0;
+        foreach($fragments as $fragment) {
+            $index++;
+            if ($fragment === '' || $index == count($fragments) - 1) {
+                continue;
+            }
+            $path .= '/'.$fragment;
+
+            if (! is_dir($directory = public_path($path))) {
+                mkdir($directory, 0755, true);
+            }
+        }
+
     }
 
     /**
