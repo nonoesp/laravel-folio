@@ -21,14 +21,6 @@ class ModifyUsersTable extends Migration
               $table->string('twitter_image')->nullable();
        });
 
-       $user = new User();
-       $user->name = "Nono Martinez Alonso";
-       $user->is_admin = 1;
-       $user->email = "mail@domain.com";
-       $user->password = Hash::make('p');
-       $user->twitter = "nonoesp";
-       $user->save();
-
      }
 
      /**
