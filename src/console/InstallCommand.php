@@ -34,9 +34,34 @@ class InstallCommand extends Command
         $this->ensureDirectoriesExist();
         $this->symlinkUploadsFolder();
         $this->publishImageAssets();
+        $this->publishBuildAssets();
         $this->publishWebpackMix();
         
         $this->info('Folio was installed successfully.');
+    }
+
+    /**
+     * Copy build assets.
+     */
+    protected function publishBuildAssets() {
+
+        $from = __DIR__.'/../../resources/build/';
+        $to = public_path().'/';
+
+        foreach (\File::glob(__DIR__.'/../../resources/build/*') as $path) {
+            $this->info($path.' - '.(is_dir($path) ? 'yes' : 'no'));
+
+            if (is_dir($path)) {
+                // Directories
+                \File::copyDirectory($from, $to);
+            } else {
+                // Files
+                $toPath = str_replace($from, $to, $path);
+                copy($path, $toPath);
+            }
+
+        }
+
     }
 
     /**
