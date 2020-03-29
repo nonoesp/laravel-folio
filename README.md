@@ -93,6 +93,7 @@ mix.sass('resources/sass/folio.scss', 'public/folio/css')
        'vue-focus',
        'jquery',
        'jquery-lazy',
+       'jquery-unveil',
        'validate-js',
        'lodash',
        'axios'
@@ -112,7 +113,7 @@ if (mix.inProduction()) {
 - Install dependencies with `npm`.
 
 ```bash
-npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery jquery-lazy validate-js vuedraggable
+npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery jquery-lazy jquery-unveil validate-js vuedraggable
 npm install
 ```
 
