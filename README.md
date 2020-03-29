@@ -11,25 +11,28 @@ Display your web content with custom templates.
 - [Getting Architecture Done](http://gettingarchitecturedone.com/writing)
 - [Nacho.MA](https://nacho.ma)
 
-## Installation
+## Laravel 7.x
 
-Require using Composer:
+- Add alternate VCS repos for packages without Laravel 7 support.
 
-```bash
-composer require nonoesp/folio:dev-master
+```json
+
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/nonoesp/versionable"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/nonoesp/laravel-imgix"
+        }
+    ],
 ```
 
-Most packages should be auto-discovered by Laravel.
-
-```bash
-php artisan folio:install
-```
-
-- `TODO` List things this command does for you.
-
-### Middleware
-
-Add the following middleware to `app/Http/Kernel.php`:
+- `composer require nonoesp/folio:7.x-dev`
+- `php artisan folio:install`
+- `php artisan migrate`
+- Add the following middleware to `app/Http/Kernel.php`:
 
 ```php
     protected $middlewareGroups = [
@@ -40,145 +43,37 @@ Add the following middleware to `app/Http/Kernel.php`:
     ];
 ```
 
-### Migrations
+## Customize Folio assets
 
-- Remove Laravel's default migration files from `database/migrations` as they can collide with Folio's migrations. (`TODO` - Check if this is necessary or Folio's `users` table works.)
-- Setup your database connection in the `.env` file.
-- Publish `rtconner/tagging` migrations:
+- `php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets`
+- Install npm dependencies
+- `npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery jquery-lazy jquery-unveil validate-js vuedraggable`
+- `npm install`
+- Build the assets
+- `npm run prod` · to build for production
+- `npm run dev` · to build for development
+- `npm run watch` · to rebuild on changes with BrowserSync
 
-```bash
-php artisan vendor:publish --provider="Conner\Tagging\Providers\TaggingServiceProvider"
-```
-
-- Run the migrations
-
-```bash
-php artisan migrate --path=vendor/mpociot/versionable/src/migrations
-php artisan migrate
-```
-
-*Note: Revert migrations with `php artisan migrate:reset`, but tables and contents will be removed.*
-
-## Configuration
-
-Folio supports optional configuration.
-
-To get started, publish the configuration file to `config/folio.php`.
+## Customize Assets, Views, Translations, Config
 
 ```bash
+// JavaScript & SCSS assets
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets
+
+// Views
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
+
+// Translations
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=lang
+
+// Config
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=config
 ```
 
-## Compile Web Assets
+## Other
 
-- Publish the assets with:
-
-```bash
-php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets
-```
-
-This will copy Folio stylesheets and JavaScript files to the resources folder, in `sass` and `js`, respectively.
-
-- Copy the following code into `webpack.mix.js`.
-
-```javascript
-const mix = require('laravel-mix');
-
-mix.sass('resources/sass/folio.scss', 'public/folio/css')
-// .sourceMaps()
-   .js('resources/js/folio.js', 'public/folio/js')
-   .extract([
-       'vue',
-       'vue-resource',
-       'vue-focus',
-       'jquery',
-       'jquery-lazy',
-       'jquery-unveil',
-       'validate-js',
-       'lodash',
-       'axios'
-   ]);
-
-// Use versioning and cache busting in production (i.e. npm run prod)
-if (mix.inProduction()) {
-   mix.version();
-}
-
-// mix.copy('node_modules/folio-scss/vendor/icons-links-gwern', 'public/folio/icons');
-
-// BrowserSync when watching (i.e. npm run watch)
-// mix.browserSync('localhost:8000');
-```
-
-- Install dependencies with `npm`.
-
-```bash
-npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery jquery-lazy jquery-unveil validate-js vuedraggable
-npm install
-```
-
-- Build with:
-  - `npm run prod` · to build for production
-  - `npm run dev` · to build for development
-  - `npm run watch` · to rebuild on changes with BrowserSync
-
-## Publish Translations
-
-```bash
-php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=lang
-```
-
-## Publish Views
-
-```bash
-php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
-```
-
-## Subscribers Notifications
-
-Optionally, you can receive new subscriber notifications via email.
-
-- Setup Amazon SES in `config/services.php`:
-
-```php
-	// Amazon SES
-	'ses' => [
-        'key' => 'your-api-key',
-    	'secret' => 'your-secret',
-    	'region' => 'us-east-1',
-	],
-```
-
-- The activate notifications in `config/folio.php`:
-
-```php
-'subscribers' => [
-    'should-notify' => true,
-    'from' => [
-        'email' => 'from@email.com',
-        'name' => 'John McFrom'
-    ],
-    'to' => [
-        'email' => ['to@email.com'],
-        'name' => ['Jane McTo']
-    ]
-],
-```
-
-## Backups
-
-Folio uses `spatie/laravel-backup` to do full app backups containing a database dump and/or all local files.
-
-- Obtain an authorization token at https://www.dropbox.com/developers/apps
-- Add the `dropbox` filesystem.
-- Publish
-
-```php
-        'dropbox' => [
-            'driver' => 'dropbox',
-            'authorization_token' => 'your-token'
-        ],
-```
+- Subscriber email notifications can be configured in `folio.subscribers` and setting up Amazon SES in `services.ses`.
+- Backups can be configured by adding disks to `backup.destination.disks` (having those disks configured in `filesystems`, say [Dropbox](https://www.dropbox.com/developers/apps), Digital Ocean, or S3).
 
 ## License
 
