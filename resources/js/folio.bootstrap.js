@@ -8,6 +8,7 @@ window._ = require('lodash');
 
 window.$ = window.jQuery = require('jquery');
 window.jQuery.Lazy = require('jquery-lazy');
+window.unveil = require('jquery-unveil');
 
 $(function() {
     // lazy-loading
