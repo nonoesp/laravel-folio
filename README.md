@@ -47,29 +47,33 @@ Display your web content with custom templates.
 
 ## Customize Folio assets
 
+You can fully customize the JavaScript and SCSS assets.
+
 - `php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets`
 - Install npm dependencies
 - `npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery jquery-lazy jquery-unveil validate-js vuedraggable`
 - `npm install`
-- Build the assets
+- Build the assets with Laravel Mix and configurate it with `webpack.mix.js`
 - `npm run prod` · to build for production
 - `npm run dev` · to build for development
 - `npm run watch` · to rebuild on changes with BrowserSync
 
-## Customize Assets, Views, Translations, Config
+## Customize Folio's Config, Views, Translations & Assets
+
+Configure Folio by publishing `config/folio.php`.
 
 ```bash
-// JavaScript & SCSS assets
-php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets
+# Config
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=config
 
-// Views
+# Views
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=views
 
-// Translations
+# Translations
 php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=lang
 
-// Config
-php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=config
+# JavaScript & SCSS assets
+php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets
 ```
 
 ## Other
