@@ -49,7 +49,6 @@ class InstallCommand extends Command
         $to = public_path().'/';
 
         foreach (\File::glob(__DIR__.'/../../resources/build/*') as $path) {
-            $this->info($path.' - '.(is_dir($path) ? 'yes' : 'no'));
 
             if (is_dir($path)) {
                 // Directories
