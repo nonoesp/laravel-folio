@@ -45,7 +45,7 @@ Display your web content with custom templates.
 
 - Party!
 
-## Customize Folio assets
+## Build Folio's Assets with Laravel Mix
 
 You can fully customize the JavaScript and SCSS assets.
 
