@@ -1,8 +1,20 @@
-const mix = require('laravel-mix').setPublicPath('resources/assets');
+const mix = require('laravel-mix');
 
-mix.sass('resources/assets-dev/sass/folio.scss', 'nonoesp/folio/css')
-    .js('resources/assets-dev/js/folio.js', 'nonoesp/folio/js')
-    .extract(['vue', 'vue-resource', 'vue-focus', 'jquery', 'jquery-lazy', 'validate-js', 'lodash', 'axios']);
+mix.setPublicPath('resources/build');
+
+mix.sass('resources/sass/folio.scss', 'folio/css')
+    .js('resources/js/folio.js', 'folio/js')
+    .extract([
+        'vue',
+        'vue-resource',
+        'vue-focus',
+        'jquery',
+        'jquery-lazy',
+        'jquery-unveil',
+        'validate-js',
+        'lodash',
+        'axios'
+    ]);
 
 // ..
 

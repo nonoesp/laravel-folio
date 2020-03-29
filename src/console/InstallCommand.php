@@ -34,6 +34,7 @@ class InstallCommand extends Command
         $this->ensureDirectoriesExist();
         $this->symlinkUploadsFolder();
         $this->publishImageAssets();
+        $this->publishWebpackMix();
         
         $this->info('Folio was installed successfully.');
     }
@@ -59,6 +60,21 @@ class InstallCommand extends Command
             copy($origin, $target);
         }
 
+    }
+
+    /**
+     * Copy webpack.mix.js.
+     */
+    protected function publishWebpackMix() {
+        $from = __DIR__.'/../../resources/stubs/webpack.mix.stub';
+        $to = base_path('webpack.mix.js');
+        $backup = $to.'.bak';
+
+        if (\File::exists($to) && !\File::exists($backup)) {
+            rename($to, $backup);
+        }
+
+        copy($from, $to);
     }
 
     /**
