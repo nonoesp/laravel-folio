@@ -1,6 +1,11 @@
 
 ## Release Notes
 
+### 7.x
+
+- Added `folio:install` command.
+- `TODO`
+
 ### 5.8.*
 
 - Add item translations (including properties).
