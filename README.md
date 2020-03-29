@@ -43,6 +43,8 @@ Display your web content with custom templates.
     ];
 ```
 
+- Party!
+
 ## Customize Folio assets
 
 - `php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets`
