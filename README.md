@@ -13,7 +13,7 @@ Display your web content with custom templates.
 
 ## Laravel 7.x
 
-- Add alternate VCS repos for packages without Laravel 7 support.
+- Add alternate VCS repos for packages without Laravel 7 support to `composer.json`.
 
 ```json
 
