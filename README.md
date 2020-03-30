@@ -4,14 +4,9 @@ Display your web content with custom templates.
 
 ## Live Examples
 
-- [Nono.MA](https://nono.ma)
-- [Getting Simple](https://gettingsimple.com)
-- [Lourdes.AC](https://lourdes.ac)
-- [AR-MA](https://ar-ma.net)
-- [Getting Architecture Done](http://gettingarchitecturedone.com/writing)
-- [Nacho.MA](https://nacho.ma)
+[Nono.MA](https://nono.ma) | [Getting Simple](https://gettingsimple.com) | [Lourdes.AC](https://lourdes.ac) | [AR-MA](https://ar-ma.net) | [Getting Architecture Done](http://gettingarchitecturedone.com/writing) | [Nacho.MA](https://nacho.ma)
 
-## Laravel 7.x
+## Installation · Laravel 7.x
 
 - Add alternate VCS repos for packages without Laravel 7 support to `composer.json`.
 
