@@ -152,7 +152,7 @@ Optionally, you can receive new subscriber notifications via email.
 	],
 ```
 
-- The activate notifications in `config/folio.php`:
+- Then activate notifications in `config/folio.php`:
 
 ```php
 'subscribers' => [
