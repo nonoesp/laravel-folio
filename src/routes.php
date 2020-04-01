@@ -25,9 +25,10 @@ use \Illuminate\Support\Str;
 /*----------------------------------------------------------------*/
 /* 404 with session store
 /*----------------------------------------------------------------*/
+
 Route::fallback(function() {
 	return response()->view('errors.404', [], 404);
-  })->middleware('web');
+})->middleware('web');
 
 /*----------------------------------------------------------------*/
 /* LoginController

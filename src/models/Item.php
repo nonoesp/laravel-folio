@@ -23,6 +23,11 @@ class Item extends Model implements Feedable, Searchable
 	public $translatable = ['title', 'text'];
 
 	/**
+	 * @var array
+	 */
+	// public $with = ['properties'];	
+
+	/**
 	 * @var string
 	 */
 	protected $table;
@@ -1035,9 +1040,11 @@ class Item extends Model implements Feedable, Searchable
 
 	public static function bySlug($slug) {
 		if (
-			$item = Item::withTrashed()->whereSlug($slug)->first() or
-			$item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
-			$item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first()
+			$item = Item::withTrashed()
+			->whereSlug($slug)
+			->orWhere('slug', '/'.$slug)
+			->orWhere('slug', '/'.Folio::path().$slug)
+			->first()
 		) {
 			return $item;
 		}
