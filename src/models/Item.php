@@ -21,6 +21,11 @@ class Item extends Model implements Feedable
 	public $translatable = ['title', 'text'];
 
 	/**
+	 * @var array		 * @var array
+	 */
+	public $with = ['properties', 'recipients'];
+
+	/**
 	 * @var string
 	 */
 	protected $table;
@@ -240,7 +245,7 @@ class Item extends Model implements Feedable
      * @return \Nonoesp\Folio\Models\Property
      */
 	public function property($key) {
-		if($property = $this->properties()->where('name', $key)->first()) {
+		if($property = $this->properties->where('name', $key)->first()) {
 				$value = $property->value;
 				if($value || $value != '') {
 					// property exists and has value
@@ -263,11 +268,11 @@ class Item extends Model implements Feedable
      */
 	public function propertyArray($key) {
 
-		$properties = $this->properties()->where('name', $key)->get();
+		$properties = $this->properties->where('name', $key);
 		if($properties->count()) {
 		  return $properties;
 		}
-		return NULL;
+		return [];
 
 	}
 
@@ -276,7 +281,7 @@ class Item extends Model implements Feedable
 		$matching_properties = [];
 		$currentLocale = app()->getLocale();
 
-		foreach($this->properties()->get() as $property) {
+		foreach($this->properties as $property) {
 
 			// Discard if property is localization, otherwise add
 			$parts = explode("--", $property->name);
@@ -399,7 +404,7 @@ class Item extends Model implements Feedable
 	}
 
 	public function isPublic() {
-		return !count($this->recipients()->get());
+		return !count($this->recipients);
 	}
 
 
