@@ -179,15 +179,13 @@ class FolioController extends Controller
 
 	public static function showItem($domain, Request $request, $slug) {
 
-		if($item = Item::bySlug($slug)
-		// $item = Item::withTrashed()->whereSlug($slug)->first() or
-		// $item = Item::withTrashed()->whereSlug('/'.$slug)->first() or
-		// $item = Item::withTrashed()->whereSlug('/'.Folio::path().$slug)->first()
-		) {
-			// Count item visit without altering updated_at
-			$item->timestamps = false;
-			$item->visits++;
-			$item->save();
+		if($item = Item::bySlug($slug)) {
+			if(Auth::guest()) {
+				// Count item visit without altering updated_at
+				$item->timestamps = false;
+				$item->visits++;
+				$item->save();
+			}
 
 			// $domain returns domain without port, e.g. localhost
 			// \Request::getHttpHost() returns domain with port (e.g., localhost:8000)
