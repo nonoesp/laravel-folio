@@ -25,7 +25,7 @@ class Item extends Model implements Feedable, Searchable
 	/**
 	 * @var array
 	 */
-	public $with = ['properties', 'recipients'];	
+	public $with = ['properties', 'recipients', 'tagged'];
 
 	/**
 	 * @var string
