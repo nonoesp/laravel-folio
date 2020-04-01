@@ -23,7 +23,7 @@ class Item extends Model implements Feedable
 	/**
 	 * @var array		 * @var array
 	 */
-	public $with = ['properties', 'recipients'];
+	public $with = ['properties', 'recipients', 'tagged'];
 
 	/**
 	 * @var string
