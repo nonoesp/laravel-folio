@@ -114,12 +114,14 @@
                         $extension = $extension[count($extension) - 1];
 
                         // Construct file path
-                        $filePath = $uploaderPublicFolder.'/'.$basename;
+                        $filePath = Folio::upload($basename);
+
+                        $image = config('folio.imgix') ? imgix($filePath) : $filePath;
                     @endphp
 
-                        <div class="[ grid__item one-whole lap--one-quarter palm--one-third ]">
+                        <div class="[ grid__item one-whole ]">
                             <p>
-                                <a href="{{ $filePath }}" target="_blank">
+                                <a href="{{ $image }}" target="_blank">
                                     {{ $basename }}
                                 </a>
                                 ·
