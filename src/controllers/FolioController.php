@@ -24,62 +24,48 @@ class FolioController extends Controller
 		$published_show = config("folio.published-show");
 		$expected_show = config("folio.expected-show");
 		
-		$published_existing = Item::published()
-							->blog()
-    				   		->visibleFor($twitter_handle)
-    				   		->count();
+		$blog_items = Item::blog()
+							->visibleFor($twitter_handle)
+							->orderBy('published_at', 'DESC');
 
-		$expected_existing = Item::expected()
-						   ->blog()
-    				   	   ->visibleFor($twitter_handle)
-    				       ->count();
+		$blog_items_count = $blog_items->count();
+		$blog_items_published_count = $blog_items->published()->count();
+		$blog_items_expected_count = $blog_items_count - $blog_items_published_count;
 
-		if($published_show > $published_existing) {
-			$published_show = $published_existing;
-		}
-		if($expected_show > $expected_existing) {
-			$expected_show = $expected_existing;
-		}
+		// Cap showed items to existing or specified in config
+		$published_show_count = min([$published_show, $blog_items_published_count]);
+		$expected_show_count = min([$expected_show, $blog_items_expected_count]);
 
-    	$published_left = $published_existing - $published_show;
-    	$expected_left = $expected_existing - $expected_show;
+    	$published_left_count = $blog_items_published_count - $published_show;
+    	$expected_left_count = $blog_items_expected_count - $expected_show;
 
-		// Get Items + Items ids
+		// Get published items
+    	$collection_published = Item::published()
+									->blog()
+									->visibleFor($twitter_handle)
+									->orderBy('published_at', 'DESC')
+									->take($published_show_count)
+									->get();
 
-		$left = Item::published()
-					->blog()
-					->visibleFor($twitter_handle)
-					->count() - $published_show;
-
-    	$items = Item::published()
-					->blog()
-					->visibleFor($twitter_handle)
-					->orderBy('published_at', 'DESC')
-					->skip(0)
-					->take($published_show)
-					->get();
-
-		$ids_array = array();
-
-  		  if ($left > 0)
-  		  {
+		// Get ids of published items left
+		$ids = [];
+		if ($published_left_count > 0)
+		{
 			$ids = Item::published()
 						->blog()
 						->visibleFor($twitter_handle)
 						->select('id','published_at')
 						->orderBy('published_at', 'DESC')
 						->skip($published_show)
-						->take($left)
-						->get();
+						->take($published_left_count)
+						// Only keep an array of ids
+						// e.g. [23, 19, 5, 2]
+						->pluck('id')
+						->toArray();
+		}
 
-			foreach($ids as $id)
-			{
-				array_push($ids_array, $id->id);
-			}
-	    }
-
-		// Get Expected Items
-		$items_expected = Item::expected()
+		// Get expected items
+		$collection_expected = Item::expected()
 								->blog()
 								->visibleFor($twitter_handle)
 								->orderBy('published_at', 'DESC')
@@ -87,12 +73,12 @@ class FolioController extends Controller
 								->get();
 
 		return view(config('folio.view.collection'), [
-			'collection' => $items,
-			'ids' => $ids_array,
-			'items_expected' => $items_expected,
+			'collection' => $collection_published,
+			'collection_expected' => $collection_expected,
+			'ids' => $ids,
 			'header_description' => trans('folio.slogan'),
 		]);
-	}
+	}	
 
 	// Simplify making showHome a generic function, then call it directly from route or from Controller function
 	public static function showItemTag($domain, $tag) {
@@ -126,8 +112,8 @@ class FolioController extends Controller
 			$expected_show = $expected_existing;
 		}
 
-    	$published_left = $published_existing - $published_show;
-    	$expected_left = $expected_existing - $expected_show;
+    	$published_left_count = $published_existing - $published_show;
+    	$expected_left_count = $expected_existing - $expected_show;
 
     	// Get content
 
@@ -140,7 +126,7 @@ class FolioController extends Controller
 
 		$ids_array = array();
 
-  		if ($published_left > 0)
+  		if ($published_left_count > 0)
   		{
 
 			$ids = Item::withAnyTag($tag)
@@ -149,7 +135,7 @@ class FolioController extends Controller
 			              ->select('id','published_at')
 	    				  ->orderBy('published_at', 'DESC')
 	    				  ->skip($published_show)
-	    				  ->take($published_left)
+	    				  ->take($published_left_count)
 	    				  ->get();
 
 			foreach($ids as $id)
