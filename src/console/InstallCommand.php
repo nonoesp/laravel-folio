@@ -13,7 +13,7 @@ class InstallCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'folio:install';
+    protected $signature = 'folio:install {--symlink} {--y|force}';
 
     /**
      * The console command description.
@@ -31,13 +31,22 @@ class InstallCommand extends Command
      */
     public function handle()
     {
-        $this->ensureDirectoriesExist();
-        $this->symlinkUploadsFolder();
-        $this->publishImageAssets();
-        $this->publishBuildAssets();
-        $this->publishWebpackMix();
-        
-        $this->info('Folio was installed successfully.');
+
+        $this->ensureDirectoriesExist();        
+
+        if ($this->option('symlink')) {
+            
+            $this->symlinkUploadsFolder();
+            
+        } else {
+            
+            $this->symlinkUploadsFolder();
+            $this->publishImageAssets();
+            $this->publishBuildAssets();
+            $this->publishWebpackMix();
+            $this->info('Folio was installed successfully.');
+        }
+
     }
 
     /**
@@ -94,11 +103,20 @@ class InstallCommand extends Command
         $to = base_path('webpack.mix.js');
         $backup = $to.'.bak';
 
-        if (\File::exists($to) && !\File::exists($backup)) {
-            rename($to, $backup);
+        if (!\File::exists($to) ||
+            (
+                $this->option('force') ||
+                $this->confirm('webpack.mix.js already exists. Do you want to overwrite it?')
+            )
+            ) {
+
+                // if (\File::exists($to) && !\File::exists($backup)) {
+                //     rename($to, $backup);
+                // }                
+                
+                copy($from, $to);
         }
 
-        copy($from, $to);
     }
 
     /**
@@ -155,9 +173,27 @@ class InstallCommand extends Command
     protected function symlinkUploadsFolder()
     {
         $publicFolder = public_path(config('folio.uploader.public-folder'));
+
+        if (is_dir($publicFolder) &&
+            (
+            $this->option('force') ||
+            $this->confirm('Symlink destination is not empty. Do you want to overwrite it?')
+            )
+        ) {
+                try {
+                    unlink($publicFolder);
+                }
+                catch (\Exception $e) {
+                    $this->error('Could not delete '.$publicFolder);
+                }
+        }
+
         if (! is_dir($publicFolder)) {
             $uploadsFolder = storage_path('app/public/'.config('folio.uploader.uploads-folder'));
             symlink($uploadsFolder, $publicFolder);
+            if ($this->option('symlink')) {
+                $this->info('Symlink was created successfully.');
+            }
         } else {
             $this->comment('Symlink already exists.');
         }
