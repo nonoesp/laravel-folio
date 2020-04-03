@@ -71,11 +71,15 @@
                         // Construct file path
                         $filePath = $uploaderPublicFolder.'/'.$basename;
 
+                        // Veil
+                        $veil = Folio::asset('images/veil.gif');
+
                         // Construct image path
                         $imageHighRes = $filePath;
                         if (config('folio.imgix')) {
+                            $veil = imgix($veil);
                             $imageHighRes = imgix($filePath);
-                            $image = imgix($filePath, ['w' => 300, 'q' => 90]);
+                            $image = imgix($filePath, ['w' => 250, 'q' => 60]);
                         } else {
                             $image = $filePath;
                         }
@@ -83,7 +87,7 @@
 
                         <div class="[ grid__item one-sixth lap--one-quarter palm--one-third ]">
                                 <a href="{{ $imageHighRes }}" target="_blank">
-                                    <img src="{{ $image }}" style="width:100%">
+                                <img src="{{ $veil }}" data-src="{{ $image }}" style="width:100%">
                                 </a>
                                 <br/>
                                 {{ $basename }}
