@@ -1,6 +1,6 @@
 {
     "name": "laravel-folio",
-    "version": "5.5.0",
+    "version": "7.0.0",
     "description": "Create webs to publish your content with custom templates.",
     "main": "index.js",
     "scripts": {
