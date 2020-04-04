@@ -11,14 +11,19 @@ window.jQuery.Lazy = require('jquery-lazy');
 window.unveil = require('jquery-unveil');
 
 $(function() {
-    // lazy-loading
-    $(".lazy").Lazy({
-      afterLoad: function(element) {
-          $(element).addClass('lazy--visible');
-      }
-    });
-    // data-src > src
-    $("img").unveil(1000);
+  // lazy-loading
+  $("img.lazy").Lazy({
+    afterLoad: function(element) {
+      $(element).addClass('lazy--visible').hide();
+      const url = $(element).attr('src');
+      $(element).siblings('div.lazy').css(
+        'background-image',
+        `url('${url}')`).addClass('lazy--visible');
+    },
+    visibleOnly: true    
+  });
+  // data-src > src
+  $("img:not(.lazy)").unveil(500);
 });
 
 /**
