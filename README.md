@@ -1,6 +1,6 @@
 <img src="assets/folio@2x.gif?reload2" alt="Folio for Laravel logo." width="200px">
 
-Display your web content with custom templates.
+A customizable Laravel content-management system. (Currently in beta.)
 
 ## Live Examples
 
