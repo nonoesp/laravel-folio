@@ -49,6 +49,7 @@
         "spatie/flysystem-dropbox": "^1.2",
         "spatie/laravel-backup": "^6.8",
         "spatie/laravel-searchable": "dev-master",
+        "spatie/laravel-newsletter": "^4.8",
         "rap2hpoutre/laravel-log-viewer": "^1.4",
         "rezozero/commonmark-ext-footnotes": "^0.1",
         "rtconner/laravel-tagging": "~4.0",

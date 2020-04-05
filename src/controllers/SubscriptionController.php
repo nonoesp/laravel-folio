@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Subscriber;
 use Thinker;
 use Mail;
+use \Spatie\Newsletter\Newsletter;
 
 class SubscriptionController extends Controller
 {
@@ -112,7 +113,7 @@ class SubscriptionController extends Controller
 
           try {
             // Subscribe
-            \Newsletter::subscribeOrUpdate(
+            Newsletter::subscribeOrUpdate(
               $email,
               [
                 // Here we need to reference the merge tags (e.g. 'NAME')
