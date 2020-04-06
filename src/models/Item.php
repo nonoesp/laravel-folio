@@ -434,7 +434,7 @@ class Item extends Model implements Feedable, Searchable
 		} else if($this->videoThumbnail()) {
 			$thumbnail = $this->videoThumbnail();
 		} else {
-			$thumbnail = Folio::asset('images/veil.gif');
+			$thumbnail = null;
 		}
 
 		// Make path absolute (add domain) when thumbnail is relative
