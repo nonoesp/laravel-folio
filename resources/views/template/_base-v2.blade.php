@@ -8,7 +8,7 @@
         <script>
             {{ 'ids = '.json_encode($ids).';' }}
         </script>
-    @stop
+    @endpush
 @endif
 
 <?php
