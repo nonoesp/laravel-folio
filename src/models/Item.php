@@ -9,6 +9,7 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Spatie\Regex\Regex;
+use Illuminate\Support\Arr;
 
 class Item extends Model implements Feedable, Searchable
 {
@@ -735,9 +736,9 @@ class Item extends Model implements Feedable, Searchable
 		}
 
 		// Deconstruct options or fallback to default values
-		$veilImages = Item::arrayValueOrDefault($options, 'veilImages', true);
-		$parseExternalLinks = Item::arrayValueOrDefault($options, 'parseExternalLinks', false);
-		$stripTags = Item::arrayValueOrDefault($options, 'stripTags', []);
+		$veilImages = Arr::pull($options, 'veilImages', true);
+		$parseExternalLinks = Arr::pull($options, 'parseExternalLinks', false);
+		$stripTags = Arr::pull($options, 'stripTags', []);
 
 		// Does the text have an excerpt to trim?
 		$text = $this->text;
@@ -858,13 +859,6 @@ class Item extends Model implements Feedable, Searchable
 	public function disqusPermalink() {
 		return str_replace("https", "http", \Request::root().'/disqus/'.$this->id);
 	}
-	
-	public static function arrayValueOrDefault($array, $key, $default = null) {
-		if(array_key_exists($key, $array)) {
-			return $array[$key];
-		}
-		return $default;
-	}
 
 	/**
 	 * Returns an array of all existing tag names in all items.
@@ -892,6 +886,7 @@ class Item extends Model implements Feedable, Searchable
 	public function collection() {
 		return Item::makeCollection([
 			'tags' => $this->stringProperty('collection'),
+			'select' => $this->stringProperty('collection-select', '*'),
 			'sort' => $this->stringProperty('collection-sort', 'published_at'),
 			'order' => $this->stringProperty('collection-order', 'DESC'),
 			'limit' => $this->intProperty('collection-limit'),
@@ -914,13 +909,14 @@ class Item extends Model implements Feedable, Searchable
 	 */
 	public static function makeCollection($params) {
 
-		$tags = Item::arrayValueOrDefault($params, 'tags');
-		$sort = Item::arrayValueOrDefault($params, 'sort', 'published_at');
-		$order = Item::arrayValueOrDefault($params, 'order', 'DESC');
-		$limit = Item::arrayValueOrDefault($params, 'limit');
-		$showAll = Item::arrayValueOrDefault($params, 'showAll', false);
-		$showHidden = Item::arrayValueOrDefault($params, 'showHidden', false);
-		$showScheduled = Item::arrayValueOrDefault($params, 'showScheduled', false);
+		$tags = Arr::get($params, 'tags');
+		$select = Arr::get($params, 'select');
+		$sort = Arr::get($params, 'sort', 'published_at');
+		$order = Arr::get($params, 'order', 'DESC');
+		$limit = Arr::get($params, 'limit');
+		$showAll = Arr::get($params, 'showAll', false);
+		$showHidden = Arr::get($params, 'showHidden', false);
+		$showScheduled = Arr::get($params, 'showScheduled', false);
 		$collection = [];
 
 		$shouldShowTrashed = false;
@@ -929,6 +925,8 @@ class Item extends Model implements Feedable, Searchable
 		}
 
 		$published = function($query) { $query->published(); };
+
+		$select = explode(',', $select);
 
     	if(isset($tags)) {
         	$tagsArray = explode(",", $tags);
@@ -940,12 +938,14 @@ class Item extends Model implements Feedable, Searchable
 				if($limit) {
 					if($shouldShowTrashed) {
 						$collection = Item::withTrashed()
+											->select($select)
 											->when(!$showScheduled, $published) // formerly ->published()
 											->orderBy($sort, $order)
 											->take($limit)
 											->get();
 					} else {
-						$collection = Item::when(!$showScheduled, $published) // formerly published()
+						$collection = Item::select($select)
+											->when(!$showScheduled, $published) // formerly published()
 											->orderBy($sort, $order)
 											->take($limit)
 											->get();	
@@ -953,11 +953,13 @@ class Item extends Model implements Feedable, Searchable
 				} else {
 					if($shouldShowTrashed) {
 						$collection = Item::withTrashed()
+											->select($select)
 											->when(!$showScheduled, $published) // formerly ->published()
 											->orderBy($sort, $order)
 											->get();
 					} else {
-						$collection = Item::when(!$showScheduled, $published) // formerly published()
+						$collection = Item::select($select)
+						->when(!$showScheduled, $published) // formerly published()
 											->orderBy($sort, $order)
 											->get();
 					}
@@ -965,13 +967,15 @@ class Item extends Model implements Feedable, Searchable
             } else {
 				if($limit) {
 		              $collection = Item::blog()
-					  					->when(!$showScheduled, $published) // formerly ->published()
+										  ->select($select)
+										  ->when(!$showScheduled, $published) // formerly ->published()
 										->orderBy($sort, $order)
 										->take($limit)
 										->get();					
 				} else {
 					   $collection = Item::blog()
-					   					   ->when(!$showScheduled, $published) // formerly ->published()
+											  ->select($select)
+											  ->when(!$showScheduled, $published) // formerly ->published()
 										   ->orderBy($sort, $order)
 					   					   ->get();
 				}
@@ -1062,8 +1066,8 @@ class Item extends Model implements Feedable, Searchable
 
 	public function summary($params = ['limit' => 159, 'property' => 'summary']) {
 
-		$limit = Item::arrayValueOrDefault($params, 'limit', 159);
-		$property = Item::arrayValueOrDefault($params, 'property', 'summary');
+		$limit = Arr::get($params, 'limit', 159);
+		$property = Arr::get($params, 'property', 'summary');
 
         if ($summary = $this->stringProperty($property)) {
             return $summary;

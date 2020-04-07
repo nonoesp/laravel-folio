@@ -1,23 +1,19 @@
 
 @extends(config("folio.view.layout"))
 
-<?php
-if(isset($collection)) {
-  $items = $collection;
-}
-?>
+{{-- Duplicate of _base.blade.php without overloading collection views --}}
 
-@section('scripts')
-    @if(isset($items))
+@if (isset($ids))
+    @push('scripts')
         <script>
-          @if (isset($ids))
             {{ 'ids = '.json_encode($ids).';' }}
-          @endif
         </script>
-    @endif
-@stop
+    @stop
+@endif
 
 <?php
+    print_r($collection[0]);
+
     // keep pre-set from child views
     if(isset($header_data)) {
       $keep_header_data = $header_data;
@@ -54,7 +50,6 @@ if(isset($collection)) {
     // Footer
     $footer_credits = config('folio.footer-credits');
     $hide_footer = false;
-    // TODO $footer_data = config('folio.footer.data';)
     $footer_data = [
       'hide_subscribe' => false,
       'hide_credits' => false,
@@ -179,7 +174,6 @@ if(isset($collection)) {
         $footer_data[$key] = $val;
       }
     }
-
 ?>
 
       {{----------------------------------------}}
@@ -187,37 +181,7 @@ if(isset($collection)) {
 
       @if($folio_type == 'MULTIPLE_WRITING_TYPE')
 
-        @section('content')
-
-        <div class="[ o-band ] [ u-pad-t-5x u-pad-b-1x ]">
-          <div class="[ o-wrap ]" style="max-width: 640px">
-
-          @if(isset($items_expected))
-            @foreach($items_expected as $item)
-              <div class="[ c-item ] [ u-pad-t-0x u-pad-b-0x ]">
-                <p>Expected — {{ $item->title }}</p>
-              </div>
-            @endforeach
-          @endif
-
-          @foreach($items as $item)
-
-            {!! view('folio::partial.c-item')->
-                     with(['item' => $item,
-                           'item_type' => 'SUMMARY_ITEM_TYPE',
-                           'isTitleLinked' => 'true',
-                           'class' => '']) !!}
-
-          @endforeach
-
-          @if(isset($ids) and count($ids) > 0)
-              {!! view('folio::partial.c-load-more', ['ids' => $ids]) !!}
-          @endif
-
-          </div>
-        </div>
-
-        @stop
+    
 
       @endif
 
@@ -228,21 +192,6 @@ if(isset($collection)) {
 
         @section('floating.menu')
           {!! view('folio::partial.c-floating-menu', ['buttons' => ['<i class="fa fa-pencil"></i>' => $item->editPath()]]) !!}
-        @stop
-
-        @section('content')
-
-        <div class="[ o-band ] [ u-pad-t-5x u-pad-b-1x ]">
-          <div class="[ o-wrap ]" style="max-width: 640px">
-
-              {!! view('folio::partial.c-item', [
-                'item' => $item,
-                'class' => ''
-              ]) !!}
-
-          </div>
-        </div>
-
         @stop
 
 @section('metadata')
