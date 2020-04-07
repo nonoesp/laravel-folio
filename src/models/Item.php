@@ -988,6 +988,7 @@ class Item extends Model implements Feedable, Searchable
 				if($limit) {
 						if($shouldShowTrashed) {
 							$collection = Item::withTrashed()
+											  ->select($select)
 											  ->withAnyTag($tagsArray)
 											  ->when(!$showScheduled, $published) // formerly ->published()
 											  ->orderBy($sort, $order)
@@ -995,7 +996,8 @@ class Item extends Model implements Feedable, Searchable
   											  ->get();	
 						} else {
 							$collection = Item::withAnyTag($tagsArray)
-							->when(!$showScheduled, $published) // formerly ->published()
+											  ->select($select)
+											  ->when(!$showScheduled, $published) // formerly ->published()
 											  ->orderBy($sort, $order)
 											  ->take($limit)
 											  ->get();	
@@ -1004,11 +1006,13 @@ class Item extends Model implements Feedable, Searchable
 					if($shouldShowTrashed) {
 						$collection = Item::withTrashed()
 										  ->withAnyTag($tagsArray)
+										  ->select($select)
 										  ->when(!$showScheduled, $published) // formerly ->published()
 										  ->orderBy($sort, $order)
 										  ->get();			
 					} else {
 						$collection = Item::withAnyTag($tagsArray)
+										  ->select($select)
 										  ->when(!$showScheduled, $published) // formerly ->published()
 										  ->orderBy($sort, $order)
 										  ->get();						
@@ -1018,13 +1022,15 @@ class Item extends Model implements Feedable, Searchable
 				if($limit) {
 		              $collection = Item::withAnyTag($tagsArray)
 										->blog()
+										->select($select)
 										->when(!$showScheduled, $published) // formerly ->published()
 										->orderBy($sort, $order)
 										->take($limit)
 										->get();					
 				} else {	
               		$collection = Item::withAnyTag($tagsArray)
-					  				  ->blog()
+										->blog()
+										->select($select)
 									  ->when(!$showScheduled, $published) // formerly ->published()
 									  ->orderBy($sort, $order)
 									  ->get();
