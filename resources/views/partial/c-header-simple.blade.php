@@ -14,7 +14,7 @@
   
 	$defaults = [
 		'is_navigation_hidden' => false,
-		'is_media_hidden' => false,
+		'is_media_hidden' => true,
 		'image' => null,
   		'title' => null,
   		'title_svg' => null,
