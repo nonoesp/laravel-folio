@@ -26,8 +26,13 @@ use \Illuminate\Support\Str;
 /* 404 with session store
 /*----------------------------------------------------------------*/
 
-Route::fallback(function() {
+Route::fallback(function(\Illuminate\Http\Request $request) {
+
+	// Log 404 errors to 404.log if channel exists (otherwise fallback to default)
+	$channel = \Illuminate\Support\Arr::has(config('logging.channels'), '404') ? '404' : 'single';
+	\Log::channel($channel)->info('404 → '.$request->url());
 	return response()->view('errors.404', [], 404);
+
 })->middleware('web');
 
 /*----------------------------------------------------------------*/
