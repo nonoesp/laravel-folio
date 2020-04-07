@@ -12,8 +12,6 @@
 @endif
 
 <?php
-    print_r($collection[0]);
-
     // keep pre-set from child views
     if(isset($header_data)) {
       $keep_header_data = $header_data;
