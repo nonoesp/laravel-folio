@@ -59,7 +59,7 @@
 
 @if($folio_typekit)
 	<!-- TypeKit -->
-	<link rel="dns-prefetch" href="http://use.typekit.com">
+	<link rel="dns-prefetch" href="http://use.typekit.net">
 	<script type="text/javascript" src="//use.typekit.net/{{ $folio_typekit }}.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 @endif
