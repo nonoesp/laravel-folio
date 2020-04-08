@@ -38,11 +38,18 @@ class SetLocales
         }
 
         // Date
-        $supported_langs = ['ar', 'az', 'bd', 'bg', 'ca', 'cs', 'cy', 'da', 'de', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fr', 'gl', 'he', 'hi', 'hr', 'hu', 'id', 'is', 'it', 'ja', 'ka', 'ko', 'lt', 'lv', 'mk', 'ms', 'nl', 'no', 'pl', 'pt', 'ro', '-ru', 'sh', 'sk', 'sl', 'sq', 'sr', 'sv', 'th', 'tk', 'tr', 'uk', 'vi'];
+        $supported_langs = [
+            'ar', 'az', 'bd', 'bg', 'ca', 'cs', 'cy', 'da', 'de',
+            'el', 'en', 'eo', 'es', 'et', 'eu', 'fa', 'fi', 'fr',
+            'gl', 'he', 'hi', 'hr', 'hu', 'id', 'is', 'it', 'ja',
+            'ka', 'ko', 'lt', 'lv', 'mk', 'ms', 'nl', 'no', 'pl',
+            'pt', 'ro', '-ru', 'sh', 'sk', 'sl', 'sq', 'sr', 'sv',
+            'th', 'tk', 'tr', 'uk', 'vi'];
+
       	if(in_array($browser_lang, $supported_langs)) {
       		Date::setLocale($browser_lang);
       	} else {
-      		Date::setLocale('en');
+      		Date::setLocale(config('app.fallback_locale', 'en'));
       	}
 
         return $next($request);
