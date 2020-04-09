@@ -39,7 +39,7 @@ class ItemClone extends Command
                 }
                 // Slug
                 $new_item->slug_title = null;
-                $new_item->slug = \Nonoesp\Thinker\Thinker::uniqueSlugWithTableAndTitle(\Folio::table('items'), $new_item->title);
+                $new_item->slug = \Thinker::uniqueSlugWithTableAndTitle(\Folio::table('items'), $new_item->title);
                 // Save                
                 $new_item->save();
                 $new_item->delete();
