@@ -507,7 +507,7 @@ methods: {
 			  'js--encoded-path',
 			  'data-clipboard-text="'.$item->encodedPath(true).'"'],
 		  '<i class="fa fa-eye"></i>' => [
-			  '/'.$item->path(),
+			  $item->path(),
 			  'js--item-path',
 			  '']
 		  ]]) !!}

@@ -1,6 +1,6 @@
 <?php
 	$date = new Date($item->published_at);
-	$href = '/'.$item->path();
+	$href = $item->path();
 	$target = "";
 	$class_is_external = '';
 	if($item->link != "") {

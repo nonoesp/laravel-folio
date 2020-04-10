@@ -301,7 +301,7 @@ class FolioController extends Controller
              }
 
              // link
-             $URL = \URL::to($request->root().'/'.$item->path());
+             $URL = \URL::to($request->root().$item->path());
 			 $itemURL = $URL;
              if($item->link) {
                $URL = $item->link;

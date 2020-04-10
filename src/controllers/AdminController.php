@@ -390,7 +390,7 @@ class AdminController extends Controller
 
 		return response()->json([
 			'message' => 'Post updated successfully!',
-			'path' => '/'.$item->path()
+			'path' => $item->path()
 		], 200);
 
 	}

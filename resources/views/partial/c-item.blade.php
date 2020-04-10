@@ -35,7 +35,7 @@
 
 	  {{-- Title --}}
 	  @if (isset($isTitleLinked))
-	  	<h1><a href="/{{$item->path()}}">{{ Thinker::title($item->title) }}</a></h1>
+	  	<h1><a href="{{ $item->path() }}">{{ Thinker::title($item->title) }}</a></h1>
 	  @else
 	    <h1>{{ Thinker::title($item->title) }}</h1>
 	  @endif

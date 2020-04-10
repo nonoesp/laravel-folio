@@ -115,28 +115,28 @@ class Item extends Model implements Feedable, Searchable
 		return $domain;
 	}
 
+	public function uri() {
+		$uri = Folio::path().$this->slug;
+		if($this->slug[0] == "/") {
+			$uri = substr($this->slug, 1, strlen($this->slug)-1);
+		}
+		return $uri;
+	}
+
 	// The public path of the item
 	// (Returns 404 if the post is hidden or scheduled for the future)
 	public function path($absolute = false) {
-		$path = Folio::path().$this->slug;
-		if($this->slug[0] == "/") {
-			$path = substr($this->slug, 1, strlen($this->slug)-1);
-		}
 		if (
 			$absolute ||
 			$this->domain() != \Request::getHttpHost()
 		) {
-			$path = '//'.$this->domain().'/'.$path;
-		}		
-		return $path;
+			return $this->URL();
+		}
+		return '/'.$this->uri();
 	}
 
 	public function sharePath($absolute = true) {
-		$slug = $this->slug;
-		if($this->slug[0] == "/") {
-			$slug = substr($this->slug, 1, strlen($this->slug)-1);
-		}
-		$path = 'share/'.$slug;
+		$path = 'share/'.$this->uri();
 		if (
 			$absolute ||
 			$this->domain() != \Request::getHttpHost()
@@ -148,12 +148,8 @@ class Item extends Model implements Feedable, Searchable
 
 	// The public URL of the item
 	public function URL() {
-		$protocol = 'http:';
-		if (\Request::secure())
-		{
-			$protocol = 'https:';
-		}
-		return $protocol.$this->path(true);
+		$protocol = \Request::secure() ? 'https://' : 'http://';
+		return $protocol.$this->domain().'/'.$this->uri();
 	}
 
 	// An encoded path that provides access to hidden items
