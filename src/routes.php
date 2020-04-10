@@ -220,6 +220,9 @@ Route::group([
 
 	}
 
+	// Item preview (beta)
+	Route::get('/preview/{id}/{template}/{stripTags?}/{locale?}/{hash?}', 'Nonoesp\Folio\Controllers\FolioController@getItemPreview');
+
 }); // close folio general domain pattern group
 
 

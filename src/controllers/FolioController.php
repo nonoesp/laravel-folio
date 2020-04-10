@@ -269,5 +269,45 @@ class FolioController extends Controller
 		}
 		return view('folio::profile', ['user' => $user]);
 	}
+
+	public static function getItemPreview($domain, Request $request,
+	$id, $template, $stripTags = '', $locale = 'undefined', $hash = '') {
+
+		if ($locale && $locale != 'undefined') {
+			app()->setLocale($locale);
+		}
+
+		$pathStripTags = $stripTags == '' ? $pathStripTags = 'undefined' : $stripTags;
+
+		$item = Item::withTrashed()->find($id);
+		
+		if (!$item) {
+			return 'Item id '.$id.' does not exist.';
+		}
+
+		$template = 'template.'.$template;
+		$stripTags = explode(',', $stripTags);
+		$isAdmin = $user = \Auth::user() and $user->is_admin;
+
+		$pathArray = explode('/', $request->path());
+		$path = join(array_slice($pathArray, 0, 3), "/");
+
+		$pathHash = \Hashids::encode($item->id);
+
+		$secretLink = '//'.$request->getHttpHost().'/'.$path.'/'.$pathStripTags.'/'.$locale.'/'.$pathHash;
+
+		if ($isAdmin or $pathHash == $hash) {
+			echo '<a href="'.$secretLink.'"><center><span class="u-text-align--center u-opacity--half u-font-size--a">'.$secretLink.'</span></center></a>';
+		} else {
+			return response()->view('errors.404', [], 404);
+		}
+
+		if (!view()->exists($template)) {
+			return "Template ".$template." doesn't exist";
+		}
+
+		return view($template, ['item' => $item, 'stripTags' => $stripTags]);
+
+	}
 	
 }
