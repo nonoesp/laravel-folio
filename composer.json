@@ -51,7 +51,7 @@
         "spatie/laravel-searchable": "dev-master",
         "spatie/laravel-newsletter": "^4.8",
         "rap2hpoutre/laravel-log-viewer": "^1.4",
-        "rezozero/commonmark-ext-footnotes": "^0.1",
+        "rezozero/commonmark-ext-footnotes": "^1.0.0",
         "rtconner/laravel-tagging": "~4.0",
         "symfony/intl": "^5.0",
         "webuni/commonmark-attributes-extension": "^1.0.0",
