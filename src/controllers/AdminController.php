@@ -395,4 +395,30 @@ class AdminController extends Controller
 
 	}
 
+	/**
+	 * Allows to remotely edit the text of an item.
+	 * Requires valid id, text, and apiKey.
+	 * Requires folio-remote to be set to true.
+	 * Accepts versioning/versionable set to false
+	 */
+	function postItemSetText(Request $request) {
+
+		$id = $request->input('id');
+		$item = Item::withTrashed()->where('id', '=', $id)->first();
+		if (!$item) {
+		  return;
+		}
+		$apiKey = $request->input('apiKey');
+		// Edit Item text if remote-edit enabled and api key is valid
+		if($item->boolProperty('remote-edit') && \Hash::check($apiKey, env('FOLIO_REMOTE_KEY'))) {
+		  if(!$item->boolProperty('versionable', true) || !$item->boolProperty('versioning', true)) {
+			$item->disableVersioning();
+		  }
+		  $item->text = $request->input('text');
+		  $item->save();
+		}
+		return;
+
+	}
+
 }

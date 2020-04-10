@@ -158,6 +158,9 @@ Route::group(['middleware' => ['web']], function () {
 // SubscriptionController (outside controller to allow cross-domain subscription)
 Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create');
 
+// Remote API · Requires to be excluded in VerifyCrsfToken middleware
+Route::post('api/item/set-text', 'Nonoesp\Folio\Controllers\AdminController@postItemSetText');
+
 /*
 * Create a domain pattern if provided in config.php
 * Otherwise allow the current domain (i.e., any domain)
