@@ -3,6 +3,7 @@
 	$href = $item->path();
 	$target = "";
 	$class_is_external = '';
+
 	if($item->link != "") {
 		$href = $item->link;
 		if(substr($item->link, 0,4) == 'http') {
@@ -11,6 +12,7 @@
 			$source = explode("/", $item->link)[2];
 		}
 	}
+
 	$class_is_tagged = '';
 	if($item->tagNames()) {
 		$class_is_tagged = '[ is-tagged ]';
@@ -33,8 +35,8 @@
 
   		{{-- Title --}}
   		<h1 class="{{$class_is_external}}">
-        {{ Thinker::title($item->title) }}
-      </h1>
+        	{{ Thinker::title($item->title) }}
+      	</h1>
 
   		{{-- Date --}}
   		<p class="[ c-item-li__date ]">
@@ -49,7 +51,13 @@
 					{{ Html::link('', trans('folio::base.subscribe'), ['class' => 'js--subscribe-link']) }}
 					{{ trans('folio::base.to-be-notified') }}
 				@else
-        	<span>{{ $item->date('F Y') }}@isset($source) · {{$source}}@endisset</span>
+        	<span>
+				<a href="{{ $item->path() }}">{{ $item->date('F Y') }}</a>
+				@isset($source)
+				·
+				<a href="{{ $href }}" target="_">{{ $source }}</a>				
+				@endisset
+			</span>
 				@endif
   		</p>
 
