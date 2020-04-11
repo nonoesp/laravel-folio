@@ -9,8 +9,7 @@ return [
 	'load-more' => 'cargar más',
 	'continue-reading' => 'Leer&nbsp;Más…',
 	'receive-our-posts' => 'Recibe nuestras publicaciones en tu email.',
-	'newsletter-privacy' => 'Al pulsar el botón de arriba para enviar este formulario,
-	entiendes que la información que proporciones será transferida a MailChimp para ser procesada de acuerdo a su <a href="https://mailchimp.com/legal/privacy/">Política de Privacidad</a> y <a href="https://mailchimp.com/legal/terms/">Términos</a>.',
+	'newsletter-privacy' => 'Sujeto a la <a href="https://mailchimp.com/legal/privacy/" style="opacity:0.6">Política&nbsp;de&nbsp;Privacidad</a> y a los <a href="https://mailchimp.com/legal/terms/" style="opacity:0.6">Términos</a> de MailChimp.',
 	'your-email-address' => 'Tu email',
 
 	// folio.subscribe.js
