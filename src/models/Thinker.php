@@ -394,7 +394,7 @@ class Thinker {
 		}
 		else
 		{
-		$ip=$_SERVER['REMOTE_ADDR'];
+		$ip=$_SERVER['REMOTE_ADDR'] ?? '127.0.0.1';
 		}
 		return $ip;
 	}
