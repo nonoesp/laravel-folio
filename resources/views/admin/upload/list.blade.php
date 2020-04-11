@@ -47,7 +47,7 @@
                 $extension = explode('.', $basename);
                 $extension = $extension[count($extension) - 1];
                 
-                $isVideo = in_array($extension, ['mp4', 'mov']);
+                $isVideo = in_array($extension, ['mp4', 'mov', 'webm']);
                 if ($isVideo) {
                     array_push($videos, $filename);
                     continue;
