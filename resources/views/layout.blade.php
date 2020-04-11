@@ -51,7 +51,6 @@
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui"/>
 	<title>{{ $site_title ?? config('folio.title') }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
-	<link rel="apple-touch-icon" sizes="144x144" href="/appicon.png">
 	<link rel="stylesheet" type="text/css" href="{{ $folio_css }}">
 
 	<!-- CSRF Token -->
