@@ -906,7 +906,7 @@ class Item extends Model implements Feedable, Searchable
 	public static function makeCollection($params) {
 
 		$tags = Arr::get($params, 'tags');
-		$select = Arr::get($params, 'select');
+		$select = Arr::get($params, 'select', '*');
 		$sort = Arr::get($params, 'sort', 'published_at');
 		$order = Arr::get($params, 'order', 'DESC');
 		$limit = Arr::get($params, 'limit');
