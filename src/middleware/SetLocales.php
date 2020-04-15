@@ -44,7 +44,7 @@ class SetLocales
             'gl', 'he', 'hi', 'hr', 'hu', 'id', 'is', 'it', 'ja',
             'ka', 'ko', 'lt', 'lv', 'mk', 'ms', 'nl', 'no', 'pl',
             'pt', 'ro', '-ru', 'sh', 'sk', 'sl', 'sq', 'sr', 'sv',
-            'th', 'tk', 'tr', 'uk', 'vi'];
+            'th', 'tk', 'tr', 'vi'];
 
       	if(in_array($browser_lang, $supported_langs)) {
       		Date::setLocale($browser_lang);
