@@ -6,12 +6,15 @@
 --}} @if($show_arrow) js--scroll-over @endif{{--
 --}} ]">
 
-	<div class="[ c-cover__image {{--
---}} @if(isset($isLazy)) lazy @endif{{--
---}} ]"
---}} @if(isset($image) && isset($isLazy)) data-src="{{ $image }}" {{--
---}} @elseif(isset($image)) style="background-image:url('{!! $image !!}')" {{--
---}} @elseif(isset($background_color)) style="background-color:{{$background_color}}" @endif></div>
+	@isset($isLazy)
+		<img class="[  lazy  ]" data-src="{!! $image !!}">
+		<div class="[  lazy  ] [  c-cover__image  ]"></div>
+	@else
+		<div class="[ c-cover__image ]" style="
+		@isset($image) style="background-image:url('{!! $image !!}') @endisset
+		@isset($background_color) style="background-color:{{ $background_color }} @endif
+		"></div>
+	@endisset
 
 	<div class="c-cover__fade"></div>
 
