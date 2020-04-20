@@ -76,8 +76,9 @@ if(!isset($subscribe_button_text)) {
 
     @if(!isset($hide_terms))
        <p class="[ js--subscribe__label-privacy ]{{--
-             --}}[ u-font-size--70 u-opacity--half u-select-none ]{{--
-             --}}[ u-text-align--portable-center ]">
+             --}}[ u-opacity--half u-select-none ]{{--
+             --}}[ u-text-align--portable-center ]"
+             style="font-size: 0.70rem">
 
                 @if(isset($text_small))
                     {!! $text_small !!}
