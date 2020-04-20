@@ -92,7 +92,7 @@
 
 		@isset($image)
 		<div class="[ c-header-simple__image ]">
-			<img class="[ u-round ]" src="{{ $image }}">
+			<img src="{{ $image }}" style="border-radius: 50%">
 		</div>
 		@endisset
 		
