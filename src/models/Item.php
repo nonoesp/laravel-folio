@@ -10,6 +10,7 @@ use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 use Spatie\Regex\Regex;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class Item extends Model implements Feedable, Searchable
 {
@@ -110,7 +111,7 @@ class Item extends Model implements Feedable, Searchable
 	public function domain() {
 		$domain = $this->stringProperty('domain', config('folio.main-domain'));
 		if ($domain == null) {
-			return \Request::getHttpHost();
+			return request()->getHttpHost();
 		}
 		return $domain;
 	}
@@ -128,9 +129,9 @@ class Item extends Model implements Feedable, Searchable
 	public function path($absolute = false) {
 		if (
 			$absolute ||
-			$this->domain() != \Request::getHttpHost()
+			$this->domain() != request()->getHttpHost()
 		) {
-			return $this->URL();
+			return $this->Url();
 		}
 		return '/'.$this->uri();
 	}
@@ -146,10 +147,11 @@ class Item extends Model implements Feedable, Searchable
 		return $path;
 	}
 
-	// The public URL of the item
-	public function URL() {
-		$protocol = \Request::secure() ? 'https://' : 'http://';
-		return $protocol.$this->domain().'/'.$this->uri();
+	/**
+	 * The public Url of the item.
+	 */
+	public function Url() {
+		return Folio::protocol().$this->domain().'/'.$this->uri();
 	}
 
 	// An encoded path that provides access to hidden items
@@ -417,60 +419,97 @@ class Item extends Model implements Feedable, Searchable
 		return !count($this->recipients);
 	}
 
+	/*
 
-	public function cardImage($imgixOptions = [], $forceAbsolute = true) {
+	██╗    ███╗   ███╗     █████╗      ██████╗     ███████╗
+	██║    ████╗ ████║    ██╔══██╗    ██╔════╝     ██╔════╝
+	██║    ██╔████╔██║    ███████║    ██║  ███╗    █████╗  
+	██║    ██║╚██╔╝██║    ██╔══██║    ██║   ██║    ██╔══╝  
+	██║    ██║ ╚═╝ ██║    ██║  ██║    ╚██████╔╝    ███████╗
+	╚═╝    ╚═╝     ╚═╝    ╚═╝  ╚═╝     ╚═════╝     ╚══════╝
+	
+	*/
 
-		// Fallback on images to grab the main thumbnail
-		if ($this->stringProperty('card-image')) {
-			$thumbnail = $this->imgix($this->stringProperty('card-image'), $imgixOptions);
-			
-		} else if($this->image) {
-			$thumbnail = $this->image($imgixOptions);
-		} else if($this->image_src) {
-			$thumbnail = $this->image_src($imgixOptions);
-		} else if($this->videoThumbnail()) {
-			$thumbnail = $this->videoThumbnail();
-		} else {
-			$thumbnail = null;
-		}
-
-		// Make path absolute (add domain) when thumbnail is relative
-		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
-			return \Request::root().$thumbnail;
-		} else if (!$forceAbsolute && count(explode(\Request::root(), $thumbnail)) > 1) {
-			return str_replace(\Request::root(), "", $thumbnail);
-		}
-		return $thumbnail;
+	public function image($imgixOptions = []) {
+		return $this->imgix($this->image, $imgixOptions);
 	}
 
-	// TODO: Add tests (https://websanova.com/blog/laravel/creating-a-new-package-in-laravel-5-part-5-unit-testing)
+	public function image_src($imgixOptions = []) {
+		return $this->imgix($this->image_src, $imgixOptions);
+	}
+
+	// Lazy load images by key
+	public function expandImage($key) {
+		if ($key == 'VIDEO_IMAGE') {
+			return $this->videoImage();
+		}
+		return null;
+	}
+
+	public function imageProperty($key = null, $imgixOptions = [], $params = []) {
+
+		$absolute = Arr::get($params, 'absolute', false);
+		$fallback = Arr::get($params, 'fallback', null);
+
+		$image = $this->stringProperty($key);
+
+		if (!$image && $fallback) {
+			if (is_array($fallback)) {
+				foreach($fallback as $fallback_image) {
+					if ($fallback_image == 'VIDEO_IMAGE') {
+						// Lazy load Vimeo thumbnails
+						$fallback_image = $this->expandImage($fallback_image);
+					}
+					if ($fallback_image) {
+						$image = $fallback_image;
+						break;
+					}
+				}
+			} else {
+				$image = $fallback;
+			}
+		}
+
+		$image = $this->imgix($image, $imgixOptions);
+
+		if ($absolute) {
+			$image = Folio::url($image);
+		}
+
+		return $image;
+	}	
+
+	public function cardImage($imgixOptions = []) {
+
+		return $this->ogImage($imgixOptions, [
+			'property' => 'card-image',
+			'absolute' => false,
+			'fallback' => [
+				$this->image,
+				$this->image_src,
+				'VIDEO_IMAGE',
+			],
+		]);
+	}
+
 	/**
-	 * Retrieve the thumbnail corresponding to this image
+	 * Retrieve Open Graph image of this item.
 	 */
-	// TODO - change the order of inputs
-	public function thumbnail($forceAbsolute = true, $imgixOptions = []) {
+	public function ogImage($imgixOptions = [], $params = []) {
 
-		// Fallback on images to grab the main thumbnail
-		if($this->image_src) {
-			$thumbnail = $this->image_src;
-		} else if($this->image) {
-			$thumbnail = $this->image;
-		} else if($this->videoThumbnail()) {
-			$thumbnail = $this->videoThumbnail();
-		} else {
-			$thumbnail = config('folio.image-src');
-		}
-
-		$thumbnail = Item::imgix($thumbnail, $imgixOptions);
-
-		// Make path absolute (add domain) when thumbnail is relative
-		if($thumbnail && $forceAbsolute && substr($thumbnail, 0, 1) == '/') {
-			return \Request::root().$thumbnail;
-		} else if (!$forceAbsolute && count(explode(\Request::root(), $thumbnail)) > 1) {
-			return str_replace(\Request::root(), "", $thumbnail);
-		} else {
-			return $thumbnail;
-		}
+		$property = Arr::get($params, 'property', 'og-image');
+		$absolute = Arr::get($params, 'absolute', true);
+		$fallback = Arr::get($params, 'fallback', [
+			$this->image_src,
+			$this->image,
+			'VIDEO_IMAGE',
+			config('folio.og.image'),
+		]);
+			
+		$params['absolute'] = $absolute;
+		$params['fallback'] = $fallback;
+		
+		return $this->imageProperty($property, $imgixOptions, $params);
 	}
 
 	/**
@@ -518,35 +557,70 @@ class Item extends Model implements Feedable, Searchable
 		return $imgixOptions;
 	}
 
+	public static function imgixOptionsFromPath($path) {
+		$parts = explode("?", $path);
+		array_shift($parts);
+		$params = [];
+		$urlParams = join('', $parts);
+		if (Str::of($urlParams)->isNotEmpty()) {
+			foreach(explode('&', $urlParams) as $param) {
+				$param_parts = explode('=', $param);
+				if (count($param_parts) < 2) {
+					continue;
+				}
+				$param_key = $param_parts[0];
+				$param_value = $param_parts[1];
+				$params[$param_key] = $param_value;
+			};
+		}
+		return $params;
+	}
+
+	/**
+	 * Remove Url parameters (i.e. text after ?)
+	 */
+	public static function stripUrlParams($url = null) {
+		$url_parts = parse_url($url);
+		if (isset($url_parts['query'])) {
+			return str_replace('?'.$url_parts['query'], '', $url);
+		} else if (Str::endsWith($url, '?')) {
+			return Str::replaceLast('?', '', $url);
+		}
+		return $url;
+	}
+
+	/***
+	 * Creates an ImgIX Url wit the provided options or returns image path.
+	 */
 	public function imgix($imagePath, $imgixOptions = []) {
 
-		// Should we try 
 		$imgix_active = $this->boolProperty('imgix', config('folio.imgix'));
-		$isRelativePath = substr($imagePath, 0, 1) == '/';
+		$isRelativePath = Str::startsWith($imagePath, '/');
 
 		if ($imgix_active && $isRelativePath) {
-			if (count(explode(".gif", $imagePath)) > 1) $imgixOptions = [];
+			$pathImgixOptions = Item::imgixOptionsFromPath($imagePath);
+			$imgixOptions = $this->imgixOptions($imgixOptions, $pathImgixOptions);
+			$imagePath = Item::stripUrlParams($imagePath);
+
+			if (Str::endsWith($imagePath, '.gif')) {
+				$imgixOptions = [];
+			}
+
 			return imgix($imagePath, $imgixOptions);
 		}
 		return $imagePath;		
 	}
 
-	public function image($imgixOptions = []) {
-		return $this->imgix($this->image, $imgixOptions);
-	}
-
-	public function image_src($imgixOptions = []) {
-		return $this->imgix($this->image_src, $imgixOptions);
-	}	
-
 	/**
 	 * Returns the URL of the video thumbnail from the provider.
 	 */
-	public function videoThumbnail() {
-		if($customVideoThumbnail = $this->customVideoThumbnail()) {
-			return $customVideoThumbnail;
-		} else if($providerVideoThumbnail = $this->providerVideoThumbnail()) {
-			return $providerVideoThumbnail;
+	public function videoImage() {
+		if($image = $this->imageProperty('video-thumbnail')) {
+			return $image;
+		} else if($image = $this->imageProperty('video-image')) {
+			return $image;
+		} else if($image = $this->providerVideoImage()) {
+			return $image;
 		}
 		return null;
 	}
@@ -554,29 +628,10 @@ class Item extends Model implements Feedable, Searchable
 	/**
 	 * Returns the URL of the video thumbnail from the provider.
 	 */
-	public function providerVideoThumbnail() {
+	public function providerVideoImage() {
 		if($this->video) {
-			return \Thinker::getVideoThumb($this->video);
+			return Thinker::getVideoThumb($this->video);
 		}
-		return null;
-	}
-
-	/**
-	 * Returns the URL of the custom video thumbnail specified
-	 * on this Item with the custom property video-thumbnail.
-	 */	
-	public function customVideoThumbnail($forceAbsolute = false) {
-		if($videoThumbnail = $this->stringProperty('video-thumbnail')) {
-			// Make path absolute (add domain) when thumbnail is relative
-			if($videoThumbnail && $forceAbsolute && substr($videoThumbnail, 0, 1) == '/') {
-				return \Request::root().$thumbnail;
-			}
-			if (config('folio.imgix')) {
-				return imgix($videoThumbnail);
-			}
-			return $videoThumbnail;			
-		}
-
 		return null;
 	}
 
@@ -586,10 +641,28 @@ class Item extends Model implements Feedable, Searchable
 	 */
 	public function renderVideo() {
 		if($this->video) {
-			return \Thinker::videoWithURL($this->video, 'c-item-v2__cover-media', $this->customVideoThumbnail());
+			return Thinker::videoWithURL(
+				$this->video,
+				'c-item-v2__cover-media',
+				$this->videoImage()
+			);
 		}
 	}
 
+	/*
+	
+	████████╗    ███████╗    ██╗  ██╗    ████████╗
+	╚══██╔══╝    ██╔════╝    ╚██╗██╔╝    ╚══██╔══╝
+	   ██║       █████╗       ╚███╔╝        ██║   
+	   ██║       ██╔══╝       ██╔██╗        ██║   
+	   ██║       ███████╗    ██╔╝ ██╗       ██║   
+	   ╚═╝       ╚══════╝    ╚═╝  ╚═╝       ╚═╝   
+	
+	*/	
+
+	/**
+	 * Parse Markdown to HTML.
+	 */
 	public static function convertToHtml($text, $markdown_parser = 'default', $veilImages = 'true') {
 
 		if(
@@ -725,6 +798,9 @@ class Item extends Model implements Feedable, Searchable
 		return $html;
 	}
 
+	/**
+	 * Get the item's text as HTML.
+	 */
 	public function htmlText($options = []) {
 
 		if (!$this->text) {
@@ -845,7 +921,7 @@ class Item extends Model implements Feedable, Searchable
 	 * the id of the Item.
 	 */	
 	public function permalink() {
-		return \Request::root().'/'.Folio::permalinkPrefix().$this->id;
+		return request()->root().'/'.Folio::permalinkPrefix().$this->id;
 	}
 
 	/**
@@ -853,28 +929,26 @@ class Item extends Model implements Feedable, Searchable
 	 * the 'disqus/' prefix plus Item's id.
 	 */	
 	public function disqusPermalink() {
-		return str_replace("https", "http", \Request::root().'/disqus/'.$this->id);
+		return str_replace("https", "http", request()->root().'/disqus/'.$this->id);
 	}
 
 	/**
 	 * Returns an array of all existing tag names in all items.
 	 */
 	public static function existingTagNames() {
-		$tagNames = [];
-		foreach(Item::existingTags() as $tag) {
-			array_push($tagNames, $tag->name);
-		}
-		return $tagNames;
+		return Item::existingTags()->pluck('name')->toArray();
 	}
 
 	/**
 	 * Returns an array with an Item's collection tag names.
 	 */
 	public function collectionTagNames() {
-		if($collectionTags = $this->property('collection')) {
-			// Get a clean array of lowercase strings of collection tag names
-			$collections = explode(",", strtolower(str_replace(', ',',',$collectionTags->value)));
-			return $collections;
+		if($collectionTags = $this->stringProperty('collection')) {
+			$tags = Str::of($collectionTags)->explode(',')->toArray();
+			foreach ($tags as $key => $tag) {
+				$tags[$key] = (string) Str::of($tag)->trim()->lower();
+			}
+			return $tags;
 		}
 		return null;
 	}
@@ -1059,11 +1133,18 @@ class Item extends Model implements Feedable, Searchable
 		return null;
 	}
 
-	public function description() {
-		return $this->summary([
-			'limit' => 159,
+	public function description($length = 159) {
+		if ($this->hasProperty('og-description')) {
+			return trim($this->summary([
+				'limit' => $length,
+				'property' => 'og-description',
+			]));			
+		}
+		// TODO - Remove and stick to either og- or meta-
+		return trim($this->summary([
+			'limit' => $length,
 			'property' => 'meta-description',
-		]);
+		]));
 	}
 
 	public function summary($params = ['limit' => 159, 'property' => 'summary']) {
@@ -1108,5 +1189,18 @@ class Item extends Model implements Feedable, Searchable
 		]);
 		return $readtime->abbreviated()
 						->get();
+	}
+
+	/**
+	 * Whether this item is tagged with a given tag.
+	 */
+	public function hasTag($tag) {
+		if ($tag) {
+			$sanitized_tag = Str::of($tag)->trim()->lower();
+			if (in_array($sanitized_tag, $this->tagSlugs())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

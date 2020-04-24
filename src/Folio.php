@@ -8,6 +8,7 @@
  use Item, Property; // Must be defined in your aliases
  use Form;
  use Thinker;
+ use Illuminate\Support\Str;
 
 class Folio {
 
@@ -40,7 +41,7 @@ class Folio {
 		return Html::link(Folio::path().'tag/'.$tag->slug, $tag->name, array('class' => $class));
 	}
 
-	public static function userURL($user) {
+	public static function userUrl($user) {
 		return '/@'.$user->twitter;
 	}
 
@@ -316,16 +317,43 @@ class Folio {
   /**
    * Returns the URL to an upload.
    */
-  public static function uploadURL($path = null) {
+  public static function uploadUrl($path = null) {
     $upload = Folio::upload($path);
+    return Folio::mediaUrl($upload);
+  }
+
+  public static function mediaUrl($path = '') {
     if (config('folio.imgix')) {
-      return imgix($upload);
+      return imgix($path);
     }
-    $protocol = 'http://';
-    if (\Request::secure()) {
-      $protocol = 'https://';
+    return Folio::url($path);
+  }
+
+  /**
+   * Returns the absolute Url of a relative path.
+   */
+  public static function url($path = '/') {
+    if (
+      Str::of($path)->isNotEmpty() &&
+      !Str::of($path)->startsWith('https://') &&
+      !Str::of($path)->startsWith('http://') &&
+      !Str::of($path)->startsWith('//')
+      ) {
+        return request()->root().Str::of($path)->start('/');
+      }
+      return $path;
+  }
+
+  public static function protocol() {
+    return request()->secure() ? 'https://' : 'http://';
+  }
+
+  public static function urlPath($url = null) {
+    $root = request()->root();
+    if ($url && Str::of($url)->startsWith($root)) {
+      return str_replace($root, '', $url);
     }
-    return $protocol.\Request::getHttpHost().$upload;
+    return $url;
   }
 
   /**
