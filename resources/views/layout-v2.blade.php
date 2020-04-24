@@ -170,10 +170,12 @@
 @endif
 
 @if($notification = session()->get('notification'))
+@prepend('notifications')
 {!! view('folio::partial.o-notification', [
     'notification' => $notification,
     'classes' => ['o-notification--light'],
 ]) !!}
+@endprepend
 @endif
 
 @push('scripts')
