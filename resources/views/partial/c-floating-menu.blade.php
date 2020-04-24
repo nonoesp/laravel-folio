@@ -1,20 +1,16 @@
-<?php
-
-  if(!isset($buttons)) {
-    $buttons = ['·' => '/'.Folio::path()];
-  }
-
-?>
+@php
+    $items = $items ?? ($buttons ?? ['<i class="fa fa-gear"></i>' => '/admin']);
+@endphp
 
 @if($user = Auth::user())
   @if($user->is_admin)
 
-    @if(isset($buttons))
+    @if(isset($items))
 
       <div class="[ c-floating-menu ]">
 
         <div class="c-floating-menu__buttons js--floating-menu__buttons">
-            @foreach($buttons as $label=>$path)
+            @foreach($items as $label=>$path)
             @if(is_array($path))
               <a href="{{ $path[0] }}"
                  class="[ c-floating-menu__item {{$path[1] ?? ''}} ]"
