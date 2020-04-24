@@ -1,5 +1,5 @@
 @php
-    $items = $items ?? ($buttons ?? ['<i class="fa fa-gear"></i>' => '/admin']);
+    $items = $items ?? ($buttons ?? null);
 @endphp
 
 @if($user = Auth::user())

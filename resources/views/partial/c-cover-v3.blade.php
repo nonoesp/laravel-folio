@@ -1,4 +1,6 @@
 <?php
+    $cover_class = 'c-cover';
+    $classes = $classes ?? ['--header'];
 	$show_arrow = $show_arrow ?? false;
 	$veil_opacity = $veil_opacity ?? null;
 	$slideshow = $slideshow ?? null;
@@ -9,13 +11,21 @@
 	$background_color = $background_color ?? null;
 	$isLazy = $isLazy ??  null;
 	$background_color = $background_color ??  null;
-	$image = $image ??  null;
-	$class = $class ?? 'c-cover--header';
+    $image = $image ??  null;
+    $youtube = $youtube ?? null;
+    
+    // Expand modifier classes
+	foreach($classes as $key => $class) {
+		if (Str::of($class)->startsWith('--')) {
+			$classes[$key] = $cover_class.$class;
+		}
+    }
+    $classes_string = count($classes) ? '[ '.join(' ', $classes).' ]' : '';
 ?>
 
-<section class="[ c-cover {!! $class ?? 'c-cover--header' !!} {{--
+<section class="[ c-cover {{--
 --}} @if($show_arrow) js--scroll-over @endif{{--
---}} ]">
+--}} ] {!! $classes_string !!}">
 
 	@if($isLazy)
 		<img class="[  lazy  ]" data-src="{!! $image !!}">
@@ -64,6 +74,32 @@
     </video>
 
 	@endif
+
+    @if($youtube)
+
+    <style>
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 */
+        height: 0;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    </style>
+    
+    <div class="video-container">
+        <iframe width="560" height="315"
+        src="https://www.youtube.com/embed/{{$youtube}}?controls=1&autoplay=1&showinfo=0&controls=0"
+        frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+        </div>
+    
+    @endif
 
 	<div class="[ c-cover__slide c-cover__veil c-cover__veil--js ]" @if($veil_opacity)style="opacity:{!! $veil_opacity !!}"@endif>
 	</div>

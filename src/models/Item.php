@@ -989,6 +989,10 @@ class Item extends Model implements Feedable, Searchable
 		$showScheduled = Arr::get($params, 'showScheduled', false);
 		$collection = [];
 
+		if (!$tags) {
+			return [];
+		}
+
 		$shouldShowTrashed = false;
 		if ($user = \Auth::user()) {
 			$shouldShowTrashed = $user->is_admin || $showHidden;
