@@ -134,7 +134,7 @@ class FeedController extends Controller
 
 				if ($item->video) {
 					$image = '<p><a href="'.$URL.'">'
-						.'<img src="'.$item->videoThumbnail()
+						.'<img src="'.$item->videoImage()
 						.'" alt="'.$item->title.'"></a></p>';
 				} else if ($item->image) {
 					// Disable to avoid displaying image twice and control location in Mailchimp template
