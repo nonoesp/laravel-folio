@@ -1,35 +1,32 @@
 <?php
 
-	$folio_typekit = isset($folio_typekit) ? $folio_typekit : config('folio.typekit');
+	$item = $item ?? null;
 
-	// Meta tags
-	$og_author = isset($og_author) ? $og_author : config('folio.meta.author');
+	// Open graph
+	$og_author = $og_author ?? config('folio.meta.author');
+	$og_description = ($og_description ?? config('folio.meta.description')) ?? config('folio.description');
+	$site_title = $site_title ?? config('folio.title');
+	$title = $title ?? $site_title;
+	$og_title = $og_title ?? $title;
+	$og_image = $og_image ?? config('folio.image-src');
+	$og_url = $og_url ?? Request::root().'/'.Request::path();
+	$fb_app_id = $fb_app_id ?? config('folio.social.facebook.app_id');
 
-	$og_description = isset($og_description) ? $og_description : config('folio.meta.description');
-	$og_description = $og_description ? $og_description : config('folio.description');
-
-	$site_title = isset($site_title) ? $site_title : config('folio.title');
-	$og_title = isset($og_title) ? $og_title : $site_title;
-
-	$og_image_default = config('folio.image-src');
-	$og_url_default = Request::root().'/'.Request::path();
-	$fb_app_id_default = config('folio.social.facebook.app_id');
-
+	// Icons
 	$apple_touch_icon_default = '/apple-touch-icon.png';
 
-	if(!isset($item)) $item = null;
-
 	// Apple App id
-	if (!isset($apple_app_id)) $apple_app_id = config('folio.apple-app-id');
+	$apple_app_id = $apple_app_id ?? config('folio.apple-app-id');
 
 	// Google Analytics
-	if (!isset($google_analytics)) $google_analytics = Folio::googleAnalytics();
+	$google_analytics = $google_analytics ?? Folio::googleAnalytics();
 
 	// Sitemap
-	if (!isset($sitemap)) $sitemap = config('folio.sitemap');
+	$sitemap = $sitemap ?? config('folio.sitemap');
 
-	// Folio CSS
-	$folio_css = config('folio.css') ? config('folio.css') : '/folio/css/folio.css';
+	// Assets
+	$folio_css = ($folio_css ?? config('folio.css')) ?? '/folio/css/folio.css';
+	$folio_typekit = $folio_typekit ?? config('folio.typekit');
 
 	// Try to pass CSS through Laravel mix to bust the cache
 	try {
@@ -49,7 +46,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui"/>
-	<title>{{ $site_title ?? config('folio.title') }}</title>
+	<title>{{ $title }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="stylesheet" type="text/css" href="{{ $folio_css }}">
 
@@ -83,10 +80,10 @@
 @endif
 
 	<!-- Tags -->
-	<meta name="description" content="{{ $og_description ?? $og_description_default }}" />
-	<link rel="image_src" href="{{ $og_image ?? $og_image_default }}" />
+	<meta name="description" content="{{ $og_description }}" />
+	<link rel="image_src" href="{{ $og_image }}" />
 @if($og_author)
-	<meta name="author" content="{{ $og_author ?? null }}" />
+	<meta name="author" content="{{ $og_author }}" />
 @endif
 
 	<!-- Open Graph meta data -->
@@ -179,9 +176,7 @@
       	{!! view('folio::partial.c-cover', $cover_data) !!}
   @endif
 
-@section('floating.menu')
-  	{!! view('folio::partial.c-floating-menu', ['buttons' => ['<i class="fa fa-gear"></i>' => '/admin']]) !!}
-@show
+@yield('floating.menu', view('folio::partial.c-floating-menu'))
 
 @yield('content')
 

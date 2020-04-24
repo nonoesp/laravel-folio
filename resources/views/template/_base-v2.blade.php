@@ -107,7 +107,7 @@
         <?php
 
         // image_src
-        $og_image = $item->thumbnail();
+        $og_image = $item->ogImage();
 
         // 4.2. Cover or not
         if ($item->image == '' || $cover_hidden) {
