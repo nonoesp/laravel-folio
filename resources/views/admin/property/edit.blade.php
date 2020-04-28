@@ -3,7 +3,7 @@
 @php
     $property = $property ?? null;
     if ($property) {
-        $item = Item::find($property->item_id);
+        $item = Item::withTrashed()->find($property->item_id);
     }
 
     $footer_hidden = true;
