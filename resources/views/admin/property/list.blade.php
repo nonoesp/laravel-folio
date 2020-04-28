@@ -8,6 +8,15 @@
         'image' => null,
         'is_media_hidden' => true,
     ]);
+
+    $menu_data = array_merge($menu_data ?? config('folio.menu'),
+    [
+        'items' => [
+          '<i class="fa fa-eye"></i>' => $item->path(),
+		  '<i class="fa fa-share"></i>' => $item->sharePath(),
+		  '<i class="fa fa-pencil"></i>' => $item->editPath()
+        ]
+    ]);    
 @endphp
 
 @section('content')
@@ -20,7 +29,7 @@
 
     @foreach ($item->properties as $p)
         <a href="/property/edit/{{ $p->id }}">
-            <strong>{{ $p->name }}</strong>
+            <strong>{{ $p->name }} →</strong>
         </a>
         <pre><code>{{ $p->value }}</code></pre>
     @endforeach

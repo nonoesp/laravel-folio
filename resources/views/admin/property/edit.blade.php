@@ -1,6 +1,11 @@
 @extends('folio::layout-v2')
 
 @php
+    $property = $property ?? null;
+    if ($property) {
+        $item = Item::find($property->item_id);
+    }
+
     $footer_hidden = true;
     $header_view = 'folio::partial.c-header-simple-v2';
     $header_data = array_merge($header_data ?? config('folio.header'),
@@ -9,10 +14,16 @@
         'is_media_hidden' => true,
     ]);
 
-    $property = $property ?? null;
-    if ($property) {
-        $item = Item::find($property->item_id);
-    }
+    $menu_data = array_merge($menu_data ?? config('folio.menu'),
+    [
+        'items' => [
+          '<i class="fa fa-eye"></i>' => $item->path(),
+		  '<i class="fa fa-share"></i>' => $item->sharePath(),
+		  '<i class="fa fa-pencil"></i>' => $item->editPath()
+        ]
+    ]);  
+
+
 @endphp
 
 @push('scripts')
@@ -36,7 +47,7 @@
 <div class="o-wrap u-mar-t-8x">
 
     <p><a href="/property/{{$property->item_id}}">
-        <strong>← item</strong>
+        <strong>← item properties</strong>
     </a></p>
 
     @if ($item)
