@@ -114,7 +114,7 @@ Route::group([
 	// Temporary - Property textarea editor
 
 	Route::get('property/{id}', function ($id) {
-		$item = Item::find($id);
+		$item = Item::withTrashed()->find($id);
 		if ($item) {
 		  return view('folio::admin.property.list', ['item' => $item]);
 		}
@@ -122,11 +122,11 @@ Route::group([
 	  });
 	  
 	Route::get('property/edit/{id}', function ($id) {
-	return view('folio::admin.property.edit', ['property' => Property::find($id)]);
+	return view('folio::admin.property.edit', ['property' => Property::withTrashed()->find($id)]);
 	});
 	
 	Route::post('property/edit', function () {
-	$property = Property::find(request()->get('id'));
+	$property = Property::withTrashed()->find(request()->get('id'));
 	$newValue = request()->get('value');
 	
 	if ($property->value != $newValue) {
