@@ -178,7 +178,7 @@
 @endprepend
 @endif
 
-@push('scripts')
+@prepend('scripts')
     
     <script src="{{ mix('/folio/js/manifest.js') }}" defer></script>
     <script src="{{ mix('/folio/js/vendor.js') }}" defer></script>
@@ -186,7 +186,7 @@
     <script>
         var trans = {!! json_encode(trans('folio::base')) !!};
     </script>
-@endpush
+@endprepend
 
 @php
 
