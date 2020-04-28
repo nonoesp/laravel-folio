@@ -122,11 +122,11 @@ Route::group([
 	  });
 	  
 	Route::get('property/edit/{id}', function ($id) {
-	return view('folio::admin.property.edit', ['property' => Property::withTrashed()->find($id)]);
+	return view('folio::admin.property.edit', ['property' => Property::find($id)]);
 	});
 	
 	Route::post('property/edit', function () {
-	$property = Property::withTrashed()->find(request()->get('id'));
+	$property = Property::find(request()->get('id'));
 	$newValue = request()->get('value');
 	
 	if ($property->value != $newValue) {
