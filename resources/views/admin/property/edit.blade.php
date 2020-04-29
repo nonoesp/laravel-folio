@@ -6,6 +6,7 @@
         $item = Item::withTrashed()->find($property->item_id);
     }
 
+    $title = $property->name.' · '.$item->title;
     $footer_hidden = true;
     $header_view = 'folio::partial.c-header-simple-v2';
     $header_data = array_merge($header_data ?? config('folio.header'),
@@ -27,17 +28,33 @@
 @endphp
 
 @push('scripts')
+	<!-- Mousetrap for handling keyboard shortcuts -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.1/mousetrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mousetrap/1.6.1/plugins/global-bind/mousetrap-global-bind.min.js"></script>
     <script>
 
         window.onload = function () {
             const value = $("#value").val();
+            const name = $("#name").val();
             const updateSaveButton = () => {
-                const newValue = $("#value").val();
-                $('.js--save').prop('disabled', value === newValue);
+                const currentValue = $("#value").val();
+                const currentName = $("#name").val();
+                $('.js--save').prop('disabled', value === currentValue && name === currentName);
             };
             $("#value").on('keyup', function () { updateSaveButton(); });
+            $("#name").on('keyup', function () { updateSaveButton(); });
             updateSaveButton();
         };
+
+        /*
+        * CTRL+S & COMMAND+S
+        * Keyboard shortcut to save edits by submitting the form.
+        */
+        Mousetrap.bindGlobal(['ctrl+s', 'command+s'], function(e) {
+            $('.js--save').click();
+            e.preventDefault();
+            return false;
+        });
 
     </script>
 @endpush
@@ -54,13 +71,11 @@
         <p class="u-font-size--g">{{$item->title}}</p>
     @endif
 
-    <p>
-        <strong><code>{{$property->name}}</code></strong>
-    </p>
-
     <form action="/property/edit" method="POST">
         @csrf
-        <textarea name="value" id="value" cols="30" rows="10">{{$property->value}}</textarea>
+        <input type="text" name="name" id="name" value="{{$property->name}}" style="font-size:1.1rem;font-family: Menlo, monospace;border:none;margin-bottom:20px;">
+        <textarea name="value" id="value" cols="30" rows="10"
+        style="height:400px;font-family:Menlo, monospace;">{{$property->value}}</textarea>
         <input type="hidden" name="id" value="{{$property->id}}" />
         <input type="submit" disabled="true" class="js--save" value="Save">
     </form>

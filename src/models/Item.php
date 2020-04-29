@@ -446,14 +446,14 @@ class Item extends Model implements Feedable, Searchable
 		return null;
 	}
 
-	public function imageProperty($key = null, $imgixOptions = [], $params = []) {
-
+	public function imageFallback($imgixOptions = [], $params = []) {
+		
 		$absolute = Arr::get($params, 'absolute', false);
 		$fallback = Arr::get($params, 'fallback', null);
 
-		$image = $this->stringProperty($key);
+		$image = null;
 
-		if (!$image && $fallback) {
+		if ($fallback) {
 			if (is_array($fallback)) {
 				foreach($fallback as $fallback_image) {
 					if ($fallback_image == 'VIDEO_IMAGE') {
@@ -470,13 +470,32 @@ class Item extends Model implements Feedable, Searchable
 			}
 		}
 
+		if (!$image) {
+			return null;
+		}
+
 		$image = $this->imgix($image, $imgixOptions);
 
 		if ($absolute) {
 			$image = Folio::url($image);
 		}
 
-		return $image;
+		return $image;		
+	}
+
+	public function imageProperty($key = null, $imgixOptions = [], $params = []) {
+
+		$absolute = Arr::get($params, 'absolute', false);
+		$fallback = Arr::get($params, 'fallback', null);
+
+		array_unshift($fallback, $this->stringProperty($key));
+
+		$params = array_merge($params, [
+			'absolute' => $absolute,
+			'fallback' => $fallback,
+		]);
+
+		return $this->imageFallback($imgixOptions, $params);
 	}	
 
 	public function cardImage($imgixOptions = []) {
@@ -492,6 +511,18 @@ class Item extends Model implements Feedable, Searchable
 		]);
 	}
 
+	public function feedImage() {
+		return $this->imageFallback([], [
+			'absolute' => true,
+			'fallback' => [
+				$this->stringProperty('feed-image'),
+				$this->stringProperty('rss-image'),
+				$this->image,
+				$this->image_src,
+			]
+		]);
+	}
+
 	/**
 	 * Retrieve Open Graph image of this item.
 	 */
@@ -500,16 +531,20 @@ class Item extends Model implements Feedable, Searchable
 		$property = Arr::get($params, 'property', 'og-image');
 		$absolute = Arr::get($params, 'absolute', true);
 		$fallback = Arr::get($params, 'fallback', [
+			$this->stringProperty($property),
 			$this->image_src,
 			$this->image,
 			'VIDEO_IMAGE',
 			config('folio.og.image'),
 		]);
-			
-		$params['absolute'] = $absolute;
-		$params['fallback'] = $fallback;
 		
-		return $this->imageProperty($property, $imgixOptions, $params);
+		$params = array_merge($params, [
+			'property' => $property,
+			'absolute' => $absolute,
+			'fallback' => $fallback,
+		]);
+
+		return $this->imageFallback($imgixOptions, $params);
 	}
 
 	/**
@@ -615,14 +650,13 @@ class Item extends Model implements Feedable, Searchable
 	 * Returns the URL of the video thumbnail from the provider.
 	 */
 	public function videoImage() {
-		if($image = $this->imageProperty('video-thumbnail')) {
-			return $image;
-		} else if($image = $this->imageProperty('video-image')) {
-			return $image;
-		} else if($image = $this->providerVideoImage()) {
-			return $image;
-		}
-		return null;
+		return $this->imageFallback([], [
+			'fallback' => [
+				$this->stringProperty('video-thumbnail'),
+				$this->stringProperty('video-image'),
+				$this->providerVideoImage(),
+			]
+		]);
 	}
 
 	/**

@@ -128,9 +128,20 @@ Route::group([
 	Route::post('property/edit', function () {
 	$property = Property::find(request()->get('id'));
 	$newValue = request()->get('value');
-	
+	$newName = request()->get('name');
+	$changed = false;
+
 	if ($property->value != $newValue) {
 		$property->value = $newValue;
+		$changed = true;
+	}
+	
+	if ($property->name != $newName) {
+		$property->name = $newName;
+		$changed = true;
+	}
+
+	if ($changed) {
 		$property->save();
 	}
 	

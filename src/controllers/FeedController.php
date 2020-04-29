@@ -96,50 +96,18 @@ class FeedController extends Controller
 			$feed->setTextLimit(159); // maximum length of description text
 			$feed->setCustomView($feedCustomView);
 
+			config(['folio.imgix' => false]);
 			foreach ($items as $item) {
 				// Link for this RSS item
-				$URL = $item->URL();
-				$itemURL = $URL;
-				// Use external link if provided
-				if($item->link) {
-					$URL = $item->link;
-				}
+				$URL = $item->link ?? $item->URL();
 
 				// Image
-				$image = '';
-				$item_image = $item->image;
-				$item_image_src = $item->image_src;
+				$imageUrl = $item->feedImage();
 
-				// Override cover image with custom properties
-				if ($item->stringProperty('feed-image')) {
-					$item_image = $item->stringProperty('feed-image');
-				} else if ($item->stringProperty('rss-image')) {
-					$item_image = $item->stringProperty('rss-image');
-				}
-
-				// Make sure $item->image is global (not local like /img/u/image.jpg)
-				if ($item_image && substr($item_image, 0, 1) == '/') {
-					$item_image = $request->root().$item_image;
-				}
-
-				// And image_src is global or falls back to default
-				if ($item_image_src == '' && $item->image) {
-					$item_image_src = $item_image;
-				} else if ($item_image_src && substr($item_image_src, 0, 1) == '/') {
-					$item_image_src = $request->root().$item_image_src;
-				} else if($item_image_src == '') {
-					// Disabled to avoid displaying placeholder image in all posts
-					// $item_image_src = config('folio.feed.default-image-src');
-				}
-
-				if ($item->video) {
-					$image = '<p><a href="'.$URL.'">'
-						.'<img src="'.$item->videoImage()
-						.'" alt="'.$item->title.'"></a></p>';
-				} else if ($item->image) {
+				// if ($imageUrl) {
 					// Disable to avoid displaying image twice and control location in Mailchimp template
-					// $image = '<p><img src="'.$item_image.'" alt="'.$item->title.'"></p>';
-				}
+					// $image = '<p><img src="'.$imageUrl.'" alt="'.$item->title.'"></p>';
+				// }
 
 				// Item->htmlText()
 				$itemHTMLText = $item->htmlTextExcerpt([
@@ -149,11 +117,7 @@ class FeedController extends Controller
 				]);
 
 				// Item description (can be set as Mailchimp's preview text)
-				$itemDescription = \Thinker::limitMarkdownText($itemHTMLText, 159, ['sup']);
-				// Override description with custom properties
-				if ($item->stringProperty('feed-description')) {
-					$itemDescription = $item->stringProperty('feed-description');
-				}
+				$itemDescription = $item->stringProperty('feed-description') ?? \Thinker::limitMarkdownText($itemHTMLText, 159, ['sup']);
 
 				// Text
 				$html = str_replace(
@@ -168,7 +132,8 @@ class FeedController extends Controller
 						'href="'.$request->root().'/',
 						'<br />',
 					],
-					$image.$itemHTMLText
+					//$image.
+					$itemHTMLText
 				);
 
 				$html = str_replace(
@@ -186,15 +151,15 @@ class FeedController extends Controller
 					'content' => $html,
 				];
 
-				if ($item_image) {
+				if ($imageUrl) {
 					$feedItem['media:content'] = [
-						'url' => $item_image,
+						'url' => $imageUrl,
 						'medium' => 'image',
 						// 'height' => '768',
 						// 'width' => '1024'
 					];
 					$feedItem['enclosure'] = [
-						'url' => $item_image,
+						'url' => $imageUrl,
 						'type' => 'image/jpeg',
 						// 'height' => '768',
 						// 'width' => '1024'
