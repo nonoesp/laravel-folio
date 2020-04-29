@@ -4,8 +4,8 @@
     $item = $item ?? null;
     $css = '/folio/css/folio-light.css';
 
-    $menu_data = ['items' => ['<i class="fa fa-pencil"></i>' => $item->editPath()]];
-    $header_view = 'partial.c-header-getting-simple-v2';
+    $menu_data = $menu_data ?? ['items' => ['<i class="fa fa-pencil"></i>' => $item->editPath()]];
+    $header_view = $header_view ?? 'partial.c-header-getting-simple-v2';
 
     if ($item) {
 

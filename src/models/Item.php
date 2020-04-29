@@ -500,14 +500,14 @@ class Item extends Model implements Feedable, Searchable
 
 	public function cardImage($imgixOptions = []) {
 
-		return $this->ogImage($imgixOptions, [
-			'property' => 'card-image',
+		return $this->imageFallback([], [
 			'absolute' => false,
 			'fallback' => [
+				$this->stringProperty('card-image'),
 				$this->image,
 				$this->image_src,
 				'VIDEO_IMAGE',
-			],
+			]
 		]);
 	}
 
