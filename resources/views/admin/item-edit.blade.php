@@ -84,7 +84,7 @@ Mousetrap.bindGlobal(['ctrl+s', 'command+s'], function(e) {
 Mousetrap.bindGlobal('esc', function(e) {
 
     e.preventDefault();
-
+	
     // new
     const textareas = $('.o-textarea__text');
     $('.o-textarea').removeClass('o-textarea--fullscreen');
@@ -93,7 +93,12 @@ Mousetrap.bindGlobal('esc', function(e) {
         admin.adjustTextareaHeight(element, 150);
     });
 	
-	$(document).scrollTop(0);
+	if($(':focus').hasClass('o-textarea__text')) {
+		$(document).scrollTop(0);
+	} else {
+		$('.c-admin__property-textarea').css('height', '36px');
+		$('textarea:focus').blur();
+	}
     
 	return false;
 });
@@ -787,7 +792,7 @@ methods: {
 								v-bind:data-id="property.id" data-field="label"
 								v-bind:class="{
 									'is-updating': property.is_updating, 
-									'is-empty': !property.label
+									'is-empty': !property.label || !!property.name && property.name[0] === '-',
 								}"
 								class="u-text-align--right">
 							</div><!--
@@ -799,7 +804,7 @@ methods: {
 								v-bind:data-id="property.id" data-field="name"
 								v-bind:class="{
 									'is-updating': property.is_updating,
-									'is-empty': !property.name
+									'is-empty': !property.name || !!property.name && property.name[0] === '-',
 								}"
 								class="u-text-align--right">
 									{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
@@ -816,16 +821,17 @@ methods: {
 									}"> --}}
 									<textarea
 										v-model="property.value"
+										class="c-admin__property-textarea"
 										v-bind:class="{
 											'is-updating': property.is_updating,
-											'is-empty': !property.value && !property.name,
+											'is-empty': (!property.value && !property.name) || !!property.name && property.name[0] === '-',
 											'is-title': !property.name && !property.label && !!property.value
 										}"
 										placeholder="Value"
 										@keyup="sync_properties(property)"
 										@input="textareaAutoresize"
 										@focus="textareaAutoresize"
-										@blur="textareaCollapse"
+										{{-- @blur="textareaCollapse" --}}
 									></textarea>
 
 									{{--
