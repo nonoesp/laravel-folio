@@ -11,10 +11,6 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/stojankukrika/versionable"
-        },
-        {
-            "type": "vcs",
             "url": "https://github.com/nonoesp/laravel-imgix"
         }
     ],     
@@ -57,7 +53,7 @@
         "webuni/commonmark-attributes-extension": "^1.0.0",
         "vinkla/hashids": "^8.0",
         "nasyrov/laravel-imgix": "7.x-dev",
-        "mpociot/versionable": "dev-patch-1",
+        "mpociot/versionable": "^3.0.0",
         "laravel/ui": "^2.0"
     },
     "require-dev": {
