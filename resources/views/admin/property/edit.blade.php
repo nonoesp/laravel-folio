@@ -79,6 +79,16 @@
         <input type="hidden" name="id" value="{{$property->id}}" />
         <input type="submit" disabled="true" class="js--save" value="Save">
     </form>
+
+    <br/>
+    <br/>
+
+    @foreach($property->versions->reverse() as $key=>$version)
+    <textarea name="value" id="value" cols="30" rows="10"
+    style="min-height:auto;height:100px;font-family:Menlo, monospace;">{{$version->getModel()->value}}</textarea>
+    <br/>
+    @endforeach
+    <br/>
 </div>
 
 @endsection

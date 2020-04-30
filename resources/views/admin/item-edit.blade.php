@@ -86,7 +86,7 @@ Mousetrap.bindGlobal('esc', function(e) {
     e.preventDefault();
 
     // new
-    const textareas = $('textarea');
+    const textareas = $('.o-textarea__text');
     $('.o-textarea').removeClass('o-textarea--fullscreen');
     $(textareas).each((index, element) => {
         element.blur();
@@ -476,6 +476,13 @@ methods: {
 			}, (response) => {
 				// error
 			});
+	},
+	textareaAutoresize(e) {
+		e.target.style.cssText = 'height:36px;';
+		e.target.style.cssText = `height: ${e.target.scrollHeight}px`;
+	},
+	textareaCollapse(e) {
+		e.target.style.cssText = 'height:36px;';
 	}
 }
 });
@@ -604,14 +611,43 @@ methods: {
 		}
 	}
 
-	input.is-updating {
+	input.is-empty,
+	.c-admin__property textarea.is-empty {
+		background-color: transparent;
+		border: none;
+		opacity: 0.5;
+	}
+
+	input.is-title,
+	.c-admin__property textarea.is-title {
+		background-color: transparent;
+		border:none;
+		font-size: 1.1rem;
+		font-weight: 600;
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+	}
+
+	input.is-updating,
+	.c-admin__property textarea.is-updating {
 		background-color: #ffefc2;
-		-webkit-transition: none;
-    	-ms-transition: none;
-    	transition: none;
 		border-color: white;
 	}
 
+	.c-admin__property.is-title {
+		margin-top: 10px;
+	}
+
+	.c-admin__property textarea {
+		border: 1px solid #dadada;
+		background-color: white;
+		min-height: 36px;
+		line-height: 20px;
+		width: 100%;
+		font-size: 12px;
+		white-space:pre-line;
+	}
+
+	.c-admin__property textarea.is-updating,
 	input {
 		-webkit-transition: 250ms linear;
     	-ms-transition: 250ms linear;
@@ -665,6 +701,7 @@ methods: {
 				'v-model' => 'item.text.'.$translation,
 				'@focus' => 'updateTextareaFocus',
 				'@blur' => 'updateTextareaFocus',
+				'class' => 'o-textarea__text',
 				'v-bind:class' => '{ "u-opacity--high" : !isTextareaFocused }'
                 ]) }}
             </p>
@@ -720,7 +757,8 @@ methods: {
 				</div>
 
 				<draggable v-model="properties" @end="sortProperties" :options="{handle:'.js--dragger'}">
-				<div v-for="(property, index) in properties" class="[ grid__item one-whole ] [ c-admin__property ]">
+				<div v-for="(property, index) in properties" class="[ grid__item one-whole ] [ c-admin__property ]"
+				v-bind:class="{'is-title': !!property.value && !property.name && !property.label}">
 
 						<div class="[ grid grid--narrow ]">
 							<div class="[ grid__item ]
@@ -733,7 +771,7 @@ methods: {
 								</span>--}}
 							</div>
 							<!--
-						--><div class="[ grid__item three-twelfths  ] [ u-text-align--right ]" style="position:relative;">
+						--><div class="[ grid__item two-twelfths  ] [ u-text-align--right ]" style="position:relative;">
 						
 								<span v-bind:data-id="property.id"
 								class="[ c-admin__property-trash ] [ u-cursor-pointer ]
@@ -747,25 +785,48 @@ methods: {
 								v-model="property.label"
 								@keyup="sync_properties(property)"
 								v-bind:data-id="property.id" data-field="label"
-								v-bind:class="{'is-updating': property.is_updating}"
+								v-bind:class="{
+									'is-updating': property.is_updating, 
+									'is-empty': !property.label
+								}"
 								class="u-text-align--right">
 							</div><!--
 							--><div class="[ grid__item three-twelfths ]">
 								<input type="text"
-								placeholder="identifier"
+								placeholder="Name"
 								v-model="property.name"
 								@keyup="sync_properties(property)"
 								v-bind:data-id="property.id" data-field="name"
-								v-bind:class="{'is-updating': property.is_updating}"
+								v-bind:class="{
+									'is-updating': property.is_updating,
+									'is-empty': !property.name
+								}"
 								class="u-text-align--right">
 									{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
 							</div><!--
-							--><div class="[ grid__item five-twelfths ]" style="position:relative">
-									<input type="text" v-model="property.value"
+							--><div class="[ grid__item six-twelfths ]" style="position:relative">
+									{{-- <input type="text" v-model="property.value"
 									placeholder="Value"
 									@keyup="sync_properties(property)"
 									v-bind:data-id="property.id" data-field="value"
-									v-bind:class="{'is-updating': property.is_updating}">
+									v-bind:class="{
+										'is-updating': property.is_updating,
+										'is-empty': !property.value && !property.name,
+										'is-title': !property.name && !property.label && !!property.value
+									}"> --}}
+									<textarea
+										v-model="property.value"
+										v-bind:class="{
+											'is-updating': property.is_updating,
+											'is-empty': !property.value && !property.name,
+											'is-title': !property.name && !property.label && !!property.value
+										}"
+										placeholder="Value"
+										@keyup="sync_properties(property)"
+										@input="textareaAutoresize"
+										@focus="textareaAutoresize"
+										@blur="textareaCollapse"
+									></textarea>
 
 									{{--
 									<div v-if="property.is_updating"
