@@ -198,7 +198,8 @@ class AdminController extends Controller
 		return response()->json([
 				'success' => true,
 				'property_id' => $property->id,
-				'item_id' => $item_id
+				'item_id' => $item_id,
+				'order_column' => $property->order_column,
 		]);
 	}
 

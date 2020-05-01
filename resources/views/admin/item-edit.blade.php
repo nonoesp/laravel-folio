@@ -327,12 +327,26 @@ methods: {
 			});
 		}
 	},
-	add_property: function(event) {
-		var data = { item_id: this.item.id }
+	add_property_at: function(property, index, delta) {
+		const data = { item_id: this.item.id }
 		VueResource.Http.post('/api/property/create', data).then((response) => {
 				// success
-				//console.log(response);
-				this.properties.push({id: response.body.property_id});
+				console.log({response, property, index: property.index});
+				const newProperty = {id: response.body.property_id, order_column: response.body.order_column};
+				this.properties.splice(index + delta, 0, newProperty);
+				this.sortProperties();
+			}, (response) => {
+				// error
+			});
+	},
+	add_property: function(event) {
+		const data = { item_id: this.item.id }
+		VueResource.Http.post('/api/property/create', data).then((response) => {
+				// success
+				// console.log(response);
+				const property = {id: response.body.property_id};
+				this.properties.push(property);
+				// this.sortProperties();
 			}, (response) => {
 				// error
 			});
@@ -784,6 +798,13 @@ methods: {
 								style="position:absolute;left:-10px;">
 									<i class="fa fa-bars"></i>
 								</span>	
+								<span v-bind:data-id="property.id"
+								@click="add_property_at(property,index,0)"
+								class="[ c-admin__property-trash ] [ u-cursor-pointer ] [ u-opacity--low ]"
+								style="position:absolute;left:-31px;padding:0 5px">
+									+
+								</span>	
+								
 
 								<input type="text"
 								placeholder="Label"
@@ -850,6 +871,12 @@ methods: {
 								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
 									<i class="fa fa-trash-o"></i>
 								</div>							
+								<span @click="add_property_at(property,index,1)" v-bind:data-id="property.id"
+								{{-- v-if="index != 0" --}}
+								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+									+
+									{{-- <i class="fa fa-angle-down"></i> --}}
+								</span>
 								{{--
 								<span @click="movePropertyUp(property)" v-bind:data-id="property.id"
 								v-if="index != 0"
