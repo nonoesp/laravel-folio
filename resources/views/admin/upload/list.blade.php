@@ -32,8 +32,9 @@
             $uploaderAllowedFileTypes = config('folio.uploader.allowed-file-types');
 
             $filenames = Storage::disk($uploaderDisk)->files($uploaderUploadsFolder);
-            $videos = [];
             $images = [];
+            $videos = [];
+            $animations = [];
         @endphp
 
         @foreach($filenames as $filename)
@@ -48,13 +49,24 @@
                 $extension = $extension[count($extension) - 1];
                 
                 $isVideo = in_array($extension, ['mp4', 'mov', 'webm']);
+                $isAnimation = in_array($extension, ['gif']);
+
                 if ($isVideo) {
+                    // Videos
                     array_push($videos, $filename);
                     continue;
+                } else if ($isAnimation) {
+                    // Animations
+                    array_push($animations, $filename);
+                    continue;
                 }
+
+                // Images
                 array_push($images, $filename);
             @endphp
         @endforeach
+
+        {{-- Images --}}
 
         @if(count($images))
 
@@ -79,7 +91,7 @@
                         if (config('folio.imgix')) {
                             $veil = imgix($veil);
                             $imageHighRes = imgix($filePath);
-                            $image = imgix($filePath, ['w' => 225, 'q' => 50, 'auto' => 'format,compress']);
+                            $image = imgix($filePath, ['w' => 200, 'q' => 50, 'auto' => 'format,compress']);
                         } else {
                             $image = $filePath;
                         }
@@ -100,6 +112,56 @@
             </div>
         
         @endif
+
+        
+        {{-- Animations --}}
+
+        @if(count($animations))
+
+            <div class="admin-form grid">
+
+                <div class="grid__item one-whole u-mar-b-3x u-mar-t-3x u-font-size--g">
+                    <strong>Gifs</strong>
+                </div>        
+
+                @foreach($animations as $filename)
+                    @php
+                        $basename = basename($filename);
+                        
+                        // Construct file path
+                        $filePath = $uploaderPublicFolder.'/'.$basename;
+
+                        // Veil
+                        $veil = Folio::asset('images/veil.gif');
+
+                        // Construct image path
+                        $imageHighRes = $filePath;
+                        if (config('folio.imgix')) {
+                            $veil = imgix($veil);
+                            $imageHighRes = imgix($filePath);
+                            $image = imgix($filePath, ['w' => 150, 'q' => 40, 'auto' => 'format,compress']);
+                        } else {
+                            $image = $filePath;
+                        }
+                    @endphp
+
+                        <div class="[ grid__item one-sixth lap--one-quarter palm--one-third ]">
+                                <a href="{{ $imageHighRes }}" target="_blank">
+                                <img src="{{ $veil }}" data-src="{{ $image }}" style="width:100%">
+                                </a>
+                                <br/>
+                                {{ $basename }}
+                                ·
+                                <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath().'upload/delete/'.$basename }}">╳</a>
+                            </p>
+                        </div>
+                @endforeach
+            
+            </div>
+        
+        @endif
+
+
 
 
         @if(count($videos))
