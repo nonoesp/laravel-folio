@@ -79,7 +79,7 @@
                         if (config('folio.imgix')) {
                             $veil = imgix($veil);
                             $imageHighRes = imgix($filePath);
-                            $image = imgix($filePath, ['w' => 250, 'q' => 60]);
+                            $image = imgix($filePath, ['w' => 225, 'q' => 50, 'auto' => 'format,compress']);
                         } else {
                             $image = $filePath;
                         }
