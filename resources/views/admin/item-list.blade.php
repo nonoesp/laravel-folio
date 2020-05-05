@@ -194,7 +194,7 @@ admin.sort_tags();
 		{{-- Tag Cloud --}}
 
 		<div v-cloak class="[ u-visible-vue ] [ c-admin__existing-tags ] [ u-pad-b-2x ]">
-			<div class="o-wrap o-wrap--size-600 u-mar-b-3x">
+			<div v-if="orderedTags.length" class="o-wrap o-wrap--size-600 u-mar-b-3x">
 				<ul>
 				<li @click="display_all_tags()"
 							v-bind:class="{ 'u-opacity--low': !unfiltered }"
