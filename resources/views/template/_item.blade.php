@@ -4,11 +4,12 @@
     $item = $item ?? null;
     $css = $css ?? Folio::asset('css/folio.css');
 
-    $menu_data = $menu_data ?? ['items' => ['<i class="fa fa-pencil"></i>' => $item->editPath()]];
     $header_view = $header_view ?? config('folio.header.view');
-
+    $menu_data = $menu_data ?? config('folio.menu');
+    
     if ($item) {
-
+        
+        $menu_data = ['items' => ['<i class="fa fa-pencil"></i>' => $item->editPath()]];
         $title = $title ?? $item->title.' · '.config('folio.title');
         $og_type = $og_type ?? 'article';
         $og_url = $og_url ?? $item->permalink();
