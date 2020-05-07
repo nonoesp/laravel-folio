@@ -27,6 +27,7 @@
 
     $admin = $admin ?? Auth::check();
     $debug_load_time = $debug_load_time ?? config('folio.debug.load-time');
+    $notification_data = $notification_data ?? ['classes' => ['--light']];
 
     // Folio
     $rss = $rss ?? config('folio.feed.route');
@@ -162,19 +163,17 @@
 
 @if($admin && $debug_load_time)
 @prepend('notifications')
-{!! view('folio::partial.o-notification', [
+{!! view('folio::partial.o-notification', array_merge($notification_data, [
     'notification' => 'This page took '. (microtime(true) - LARAVEL_START) .' seconds to render',
-    'classes' => ['o-notification--light'],
-]) !!}
+])) !!}
 @endprepend
 @endif
 
 @if($notification = session()->get('notification'))
 @prepend('notifications')
-{!! view('folio::partial.o-notification', [
+{!! view('folio::partial.o-notification', array_merge($notification_data, [
     'notification' => $notification,
-    'classes' => ['o-notification--light'],
-]) !!}
+])) !!}
 @endprepend
 @endif
 

@@ -2,10 +2,10 @@
 
 @php
     $item = $item ?? null;
-    $css = '/folio/css/folio-light.css';
+    $css = $css ?? Folio::asset('css/folio.css');
 
     $menu_data = $menu_data ?? ['items' => ['<i class="fa fa-pencil"></i>' => $item->editPath()]];
-    $header_view = $header_view ?? 'partial.c-header-getting-simple-v2';
+    $header_view = $header_view ?? config('folio.header.view');
 
     if ($item) {
 

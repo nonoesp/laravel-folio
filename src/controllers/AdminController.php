@@ -28,7 +28,9 @@ class AdminController extends Controller
 			'title',
 			'tags_str',
 			'published_at',
-			'deleted_at'];
+			'deleted_at',
+			'slug',
+		];
 
 		if($tag) {
 			$items = Item::

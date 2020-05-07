@@ -367,4 +367,24 @@ class Folio {
     return $assetsDir;
   }
 
+  /**
+   * Returns an array of classes expanded with a base class
+   * (only expanding classes thatstart with `--`).
+   */
+  public static function expandClasses($classes, $baseClass) {
+    if (!$classes) {
+      return [];
+    }
+    if (!is_array($classes)) {
+      $classes = [$classes];
+    }
+    foreach($classes as $key => $class) {
+      if (Str::of($class)->startsWith('--')) {
+        $classes[$key] = $baseClass.$class;
+      }
+    }
+    return $classes;
+  }
+  
+
 }

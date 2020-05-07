@@ -44,7 +44,7 @@
 
   	<div class="[ o-band ] [ u-pad-t-4x u-pad-b-4x ]">
 
-		<div class="[ o-wrap o-wrap--size-small ]">
+		<div class="[ o-wrap o-wrap--size-600 ]">
 			@if(!isset($shouldHideMenu))
 				{!! view('folio::admin.c-menu') !!}
 			@endif
@@ -52,7 +52,7 @@
 		</div>
 
 		@if(!$remove_wrap)
-			<div class="[ o-wrap o-wrap--size-small ]">
+			<div class="[ o-wrap o-wrap--size-600 ]">
 		@endif
 
 			@yield('content')

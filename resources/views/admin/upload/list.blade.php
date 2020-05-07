@@ -9,13 +9,7 @@
 
 @section('content')
 
-	<style>
-	.o-image-upload__delete {
-		cursor: pointer;
-	}
-	</style>
-
-	<div class="admin-form o-wrap o-wrap--size-550">
+	<div class="admin-form o-wrap o-wrap--size-1000">
 	
 		<p>
 			<a href="/{{ Folio::adminPath() }}upload">↑ Upload File</a>
@@ -191,7 +185,12 @@
                                     {{ $basename }}
                                 </a>
                                 ·
-                                <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath("upload/delete/$basename") }}">╳</a>
+                                <a
+                                    class="js--delete-image u-cursor-pointer"
+                                    data-url="/{{ Folio::adminPath("upload/delete/$basename") }}"
+                                >
+                                    ╳
+                                </a>
                             </p>
                         </div>
                 @endforeach        
@@ -203,7 +202,7 @@
 	</div>
 
     @if(!count($images) && !count($videos))
-        <div class="o-wrap o-wrap--size-550">
+        <div class="o-wrap o-wrap--size-1000">
             No images or videos has been uploaded yet.
         </div>
     @endif

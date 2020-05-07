@@ -1,13 +1,14 @@
 @extends('folio::admin.layout')
 
-<?php
+@php
 	$settings_title = config('folio.title');
 	if($settings_title == '') {
 		$settings_title = "Folio";
 	}
 	$site_title = 'Items | '. $settings_title;
 	$remove_wrap = true;
-?>
+
+@endphp
 
 @section('scripts')
 
@@ -18,6 +19,7 @@
 		<?php
 		foreach($items as $item) {
 			$item->hidden = false;
+			$item->path = $item->path();
 		}
 
 		foreach($existing_tags as $tag) {
@@ -99,7 +101,11 @@ methods: {
 		console.log('trash');
 	},
 	human_date: function (item) {
-		var d = new Date(item.published_at);
+		const d = new Date(item.published_at);
+		return months[d.getMonth()] + ' ' + (d.getDate()) + ', ' + (d.getYear()+1900);
+	},
+	human_date_with_day: function (item) {
+		const d = new Date(item.published_at);
 		return months[d.getMonth()] + ' ' + (d.getDate()) + ', ' + (d.getYear()+1900) + ' ('+days[d.getDay()]+')';
 	},
 	edit_href: function (item) {
@@ -229,20 +235,50 @@ admin.sort_tags();
 
 		{{-- Item List --}}
 
-		<div v-cloak v-for="item in items" class="[ u-visible-vue ] [ admin-list-item ]" v-if="!item.hidden" ref="items">
-			<div class="o-wrap o-wrap--size-600">
-			<p v-bind:class="{ 'u-opacity--half': item.deleted_at }">
-				<a v-bind:href="edit_href(item)">
-					@{{ item.title.en || item.title[Object.keys(item.title)[0]] }}
-				</a>
-				<i v-if=" item.deleted_at" @click="toggle_item(item)"
-					 class="[ fa fa-toggle-off fa--social ] [ u-cursor-pointer admin-list-optionLink is-invisible ]"></i>
-				<i v-if="!item.deleted_at" @click="toggle_item(item)"
-					 class="[ fa fa-toggle-on fa--social ] [ u-cursor-pointer admin-list-optionLink is-invisible ]"></i>
-			</p>
-			<p v-if="item.published_at > date" class="admin-list-itemDetails">
-				Scheduled for <span style="text-transform:capitalize">@{{ human_date(item) }}</span>
-			</p>
+		<div v-cloak v-for="item in items" class="[ u-visible-vue ] [ admin-list-item ]"
+		style="padding:0.6rem 0;margin-bottom:0;border-bottom: 1px solid #eaeaea;" v-if="!item.hidden" ref="items">
+			<div class="o-wrap o-wrap--size-900" style="padding:0;margin:0">
+			<div v-bind:class="{ 'u-opacity--half': item.deleted_at }">
+				<div class="grid">
+					<div class="grid__item one-eighth">
+						<div class="grid">
+							<div class="grid__item one-third">
+							</div>
+							<div class="grid__item one-third">
+								<i v-if=" item.deleted_at" @click="toggle_item(item)"
+								class="[ fa fa-toggle-off fa--social ] [ u-cursor-pointer is-invisible ]"></i>
+								<i v-if="!item.deleted_at" @click="toggle_item(item)"
+								class="[ fa fa-toggle-on fa--social ] [ u-cursor-pointer admin-list-optionLink is-invisible ]"></i>
+							</div>
+							<div class="grid__item one-third">
+								<a v-bind:href="item.path" target="_blank">
+									<i class="[ fa fa-eye fa--social ] [ u-cursor-pointer is-invisible ]"></i>
+								</a>
+							</div>							
+						</div>
+					</div>
+					<div class="grid__item six-eighths">
+						<a v-bind:href="edit_href(item)">
+							@{{ item.title.en || item.title[Object.keys(item.title)[0]] }}
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="admin-list-itemDetails" style="margin:0;">
+				<div class="grid">
+					<div class="grid__item one-eighth">
+
+					</div>
+					<div class="grid__item six-eighths">
+						<p v-if="item.published_at > date" style="font-size:0.65rem;margin:0">
+							Scheduled for <span style="text-transform:capitalize">@{{ human_date_with_day(item) }}</span>
+						</p>
+						<p v-if="item.published_at <= date" style="font-size:0.65rem;margin:0">
+							<span style="text-transform:capitalize">@{{ human_date(item) }}</span>
+						</p>
+					</div>
+				</div>				
+			</div>
 			</div>
 		</div>
 

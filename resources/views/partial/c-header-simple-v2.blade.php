@@ -67,7 +67,7 @@
 			<nav role="navigation" class="[ c-header-simple__navigation ]">
 				<ul>
 
-					@foreach($navigation as $title=>$href)
+					@foreach($navigation as $title => $href)
 
 						<?php
 						// Insert {path-prefix}

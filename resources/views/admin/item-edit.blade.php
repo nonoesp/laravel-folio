@@ -580,7 +580,7 @@ methods: {
 
     .o-textarea--fullscreen .o-textarea__title * {
         text-align: center;
-        font-size: 1.3rem;
+        font-size: 1rem;
     }
 
     .o-textarea--fullscreen .o-textarea__title {
@@ -641,7 +641,7 @@ methods: {
 	.c-admin__property textarea.is-title {
 		background-color: transparent;
 		border:none;
-		font-size: 1.1rem;
+		font-size: var(--font-default);
 		font-weight: 600;
 		font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 	}
@@ -701,12 +701,12 @@ methods: {
 					$language_label = " · $translation";
 				}
 			@endphp
-			<div class="[ o-wrap o-wrap--size-small ] ">
+			<div class="[ o-wrap o-wrap--size-750 ] ">
 				<div class="[ grid__item ] [ one-whole ] o-textarea__title">
 					<p>{{ Form::text('title', null, [
 							'placeholder' => 'Title'.$language_label,
 							'v-model' => 'item.title.'.$translation,
-							'class' => 'o-textarea__title-input js--o-textarea__title-input',
+							'class' => 'o-textarea__title-input js--o-textarea__title-input center',
                         ]) }}
                     </p>
 				</div>
