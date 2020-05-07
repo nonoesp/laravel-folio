@@ -11,12 +11,7 @@ A customizable Laravel content-management system. (Currently in beta.)
 - Add alternate VCS repos for packages without Laravel 7 support to `composer.json`.
 
 ```json
-
     "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/nonoesp/versionable"
-        },
         {
             "type": "vcs",
             "url": "https://github.com/nonoesp/laravel-imgix"
