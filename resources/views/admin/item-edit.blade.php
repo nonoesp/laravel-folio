@@ -85,20 +85,11 @@ Mousetrap.bindGlobal('esc', function(e) {
 
     e.preventDefault();
 	
-    // new
-    const textareas = $('.o-textarea__text');
-    $('.o-textarea').removeClass('o-textarea--fullscreen');
-    $(textareas).each((index, element) => {
-        element.blur();
-        admin.adjustTextareaHeight(element, 150);
-    });
+	admin.exitFullscreen();
 	
-	if($(':focus').hasClass('o-textarea__text')) {
-		$(document).scrollTop(0);
-	} else {
-		$('.c-admin__property-textarea').css('height', '36px');
-		$('textarea:focus').blur();
-	}
+	// Reset height of property textareas
+	$('.c-admin__property-textarea').css('height', '36px');
+	$('textarea:focus').blur();
     
 	return false;
 });
@@ -121,40 +112,10 @@ Mousetrap.bindGlobal('alt+f', function(e) {
     
     e.preventDefault();
 
-    makeFullscreen();
+    enterFullscreen();
 
 	return false;
 });
-
-const makeFullscreen = () => {
-
-    if ($('.o-textarea--fullscreen').length) {
-        $('.o-textarea').removeClass('o-textarea--fullscreen');
-		$("textarea").each((index, element) => {
-			// Force -webkit-fill-available
-			admin.adjustTextareaHeight(element, 0);
-		});
-		//setTimeout(() => { $("textarea").select(); }, 50);
-        return false;
-    }
-
-    let focused = document.activeElement;
-    if (!$(focused).is('textarea') && !$(focused).hasClass('js--o-textarea__title-input')) {
-        focused = $('textarea')[0];
-	}
-
-    const oText = $(focused).closest('.js--o-textarea');
-    $('.o-textarea').removeClass('o-textarea--fullscreen');
-    $(oText).addClass('o-textarea--fullscreen');
-
-	// Force -webkit-fill-available
-	if (typeof target != 'undefined') {
-		this.adjustTextareaHeight(target, 0);
-	}
-
-	// Deselect if selected by double-clicking
-	//$("textarea").select();
-}
 
 var save = function(e) {
 	if(e) {
@@ -216,7 +177,8 @@ data: {
 	timers: {},
 	properties_changed: false,
 	isTextareaFocused: false,
-	isTextareaExpanded: false
+	isTextareaExpanded: false,
+	isFullscreen: false
 },
 watch: {
 	properties: {
@@ -249,12 +211,66 @@ created() {
 		return false;
 	});
 
-	$(document).on('dblclick', '.js--o-textarea__title-input', function(e) {
-		makeFullscreen();
-	});
+	// $(document).on('dblclick', '.js--o-textarea__title-input', function(e) {
+	// 	admin.enterFullscreen();
+	// });
 
 },
+computed: {
+	// ..
+},
 methods: {
+	exitFullscreen: function(e) {
+		
+		this.isFullscreen = false;
+
+		const textareas = $('.o-textarea__text');
+		$('.o-textarea').removeClass('o-textarea--fullscreen');
+		$(textareas).each((index, element) => {
+			element.blur();
+			this.adjustTextareaHeight(element, 150);
+		});
+	},
+	enterFullscreen: function(e) {
+
+		this.isFullscreen = true;
+
+		$('.o-textarea').removeClass('o-textarea--fullscreen');
+		
+		if (e != undefined) {
+			const oTextarea = $(e.target).closest('.js--o-textarea');
+			$(oTextarea).addClass('o-textarea--fullscreen');
+			const textarea = $('.o-textarea--fullscreen textarea').get();
+			setTimeout(() => {
+				$(textarea).css('height', '-webkit-fill-available');
+			}, 1);
+			
+		}
+
+		// if ($('.o-textarea--fullscreen').length) {
+		// 	$('.o-textarea').removeClass('o-textarea--fullscreen');
+		// 	$("textarea").each((index, element) => {
+		// 		// Force -webkit-fill-available
+		// 		admin.adjustTextareaHeight(element, 0);
+		// 	});
+		// 	//setTimeout(() => { $("textarea").select(); }, 50);
+		// 	return false;
+		// }
+
+		// let focused = document.activeElement;
+		// if (!$(focused).is('textarea') && !$(focused).hasClass('js--o-textarea__title-input')) {
+		// 	focused = $('textarea')[0];
+		// }
+
+		// const oText = $(focused).closest('.js--o-textarea');
+		// $('.o-textarea').removeClass('o-textarea--fullscreen');
+		// $(oText).addClass('o-textarea--fullscreen');
+
+		// Force -webkit-fill-available
+		if (typeof target != 'undefined') {
+			this.adjustTextareaHeight(target, 0);
+		}
+	},
 	wordCountFromText(t){
 		t = t.replace(/(^\s*)|(\s*$)/gi,"");
 		t = t.replace(/[ ]{2,}/gi," ");
@@ -270,7 +286,8 @@ methods: {
 				if (text === '') {
 					return 0;
 				}
-				return this.wordCountFromText(text);
+				return count.count(text, 'words', {});
+				// return this.wordCountFromText(text);
 			}
 		}
 		
@@ -357,7 +374,6 @@ methods: {
 	},
 	adjustTextareaHeight: function(textarea, height) {
         if ($('.o-textarea--fullscreen').length) {
-            //
             textarea.style.height = '-webkit-fill-available';
         } else if(height == 0) {
 			this.isTextAreaExpanded = true;
@@ -556,126 +572,6 @@ methods: {
 
 @else
 
-<style>
-	.grid {
-		letter-spacing: inherit;
-	}
-
-	[v-cloak] {
-  		display: none;
-    }
-    
-    .o-textarea {
-    }
-
-    .o-textarea--fullscreen {
-        position: fixed;
-        background-color: #fafafa;
-        z-index: 10;
-        top:0;
-        bottom:0;
-        left:0;
-        right:0;
-    }
-
-    .o-textarea--fullscreen .o-textarea__title * {
-        text-align: center;
-        font-size: 1rem;
-    }
-
-    .o-textarea--fullscreen .o-textarea__title {
-        position: fixed;
-        top: 0;
-        background-color:white;
-        padding-top: 20px;
-        width: 100%;
-        left:0;
-        text-align: center;
-    }
-
-    .o-textarea--fullscreen .o-textarea__textarea {
-        position: fixed;
-        left:0;
-        right:0;
-        top:110px;
-        max-width: 60rem;
-        margin:auto;
-    }
-
-    .o-textarea--fullscreen .o-textarea__textarea textarea {
-        position: relative;
-        width: 70rem!important;
-        height: 100%;
-    }    
-
-	.o-label-saved {
-		position:absolute;
-		bottom:0;
-		left:0;
-		margin-left:10px;
-		margin-bottom:11px;
-		padding-bottom:0;
-		border-radius:3px;
-		padding:2px 8px;
-		color:#666;
-		background-color:transparent;
-	}
-
-	@media all and (max-width:750px) {
-		.o-label-saved {
-			background-color: white;
-			margin-left:0;
-			margin-bottom:0;
-			padding: 5px 18px 13px;
-		}
-	}
-
-	input.is-empty,
-	.c-admin__property textarea.is-empty {
-		background-color: transparent;
-		border: none;
-		opacity: 0.5;
-	}
-
-	input.is-title,
-	.c-admin__property textarea.is-title {
-		background-color: transparent;
-		border:none;
-		font-size: var(--font-default);
-		font-weight: 600;
-		font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-	}
-
-	input.is-updating,
-	.c-admin__property textarea.is-updating {
-		background-color: #ffefc2;
-		border-color: white;
-	}
-
-	.c-admin__property.is-title {
-		margin-top: 10px;
-	}
-
-	.c-admin__property textarea {
-		border: 1px solid #dadada;
-		background-color: white;
-		min-height: 36px;
-		line-height: 20px;
-		width: 100%;
-		font-size: 12px;
-		white-space:pre-line;
-	}
-
-	.c-admin__property textarea.is-updating,
-	input {
-		-webkit-transition: 250ms linear;
-    	-ms-transition: 250ms linear;
-    	transition: 250ms linear;
-		transition-property: background-color,border;
-	}
-    
-</style>
-
 {{-- Vue Component --}}
 
 <div v-cloak class="[ c-admin ] [ u-pad-b-12x ]">
@@ -702,6 +598,15 @@ methods: {
 				}
 			@endphp
 			<div class="[ o-wrap o-wrap--size-750 ] ">
+
+				<div v-if="!isFullscreen" class="o-fullscreen-button__wrap" @click="enterFullscreen">
+					<i class="fa fa-expand o-fullscreen-button__icon"></i>
+				</div>
+
+				<div v-if="isFullscreen" class="o-fullscreen-button__wrap" @click="exitFullscreen">
+					<i class="fa fa-compress o-fullscreen-button__icon"></i>
+				</div>
+
 				<div class="[ grid__item ] [ one-whole ] o-textarea__title">
 					<p>{{ Form::text('title', null, [
 							'placeholder' => 'Title'.$language_label,
@@ -729,7 +634,7 @@ methods: {
         
 		@endforeach
 
-		<div class="[ o-wrap o-wrap--size-600 ]">
+		<div v-if="!isFullscreen" class="[ o-wrap o-wrap--size-600 ]">
 
 			@foreach($inputs as $input)
 				<div v-if="item.{{ $input['name'] }}" class="[ grid__item ]
@@ -749,28 +654,38 @@ methods: {
 					{{ Form::select('template', $templates, $item->template, ['v-model' => 'item.template']) }}
 				</p>
 				@if($item->templateView() != null && !view()->exists($item->templateView()))
-					<p>View <i>{{$item->templateView()}}</i> is missing!</p>
+				<p class="u-pad-b-1x">View <i>{{$item->templateView()}}</i> is missing!</p>
 				@endif
 			</div>
 
 			<div class="[ grid__item ] [ one-whole ]">
-				<p><label for="hidden">{{ Form::checkbox('is_hidden', null, $item->trashed(), ['id' => 'is_hidden', 'v-model' => 'item.deleted_at']) }} Hidden</label></p>
+				<p>
+					{{ Form::checkbox('is_hidden', null, $item->trashed(), ['id' => 'is_hidden', 'v-model' => 'item.deleted_at']) }}
+					<label for="is_hidden">Hidden</label>
+				</p>
 			</div>
 
 			{{-- Blog Feed --}}
 
 			<div class="[ grid__item ] [ one-whole ]">
-				<p><label for="blog">{{ Form::checkbox('is_blog', null, null, ['id' => 'is_blog', 'v-model' => 'item.is_blog']) }} Blog Feed</label></p>
+				<p>
+					{{ Form::checkbox('is_blog', null, null, ['id' => 'is_blog', 'v-model' => 'item.is_blog']) }}
+					<label for="is_blog">Blog Feed</label></p>
 			</div>
 
 			{{-- RSS --}}
 
 			<div class="[ grid__item ] [ one-whole ]">
-				<p><label for="rss">{{ Form::checkbox('rss', null, null, ['id' => 'rss', 'v-model' => 'item.rss']) }} RSS Feed</label></p>
+				<p>
+					{{ Form::checkbox('rss', null, null, ['id' => 'rss', 'v-model' => 'item.rss']) }}
+					<label for="rss">RSS Feed</label>
+				</p>
 			</div>
 
 			{{-- Properties --}}
 
+				<br/>
+				<br/>
 				<div v-if="properties.length" class="[ grid__item ] [ u-pad-b-1x ]">
 					<strong>Properties</strong>
 				</div>
@@ -805,7 +720,6 @@ methods: {
 									+
 								</span>	
 								
-
 								<input type="text"
 								placeholder="Label"
 								v-model="property.label"
@@ -828,18 +742,8 @@ methods: {
 									'is-empty': !property.name || !!property.name && property.name[0] === '-',
 								}"
 								class="u-text-align--right">
-									{{--<span v-bind:data-id="property.id" data-field="name">@{{ property.name }}</span>--}}
 							</div><!--
 							--><div class="[ grid__item six-twelfths ]" style="position:relative">
-									{{-- <input type="text" v-model="property.value"
-									placeholder="Value"
-									@keyup="sync_properties(property)"
-									v-bind:data-id="property.id" data-field="value"
-									v-bind:class="{
-										'is-updating': property.is_updating,
-										'is-empty': !property.value && !property.name,
-										'is-title': !property.name && !property.label && !!property.value
-									}"> --}}
 									<textarea
 										v-model="property.value"
 										class="c-admin__property-textarea"
@@ -852,18 +756,7 @@ methods: {
 										@keyup="sync_properties(property)"
 										@input="textareaAutoresize"
 										@focus="textareaAutoresize"
-										{{-- @blur="textareaCollapse" --}}
 									></textarea>
-
-									{{--
-									<div v-if="property.is_updating"
-									class="[ u-opacity--low ]"
-									style="position:absolute;right:-50px;display:inline-block">
-									<i class="fa fa-refresh fa-spin fa-fw"></i>
-									<span class="sr-only">Loading...</span>
-									</div>
-									--}}
-
 							</div><!--
 							--><div
 							class="[ grid__item one-twelfth ] [ u-opacity--low ]" style="position:relative">
@@ -900,32 +793,34 @@ methods: {
 					<p @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</p>
             </div>
 
-            <div style="background-color:transparent;position:fixed;bottom:0;right:0;left:0;height:55px;z-index:200">
-
-                {{-- Save --}}
-                <div v-if="isDirty()" style="background-color:transparent;position:absolute;bottom:0;right:0;width:10rem;padding-top:10px;padding-left:40px;padding-right:10px">
-                    <p>{{ Form::button('Save', [
-                        'v-on:click' => 'this.save()',
-                        'v-bind:disabled'=>"!isDirty()",
-                        'class' => 'js--save',
-                        'style' => 'margin:0;background-color:white;'
-                        ]) }}</p>
-                </div>
-
-                {{-- Unsaved changes --}}
-                <div class="o-label-saved">
-                    <p style="margin:0">
-						<span v-if="!!wordCount()">@{{ wordCount() }} words</br></span>
-						<span v-if="!!isDirty()">Unsaved changes.</span>
-						<span v-if="!isDirty()">Saved.</span>
-					</p>
-                </div>     
-
-            </div>
-
-
 
 		{{ Form::close() }}
+
+	</div>
+
+	<div style="background-color:transparent;position:fixed;bottom:0;right:0;left:0;height:55px;z-index:200">
+
+		{{-- Save --}}
+		
+		<div v-if="isDirty()"
+		style="background-color:transparent;position:absolute;bottom:0;right:0;width:10rem;padding-top:10px;padding-left:40px;padding-right:10px">
+			<p>{{ Form::button('Save', [
+				'v-on:click' => 'this.save()',
+				'v-bind:disabled'=>"!isDirty()",
+				'class' => 'js--save',
+				'style' => 'margin:0;background-color:white;'
+				]) }}</p>
+		</div>
+
+		{{-- Unsaved changes --}}
+		
+		<div class="o-label-saved">
+			<p>
+				<span v-if="!!wordCount()">@{{ wordCount() }} words</br></span>
+				<span v-if="!!isDirty()" v-bind:class="{'u-opacity--half': isFullscreen}">Unsaved changes.</span>
+				<span v-if="!isDirty()" v-bind:class="{'u-opacity--half': isFullscreen}">Saved.</span>
+			</p>
+		</div>     
 
 	</div>
 

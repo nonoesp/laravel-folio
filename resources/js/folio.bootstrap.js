@@ -38,6 +38,7 @@ window.Vue.use(window.VueResource);
 window.Focus = require('vue-focus');
 import draggable from "vuedraggable";
 window.draggable = draggable;
+window.count = require('@wordpress/wordcount');
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

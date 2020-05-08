@@ -13,7 +13,8 @@ mix.sass('resources/sass/folio.scss', 'folio/css')
         'jquery-unveil',
         'validate-js',
         'lodash',
-        'axios'
+        'axios',
+        '@wordpress/wordpress',
     ]);
 
 // ..

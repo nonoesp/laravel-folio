@@ -55,7 +55,10 @@
 			<div class="[ o-wrap o-wrap--size-600 ]">
 		@endif
 
+
+		<div class="folio-inputs">
 			@yield('content')
+		</div>
 
 		@if(!$remove_wrap)
 			</div>
