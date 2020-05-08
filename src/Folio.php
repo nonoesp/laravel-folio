@@ -371,7 +371,7 @@ class Folio {
    * Returns an array of classes expanded with a base class
    * (only expanding classes thatstart with `--`).
    */
-  public static function expandClasses($classes, $baseClass) {
+  public static function expandClasses($classes, $baseClass = '') {
     if (!$classes) {
       return [];
     }
@@ -385,6 +385,19 @@ class Folio {
     }
     return $classes;
   }
+
+  public static function expandClassesAsString($classes, $baseClass = '') {
+    return join(" ", Folio::expandClasses($classes, $baseClass));
+  }
   
+  public static function trans($key = null) {
+    if (!$key) {
+      return null;
+    }
+    if (Str::of($key)->is('{*}')) {
+      $key = Str::of($key)->replace(['{', '}'], ['', '']);
+    }
+    return trans((string)$key);
+  }
 
 }
