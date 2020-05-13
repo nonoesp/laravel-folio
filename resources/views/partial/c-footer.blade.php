@@ -41,12 +41,12 @@ if(!isset($subscribe_data)) {
   if(isset($data['classes'])) { $classes = $data['classes']; }
 ?>
 
-<div class="[ u-pad-b-1x u-pad-t-1x {{ $classes ?? '' }} ]">
+<div class="[ u-pad-b-1x u-pad-t-1x {{ $classes ?? '' }} ] [ folio-inputs ]">
 
   @if($hide_subscribe == false)
 
     <div class="[ o-wrap o-wrap--size-tiny o-wrap--portable-size-minuscule u-pad-b-2x ]">
-      {!! view('folio::partial.c-footer__subscribe', [
+      {!! view('folio::partial.c-subscribe-v2', [
         'source' => $source,
         'medium' => $medium,
         'campaign' => $campaign,

@@ -27,6 +27,9 @@ $(document).on('click', '.js--subscribe__submit', function(event) {
         submitButton.prop('disabled', true);
         submitButton.val("...");
 
+        const form = subscribeContainer.find(".js--subscribe__form");
+        $(form).addClass('flash');    
+
         $.ajax({
             url: '/subscriber/create',
             type: 'POST',
@@ -43,12 +46,19 @@ $(document).on('click', '.js--subscribe__submit', function(event) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: (response) => {
-                handleSubscribeResponse(response, subscribeContainer);
 
-                // Reset form state
-                emailField.prop('disabled', false);
-                submitButton.prop('disabled', false);
-                submitButton.val(trans.subscribe_button_text);
+                // Delay on purpose for visual feedback
+                setTimeout( () => {
+    
+                    // Handle response
+                    handleSubscribeResponse(response, subscribeContainer);
+                    
+                    // Reset form state
+                    emailField.prop('disabled', false);
+                    submitButton.prop('disabled', false);
+                    submitButton.val(trans.subscribe_button_text);
+
+                }, 200);
             },
             traditional: true
         });
@@ -63,14 +73,19 @@ $(document).on('click', '.js--subscribe__submit', function(event) {
 
 function handleInvalidEmail(container) {
 
-    let label = container.find(".js--subscribe__label");
-
+    const label = container.find(".js--subscribe__label");
+    const form = container.find(".js--subscribe__form");
     label.html(trans.email_is_not_valid);
+
+    $(form).removeClass('animated headShake');
+    setTimeout(() => {
+        $(form).addClass('animated headShake');
+    }, 10);
 
     clearTimeout(timer);
     timer = setTimeout(() => {
         label.html(trans.to_receive_our_updates);
-    }, 3000);
+    }, 4000);
 
 }
 
@@ -79,19 +94,19 @@ function handleSubscribeResponse(response, container) {
 
     const form = container.find(".js--subscribe__form");
     const label = container.find(".js--subscribe__label");
-    form.hide();
+
+    $(form).addClass('flash');
+    // form.hide();
 
     if (response.success == true) {
-
-        label.html(trans.thanks_for_subscribing).addClass('u-text-align--center');
-
+        label.html(trans.thanks_for_subscribing).addClass('flash animated slideInUp faster');
     } else {
-        label.html(trans.something_is_not_working_well).addClass('u-text-align--center');
+        label.html(trans.something_is_not_working_well).addClass('flash');
     }
 
     timer = setTimeout(() => {
         restoreSubscriptionForm(container);
-    }, 5000);    
+    }, 6000);    
 }
 
 function restoreSubscriptionForm(container) {
@@ -101,11 +116,11 @@ function restoreSubscriptionForm(container) {
     let label = container.find(".js--subscribe__label");
 
     email.val('');
-    form.show();
-    label.removeClass('u-text-align--center');
-
+    // form.show();
+    form.removeClass('flash');
+    
     clearTimeout(timer);
     timer = setTimeout(() => {
-        label.html(trans.to_receive_our_updates);
-    }, 10000);
+        label.html(trans.to_receive_our_updates).removeClass('flash animated slideInUp faster');
+    }, 1000);
 }

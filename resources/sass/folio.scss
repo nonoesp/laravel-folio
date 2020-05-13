@@ -46,4 +46,9 @@
 @import '../../node_modules/folio-scss/utilities/utilities.font.family';
 // folio-scss - themes
 @import '../../node_modules/folio-scss/themes/t-folio-dark';
+// animate.css
+@import '~animate.css/source/_vars.css';
+@import '~animate.css/source/_base.css';
+@import '~animate.css/source/attention_seekers/headShake.css'; // used in folio.subscribe.js
+@import '~animate.css/source/sliding_entrances/slideInUp.css'; // used in folio.subscribe.js
 // custom

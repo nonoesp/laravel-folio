@@ -641,6 +641,10 @@ class Item extends Model implements Feedable, Searchable
 				$imgixOptions = [];
 			}
 
+			if (!is_array($imgixOptions)) {
+				$imgixOptions = [];
+			}
+
 			return imgix($imagePath, $imgixOptions);
 		}
 		return $imagePath;		
@@ -698,6 +702,15 @@ class Item extends Model implements Feedable, Searchable
 	 * Parse Markdown to HTML.
 	 */
 	public static function convertToHtml($text, $markdown_parser = 'default', $veilImages = 'true') {
+
+		if (!in_array($markdown_parser, [
+			'default',
+			'commonmark',
+			'vtalbot',
+			'michelf',
+		])) {
+			$markdown_parser = 'default';
+		}
 
 		if(
 			$markdown_parser == 'default' ||
