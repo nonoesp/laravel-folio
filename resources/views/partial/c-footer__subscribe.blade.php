@@ -24,7 +24,7 @@ if(!isset($subscribe_button_text)) {
 
 <div class="[ grid ]">
 
-    <div class="[ c-footer__item ] [ grid__item one-whole ]">
+    <div class="[ c-footer__item ] [ grid__item one-whole folio-inputs ]">
 
     {{ Form::open(array('class' => '[ s-form-subscribe ] [ js--subscribe__form ]', 'url' => config('services.mailchimp.long'))) }}
 
@@ -49,7 +49,7 @@ if(!isset($subscribe_button_text)) {
            <div class="[ grid__item desk--two-thirds ]">
                {{ Form::email('email', null, ['placeholder' => trans('folio::base.your-email-address'), 'class' => '[ js--subscribe__email ] [ u-case-input-lower ]', 'name' => 'EMAIL']) }}
            </div>
-           <div class="[ grid__item desk--one-third ]">
+           <div class="[ grid__item desk--one-third folio-inputs ]">
                 @if(isset($button_text))
                     {{ Form::submit($button_text, ['class' => '[ js--subscribe__submit ] [ button--background-white ]']) }}
                 @else
