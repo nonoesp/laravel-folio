@@ -204,5 +204,5 @@
       {{-----------------------------------}}
 
 @section('footer')
-	{!! view('folio::partial.c-footer', $footer_data) !!}
+	{!! view('folio::legacy.partial.c-footer', $footer_data) !!}
 @stop

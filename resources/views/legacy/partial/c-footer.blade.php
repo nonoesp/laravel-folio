@@ -1,7 +1,7 @@
 <?php
 // hide credits?
 if(!isset($hide_credits)) {
-  $footer_credits = config('space.footer');
+  $footer_credits = config('folio.footer');
   $hide_credits = false;
   if(isset($footer_credits['hide_credits'])) {
     $hide_credits = $footer_credits['hide_credits'];
@@ -61,9 +61,9 @@ if(!isset($subscribe_data)) {
 
     <div class="[ o-wrap o-wrap--size-medium ]">
       @if(isset($credits_text))
-        {!! view('folio::partial.c-footer__credits')->with(['text' => $credits_text]) !!}
+        {!! view('folio::legacy.partial.c-footer__credits')->with(['text' => $credits_text]) !!}
       @else
-        {!! view('folio::partial.c-footer__credits') !!}
+        {!! view('folio::legacy.partial.c-footer__credits') !!}
       @endif
     </div>
 

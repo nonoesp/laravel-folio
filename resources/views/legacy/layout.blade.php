@@ -173,7 +173,7 @@
 	<?php if(!isset($cover_active)) $cover_active = true;
 		  if(!isset($cover_hidden)) $cover_hidden = true; ?>
   @if($cover_active and $cover_hidden != true)
-      	{!! view('folio::partial.c-cover', $cover_data) !!}
+      	{!! view('folio::legacy.partial.c-cover', $cover_data) !!}
   @endif
 
 @yield('floating.menu', view('folio::partial.c-floating-menu'))
