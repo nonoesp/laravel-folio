@@ -21,6 +21,7 @@
 			$item->hidden = false;
 			$item->path = $item->path();
 			$item->editPath = $item->editPath();
+			$item->titleString = $item->title ?? 'Untitled';
 		}
 
 		foreach($existing_tags as $tag) {
@@ -273,7 +274,7 @@ admin.sort_tags();
 
 					<div class="grid__item six-eighths c-admin__item-list-item-title" style="height:25px">
 						<a v-bind:href="edit_href(item)">
-							@{{ item.title.en || item.title[Object.keys(item.title)[0]] }}
+							@{{ item.titleString || 'Untitled' }}
 						</a>
 					</div>
 

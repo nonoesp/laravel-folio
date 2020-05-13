@@ -117,6 +117,9 @@ class Item extends Model implements Feedable, Searchable
 	}
 
 	public function uri() {
+		if (!$this->slug) {
+			return null;
+		}
 		$uri = Folio::path().$this->slug;
 		if($this->slug[0] == "/") {
 			$uri = substr($this->slug, 1, strlen($this->slug)-1);
