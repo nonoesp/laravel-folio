@@ -12,6 +12,7 @@
         <p style="color: #e36129">{{ trans('folio::base.'.session('error')) }}</p>
     @endif
 
+    <div class="folio-inputs">
     <form action="{{ route('login') }}" method="post" accept-charset="UTF-8">
 
         @csrf
@@ -21,5 +22,6 @@
         <button type="submit">Sign in</button>
 
     </form>
+    </div>
 
 @endsection

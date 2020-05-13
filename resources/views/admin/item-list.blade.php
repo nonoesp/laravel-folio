@@ -20,6 +20,7 @@
 		foreach($items as $item) {
 			$item->hidden = false;
 			$item->path = $item->path();
+			$item->editPath = $item->editPath();
 		}
 
 		foreach($existing_tags as $tag) {
@@ -38,7 +39,7 @@ var months = [
 var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
 var admin = new Vue({
-el: '.c-admin',
+el: '.js--admin',
 data: {
 	items: {!! $items !!},
 	tags: {!! $existing_tags !!},
@@ -191,7 +192,7 @@ admin.sort_tags();
 	}
 	</style>
 
-	<div class="[ c-admin ] [ admin-list ]">
+	<div class="[ js--admin c-admin-v2 ] [ admin-list ]">
 
 		{{-- Loading.. --}}
 
@@ -200,7 +201,7 @@ admin.sort_tags();
 		{{-- Tag Cloud --}}
 
 		<div v-cloak class="[ u-visible-vue ] [ c-admin__existing-tags ] [ u-pad-b-2x ]">
-			<div v-if="orderedTags.length" class="o-wrap o-wrap--size-600 u-mar-b-3x">
+			<div v-if="orderedTags.length" class="o-wrap o-wrap--size-650">
 				<ul>
 				<li @click="display_all_tags()"
 							v-bind:class="{ 'u-opacity--low': !unfiltered }"
@@ -221,7 +222,8 @@ admin.sort_tags();
 				</li>
 				</ul>
 			</div>
-			<div v-if="limit > 0" class="o-wrap o-wrap--full u-text-align--center">
+			{{-- <div v-if="limit > 0" class="o-wrap o-wrap--size-650 -o-wrap--full u-text-align--left u-mar-t-2x"> --}}
+			<div v-if="limit > 0" class="o-wrap o-wrap--full u-text-align--center u-mar-t-2x">
 			<ul>
 				<li v-for="(tag, index) in orderedTags" v-if="index < limit"
 				class="u-cursor-pointer"
@@ -235,37 +237,50 @@ admin.sort_tags();
 
 		{{-- Item List --}}
 
+		<div style="border-top: 1px solid #eaeaea;">
 		<div v-cloak v-for="item in items" class="[ u-visible-vue ] [ admin-list-item ]"
 		style="padding:0.6rem 0;margin-bottom:0;border-bottom: 1px solid #eaeaea;" v-if="!item.hidden" ref="items">
-			<div class="o-wrap o-wrap--size-900" style="padding:0;margin:0">
+			<div class="o-wrap o-wrap--size-900" style="padding:0;margin-left:auto;margin-right:auto;">
 			<div v-bind:class="{ 'u-opacity--half': item.deleted_at }">
 				<div class="grid">
-					<div class="grid__item one-eighth">
-						<div class="grid">
-							<div class="grid__item one-third">
-							</div>
-							<div class="grid__item one-third">
-								<i v-if=" item.deleted_at" @click="toggle_item(item)"
-								class="[ fa fa-toggle-off fa--social ] [ u-cursor-pointer is-invisible ]"></i>
-								<i v-if="!item.deleted_at" @click="toggle_item(item)"
-								class="[ fa fa-toggle-on fa--social ] [ u-cursor-pointer admin-list-optionLink is-invisible ]"></i>
-							</div>
-							<div class="grid__item one-third">
+					<div class="grid__item one-eighth c-admin__item-list-item-tools">
+						<div class="m-fa grid">
+
+							{{-- Preview --}}
+							<div class="fa-wrap u-cursor-pointer is-invisible">
 								<a v-bind:href="item.path" target="_blank">
-									<i class="[ fa fa-eye fa--social ] [ u-cursor-pointer is-invisible ]"></i>
+									<i class="[ fa fa-eye fa--social ]"></i>
 								</a>
+							</div>
+
+							{{-- Edit --}}
+							<div class="fa-wrap u-cursor-pointer is-invisible u-hidden-portable">
+								<a v-bind:href="item.editPath">
+									<i class="[ fa fa-pencil fa--social ]"></i>
+								</a>
+							</div>
+
+							{{-- Hide/Show --}}
+							<div class="fa-wrap u-cursor-pointer is-invisible" >
+								<i v-if=" item.deleted_at" @click="toggle_item(item)"
+								class="[ fa fa-toggle-off fa--social ]"></i>
+								<i v-if="!item.deleted_at" @click="toggle_item(item)"
+								class="[ fa fa-toggle-on fa--social ]"></i>
 							</div>							
+
 						</div>
 					</div>
-					<div class="grid__item six-eighths">
+
+					<div class="grid__item six-eighths c-admin__item-list-item-title" style="height:25px">
 						<a v-bind:href="edit_href(item)">
 							@{{ item.title.en || item.title[Object.keys(item.title)[0]] }}
 						</a>
 					</div>
+
 				</div>
 			</div>
-			<div class="admin-list-itemDetails" style="margin:0;">
-				<div class="grid">
+			<div class="admin-list-itemDetails" style="margin:0;user-select:none">
+				<div class="grid c-admin__item-list-item-date">
 					<div class="grid__item one-eighth">
 
 					</div>
@@ -280,6 +295,7 @@ admin.sort_tags();
 				</div>				
 			</div>
 			</div>
+		</div>
 		</div>
 
 	</div>
