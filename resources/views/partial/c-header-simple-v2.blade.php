@@ -2,8 +2,8 @@
 	use Illuminate\Support\Str;
 	
 	$header_active_link_classes = $header_active_link_classes ?? 'c-header-getting-simple__link--active';
-	$header_class = $header_class ?? 'c-header-getting-simple';
-    $classes = $classes ?? [];
+	$class = $class ?? 'c-header-simple-v2';
+  	$classes = Folio::expandClassesAsString($classes ?? config('folio.header.classes'), $class);
 	$item = $item ?? null;
 	$title = $title ?? null;
 	$is_navigation_hidden = $is_navigation_hidden ?? null;
@@ -17,14 +17,6 @@
 	$header_domain = '';
 	$folio_domain = config('folio.domain') ? Folio::protocol().config('folio.domain') : null;
 	$header_domain = $header_domain ?? $folio_domain;
-
-	// Expand modifier classes
-	foreach($classes as $key => $class) {
-		if (Str::of($class)->startsWith('--')) {
-			$classes[$key] = $header_class.$class;
-		}
-    }
-    $class_specified = count($classes) ? '[ '.join(' ', $classes).' ]' : '';
 
 	// Set link type to highlight header link
 	$hasPodcastTag = $item && $item->hasTag('podcast');
@@ -40,7 +32,7 @@
 
 <!-- c-header-simple · styling based on frankchimero.com -->
 
-<header class="[ c-header-simple ] {{ $class_specified }}">
+<header class="[ c-header-simple ] {{ $classes }}">
 	<div class="[ o-wrap o-wrap--size-full ]">
 		<a href="{{ $header_domain }}/" class="[ c-header-simple__name ]">
 
