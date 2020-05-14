@@ -2,6 +2,8 @@
 
 @php
     $item = $item ?? null;
+    $collection = $collection ?? [];
+    $tag = $tag ?? null;
     $css = $css ?? Folio::asset('css/folio.css');
 
     $header_view = $header_view ?? config('folio.header.view');
@@ -21,4 +23,11 @@
         $stylesheets = $stylesheets ?? $item->propertyArray('css');
 
     }
+   
+    if ($tag) {
+
+        $title = config('folio.title').' · '.$tag;
+        $og_description = 'Publications tagged as '.$tag.'.';
+
+    }    
 @endphp
