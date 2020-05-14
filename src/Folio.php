@@ -387,7 +387,9 @@ class Folio {
   }
 
   public static function expandClassesAsString($classes, $baseClass = '') {
-    return join(" ", Folio::expandClasses($classes, $baseClass));
+    $classes = Folio::expandClasses($classes, $baseClass);
+    array_unshift($classes, $baseClass);
+    return join(" ", $classes);
   }
   
   public static function trans($key = null) {
