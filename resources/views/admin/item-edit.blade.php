@@ -530,12 +530,12 @@ methods: {
 	$inputs = [
 		['name' => 'published_at', 'placeholder' => 'Publication Date (yyyy-mm-dd hh:mm:ss)', 'label' => 'Publication Date'],
 		['name' => 'image', 'placeholder' => 'Image', 'label' => 'Image'],
-		['name' => 'image_src', 'placeholder' => 'Thumbnail', 'label' => 'Thumbnail'],
+		['name' => 'image_src', 'placeholder' => 'Open Graph Image', 'label' => 'Open Graph Image'],
 		['name' => 'video', 'placeholder' => 'Video', 'label' => 'Video URL'],
 		['name' => 'link', 'placeholder' => 'External Link', 'label' => 'External Link'],
 		['name' => 'slug_title', 'placeholder' => 'Explicit URL slug (prefix with / to make absolute, i.e. \'/terms\')', 'label' => 'URL slug'],
 		['name' => 'tags_str', 'placeholder' => 'Tags (e.g. writing, project)', 'label' => 'Tags'],
-		['name' => 'recipients_str', 'placeholder' => 'Recipients (Twitter handles)', 'label' => 'Recipients'],
+		// ['name' => 'recipients_str', 'placeholder' => 'Recipients (Twitter handles)', 'label' => 'Recipients'],
 	];
 ?>
 
@@ -571,6 +571,10 @@ methods: {
 	</div>
 
 @else
+
+@push('metadata')
+<link href="https://fonts.googleapis.com/css?family=Cousine:400,700" rel="stylesheet">
+@endpush
 
 {{-- Vue Component --}}
 
@@ -634,21 +638,26 @@ methods: {
         
 		@endforeach
 
-		<div v-if="!isFullscreen" class="[ o-wrap o-wrap--size-600 ]">
+		<div v-if="!isFullscreen" class="[ o-wrap o-wrap--size-600 ]" style="position:relative">
 
 			@foreach($inputs as $input)
 				<div v-if="item.{{ $input['name'] }}" class="[ grid__item ]
-				[ c-admin-form__label u-text-align--right c-admin--font-light ]
+				[ c-admin-form__label u-text-align--right ]
 				[ one-half portable--one-whole ]">
 					<span>{{ $input['label'] }}</span>
 				</div><!--
 		 --><div class="[ grid__item ] [ one-whole ]">
 		 			<p>{{ Form::text($input['name'], null, ['v-model' => 'item.'.$input['name'], 'placeholder' => $input['placeholder']]) }}</p>
-				</div>
+			</div>
 			@endforeach
 
 			{{-- Template Drop-down --}}
 
+			<div class="[ grid__item ]
+				[ c-admin-form__label u-text-align--right ]
+				[ one-half portable--one-whole ]">
+					<span>Template</span>
+			</div>
 			<div class="[ grid__item ] [ one-whole ]">
 				<p>
 					{{ Form::select('template', $templates, $item->template, ['v-model' => 'item.template']) }}
@@ -689,6 +698,9 @@ methods: {
 				<div v-if="properties.length" class="[ grid__item ] [ u-pad-b-1x ]">
 					<strong>Properties</strong>
 				</div>
+				<div v-if="!!!properties.length" class="[ grid__item ] [ u-pad-b-1x ]">
+					<p @click="add_property" class="c-admin__property-add">Add Properties</p>
+				</div>				
 
 				<draggable v-model="properties" @end="sortProperties" :options="{handle:'.js--dragger'}">
 				<div v-for="(property, index) in properties" class="[ grid__item one-whole ] [ c-admin__property ]"
@@ -700,7 +712,7 @@ methods: {
 							[ one-half portable--one-whole ]
 							[ u-hidden-portable ]">
 								{{-- <span>@{{ property.id }} · @{{ property.order_column }} · @{{ index }}</span> --}}
-								{{-- <span class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+								{{-- <span class="[ c-admin__property-icon ] [ u-cursor-pointer ]">
 									<i class="fa fa-trash-o"></i>
 								</span>--}}
 							</div>
@@ -708,15 +720,13 @@ methods: {
 						--><div class="[ grid__item two-twelfths  ] [ u-text-align--right ]" style="position:relative;">
 						
 								<span v-bind:data-id="property.id"
-								class="[ c-admin__property-trash ] [ u-cursor-pointer ]
-								[ js--dragger ] [ u-opacity--low ]"
-								style="position:absolute;left:-10px;">
+								class="[ c-admin__property-icon c-admin__property-icon--drag ]
+								[ js--dragger ]">
 									<i class="fa fa-bars"></i>
 								</span>	
 								<span v-bind:data-id="property.id"
 								@click="add_property_at(property,index,0)"
-								class="[ c-admin__property-trash ] [ u-cursor-pointer ] [ u-opacity--low ]"
-								style="position:absolute;left:-31px;padding:0 5px">
+								class="[ c-admin__property-icon c-admin__property-icon--add-before ]">
 									+
 								</span>	
 								
@@ -743,7 +753,7 @@ methods: {
 								}"
 								class="u-text-align--right">
 							</div><!--
-							--><div class="[ grid__item six-twelfths ]" style="position:relative">
+							--><div class="[ grid__item six-twelfths ]">
 									<textarea
 										v-model="property.value"
 										class="c-admin__property-textarea"
@@ -759,40 +769,20 @@ methods: {
 									></textarea>
 							</div><!--
 							--><div
-							class="[ grid__item one-twelfth ] [ u-opacity--low ]" style="position:relative">
+							class="[ grid__item one-twelfth ]">
 								<div @click="delete_property(property)" v-bind:data-id="property.id"
-								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+								class="[ c-admin__property-icon ]">
 									<i class="fa fa-trash-o"></i>
 								</div>							
 								<span @click="add_property_at(property,index,1)" v-bind:data-id="property.id"
-								{{-- v-if="index != 0" --}}
-								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
+								class="[ c-admin__property-icon ]">
 									+
-									{{-- <i class="fa fa-angle-down"></i> --}}
 								</span>
-								{{--
-								<span @click="movePropertyUp(property)" v-bind:data-id="property.id"
-								v-if="index != 0"
-								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
-									<i class="fa fa-angle-up"></i>
-								</span>
-								<span @click="movePropertyDown(property)" v-bind:data-id="property.id"
-								v-if="index != properties.length - 1"
-								class="[ c-admin__property-trash ] [ u-cursor-pointer ]">
-									<i class="fa fa-angle-down"></i>
-								</span>
-								--}}
 							</div><!--
 				--></div>
 
 				</div>
 				</draggable>
-
-
-			<div class="[ grid__item ] [ u-pad-b-2x u-pad-t-0x ] [ c-admin--font-light ] ">
-					<p @click="add_property" class="[ u-cursor-pointer ]">Add Custom Property</p>
-            </div>
-
 
 		{{ Form::close() }}
 

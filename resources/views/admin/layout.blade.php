@@ -34,6 +34,8 @@
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	@endif
 
+	@stack('metadata')
+
 </head>
 
 <body>
