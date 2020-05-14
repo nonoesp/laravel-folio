@@ -36,13 +36,15 @@
 
 <body>
 
-<div class="[ o-band ] [ u-pad-t-5x ] ">
-	<div class="[ o-wrap  o-wrap--size-400 ]">
-
-	<h3 class="[ c-admin__title ] [ u-border-bottom ]">{{ $headline ?? 'Admin' }}</h3>
-
-	@yield('content')
-
+<div class="c-admin-v2">
+	<div class="[ o-band ] [ u-pad-t-5x ] ">
+		<div class="[ o-wrap  o-wrap--size-400 ]">
+	
+		<h3 class="[ c-admin__title ] [ u-border-bottom ]">{{ $headline ?? 'Admin' }}</h3>
+	
+		@yield('content')
+	
+		</div>
 	</div>
 </div>
 
