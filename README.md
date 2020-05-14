@@ -42,7 +42,7 @@ You can fully customize the JavaScript and SCSS assets.
 - Publish Folio's assets
     - `php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag=dev-assets`
 - Install npm dependencies
-    - `npm install nonoesp/folio-scss bourbon@4.3.4 font-awesome vue vue-resource vue-focus lodash jquery jquery-lazy jquery-unveil validate-js vuedraggable @wordpress/wordcount`
+    - `npm install nonoesp/folio-scss font-awesome vue vue-resource vue-focus lodash jquery jquery-lazy jquery-unveil validate-js vuedraggable @wordpress/wordcount`
     - `npm install`
 - Build the assets with Laravel Mix and configurate it with `webpack.mix.js`
     - `npm run prod` · to build for production

@@ -40,7 +40,6 @@
         "webpack": "^4.42.1"
     },
     "dependencies": {
-        "bourbon": "^4.3.4",
         "folio-scss": "github:nonoesp/folio-scss",
         "font-awesome": "^4.7.0",
         "jquery": "^3.4.1",
