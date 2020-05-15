@@ -6,8 +6,6 @@ use Illuminate\Console\Command;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
-//
-
 class ItemPropertiesImport extends Command
 {
     protected $signature = 'folio:prop:import {id} {json}';
@@ -35,13 +33,18 @@ class ItemPropertiesImport extends Command
                 $this->warn("Item $id doesn't exist.");
                 return;
             }
-            // Decode properties as JSON
-            foreach(json_decode($json) as $prop) {
+            
+            // Decode properties as JSON, create collection, sort by order_column
+            $json_props = collect(json_decode($json));
+            $json_props = $json_props->sortBy('order_column');
+
+            foreach($json_props as $prop) {
                 $property = new \Property();
                 $property->item_id = $id;
                 $property->label = $prop->label;
                 $property->name = $prop->name;
                 $property->value = $prop->value;
+                $property->order_column = $prop->order_column;
                 $property->save();
             }            
 
