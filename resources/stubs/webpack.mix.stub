@@ -2,6 +2,8 @@ const mix = require('laravel-mix');
 
 // ...
 
+mix.copy('resources/images/favicon-48x48.png', 'public/folio/images');
+
 mix.sass('resources/sass/folio.scss', 'public/folio/css');
     //.sourceMaps();
 
@@ -14,7 +16,8 @@ mix.js('resources/js/folio.js', 'public/folio/js')
         'jquery-unveil',
         'validate-js', 
         'lodash', 
-        'axios'
+        'axios',
+        '@wordpress/wordpress',
     ]);
 
 if (mix.inProduction()) {
