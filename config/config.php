@@ -26,9 +26,9 @@ return [
      * The location of the templates to use for the main layout of Folio, collections, and items
      */
 	'view' => [
-		'layout' => 'folio::layout', 				// defaults to 'folio::layout'
-		'collection' => 'folio::template._base', 	// defaults to 'folio::template._base'
-		'item' => 'folio::template._standard', 		// defaults to 'folio::template._standard'
+		'layout' => 	'folio::layout-v2', 				// defaults to 'folio::layout-v2'
+		'collection' => 'folio::legacy.template._base', 	// defaults to 'folio::legacy.template._base'
+		'item' => 		'folio::legacytemplate._standard', 	// defaults to 'folio::legacy.template._standard'
 	],
 
 	/*
@@ -173,12 +173,18 @@ return [
 	* The configuration of Folio's template footer.
 	*/			
 	'footer' => [
-		'hide_credits' => false,
-		'credits_text' => ''
-		],
+		'view' => 'folio::partial.c-footer-v2',
+		'hidden' => true,
+		'classes' => [],
+	],
 
 	//'template-paths' => ['folio::templates'],
 	//'special-tags' => ['highlight'],
+	
+	'menu' => [
+		'view' => 'folio::partial.c-floating-menu',
+		'items' => ['<i class="fa fa-gear"></i>' => '/admin'],
+	],
 
 	/*
 	* The configuration of Folio's template header.
