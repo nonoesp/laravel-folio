@@ -50,7 +50,9 @@
 			@if(!isset($shouldHideMenu))
 				{!! view('folio::admin.c-menu') !!}
 			@endif
-			<div class="admin-title u-borderBottom">@yield('title', 'Admin')</div>
+			<div class="admin-title u-borderBottom u-text-align--center">
+				@yield('title', 'Admin')
+			</div>
 		</div>
 
 		@if(!$remove_wrap)
