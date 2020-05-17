@@ -14,7 +14,7 @@ mix.sass('resources/sass/folio.scss', 'folio/css')
         'validate-js',
         'lodash',
         'axios',
-        '@wordpress/wordpress',
+        '@wordpress/wordcount',
     ]);
 
 // ..

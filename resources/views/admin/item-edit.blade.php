@@ -272,10 +272,12 @@ methods: {
 		}
 	},
 	wordCountFromText(t){
+
 		t = t.replace(/(^\s*)|(\s*$)/gi,"");
 		t = t.replace(/[ ]{2,}/gi," ");
 		t = t.replace(/\n /,"\n");
 		return t.split(' ').length;
+
 	},
 	wordCount: function(e) {
 
@@ -287,7 +289,6 @@ methods: {
 					return 0;
 				}
 				return count.count(text, 'words', {});
-				// return this.wordCountFromText(text);
 			}
 		}
 		
