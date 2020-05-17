@@ -32,7 +32,7 @@
 
 <!-- c-header-simple · styling based on frankchimero.com -->
 
-<header class="[ c-header-simple ] {{ $classes }}">
+<header class="{{ $classes }}">
 	<div class="[ o-wrap o-wrap--size-full ]">
 		<a href="{{ $header_domain }}/" class="[ c-header-simple__name ]">
 
