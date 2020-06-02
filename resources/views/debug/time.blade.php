@@ -1,4 +1,4 @@
-@extends('folio::template._base')
+@extends('folio::legacy.template._base')
 
 <?php
   $site_title = 'Time · '.config('folio.title');
