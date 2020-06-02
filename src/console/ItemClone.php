@@ -45,7 +45,7 @@ class ItemClone extends Command
                 $new_item->delete();
                 
                 // Clone custom properties
-                foreach($item->properties as $property) {
+                foreach($item->properties->sortBy('order_column') as $property) {
                     $new_property = $property->replicate();
                     $new_property->item_id = $new_item->id;
                     $new_property->save();

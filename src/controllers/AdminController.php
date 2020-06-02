@@ -90,8 +90,22 @@ class AdminController extends Controller
 		if($item) {
 			$item->forceDelete();
 		}
-		return Redirect::to(Folio::adminPath().'items');
-	}	
+		return redirect(Folio::adminPath().'items');
+	}
+
+	/**
+	 * Clones an item by id (when existing) and redirects to its edit page.
+	 */
+	public function ItemClone(Request $request, $id) {
+		$item = Item::withTrashed()->find($id);
+		if ($item) {
+			$command = 'folio:clone '.$id.' "Clone of '.$item->title.'"';
+			\Artisan::call($command);
+			$newItem = Item::withTrashed()->orderBy('id', 'DESC')->first();
+			return redirect($newItem->editPath());
+		}
+		return 'Item with id '.$id.' does not exist';
+	}
 
 	public function getItemCreate() {
 		return view('folio::admin.item-add');

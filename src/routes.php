@@ -72,6 +72,7 @@ Route::group([
 	Route::get($admin_path.'item/restore/{id}', 'Nonoesp\Folio\Controllers\AdminController@getItemRestore');
 	Route::get($admin_path.'item/destroy/{id}', 'Nonoesp\Folio\Controllers\AdminController@ItemDestroy');
 	Route::get($admin_path.'item/force-delete/{id}', 'Nonoesp\Folio\Controllers\AdminController@ItemForceDelete');
+	Route::get($admin_path.'item/clone/{id}', 'Nonoesp\Folio\Controllers\AdminController@ItemClone');
 
 	// Item Update with Ajax
 	Route::post('item/update/{id}', 'Nonoesp\Folio\Controllers\AdminController@postItemUpdateAjax');
@@ -80,9 +81,7 @@ Route::group([
 	Route::get($admin_path.'visits', 'Nonoesp\Folio\Controllers\AdminController@getVisits');
 	Route::get($admin_path.'redirections', 'Nonoesp\Folio\Controllers\AdminController@getRedirections');
 
-	Route::get($admin_path, function() use ($admin_path) {
-		return redirect()->to($admin_path.'items');
-	});
+	Route::redirect($admin_path, $admin_path.'items');
 
 	// Properties (API)
 	Route::post('/api/property/update', 'Nonoesp\Folio\Controllers\AdminController@postPropertyUpdate');
