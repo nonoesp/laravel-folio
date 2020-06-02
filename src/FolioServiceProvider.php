@@ -71,11 +71,11 @@ class FolioServiceProvider extends ServiceProvider
                 \Nonoesp\Folio\Commands\InstallCommand::class,
                 \Nonoesp\Folio\Commands\CreateUserCommand::class,
             ]);
-        } else {
-            $this->commands([
-                \Nonoesp\Folio\Commands\ItemClone::class,
-            ]);            
         }
+
+        $this->commands([
+            \Nonoesp\Folio\Commands\ItemClone::class,
+        ]);
     }
 
     /**
