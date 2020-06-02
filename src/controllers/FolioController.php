@@ -244,10 +244,13 @@ class FolioController extends Controller
 
 	public function showItemWithId($domain, $id) {
 		$item = Item::withTrashed()->find($id);
-    if($item->slug[0] == '/') {
-      return redirect($item->slug);
-    }
-		return redirect(Folio::path().$item->slug);
+		if ($item) {
+			if ($item->slug[0] == '/') {
+    	  		return redirect($item->slug);
+    		}
+			return redirect(Folio::path().$item->slug);
+		}
+		return response()->view('errors.404', [], 404);
 	}
 
 	public function getItemsWithIds($domain, Request $request) {
