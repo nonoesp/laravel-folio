@@ -2,13 +2,53 @@
 
 return [
 
+	/*
+    |--------------------------------------------------------------------------
+    | Site details
+	|--------------------------------------------------------------------------
+	*/
+
+	/*
+	 * The main site's title
+	 */
+	'title' => 'Folio',
+
+	/*
+	 * A short site title
+	 */	
+	'title-short' => 'Fol',
+
+	/**
+	 * Brief site description
+	 * e.g. John's personal blog.
+	 */
+	'description' => '',
+	
+	/**
+	 * Social preview
+	 * e.g. http://domain.com/og-image.jpg
+	 */
+	'image' => '',
+	
+	/**
+	 * Author
+	 * e.g. John Doe
+	 */
+	'author' => '',
+
+	/*
+    |--------------------------------------------------------------------------
+    | Folio settings
+	|--------------------------------------------------------------------------
+	*/
+
     /*
      * The base route for your Folio installation.
 	 * You can set Folio to run on the root '/' by setting this to '' or null.
-	 * (1) 'string' site.com/string/slug
-	 * (2) '' site.com/slug
+	 * (1) 'string' · site.com/string/slug
+	 * (2) '' 		· site.com/slug
      */	
-	'path-prefix' => 'folio',
+	'path-prefix' => 'blog',
 
     /*
      * The base route for your the admin of your Folio installation.
@@ -22,41 +62,42 @@ return [
 	 */				
 	'permalink-prefix' => '',
 
-    /*
-     * The location of the templates to use for the main layout of Folio, collections, and items
-     */
-	'view' => [
-		'layout' => 	'folio::layout-v2', 				// defaults to 'folio::layout-v2'
-		'collection' => 'folio::legacy.template._base', 	// defaults to 'folio::legacy.template._base'
-		'item' => 		'folio::legacytemplate._standard', 	// defaults to 'folio::legacy.template._standard'
-	],
-
 	/*
-	 * Translations that will show up when editing items. Defaults to ['en'].
+	 * Translations that will show up when editing items.
+	 * e.g. ['en']
 	 */
 	'translations' => ['en'],
-
-	/*
-     * The path for Folio to search for custom templates.
-	 * eg. 'template' with search for templates on /resources/views/template.
-     */
-	'templates-path' => 'template',
 
 	/*
      * Pattern of domains accepted by Folio.
 	 * (1) null - accept any domain
 	 * (2) pattern - just accept provided domains, e.g. 'localhost|example.com|127.0.0.1'
      */
-	'domain-pattern' => null,
+	'domain-pattern' => env('FOLIO_DOMAIN_PATTERN', null),
 	
 	// Pattern of domains accepted by Folio (only to render items)
-	// e.g. 'sketch.nono.ma|sketch.nono.localhost|expensed.me'
-	'domain-pattern-items' => null,
+	// e.g. 'dev.domain.com|dev.domain.test'
+	'domain-pattern-items' => env('FOLIO_DOMAIN_PATTERN_ITEMS', null),
 
 	// Main domain to redirect items that are loaded from an unset accepted domain
 	// If null - there's no domain redirection
 	// If existent - redirection happens if no $item->domain() exists
 	'main-domain' => env('FOLIO_DOMAIN', null),
+
+	/**
+	 * Reserved routes.
+	 */
+	'protected_uris' => [],
+
+	/**
+	 * Middleware for Folio routes.
+	 */
+	'middlewares' => ['web'],
+
+	/**
+	 * Middleware for Folio admin routes.
+	 */
+	'middlewares-admin' => ['web', 'auth'],
 
 	/*
 	 * Prefix for database tables
@@ -64,41 +105,22 @@ return [
 	'db-prefix' => 'folio_',
 
 	/**
-	 * Sitemap
+	 * Sitemap path (e.g. '/sitemap.xml')
 	 * string or null
 	 * Can be generated with `php artisan folio:sitemap`
 	 */
 	'sitemap' => null,
 
 	/*
-     * Wether subscribers should be added to Mailchimp or not.
-	 * Mailchimp configuration should be added to .env for Spatie\Newsletter as follows:
-	 * MAILCHIMP_APIKEY=your-api-key
-	 * MAILCHIMP_LIST_ID=your-list-id
-     */	
-	'should-add-to-mailchimp' => false,
+    |--------------------------------------------------------------------------
+    | Assets
+	|--------------------------------------------------------------------------
+	*/
 
-	/*
-	 * The main title of the Folio site.
+	/**
+	 * Folio assets directory path.
 	 */
-	'title' => 'Folio',
-
-	/*
-	 * A short title
-	 */	
-	'title-short' => 'Fol',
-
-	/*
-	 * A brief description of your site.
-	 * Default og_description.
-	 */		
-	'description' => 'A simple web.',
-
-	/*
-	 * A thumbnail for your site.
-	 * Default og_image.
-	 */
-	'image-src' => 'http://domain.com/img/image_src.jpg',
+	'assets-folder' => '/folio',
 
 	/*
 	 * Path of your Folio stylesheets.
@@ -106,10 +128,21 @@ return [
 	 */		
 	'css' => '/folio/css/folio.css',
 
+    /*
+    * Settings for the file uploader.
+    */          
+    'uploader' => [
+        'public-folder' => '/img/u',
+        'disk' => 'public',
+        'uploads-folder' => 'uploads',
+        'allowed-file-types' => ['png', 'jpg', 'jpeg', 'gif', 'mp4'],
+	],
+
 	/*
-	 * Your typekit id. (Optional)
-	 */			
-	'typekit' => '',
+    |--------------------------------------------------------------------------
+    | Third-party services
+	|--------------------------------------------------------------------------
+	*/
 
 	/*
 	 * Your Google Analytics code. (Optional)
@@ -118,98 +151,150 @@ return [
 	'google-analytics' => '',
 
 	/**
-	 * Whether to use imgix.net as image cdn.
+	 * Whether to use imgix.net as image CDN.
 	 */
 	'imgix' => false,
 
 	/*
-    * Settings for the file uploader.
-    */			
-	'uploader' => [
-        'public-folder' => '/img/u',
-        'disk' => 'public',
-        'uploads-folder' => 'uploads',
-        'allowed-file-types' => ['png', 'jpg', 'jpeg', 'gif', 'mp4'],
-	],
+	 * Your typekit id. (Optional)
+	 */			
+	'typekit' => '',	
 
-	/**
-	 * Asset directory path.
-	 */
-	'assets-folder' => '/folio',
-
+	/*
+    |--------------------------------------------------------------------------
+    | Subscribers
+	|--------------------------------------------------------------------------
+	|
+	| Spatie\Newsletter requires MAILCHIMP_APIKEY & MAILCHIMP_LIST_ID in .env
+	| to add subscribers to a Mailchimp list.
+	|
+	| Amazon SES needs to be configured to send email notifications.
+	| 
+	*/
+	
 	'subscribers' => [
-		/*
-	 	* Wether Folio should send a "new subscriber" notification e-mail.
-	 	*/				
-		'should-notify' => false,
-		/*
-	 	* 'From' e-mail for notifications.
-	 	*/				
+		// Add subscribers to a Mailchimp list?
+		'add-to-newsletter' => env('FOLIO_SUBSCRIBER_ADD_TO_MAILCHIMP', false),		
+		// Send "new subscriber" notifications to admins?
+		'notify-admins' => env('FOLIO_SUBSCRIBER_NOTIFY_ADMINS', false),
+		// From email
 		'from' => [
-			'email' => 'from@domain.com',
-			'name' => 'John Smith'
+			'email' => env('MAIL_FROM_ADDRESS', 'help@nono.ma'),
+			'name' => env('MAIL_FROM_NAME', 'Nono Martínez Alonso'),
 		],
-		/*
-	 	* 'To' e-mail for notifications.
-	 	*/						
+		// To emails
 		'to' => [
-			'email' => 'to@domain.com',
-			'name' => 'Alissa Smith'
+			'email' => ['mundowarezweb@gmail.com'],
+			'name' => ['Nono Martínez Alonso'],
 		]
 	],
 
 	/*
-	* The configuration of Folio's template cover.
-	*/					
-	'cover' => [
-		'hidden' => false,
-		'title' => '',
-		'subtitles' => ['Folio for Laravel','Making the web simple.'],
-		'footline' => 'Folio for Laravel.',
-		'class' => 'is-cool some-class'
+    |--------------------------------------------------------------------------
+    | Templates
+	|--------------------------------------------------------------------------
+	*/
+
+	'view' => [
+		'layout' => 'folio::layout-v2',
+		'item' => 'template.item',
+		'collection' => 'template.item',
 	],
 
 	/*
-	* The configuration of Folio's template footer.
-	*/			
+     * Path to search for custom templates.
+	 * eg. 'template' will search for templates on /resources/views/template.
+     */
+	'templates-path' => 'template',
+
+	/*
+    |--------------------------------------------------------------------------
+    | Views
+	|--------------------------------------------------------------------------
+	|
+	| Configure default views for Folio's template components.
+	|
+	| view 		· view name						· string
+	| class 	· main class					· string
+	| classes 	· modifiers and extra classes 	· array
+	| hidden 	· whether it's visible			· bool
+	|
+	*/
+
+	'html' => [
+		'classes' => ['limit'],
+	],
+
+	'cover' => [
+		'view' => 'folio::partial.c-cover-v3',
+		'hidden' => false,
+		'class' => 'is-cool some-class',
+		//'classes' => [''],
+		'title' => '',
+		'subtitles' => ['Laravel Folio', 'A Simple Site'],
+		'footline' => 'Laravel Folio',
+	],
+
+	'header' => [
+		'view' => 'folio::partial.c-header-simple-v2',
+		'hidden' => false,
+		'class' => 'header-v1',
+		'classes' => [],
+		'title' => 'Folio',
+		'svg' => null,
+		'navigation' => [
+			'blog' => '/blog',
+			'about' => [
+				'href' => '/about',
+				'classes' => ['--external', 'u-opacity--half'],
+			],			
+		],
+	],	
+
 	'footer' => [
 		'view' => 'folio::partial.c-footer-v2',
-		'hidden' => true,
-		'classes' => [],
+		'hidden' => false,
+		//'class' => '',
+		'classes' => ['--left', '--border-top'],
+	],
+	
+	'credits' => [
+		'view' => 'folio::partial.c-credits-v2',
+		'hidden' => false,
+		'classes' => '',
+		'text' => '©',
 	],
 
-	//'template-paths' => ['folio::templates'],
-	//'special-tags' => ['highlight'],
-	
+	'subscribe' => [
+		'view' => 'folio::partial.c-subscribe-v2',
+		'hidden' => false,
+		'class' => 'c-subscribe-v2',
+		'classes' => ['--left'],
+		'source' => 'folio_source',
+		'medium' => 'folio_medium',
+		'campaign' => 'folio_campaign',
+		// 'text' => '{folio.subscribe-text}',
+		'detail_text' => '',
+		// 'button_text' => '',
+	],
+
 	'menu' => [
 		'view' => 'folio::partial.c-floating-menu',
+		'hidden' => false,
 		'items' => ['<i class="fa fa-gear"></i>' => '/admin'],
+	],	
+
+	'admin-header' => [
+		'view' => 'folio::partial.c-header',
+		'classes' => ['white', 'absolute'],
+		'data' => [],
 	],
 
 	/*
-	* The configuration of Folio's template header.
-	*/			
-	'header' => [
-			'title' => 'Folio',		
-			'view' => 'folio::partial.c-header',
-			'classes' => ['white', 'absolute'],
-			'data' => []
-		],
-
-	'admin-header' => [
-			'view' => 'folio::partial.c-header',
-			'classes' => ['white', 'absolute'],
-			'data' => []
-		],
-
-	/**
-	 * Default metadata
-	 */
-	'meta' => [
-		'author' => '', // e.g. John Doe
-		'description' => '', // e.g. A site built with Folio.
-		'image' => '', // http://domain.com/img/image_src.jpg
-	],
+    |--------------------------------------------------------------------------
+    | Social media
+	|--------------------------------------------------------------------------
+	*/
 
 	'media_links' => [
 		'rss' => '/feed.xml',
@@ -218,52 +303,7 @@ return [
 		'instagram' => 'http://instagram.com/nonoesp',
 		'dribbble' => 'http://dribbble.com/nonoesp',
 		'github' => 'http://github.com/nonoesp',
-		'star' => 'http://gettingsimple.com'
-	],
-
-	'protected_uris' => ['example', 'profile', 'about', 'magic'], // are not overriden by folio
-
-	'middlewares' => ['web'], // folio routes
-	'middlewares-admin' => ['web', 'auth'], // folio admin routes
-
-	/*
-	 * The HTML tags to use on Item's text field to specify where a
-	 * exceprt or teaser end.
-	 * 
-	 */
-	'more-tag' => '<!--more-->',
-	'excerpt-tag' => '<!--excerpt-->',
-
-	/*
-	 * Item property name to specify a redirection path that will
-	 * redirect to the item.
-	 * 
-	 */
-	'item-redirection-property-name' => 'redirect',
-
-	/*
-	 * The amount of published items to display in Folio's home page.
-	 * (The rest will be passed as a JavaScript JSON object for "load more".)
-	 */		
-	'published-show' => 5,
-
-	/*
-	 * The amount of items expected to display in Folio's home page.
-	 * Expected items are active items with a published date in the future.
-	 */	
-	'expected-show' => 100,
-
-	/*
-	 * The RSS Feed configuration.
-	 */
-	'feed' => [
-		'route' => 'feed.xml', // (e.g. 'feed', or 'feed.xml')
-		'title' => 'Folio Feed',
-		'description' => 'Folio publications.',
-		'show' => '30', // maximum amount of articles to display
-		'logo' => '', // (optional) URL to your feed's logo
-		'default-image-src' => 'http://your-default.com/image.jpg',
-		'default-author' => 'Nono Martínez Alonso',
+		'star' => 'http://gettingsimple.com',
 	],
 
 	'social' => [
@@ -274,11 +314,61 @@ return [
 			'app_id' => 'your-app-id',
 			'author' => 'http://facebook.com/author-username',
 			'publisher' => 'http://facebook.com/publisher-username',
-        ],
+		]
     ],
 
+	/*
+    |--------------------------------------------------------------------------
+    | Publishing
+	|--------------------------------------------------------------------------
+	*/
+
+	/*
+	 * HTML tags to mark excerpts or publication teasers.
+	 */
+	'more-tag' => '<!--more-->',
+	'excerpt-tag' => '<!--excerpt-->',
+
+	/*
+	 * Item property name to specify a redirection path that will
+	 * redirect to the item.
+	 */
+	'item-redirection-property-name' => 'redirect',
+
+	/*
+	 * The amount of published items to display in Folio's home page.
+	 * (The rest will be passed as a JavaScript JSON object for "load more".)
+	 * Use -1 to display all.
+	 */		
+	'published-show' => -1,
+
+	/*
+	 * The amount of items expected to display in Folio's home page.
+	 * Expected items are active items with a published date in the future.
+	 */	
+	'expected-show' => 100,
+
+	/*
+	 * RSS feed configuration.
+	 */
+	'feed' => [
+		'route' => 'feed.xml', // (e.g. 'feed', or 'feed.xml')
+		'title' => 'Folio Feed',
+		'description' => 'Folio publications.',
+		'show' => '30', // maximum amount of articles to display
+		'logo' => '', // (optional) URL to your feed's logo
+		'default-image-src' => 'http://your-default.com/image.jpg',
+		'default-author' => 'Nono Martínez Alonso',
+	],
+	
+	/*
+    |--------------------------------------------------------------------------
+    | Debug
+	|--------------------------------------------------------------------------
+	*/
+
     'debug' => [
-        'load-time' => false,
+        'load-time' => true,
     ],
 
 ];
