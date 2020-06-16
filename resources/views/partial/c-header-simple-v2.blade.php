@@ -58,29 +58,35 @@
 
 			<nav role="navigation" class="[ c-header-simple__navigation ]">
 				<ul>
+					@foreach($navigation as $title => $link)
+					@php
+						$link_classes = [];
+		
+						if (is_array($link)) {
+							$href = $link['href'] ?? 'empty';
+							$link_classes = Folio::expandClasses($link['classes'] ?? [], 'link');
+						} else {
+							$href = $link;
+						}
+		
+						$isExternal = Str::of($href)->startsWith('http');
+						if ($isExternal) {
+							array_push($link_classes, 'u-is-external-v2');
+							array_push($link_classes, 'u-is-external--top-right');
+						}
+					@endphp
 
-					@foreach($navigation as $title => $href)
-
-						<?php
-						// Insert {path-prefix}
-						$href[0] = str_replace('{path-prefix}', config('folio.path-prefix'), $href[0]);
-						$href[1] = str_replace('{path-prefix}', config('folio.path-prefix'), $href[1]);
-						$isExternal = false;
-						if(count($href) > 2) { if($href[2] == 'external') { $isExternal = true; } }
-						?>
-						<li>
-							<a href="{{ $href[0] }}" class="[ navigation-link js--navigation-link-{{$href[1]}} 
-							@if($isExternal) u-is-external-v2 u-is-external--top-right ]" target="_blank" @else ]" @endif>
-								{!! trans('folio.'.$title) !!}
-							</a>
-						</li>
-						
+					<li>
+						<a href="{{ $href }}" class="link {{ join(" ", $link_classes) }}" {{ $isExternal ? 'target="_blank"' : null}}>
+							{!! trans('folio.'.$title) ?? $title !!}
+						</a>
+					</li>
 					@endforeach
 
 				</ul>
 			</nav>
 
-    @endunless
+    	@endunless
 
 		@isset($image)
 		<div class="[ c-header-simple__image ]">
