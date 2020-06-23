@@ -65,7 +65,7 @@ class SubscriptionController extends Controller
       'campaign' => $subscriber->campaign,
       'newsletter_list' => $subscriber->newsletter_list,
       'path' => $subscriber->path,
-      'host' => $subscriber->host
+      'host' => $subscriber->host,
     ];
 
     if(config('folio.subscribers.notify-admins')) {

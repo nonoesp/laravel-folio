@@ -191,8 +191,10 @@ Route::group(['middleware' => ['web']], function () {
 
 // ALL DOMAINS
 
+use Spatie\Honeypot\ProtectAgainstSpam;
 // SubscriptionController (outside controller to allow cross-domain subscription)
-Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create');
+Route::post('subscriber/create', 'Nonoesp\Folio\Controllers\SubscriptionController@create')
+->middleware(ProtectAgainstSpam::class);
 
 // Remote API · Requires to be excluded in VerifyCrsfToken middleware
 Route::post('api/item/set-text', 'Nonoesp\Folio\Controllers\AdminController@postItemSetText');

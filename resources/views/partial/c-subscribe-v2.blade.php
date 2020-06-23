@@ -29,9 +29,10 @@
 
     {{ Form::open([
       'class' => $class.'__form ] [ js--subscribe__form ]',
-      'url' => null,
+      'url' => '/subscriber/create',
+      'method' => 'POST',
     ]) }}
-
+    @honeypot
     <div class="[ grid ] [ grid--narrow ] folio-inputs">
 
            @if($source)
