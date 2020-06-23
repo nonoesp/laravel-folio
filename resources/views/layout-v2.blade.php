@@ -191,8 +191,8 @@
 
     /* 
     # View fallbacks
-    Tip: Hide any of these subviews by setting their view to false.
-    For instance, you'd hide the header with: $header_view = false;
+    Tip: Hide any of these subviews by setting them to hidden.
+    For instance, you'd hide the header with $header_hidden = true;
     */
 
     $menu_view = $menu_view ?? config('folio.menu.view');
