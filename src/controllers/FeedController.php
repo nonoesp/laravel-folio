@@ -96,6 +96,8 @@ class FeedController extends Controller
 			$feed->setTextLimit(159); // maximum length of description text
 			$feed->setCustomView($feedCustomView);
 
+			$imgix = config('folio.imgix');
+
 			config(['folio.imgix' => false]);
 			foreach ($items as $item) {
 				// Link for this RSS item
@@ -164,6 +166,27 @@ class FeedController extends Controller
 						// 'height' => '768',
 						// 'width' => '1024'
 					];
+
+					// Square image for Instagram with imgix
+					// RSS feed template needs to look for 'media:square'
+					if ($imgix) {
+
+						$squareImageSize = 2048;
+						$squareImageLink = imgix($item->image, [
+							'ar' => '1:1',
+							'w' => $squareImageSize,
+							'h' => $squareImageSize,
+							'fit' => 'clamp',
+						]);
+						$feedItem['media:square'] = [
+							'url' => htmlspecialchars($squareImageLink),
+							'type' => 'image/jpeg',
+							'height' => $squareImageSize,
+							'width' => $squareImageSize,
+						];
+
+					}
+
 				}
 
 				$feed->addItem($feedItem);
