@@ -153,6 +153,8 @@ class FeedController extends Controller
 					'content' => $html,
 				];
 
+				$feedItem['item'] = $item;
+
 				if ($imageUrl) {
 					$feedItem['media:content'] = [
 						'url' => $imageUrl,
