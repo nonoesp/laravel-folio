@@ -726,8 +726,8 @@ class Item extends Model implements Feedable, Searchable
 			// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
 			$environment = \League\CommonMark\Environment::createCommonMarkEnvironment();
 			// Optional: Add your own parsers, renderers, extensions, etc. (if desired)
-			$environment->addExtension(new \Webuni\CommonMark\AttributesExtension\AttributesExtension);
-			$environment->addExtension(new \RZ\CommonMark\Ext\Footnote\FootnoteExtension);
+			$environment->addExtension(new \League\CommonMark\Extension\Attributes\AttributesExtension);
+			$environment->addExtension(new \League\CommonMark\Extension\Footnote\FootnoteExtension);
 			// For example:  $environment->addInlineParser(new TwitterHandleParser());
 			// Define your configuration (reference at https://commonmark.thephpleague.com/configuration/):
 			$config = ['html_input' => 'allow'];
