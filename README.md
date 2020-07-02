@@ -22,6 +22,7 @@ A customizable Laravel content-management system. (Currently in beta.)
 - `composer require nonoesp/folio:7.x-dev`
 - `php artisan folio:install`
 - `php artisan migrate`
+- `php artisan migrate --path=vendor/mpociot/versionable/src/migrations`
 - Add the following middleware to `app/Http/Kernel.php`:
 
 ```php
