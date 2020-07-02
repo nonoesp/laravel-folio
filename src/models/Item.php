@@ -1257,4 +1257,52 @@ class Item extends Model implements Feedable, Searchable
 		}
 		return false;
 	}
+
+	/**
+	 * Override property attributes with an array of params.
+	 * e.g.
+	 * [
+	 *   'name' => 'new-name',
+	 *   'value' => 'new-value',
+	 *   'label' => 'new-label'
+	 * ]
+	 */
+	public function setProperty($name, $params) {
+
+		// Look for existing property by name
+		// or create property if it doesn't exist
+		$property = $this->properties->where('name', $name)->first() ?? new Property();
+		
+		// Edit property attributes with params
+
+		$propertyName = Arr::get($params, 'name', $name);
+		$propertyValue = Arr::get($params, 'value', $property->value);
+		$propertyLabel = Arr::get($params, 'label', $property->label);
+		
+		$property->item_id = $this->id;
+		$property->name = $propertyName;
+		$property->value = $propertyValue;
+		$property->label = $propertyLabel;
+		
+		// Save
+		$property->save();
+	}
+
+	/**
+	 * Set a property value.
+	 */
+	public function setPropertyValue($name, $newValue) {
+		$this->setProperty($name, [
+			'value' => $newValue,
+		]);
+	}
+
+	/**
+	 * Set a property label.
+	 */
+	public function setPropertyLabel($name, $newLabel) {
+		$this->setProperty($name, [
+			'label' => $newLabel,
+		]);
+	}
 }
