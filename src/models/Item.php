@@ -1279,13 +1279,20 @@ class Item extends Model implements Feedable, Searchable
 		$propertyValue = Arr::get($params, 'value', $property->value);
 		$propertyLabel = Arr::get($params, 'label', $property->label);
 		
-		$property->item_id = $this->id;
-		$property->name = $propertyName;
-		$property->value = $propertyValue;
-		$property->label = $propertyLabel;
-		
-		// Save
-		$property->save();
+		if (
+			$property->name != $propertyName ||
+			$property->value != $propertyValue ||
+			$property->label = $propertyLabel			
+		) 
+		{
+			$property->item_id = $this->id;
+			$property->name = $propertyName;
+			$property->value = $propertyValue;
+			$property->label = $propertyLabel;
+			
+			// Save
+			$property->save();
+		}
 	}
 
 	/**
