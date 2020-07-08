@@ -5,11 +5,11 @@
 
     $title = $title ?? config('folio.title');
 
-    $author = $author ?? config('folio.og.author');
+    $author = $author ?? config('folio.author');
     $og_author = $og_author ?? config('folio.social.facebook.author');
-    $og_title = $og_title ?? ($title ?? config('folio.og.title'));
-    $og_description = $og_description ?? config('folio.og.description');
-    $og_image = $og_image ?? config('folio.og.image');
+    $og_title = $og_title ?? ($title ?? config('folio.title'));
+    $og_description = $og_description ?? config('folio.description');
+    $og_image = $og_image ?? config('folio.image');
     $og_url = $og_url ?? request()->root().'/'.request()->path();
     $og_type = $og_type ?? 'website';
     
