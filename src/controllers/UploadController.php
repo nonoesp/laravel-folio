@@ -64,7 +64,7 @@ class UploadController extends Controller
             // Validate image does not exist (or replace is active)
             $shouldReplace = $request->input('shouldReplace');
             $imgExists = \Storage::disk($uploaderDisk)
-                                    ->exists($uploaderUploadsFolder.'/'.$filename);
+                                 ->exists($uploaderUploadsFolder.'/'.$filename);
             if ($imgExists && !$shouldReplace) {
                 array_push($errors, "A upload named <strong>$filename</strong> already exists. Choose Overwrite if that's what you want.");
                 return view('folio::admin.upload.form', [
@@ -89,7 +89,8 @@ class UploadController extends Controller
                             $uploaderUploadsFolder,
                             $filename,
                             $uploaderDisk
-                        );  
+                        );
+                \Storage::disk($uploaderDisk)->setVisibility($uploaderUploadsFolder.'/'.$filename, 'public');
             } else {
                 array_push($errors, 'Invalid image provided.</br>It was either empty of bigger than the limit configured in your server.');
                 return view('folio::admin.upload.form', [
@@ -111,7 +112,7 @@ class UploadController extends Controller
             'imgURL' => $imgURL,
             'filename' => $filename,
             'fileType' => $fileType,
-            ]);
+        ]);
 	}
 
 	public function getMediaList()

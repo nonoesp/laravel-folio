@@ -203,7 +203,7 @@
 
     @if(!count($images) && !count($videos))
         <div class="o-wrap o-wrap--size-1000">
-            No images or videos has been uploaded yet.
+            No images or videos have been uploaded yet.
         </div>
     @endif
 

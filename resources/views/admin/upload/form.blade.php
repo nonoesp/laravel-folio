@@ -138,26 +138,56 @@
                 </br>
             @endif            
 			
-			@if(isset($imgUploaded) && $imgUploaded == true)
-				<p>
-				<input
+            @if(isset($imgUploaded) && $imgUploaded == true)
+            
+                @php
+                    $uploaderDisk = config('folio.uploader.disk');
+
+                    if (
+                        !Str::of($imgURL)->startsWith('/') ||
+                        $uploaderDisk != 'public'
+                    ) {
+                        $mediaDiskUrl = \Storage::disk($uploaderDisk)->url($imgURL);
+                        $mediaDiskUrl = Str::replaceArray('//', ['//', '/'], $mediaDiskUrl);
+                    } else {
+                        $mediaDiskUrl = $imgURL;
+                    }
+                    
+                @endphp
+                
+                <p>
+                <input
 					type="text" 
 					value="{{ $imgURL }}" 
 					class="js--image-path" 
-					data-clipboard-text="{{$imgURL}}"
+					data-clipboard-text="{{ $imgURL }}"
 					style="height:50px;font-size:1.2em;padding:0.7em;cursor:context-menu;"
 					spellcheck="false"
 				/>
-				</p>
+                </p>
+                
+                @if ($imgURL != $mediaDiskUrl)
+                <p>
+                <input
+					type="text" 
+					value="{{ $mediaDiskUrl }}" 
+					class="js--image-path" 
+					data-clipboard-text="{{ $mediaDiskUrl }}"
+					style="height:50px;font-size:1.2em;padding:0.7em;cursor:context-menu;"
+					spellcheck="false"
+				/>
+                </p>
+                @endif
+
 				<p>
                     @isset($fileType)
                         @if(in_array($fileType, ['mp4']))
                             <video width="100%" controls>
-                                <source src="{{ $imgURL }}" type="video/{{ $fileType }}">
+                                <source src="{{ \Storage::disk(config('folio.uploader.disk'))->url($imgURL) }}" type="video/{{ $fileType }}">
                             Your browser does not support the video tag.
                             </video>
                         @else
-                            <img src="{{ $imgURL }}" style="max-width: 100%">
+                            <img src="{{ $mediaDiskUrl }}" style="max-width: 100%">
                         @endif
                     @endisset
 				</p>
