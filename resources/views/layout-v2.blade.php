@@ -49,7 +49,7 @@
 @prepend('metadata')
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>{{ $title }}</title>
     <link rel="stylesheet" type="text/css" href="{{ $css }}">
     <link rel="icon" type="image/png" href="{{ $favicon }}" />

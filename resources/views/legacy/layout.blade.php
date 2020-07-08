@@ -45,7 +45,7 @@
 
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport" content="initial-scale=1, maximum-scale=1, minimal-ui"/>
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1"/>
 	<title>{{ $title }}</title>
 	<link rel="shortcut icon" href="/favicon.png" type="image/png">
 	<link rel="stylesheet" type="text/css" href="{{ $folio_css }}">
