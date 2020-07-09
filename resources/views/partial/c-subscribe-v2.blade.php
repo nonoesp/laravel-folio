@@ -3,7 +3,7 @@
   $classes = Folio::expandClassesAsString($classes ?? config('folio.footer.classes'), $class);
   
   $button_text = Folio::trans($button_text ?? '{folio::base.subscribe_button_text}');
-  $text = Folio::trans($text ?? '{folio::base.receive-our-posts}');
+  $text = Folio::trans($text ?? '{folio::base.to_receive_our_updates}');
   $detail_text = Folio::trans($detail_text ?? '{folio::base.newsletter-privacy}');
 
   $source = $source ?? request()->has('utm_source');
