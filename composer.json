@@ -21,7 +21,7 @@
             "src/facades"
         ],
         "psr-4": {
-            "Nonoesp\\Folio\\": "src/"
+            "Nonoesp\\Folio\\": "src"
         }
     },
     "minimum-stability": "dev",
