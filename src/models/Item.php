@@ -711,6 +711,8 @@ class Item extends Model implements Feedable, Searchable
 		$parser = Arr::get($options, 'parser', 'default');
 		$stripTags = Arr::get($options, 'stripTags', []);
 		$parseExternalLinks = Arr::get($options, 'parseExternalLinks', false);
+		$newsletterFormat = Arr::get($options, 'newsletterFormat', false);
+		$absoluteUrls = Arr::get($options, 'absoluteUrls', false);
 
 		// Strip HTML tags ↓ Before parsing
 		// e.g., <norss></norss> <rss></rss> <nopodcast> </nopodcast>
@@ -809,6 +811,7 @@ class Item extends Model implements Feedable, Searchable
 			$parser == "michelf"
 			) {
 
+			// TODO: deprecate? 2020.07.18
 			// Michelf MarkdownExtra
 
 			$html = \Michelf\MarkdownExtra::defaultTransform($text);
@@ -835,7 +838,44 @@ class Item extends Model implements Feedable, Searchable
 		// Parse external links
 		if ($parseExternalLinks) {
 			$html = Item::parseExternalLinks($html);
-		}		
+		}
+
+		// Force relative Urls to be absolute
+		if ($absoluteUrls) {
+
+			$root = request()->root();
+			$html = str_replace(
+				[
+					'src="/',
+					'href="/',
+				], [
+					'src="'.$root.'/',
+					'href="'.$root.'/',
+				],
+				$html
+			);
+
+		}
+
+		// Escape elements for newsletter
+		if ($newsletterFormat) {
+
+			$html = str_replace(
+				[
+					'<img',
+					'<p><img',
+					'/></p>',
+					'<hr />',
+				], [
+					'<img width="100%"',
+					'<p class=\"rss__img-wrapper\"><img',
+					'/></p>',
+					'<br />',
+				],
+				$html
+			);
+
+		}
 
 		return $html;
 	}
@@ -877,7 +917,7 @@ class Item extends Model implements Feedable, Searchable
 
 		// Deconstruct options or fallback to default values
 		$veilImages = Arr::get($options, 'veilImages', true);
-		$parseExternalLinks = Arr::get($options, 'parseExternalLinks', false);
+		$parseExternalLinks = Arr::get($options, 'parseExternalLinks', true);
 		$stripTags = Arr::get($options, 'stripTags', []);
 		$parser = Arr::get($options, 'parser', null);
 
@@ -888,12 +928,12 @@ class Item extends Model implements Feedable, Searchable
 		}
 		
 		// Parse Markdown to HTML
-		$options = [
+		$options = array_merge($options, [
 			'parser' => $parser ?? $this->stringProperty('markdown-parser'),
 			'veilImages' => $veilImages,
 			'stripTags' => $stripTags,
-			'parseExternalLinks' => true,
-		];
+			'parseExternalLinks' => $parseExternalLinks,
+		]);
 		$html = Item::convertToHtml($text, $options);
 
 		return $html;
