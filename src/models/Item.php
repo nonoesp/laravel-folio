@@ -704,21 +704,42 @@ class Item extends Model implements Feedable, Searchable
 	/**
 	 * Parse Markdown to HTML.
 	 */
-	public static function convertToHtml($text, $markdown_parser = 'default', $veilImages = 'true') {
+	public static function convertToHtml($text, $options = []) {
 
-		if (!in_array($markdown_parser, [
+		// Deconstruct options or fallback to default values
+		$veilImages = Arr::get($options, 'veilImages', true);
+		$parser = Arr::get($options, 'parser', 'default');
+		$stripTags = Arr::get($options, 'stripTags', []);
+		$parseExternalLinks = Arr::get($options, 'parseExternalLinks', false);
+
+		// Strip HTML tags ↓ Before parsing
+		// e.g., <norss></norss> <rss></rss> <nopodcast> </nopodcast>
+		if (is_array($stripTags) && count($stripTags)) {
+
+			// Remove tags from raw text · $text
+			foreach ($stripTags as $tag) {
+				$tagPattern = "/<".$tag."[^>]*>(.|\n)*?<\/".$tag.">/";
+				if(Regex::match($tagPattern, $text)->hasMatch()) {
+					// We wrap with <p></p> to avoid leaving an empty paragraph (because we are stripping
+					// the HTML output of Markdown)
+					$text = Regex::replace($tagPattern, '', $text)->result();
+				}
+			}
+		}
+
+		if (!in_array($parser, [
 			'default',
 			'commonmark',
 			'vtalbot',
 			'michelf',
 		])) {
-			$markdown_parser = 'default';
+			$parser = 'default';
 		}
 
 		if(
-			$markdown_parser == 'default' ||
-			$markdown_parser == 'commonmark' ||
-			$markdown_parser == 'vtalbot'
+			$parser == 'default' ||
+			$parser == 'commonmark' ||
+			$parser == 'vtalbot'
 			) {
 
 				// CommonMark
@@ -770,34 +791,22 @@ class Item extends Model implements Feedable, Searchable
 				$imgixPrefix = $protocol.'://'.$imgixDomain;
 
 				$search = [
-					// '/<img src="\/(.*?)" alt="(.*?)" \/>/is',
 					'/<img(.*?)src="\/(.*?)" alt="(.*?)" \/>/is',
-					// '/<img src="(.*?)" data-src="\/(.*?)" alt="(.*?)" \/>/is',
 					'/<img(.*?)src="(.*?)" data-src="\/(.*?)" alt="(.*?)" \/>/is',
 					'/<source src="\/(.*?)" type="video\/mp4"(.*?)>/is',
 				];
 
 				$replace = [
-					// '<img src="'.$imgixPrefix.'/$1" alt="$2" />',
 					'<img$1src="'.$imgixPrefix.'/$2" alt="$3" />',
-					// '<img src="$1" data-src="'.$imgixPrefix.'/$2" alt="$3" />',
 					'<img$1src="$2" data-src="'.$imgixPrefix.'/$3" alt="$4" />',
 					'<source src="'.$imgixPrefix.'/$1" type="video/mp4"$2>',
 				]; 
 
 				$html = preg_replace ($search, $replace, $html);
-			}			
-		
-		// } else if($markdown_parser == 'vtalbot) {
-
-			// VTalbot
-
-			// Deprecated (at least for now)
-			// $html = \VTalbot\Markdown\Facades\Markdown::convertToHtml($text);
-			// $html = str_replace(["<p><img","/></p>"],["<img","/>"], $html);
+			}
 
 		} else if (
-			$markdown_parser == "michelf"
+			$parser == "michelf"
 			) {
 
 			// Michelf MarkdownExtra
@@ -807,17 +816,26 @@ class Item extends Model implements Feedable, Searchable
 
 		}
 
-		// Cleanup
-		$html = str_replace(
-		[
-			'<p><nopodcast></p>',
-			'<p></nopodcast></p>',
-		],
-		[
-			'',
-			'',
-		],
-		$html);
+		// Strip HTML tags ↑ After parsing
+		// e.g., <norss></norss> <rss></rss> <nopodcast> </nopodcast>
+		if (is_array($stripTags) && count($stripTags)) {	
+
+			// Remove tags from Markdown text · $html
+			foreach ($stripTags as $tag) {
+				$tagPattern = "/<".$tag."[^>]*>(.|\n)*?<\/".$tag.">/";
+				if(Regex::match($tagPattern, $html)->hasMatch()) {
+					// We wrap with <p></p> to avoid leaving an empty paragraph (because we are stripping
+					// the HTML output of Markdown)
+					$html = Regex::replace($tagPattern, '', $html)->result();
+				}
+			}
+
+		}
+
+		// Parse external links
+		if ($parseExternalLinks) {
+			$html = Item::parseExternalLinks($html);
+		}		
 
 		return $html;
 	}
@@ -835,12 +853,12 @@ class Item extends Model implements Feedable, Searchable
 	 * ]
 	 */
 	public function htmlTextLegacy($veilImages = true, $parseExternalLinks = false) {
-		$markdown_parser = $this->stringProperty('markdown-parser', 'default');
+		$parser = $this->stringProperty('markdown-parser', 'default');
 		if($this->hasExcerptTag()) {
 			$text = explode(config('folio.excerpt-tag'), $this->text)[1];
-			$html = Item::convertToHtml($text, $markdown_parser, $veilImages);
+			$html = Item::convertToHtml($text, $parser, $veilImages);
 		} else {
-            $html = Item::convertToHtml($this->text, $markdown_parser, $veilImages);
+            $html = Item::convertToHtml($this->text, $parser, $veilImages);
         }
         if ($parseExternalLinks) {
             $html = Item::parseExternalLinks($html);
@@ -858,9 +876,10 @@ class Item extends Model implements Feedable, Searchable
 		}
 
 		// Deconstruct options or fallback to default values
-		$veilImages = Arr::pull($options, 'veilImages', true);
-		$parseExternalLinks = Arr::pull($options, 'parseExternalLinks', false);
-		$stripTags = Arr::pull($options, 'stripTags', []);
+		$veilImages = Arr::get($options, 'veilImages', true);
+		$parseExternalLinks = Arr::get($options, 'parseExternalLinks', false);
+		$stripTags = Arr::get($options, 'stripTags', []);
+		$parser = Arr::get($options, 'parser', null);
 
 		// Does the text have an excerpt to trim?
 		$text = $this->text;
@@ -868,44 +887,14 @@ class Item extends Model implements Feedable, Searchable
 			$text = explode(config('folio.excerpt-tag'), $this->text)[1];
 		}
 		
-		// Strip HTML tags
-		// e.g., <norss></norss> <rss></rss> <nopodcast> </nopodcast>
-		if (is_array($stripTags) && count($stripTags)) {
-
-			// Remove tags from raw text · $text
-			foreach ($stripTags as $tag) {
-				$tagPattern = "/<".$tag."[^>]*>(.|\n)*?<\/".$tag.">/";
-				if(Regex::match($tagPattern, $text)->hasMatch()) {
-					// We wrap with <p></p> to avoid leaving an empty paragraph (because we are stripping
-					// the HTML output of Markdown)
-					$text = Regex::replace($tagPattern, '', $text)->result();
-				}
-			}
-
-			// Parse Markdown to HTML · $text → $html
-			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
-			$html = Item::convertToHtml($text, $markdown_parser, $veilImages);
-
-			// Remove tags from Markdown text · $html
-			foreach ($stripTags as $tag) {
-				$tagPattern = "/<".$tag."[^>]*>(.|\n)*?<\/".$tag.">/";
-				if(Regex::match($tagPattern, $html)->hasMatch()) {
-					// We wrap with <p></p> to avoid leaving an empty paragraph (because we are stripping
-					// the HTML output of Markdown)
-					$html = Regex::replace($tagPattern, '', $html)->result();
-				}
-			}
-
-		} else {
-			// Parse Markdown to HTML
-			$markdown_parser = $this->stringProperty('markdown-parser', 'default');
-			$html = Item::convertToHtml($text, $markdown_parser, $veilImages);
-		}
-
-		// Parse external links
-		if ($parseExternalLinks) {
-			$html = Item::parseExternalLinks($html);
-		}
+		// Parse Markdown to HTML
+		$options = [
+			'parser' => $parser ?? $this->stringProperty('markdown-parser'),
+			'veilImages' => $veilImages,
+			'stripTags' => $stripTags,
+			'parseExternalLinks' => true,
+		];
+		$html = Item::convertToHtml($text, $options);
 
 		return $html;
 	}
@@ -953,7 +942,7 @@ class Item extends Model implements Feedable, Searchable
      * Add target="_blank" and class="is-external" to any links
      * with an href starting on http:// or https://
      */
-    public function parseExternalLinks($html) {
+    public static function parseExternalLinks($html) {
         $from = [
             'href="http://',
             'href="https://',
