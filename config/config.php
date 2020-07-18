@@ -352,6 +352,7 @@ return [
      * RSS feed configuration.
      */
     'feed' => [
+		// 'view' => 'folio::template.rss',
         'route' => 'feed.xml', // (e.g. 'feed', or 'feed.xml')
         'title' => 'Folio Feed',
         'description' => 'Folio publications.',

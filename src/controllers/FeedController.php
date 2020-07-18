@@ -44,7 +44,7 @@ class FeedController extends Controller
 			$feedLogo = config('folio.feed.logo');
 			$feedLink = URL::to('/'.Folio::path());
 			$feedLang = 'en';
-			$feedCustomView = "folio::template.rss";
+			$feedCustomView = config('folio.feed.view', "folio::template.rss");
 
 			// Collection
 			if ($item) {
