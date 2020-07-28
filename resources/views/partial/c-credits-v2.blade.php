@@ -4,6 +4,12 @@
 	$classes = Folio::expandClassesAsString($classes ?? [], $class ?? 'c-credits-v2');
 @endphp
 
+@if ($text)
+
+@php
+    $text = str_replace('{year}', Item::formatDate(Date::now(), 'Y'), $text);    
+@endphp
+
 <div class="{{ $class }} {{ $classes }}">
     {!! 
     preg_replace(
@@ -13,3 +19,5 @@
     );
     !!}
 </div>
+
+@endif
