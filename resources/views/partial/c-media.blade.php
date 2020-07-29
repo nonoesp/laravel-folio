@@ -1,17 +1,23 @@
-@if(isset($media) && count($media))
+@php
+  $class = $class ?? 'c-social__wrapper';
+  $classes = Folio::expandClassesAsString($classes ?? [], $class);
+  $media = $media ?? null;
+@endphp
 
-<div class="[ c-header-simple__media ]">
+@if($media && count($media))
 
-      <span class="[ c-social m-fa ]">
+  <div class="[ {{ $classes }} ]">
 
-        @foreach($media as $media=>$link)
-          <a href="{{ $link }}" target="_blank" class="fa--social">
-            <i class="fa fa-{{ $media }}"></i>
-          </a>
-        @endforeach
+        <span class="[ c-social m-fa ]">
 
-      </span>
+          @foreach($media as $media=>$link)
+            <a href="{{ $link }}" target="_blank" class="fa--social">
+              <i class="fa fa-{{ $media }}"></i>
+            </a>
+          @endforeach
 
-</div>
+        </span>
+
+  </div>
 
 @endif

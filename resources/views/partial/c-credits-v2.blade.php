@@ -1,7 +1,7 @@
 @php
     $text = $text ?? null;
     $class = $class ?? 'c-credits-v2';
-	$classes = Folio::expandClassesAsString($classes ?? [], $class ?? 'c-credits-v2');
+	$classes = Folio::expandClassesAsString($classes ?? [], $class);
 @endphp
 
 @if ($text)
