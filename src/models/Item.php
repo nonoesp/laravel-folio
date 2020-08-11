@@ -527,7 +527,7 @@ class Item extends Model implements Feedable, Searchable
 	}
 
 	/**
-	 * Retrieve Open Graph image of this item.
+	 * Retrieve social preview image (i.e. Open Graph image) of this item.
 	 */
 	public function ogImage($imgixOptions = [], $params = []) {
 

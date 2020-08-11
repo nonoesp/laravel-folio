@@ -531,7 +531,7 @@ methods: {
 	$inputs = [
 		['name' => 'published_at', 'placeholder' => 'Publication Date (yyyy-mm-dd hh:mm:ss)', 'label' => 'Publication Date'],
 		['name' => 'image', 'placeholder' => 'Image', 'label' => 'Image'],
-		['name' => 'image_src', 'placeholder' => 'Open Graph Image', 'label' => 'Open Graph Image'],
+		['name' => 'image_src', 'placeholder' => 'Social Preview Image', 'label' => 'Social Preview Image'],
 		['name' => 'video', 'placeholder' => 'Video', 'label' => 'Video URL'],
 		['name' => 'link', 'placeholder' => 'External Link', 'label' => 'External Link'],
 		['name' => 'slug_title', 'placeholder' => 'Explicit URL slug (prefix with / to make absolute, i.e. \'/terms\')', 'label' => 'URL slug'],
