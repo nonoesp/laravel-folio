@@ -278,7 +278,7 @@ class Thinker {
 		// Text > Limit
 		$str_limited_words = explode(" ", $str_limited);
 		array_pop($str_limited_words);
-		$str_limited = join($str_limited_words, " ").'…';
+		$str_limited = join(" ", $str_limited_words).'…';
 
 		return $str_limited;
 	}
