@@ -50,9 +50,7 @@
     @endif
 
     <div class="u-font-size--b">
-        @foreach ($item->properties->sortBy(function ($property) {
-            return $property->order_column;
-        }) as $p)
+        @foreach ($item->properties->sortBy('order_column') as $p)
             <div @if($p->name[0] === '-' || $p->name[0] === '#') style="opacity:0.3" @endif >
                 <div class="property-title">
                     <a href="/property/edit/{{ $p->id }}">

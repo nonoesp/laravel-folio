@@ -260,7 +260,7 @@ class Item extends Model implements Feedable, Searchable
      * @return \Nonoesp\Folio\Models\Property
      */
 	public function property($key) {
-		if($property = $this->properties->where('name', $key)->first()) {
+		if($property = $this->properties->sortBy('order_column')->where('name', $key)->first()) {
 				$value = $property->value;
 				if($value || $value != '') {
 					// property exists and has value
@@ -283,7 +283,7 @@ class Item extends Model implements Feedable, Searchable
      */
 	public function propertyArray($key) {
 
-		$properties = $this->properties->where('name', $key);
+		$properties = $this->properties->sortBy('order_column')->where('name', $key);
 		if($properties->count()) {
 		  return $properties;
 		}
@@ -296,12 +296,13 @@ class Item extends Model implements Feedable, Searchable
 		$matching_properties = [];
 		$currentLocale = app()->getLocale();
 
-		foreach($this->properties as $property) {
+		foreach($this->properties->sortBy('order_column') as $property) {
 
 			// Discard if property is localization, otherwise add
 			$parts = explode("--", $property->name);
 			$parts_count = count($parts);
 			$last_part = $parts[$parts_count - 1];
+
 			if ($parts_count > 1 && \Symfony\Component\Intl\Locales::exists($last_part)) {
 				
 				// (0) This property is a localization
@@ -1300,7 +1301,7 @@ class Item extends Model implements Feedable, Searchable
 
 		// Look for existing property by name
 		// or create property if it doesn't exist
-		$property = $this->properties->where('name', $name)->first() ?? new Property();
+		$property = $this->properties->sortBy('order_column')->where('name', $name)->first() ?? new Property();
 		
 		// Edit property attributes with params
 
