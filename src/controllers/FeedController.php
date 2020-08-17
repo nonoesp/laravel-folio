@@ -148,7 +148,8 @@ class FeedController extends Controller
 					'title' => $item->title,
 					'author' => $default_author,
 					'url' => $URL,
-					'pubdate' => $item->published_at,
+					// 'pubdate' => $item->published_at,
+					'pubdate' => $item->date('Y-m-d H:i:s O'),
 					'description' => $itemDescription,
 					'content' => $html,
 				];
