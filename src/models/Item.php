@@ -504,7 +504,7 @@ class Item extends Model implements Feedable, Searchable
 
 	public function cardImage($imgixOptions = []) {
 
-		return $this->imageFallback([], [
+		return $this->imageFallback($imgixOptions, [
 			'absolute' => false,
 			'fallback' => [
 				$this->stringProperty('card-image'),
@@ -515,8 +515,8 @@ class Item extends Model implements Feedable, Searchable
 		]);
 	}
 
-	public function feedImage() {
-		return $this->imageFallback([], [
+	public function feedImage($imgixOptions = []) {
+		return $this->imageFallback($imgixOptions, [
 			'absolute' => true,
 			'fallback' => [
 				$this->stringProperty('feed-image'),
@@ -657,8 +657,8 @@ class Item extends Model implements Feedable, Searchable
 	/**
 	 * Returns the URL of the video thumbnail from the provider.
 	 */
-	public function videoImage() {
-		return $this->imageFallback([], [
+	public function videoImage($imgixOptions = []) {
+		return $this->imageFallback($imgixOptions, [
 			'fallback' => [
 				$this->stringProperty('video-thumbnail'),
 				$this->stringProperty('video-image'),
