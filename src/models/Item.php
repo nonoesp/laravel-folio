@@ -490,7 +490,7 @@ class Item extends Model implements Feedable, Searchable
 	public function imageProperty($key = null, $imgixOptions = [], $params = []) {
 
 		$absolute = Arr::get($params, 'absolute', false);
-		$fallback = Arr::get($params, 'fallback', null);
+		$fallback = Arr::get($params, 'fallback', []);
 
 		array_unshift($fallback, $this->stringProperty($key));
 
