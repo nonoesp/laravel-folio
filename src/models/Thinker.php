@@ -261,15 +261,20 @@ class Thinker {
 	/
 	*/
 
-	public static function limitMarkdownText($str, $limit, $ignored_tags = false) {
+	public static function limitMarkdownText($str, $limit, $ignored_tags = false, $allow_multiline = false) {
 
 		// Remove content in $ignored_tags
 		if ($ignored_tags) {
 			$str = Thinker::removeTagsFromString($str, $ignored_tags);
 		}
 
+		// Strip HTML tags
+		$str = strip_tags($str);
+
 		// Shorten Markdown
-		$str = preg_replace( "/\r|\n/", " ", strip_tags($str));
+		if (!$allow_multiline) {
+			$str = preg_replace( "/\r|\n/", " ", $str);
+		}
 		$str_limited = Str::limit($str, $limit);
 
 		// Text < Limit
