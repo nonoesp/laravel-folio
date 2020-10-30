@@ -360,6 +360,8 @@ return [
         'logo' => '', // (optional) URL to your feed's logo
         'default-image-src' => 'http://your-default.com/image.jpg',
         'default-author' => 'Nono Martínez Alonso',
+        'square-image-size' => 2048,
+        'square-image-fit-method' => 'crop',
     ],
         
     /*

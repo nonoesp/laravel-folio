@@ -174,19 +174,31 @@ class FeedController extends Controller
 					// RSS feed template needs to look for 'media:square'
 					if ($imgix) {
 
-						$squareImageSize = 2048;
-						$squareImageLink = imgix($item->image, [
+						config(['folio.imgix' => true]);
+
+						$squareImageSize = config('folio.feed.square-image-size', 2048);
+						$squareImageFitMethod = config('folio.feed.square-image-fit-method', 'clamp');
+
+						$squareImageLink = $item->imageProperty('square-image',
+						[
 							'ar' => '1:1',
 							'w' => $squareImageSize,
 							'h' => $squareImageSize,
-							'fit' => 'clamp',
+							'fit' => $squareImageFitMethod,
+						],
+						[
+							'fallback' => [$item->image]
 						]);
+
 						$feedItem['media:square'] = [
 							'url' => htmlspecialchars($squareImageLink),
 							'type' => 'image/jpeg',
 							'height' => $squareImageSize,
 							'width' => $squareImageSize,
 						];
+
+
+						config(['folio.imgix' => $imgix]);
 
 					}
 
