@@ -1033,6 +1033,10 @@ class Item extends Model implements Feedable, Searchable
 		return null;
 	}
 
+	/**
+	 * Returns the first collection of the item.
+	 * TODO: Deprecate as this can be obtained from $item->collections().
+	 */
 	public function collection() {
 		return Item::makeCollection([
 			'tags' => $this->stringProperty('collection'),
@@ -1044,6 +1048,129 @@ class Item extends Model implements Feedable, Searchable
 			'showHidden' => $this->boolProperty('collection-show-hidden'),
 			'showScheduled' => $this->boolProperty('collection-show-scheduled'),
 		]);
+	}
+
+	/**
+	 * Returns the labels of the item's collections.
+	 */
+	public function collectionLabels() {
+
+		$collectionLabels = [];
+
+		foreach($this->propertyArray('collection') as $collectionProperty) {
+			array_push($collectionLabels, $collectionProperty->label);
+		}
+
+		return $collectionLabels;
+	}
+
+	/**
+	 * Returns the item's collections.
+	 */
+	public function collections() {
+
+		$collections = [];
+
+		$index = 0;
+
+		// Get collection properties sorted by order_column
+		$collectionProperties = $this->propertyArray('collection');
+	
+		// Store the collection count
+		$collectionCount = count($collectionProperties);
+		
+		if ($collectionCount) {
+	
+			// Get clean array with sorted properties
+			$collectionProperties = Arr::divide($collectionProperties->toArray())[1];
+					
+			// Get properties sorted by order_column
+			$properties = $this->properties->sortBy('order_column');
+
+			// Get clean array with sorted properties
+			$properties = Arr::divide($properties->toArray())[1];
+
+			$index = 0;
+
+			foreach($collectionProperties as $collectionProperty) {
+	
+				unset($collection_limit);
+				unset($collection_select);
+				unset($collection_sort);
+				unset($collection_order);
+				unset($collection_show_all);
+				unset($collection_show_hidden);
+				unset($collection_show_scheduled);
+				
+				$toIndex = count($this->properties) - 1;
+				$selfIndex = array_search($collectionProperty, $properties);
+	
+				// Find index of last sub-item
+				if ($index < $collectionCount - 1) {
+					$nextCollection = $collectionProperties[$index + 1];
+					$nextIndex = array_search($nextCollection, $properties);
+					$toIndex = $nextIndex - 1;
+				}
+	
+				// Get subset of properties between this collection and next
+				$from = $selfIndex;
+				$amount = $toIndex - $from;
+				$subProperties = array_slice($properties, $selfIndex + 1, $amount);
+	
+				// Look for collection sub-properties
+				foreach ($subProperties as $key => $p) {
+
+					$name = $p['name'];
+					$value = $p['value'];
+					
+					switch ($name) {
+						case 'collection-limit':
+							$collection_limit = $value;
+							break;
+						case 'collection-select':
+							$collection_select = $value;
+							break;
+						case 'collection-sort':
+							$collection_sort = $value;
+							break;
+						case 'collection-order':
+							$collection_order = $value;
+							break;
+						case 'collection-show-all';
+							$collection_show_all = $value == 'true';
+							break;
+						case 'collection-show-hidden';
+							$collection_show_hidden = $value == 'true';
+							break;
+						case 'collection-show-scheduled';
+							$collection_show_scheduled = $value == 'true';
+							break;
+						default:
+							break;
+					}
+	
+				}
+	
+				// Construct collection
+				$collection = Item::makeCollection([
+					'tags' => $collectionProperty['value'],
+					'select' => $collection_select ?? '*',
+					'sort' => $collection_sort ?? 'published_at',
+					'order' => $collection_order ?? 'DESC',
+					'limit' => $collection_limit ?? -1,
+					'showAll' => $collection_show_all ?? false,
+					'showHidden' => $collection_show_hidden ?? false,
+					'showScheduled' => $collection_show_scheduled ?? false,
+				]);
+	
+				array_push($collections, $collection);
+	
+				$index += 1;
+			}
+	
+		}
+
+		return $collections;
 	}
 
 	/**
