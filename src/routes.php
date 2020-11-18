@@ -110,43 +110,6 @@ Route::group([
 	// Debug
 	Route::get('debug/templates', 'Nonoesp\Folio\Controllers\DebugController@templateStats');
 
-	// Temporary - Property textarea editor
-
-	Route::get('property/{id}', function ($id) {
-		$item = Item::withTrashed()->find($id);
-		if ($item) {
-		  return view('folio::admin.property.list', ['item' => $item]);
-		}
-		return;
-	  });
-	  
-	Route::get('property/edit/{id}', function ($id) {
-		return view('folio::admin.property.edit', ['property' => Property::find($id)]);
-	});
-	
-	Route::post('property/edit', function () {
-		$property = Property::find(request()->get('id'));
-		$newValue = request()->get('value');
-		$newName = request()->get('name');
-		$changed = false;
-
-		if ($property->value != $newValue) {
-			$property->value = $newValue;
-			$changed = true;
-		}
-		
-		if ($property->name != $newName) {
-			$property->name = $newName;
-			$changed = true;
-		}
-
-		if ($changed) {
-			$property->save();
-		}
-		
-		return redirect('/property/edit/'.$property->id);
-	});
-
 }); // close folio admin
 
 /*----------------------------------------------------------------*/
