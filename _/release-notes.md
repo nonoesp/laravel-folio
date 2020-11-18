@@ -3,6 +3,7 @@
 
 ### 8.x
 
+- Add Google Analytics 4 support.
 - `TODO`
 
 ### 7.x
