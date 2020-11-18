@@ -1,6 +1,10 @@
 
 ## Release Notes
 
+### 8.x
+
+- `TODO`
+
 ### 7.x
 
 - Added `folio:install` command.
