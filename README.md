@@ -81,6 +81,19 @@ Folio is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 Hi. I'm [Nono Martínez Alonso](https://nono.ma/about) (Nono.MA), a computational designer with a penchant for simplicity.
 
-I host [Getting Simple](https://gettingsimple.com)—a podcast about how you can live a meaningful, creative, simple life—[sketch](https://sketch.nono.ma) things that call my attention, [write](https://gettingsimple.com/writing) about enjoying a slower life, and recently started [live streaming and recording videos](https://youtube.com/NonoMartinezAlonso) on machine learning, life hacking, and more. [Join the Discord community](https://nono.ma/discord).
+I host [Getting Simple](https://gettingsimple.com)—a podcast about how you can live a meaningful, creative, simple life—[sketch](https://sketch.nono.ma) things that call my attention, [write](https://gettingsimple.com/writing) about enjoying a slower life, and recently started [live streaming and recording videos](https://youtube.com/NonoMartinezAlonso) on machine learning, life hacking, and more.
+
+[Join the Discord community](https://nono.ma/discord).
 
 If you find Folio useful in any way, reach out on Twitter at [@nonoesp](https://twitter.com/nonoesp). Cheers!
+
+## Elsewhere
+
+🍃 [Getting Simple](https://gettingsimple.com)  
+🎙 [Podcast](https://gettingsimple.com/podcast)  
+🗣 [Ask Questions](https://gettingsimple.com/ask)  
+💬 [Discord](https://discord.gg/DdsefVZ)  
+👨🏻‍🎨 [Sketches](https://sketch.nono.ma)  
+✍🏻 [Blog](https://nono.ma)  
+🐦 [Twitter](https://twitter.com/nonoesp)  
+📸 [Instagram](https://instagram.com/nonoesp)
