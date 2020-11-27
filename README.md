@@ -4,11 +4,11 @@ A customizable Laravel content-management system. (Currently in beta.)
 
 ## Live Examples
 
-[Nono.MA](https://nono.ma) | [Getting Simple](https://gettingsimple.com) | [Lourdes.AC](https://lourdes.ac) | [AR-MA](https://ar-ma.net) | [Getting Architecture Done](http://gettingarchitecturedone.com/writing) | [Nacho.MA](https://nacho.ma)
+[Nono.MA](https://nono.ma) | [Getting Simple](https://gettingsimple.com) | [Lourdes.AC](https://lourdes.ac) | [AR-MA](https://ar-ma.net) | [Getting Architecture Done](http://gettingarchitecturedone.com/writing) | [Nacho.MA](https://nacho.ma) | [Burns.art](https://burns.art) | [RCA Media Studies](https://ms.rca-architecture.com) | [Luis Ruiz Padrón](https://luisruiz.es)
 
-## Installation · Laravel 7.x
+## Installation · Laravel 8.x
 
-- Add alternate VCS repos for packages without Laravel 7 support to `composer.json`.
+- Add alternate VCS repos for packages without Laravel 8 support to `composer.json`.
 
 ```json
     "repositories": [
@@ -19,7 +19,7 @@ A customizable Laravel content-management system. (Currently in beta.)
     ],
 ```
 
-- `composer require nonoesp/folio:7.x-dev`
+- `composer require nonoesp/folio:dev-master`
 - `php artisan folio:install`
 - `php artisan migrate`
 - `php artisan migrate --path=vendor/mpociot/versionable/src/migrations`
@@ -34,7 +34,7 @@ A customizable Laravel content-management system. (Currently in beta.)
     ];
 ```
 
-- Party!
+- Party! 🥳
 
 ## Build Folio's Assets with Laravel Mix
 
@@ -81,6 +81,6 @@ Folio is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 Hi. I'm [Nono Martínez Alonso](https://nono.ma/about) (Nono.MA), a computational designer with a penchant for simplicity.
 
-I host [Getting Simple](https://gettingsimple.com)—a podcast about how you can live a meaningful, creative, simple life—[sketch](https://sketch.nono.ma) things that call my attention, and [write](https://gettingsimple.com/writing) about enjoying a slower life.
+I host [Getting Simple](https://gettingsimple.com)—a podcast about how you can live a meaningful, creative, simple life—[sketch](https://sketch.nono.ma) things that call my attention, [write](https://gettingsimple.com/writing) about enjoying a slower life, and recently started [live streaming and recording videos](https://youtube.com/NonoMartinezAlonso) on machine learning, life hacking, and more. [Join the Discord community](https://nono.ma/discord).
 
 If you find Folio useful in any way, reach out on Twitter at [@nonoesp](https://twitter.com/nonoesp). Cheers!
