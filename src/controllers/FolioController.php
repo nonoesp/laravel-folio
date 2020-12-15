@@ -293,7 +293,7 @@ class FolioController extends Controller
 		$isAdmin = $user = \Auth::user() and $user->is_admin;
 
 		$pathArray = explode('/', $request->path());
-		$path = join(array_slice($pathArray, 0, 3), "/");
+		$path = join('/', array_slice($pathArray, 0, 3));
 
 		$pathHash = \Hashids::encode($item->id);
 
