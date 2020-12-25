@@ -1,16 +1,8 @@
 <?php
 	use Illuminate\Support\Arr;
 
-	$header_class = 'c-header-simple';
-	// Class
-	$class_specified = '';
-	if(isset($classes) && $classes != '') {
-		$class_specified = '[ ';
-		foreach($classes as $class) {
-			$class_specified .= $header_class.'--'.$class.' ';
-		}
-		$class_specified .= ']';
-	}
+	$class = $class ?? 'c-header-simple';
+  	$classes = Folio::expandClassesAsString(config('folio.header.classes'), $class);
   
 	$defaults = [
 		'is_navigation_hidden' => false,
@@ -40,7 +32,7 @@
 
 <!-- c-header-simple · styling based on frankchimero.com -->
 
-<header class="[ c-header-simple ] {{ $class_specified }}">
+<header class="{{ $classes }}">
 	<div class="[ o-wrap o-wrap--size-full ]">
 		<a href="{{ $header_domain }}/" class="[ c-header-simple__name ]">
 
