@@ -237,6 +237,14 @@ class FolioController extends Controller
 				return \Nonoesp\Folio\Controllers\FeedController::makeFeed($request, $domain, $item);
 			}
 
+			$content_type = $item->stringProperty('content-type');
+			$allowed_content_types = config('folio.allowed-content-types', []);
+
+			if (in_array($content_type, $allowed_content_types)) {
+				return response(view($itemTemplateView, ['item' => $item]))
+					   ->header('Content-Type', $content_type);				
+			}
+
 			return view($itemTemplateView, ['item' => $item]);
 		}
 		

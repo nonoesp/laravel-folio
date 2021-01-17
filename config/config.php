@@ -158,7 +158,12 @@ return [
     /*
      * Your typekit id. (Optional)
      */         
-    'typekit' => '',    
+    'typekit' => '',
+
+    /*
+     * Whether to use RECAPTCHA.
+     */         
+    'recaptcha' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -322,6 +327,19 @@ return [
     | Publishing
     |--------------------------------------------------------------------------
     */
+
+    /*
+     * Allowed Content-Type response types.
+     */
+    'allowed-content-types' => [
+        'text/plain',
+        'text/xml',
+        'application/xml',
+        'application/rss+xml',
+        'image/svg+xml',
+        'application/xhtml+xml',
+        'application/json',
+    ],
 
     /*
      * HTML tags to mark excerpts or publication teasers.
