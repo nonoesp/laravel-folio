@@ -12,6 +12,7 @@
 	$og_image_default = config('folio.image-src');
 	$og_url_default = Request::root().'/'.Request::path();
 	$fb_app_id_default = config('folio.social.facebook.app_id');
+	$google_analytics = $google_analytics ?? Folio::googleAnalytics();
 	$admin = $admin ?? Auth::check();
 
 	// $folio_css = config('folio.css');
