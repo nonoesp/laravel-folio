@@ -2,7 +2,7 @@
 	use Illuminate\Support\Arr;
 
 	$class = $class ?? 'c-header-simple';
-  	$classes = Folio::expandClassesAsString(config('folio.header.classes'), $class);
+  	$classes = Folio::expandClassesAsString($classes ?? config('folio.header.classes'), $class);
   
 	$defaults = [
 		'is_navigation_hidden' => false,

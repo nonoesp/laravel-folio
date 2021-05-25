@@ -11,6 +11,7 @@
 	$og_image = $og_image ?? config('folio.image-src');
 	$og_url = $og_url ?? Request::root().'/'.Request::path();
 	$fb_app_id = $fb_app_id ?? config('folio.social.facebook.app_id');
+	$debug_load_time = $debug_load_time ?? config('folio.debug.load-time');
 
 	// Icons
 	$apple_touch_icon_default = '/apple-touch-icon.png';
@@ -148,7 +149,7 @@
 
 <body>
 
-	@if(Auth::check() && config('folio.debug.load-time'))
+	@if(Auth::check() && $debug_load_time)
 		{!! view('folio::partial.o-notification', [
 			'notification' => 'This page took '. (microtime(true) - LARAVEL_START) .' seconds to render',
 			'classes' => ['o-notification--light'],
