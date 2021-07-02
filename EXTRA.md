@@ -4,7 +4,7 @@ This sample route displays an item with an explicit `slug` with no need to have 
 
 ```php
 Route::get('/', function ($domain, Request $request) {
-    return \Nonoesp\Folio\Controllers\FolioController::showItem($domain, $request, 'sketches');
+    return \Nonoesp\Folio\Controllers\FolioController::showItemBySlug($domain, $request, 'sketches');
 });
 ```
 
