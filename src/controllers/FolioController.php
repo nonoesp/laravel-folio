@@ -163,7 +163,15 @@ class FolioController extends Controller
 
 	}
 
-	public static function showItem($domain, Request $request, $slug) {
+	public static function showItemById($domain, Request $request, $id) {
+		$item = Item::withTrashed()->find($id);
+		if ($item) {
+			return \Nonoesp\Folio\Controllers\FolioController::showItemBySlug($domain, $request, $item->slug);
+		}
+		return response()->view('errors.404', [], 404);
+	}
+
+	public static function showItemBySlug($domain, Request $request, $slug) {
 
 		if($item = Item::bySlug($slug)) {
 			if(Auth::guest()) {
@@ -250,7 +258,7 @@ class FolioController extends Controller
 		
 	}
 
-	public function showItemWithId($domain, $id) {
+	public static function redirectToItemWithId($domain, $id) {
 		$item = Item::withTrashed()->find($id);
 		if ($item) {
 			if ($item->slug[0] == '/') {

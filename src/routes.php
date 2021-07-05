@@ -204,9 +204,9 @@ Route::group([
 	// Item
 	if($path_type = Folio::isFolioURI()) { // Check this is an actual item route
 
-		Route::get($path.'{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
+		Route::get($path.'{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItemBySlug')->
 			   where('slug', '[A-Za-z0-9.\-\/]+');
-		Route::get('{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItem')->
+		Route::get('{slug}', 'Nonoesp\Folio\Controllers\FolioController@showItemBySlug')->
 			   where('slug', '[A-Za-z0-9.\-\/]+');
 	}
 
@@ -253,12 +253,26 @@ Route::group([
 		Route::get('@{handle}', 'Nonoesp\Folio\Controllers\FolioController@getUserProfile');
 
 		Route::post('items', 'Nonoesp\Folio\Controllers\FolioController@getItemsWithIds');
-		Route::get($path, ['as' => 'folio', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@showHome']);
+
+		$home_item = config('folio.home-item');
+
+		if ($home_item) {
+			// Specific home item
+			Route::get($path, function(\Illuminate\Http\Request $request, string $domain) use ($home_item) {
+				if (is_numeric($home_item)) {
+					return \Nonoesp\Folio\Controllers\FolioController::showItemById($domain, $request, $home_item);
+				}
+				return \Nonoesp\Folio\Controllers\FolioController::showItemBySlug($domain, $request, $home_item);
+			})->name('folio');
+		} else {
+			// Default home collection
+			Route::get($path, ['as' => 'folio', 'uses' => 'Nonoesp\Folio\Controllers\FolioController@showHome']);
+		}
 		Route::get($path.'tag/{tag}', 'Nonoesp\Folio\Controllers\FolioController@showItemTag');
 
 		// Permalinks
-		Route::get(Folio::permalinkPrefix().'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
-		Route::get('disqus/'.'{id}', 'Nonoesp\Folio\Controllers\FolioController@showItemWithId')->where('id', '[0-9]+');
+		Route::get(Folio::permalinkPrefix().'{id}', 'Nonoesp\Folio\Controllers\FolioController@redirectToItemWithId')->where('id', '[0-9]+');
+		Route::get('disqus/'.'{id}', 'Nonoesp\Folio\Controllers\FolioController@redirectToItemWithId')->where('id', '[0-9]+');
 
 		// Feed
 		Route::get(config('folio.feed.route'), ['as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FeedController@makeFeed']);
