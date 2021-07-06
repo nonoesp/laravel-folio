@@ -20,7 +20,7 @@
     },
     "homepage": "https://github.com/nonoesp/laravel-folio",
     "devDependencies": {
-        "axios": "^0.19",
+        "axios": "^0.21",
         "babel-core": "^6.26.3",
         "babel-loader": "^8.1.0",
         "babel-preset-env": "^1.7.0",
