@@ -38,6 +38,7 @@ class ItemClone extends Command
                     $new_item->title = $new_item->title.' (copy)';
                 }
                 // Slug
+                $new_item->visits = 0;
                 $new_item->slug_title = null;
                 $new_item->slug = \Thinker::uniqueSlugWithTableAndTitle(\Folio::table('items'), $new_item->title);
                 // Save                
