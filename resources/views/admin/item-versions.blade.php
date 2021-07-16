@@ -54,10 +54,10 @@
             <a href="/admin/item/edit/{{ $item->id }}">Return to Item</a>
         </p>
 
-        @foreach($item->versions->reverse() as $key=>$version)
+        @foreach($item->versions->reverse() as $key => $version)
             <?php
                 $date = Item::formatDate($version->updated_at, 'l, F j, Y H:i:s');
-                $text_languages = json_decode($version->getModel()->text);
+                $text_languages = $version->getModel()->translations['text'];
             ?>
 
             <div class="[ u-pad-t-2x ]">
