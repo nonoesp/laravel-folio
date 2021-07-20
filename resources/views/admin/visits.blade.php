@@ -30,7 +30,7 @@ if($settings_title == '') {
 			@foreach($items as $item)
 
 					<li>
-						<a href="{{ $item->editPath() }}" target="_blank">
+						<a href="{{ $item->path() }}" target="_blank">
 
 							<b class="c-archive__list__title">{{ $item->title }}</b>
 
