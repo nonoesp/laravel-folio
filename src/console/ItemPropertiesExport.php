@@ -10,7 +10,7 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class ItemPropertiesExport extends Command
 {
-    protected $signature = 'folio:prop:export {id} {--dir=}';
+    protected $signature = 'folio:prop:export {id} {--dir=} {--replace}';
 
 	protected $description = 'Export item properties to a JSON string.';
 	
@@ -27,12 +27,14 @@ class ItemPropertiesExport extends Command
             $id = $this->argument('id');
             // Save directory            
             $dir = $this->option('dir');
+            // Replace output file if it exists
+            $replace = $this->option('replace');
             // Find item by id
             $item = \Item::find($id);
             // Encode properties as JSON
             if ($item->properties) {
 
-                $export_name = 'export.json';
+                $export_name = 'folio-props-'.$item->id.'.json';
 
                 foreach ($item->properties as $p) {
                     if ($p->name == 'export-name') {
@@ -41,12 +43,25 @@ class ItemPropertiesExport extends Command
                 }
 
                 $json = json_encode($item->properties);
-                // Print JSON
-                $this->info($json);
 
+                // Print JSON
+                $this->comment($json);                
+                
                 if ($dir) {
-                    \File::put(\Str::finish($dir,'/').$export_name, $json, );
+                    $this->newLine();
+                    $export_path = $dir;
+                    if (!\Str::contains($dir, ['.json'])) {
+                        $export_path = \Str::finish($dir,'/').$export_name;
+                    }
+                    if (\File::exists($export_path) && !$replace) {
+                        $this->error('File exists at '.$export_path);
+                        $this->comment('Use --replace flag to override file.');
+                    } else {
+                        \File::put($export_path, $json, );
+                        $this->info('Saved at '.$export_path);
+                    }
                 }
+
             } else {
                 $this->warn('This item doesn\'t have any properties.');
             }
