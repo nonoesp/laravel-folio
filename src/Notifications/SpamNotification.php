@@ -27,7 +27,7 @@ class SpamNotification
                 [
                     'email' => $email,
                     'path' => $path,
-                    'data' => $data
+                    'data' => $data,
                 ],
                 function ($m) {
 

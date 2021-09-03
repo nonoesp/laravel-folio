@@ -53,7 +53,8 @@
         "nasyrov/laravel-imgix": "8.x-dev",
         "mpociot/versionable": "^4.0.0",
         "laravel/ui": "^3.0",
-        "spatie/laravel-honeypot": "^2.2"
+        "spatie/laravel-honeypot": "^2.2",
+        "johannebert/laravel-spam-protector": "^6.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0"
