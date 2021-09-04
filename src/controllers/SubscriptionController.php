@@ -83,6 +83,7 @@ class SubscriptionController extends Controller
       ($subscriber->email ?? '[no email]').($isSpamEmail ? ' › SPAM' : null).
       '<br/>'.
       ($subscriber->ip).($isSpamIp ? ' › SPAM' : null);
+      $subscriber->delete();
     }
 
     if(config('folio.subscribers.notify-admins')) {
