@@ -68,17 +68,45 @@ class SubscriptionController extends Controller
       'host' => $subscriber->host,
     ];
 
-    if(config('folio.subscribers.notify-admins')) {
-      Mail::send('folio::email.new-subscriber',
-      ['email' => $email, 'path' => $path, 'data' => $data],
-      function ($m) use ($email) {
-        $m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
-        $m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))->
-            subject('New Subscriber to '.config('folio.title-short'));
-      });
+    // Default email subject
+    $email_subject = 'New Subscriber to '.config('folio.title-short');
+
+    // Check email and ip address for spam
+    $isSpamEmail = $subscriber->email == '' || \SpamProtector::isSpamEmail($subscriber->email);
+    $isSpamIp = \SpamProtector::isSpamIp($subscriber->ip);
+    $isSpam = $isSpamEmail || $isSpamIp;
+
+    if ($isSpam) {
+      $email_subject = '[SPAM] Subscriber at '.config('folio.title-short');
+      $text = 'Filtered SPAM subscriber at '.config('folio.title-short').
+      '<br/><br/>'.
+      ($subscriber->email ?? '[no email]').($isSpamEmail ? ' › SPAM' : null).
+      '<br/>'.
+      ($subscriber->ip).($isSpamIp ? ' › SPAM' : null);
+      $subscriber->delete();
     }
 
-    if(config('folio.subscribers.add-to-newsletter')) {
+    if(config('folio.subscribers.notify-admins')) {
+
+      Mail::send('folio::email.new-subscriber',
+      [
+        'email' => $email,
+        'path' => $path,
+        'data' => $data,
+        'text' => $text ?? null,
+      ],
+      function ($m) use ($email, $email_subject) {
+        $m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
+        $m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))->
+            subject($email_subject);
+      });
+
+    }
+
+    if(
+      config('folio.subscribers.add-to-newsletter') &&
+      !$isSpam
+      ) {
 
       $lists = explode(",", str_replace(' ', '', $newsletter_list));
       $valid_lists = [];
