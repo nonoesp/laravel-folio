@@ -88,7 +88,7 @@
 		{{ Form::open(['url' => Folio::adminPath().'item/add', 'method' => 'POST']) }}
 
 			<p>{{ Form::text('title', '', [
-				'placeholder' => Arr::random($titles),
+				'placeholder' => Illuminate\Support\Arr::random($titles),
 				'class' => 'js--title',
 			]) }}</p>
 

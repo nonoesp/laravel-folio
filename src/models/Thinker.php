@@ -76,8 +76,11 @@ class Thinker {
 		return $slug;
 	}
 
-	public static function uniqueSlugWithTableAndTitle($table, $title, $slug_row = 'slug') {
-		$slug_original = Thinker::slug($title);
+	public static function uniqueSlugWithTableAndTitle($table, $title, $slug_row = 'slug', $should_slug = true) {
+		$slug_original = $title;
+		if ($should_slug) {
+			$slug_original = Thinker::slug($title);
+		}
 		$slug = $slug_original;
 		$slugExists = true;
 		$idx = 0;
