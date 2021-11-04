@@ -14,7 +14,11 @@ class SpamNotification
 
     public function handle(SpamDetected $event)
     {
-        if(config('folio.subscribers.notify-admins')) {
+
+        $shouldNotifyAdminsOfSpam = config('folio.subscribers.notify-admins-of-spam');
+
+        if($shouldNotifyAdminsOfSpam) {
+
             $path = $event->request->input('path');
             $email = $event->request->input('email');
             $data = \Arr::flatten($event->request->all());

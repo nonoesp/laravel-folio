@@ -176,20 +176,22 @@ return [
     | Amazon SES needs to be configured to send email notifications.
     | 
     */
-        
+
     'subscribers' => [
         // Add subscribers to a Mailchimp list?
         'add-to-newsletter' => env('FOLIO_SUBSCRIBER_ADD_TO_MAILCHIMP', false),     
         // Send "new subscriber" notifications to admins?
         'notify-admins' => env('FOLIO_SUBSCRIBER_NOTIFY_ADMINS', false),
+        // Send "[SPAM] new subscriber" notifications to admins?
+        'notify-admins-of-spam' => env('FOLIO_SUBSCRIBER_NOTIFY_ADMINS_OF_SPAM', false),
         // From email
         'from' => [
-            'email' => env('MAIL_FROM_ADDRESS', 'help@nono.ma'),
+            'email' => env('MAIL_FROM_ADDRESS', 'no-reply@domain.com'),
             'name' => env('MAIL_FROM_NAME', 'Nono Martínez Alonso'),
         ],
         // To emails
         'to' => [
-            'email' => ['mundowarezweb@gmail.com'],
+            'email' => ['your.email@domain.com'],
             'name' => ['Nono Martínez Alonso'],
         ]
     ],
