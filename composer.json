@@ -44,7 +44,7 @@
         "spatie/laravel-sitemap": "^5.7",
         "spatie/flysystem-dropbox": "^1.2",
         "spatie/laravel-backup": "^6.8",
-        "spatie/laravel-searchable": "dev-master",
+        "spatie/laravel-searchable": "dev-main",
         "spatie/laravel-newsletter": "^4.8",
         "rap2hpoutre/laravel-log-viewer": "^1.4",
         "rtconner/laravel-tagging": "~4.0",
