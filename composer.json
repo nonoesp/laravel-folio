@@ -35,7 +35,7 @@
         "laravelium/feed": "^8.0.0",
         "league/flysystem-aws-s3-v3": "^1.0@dev",
         "michelf/php-markdown": "^1.9",
-        "mtownsend/read-time": "^1.1",
+        "mtownsend/read-time": "^2.0.0",
         "spatie/eloquent-sortable": "^3.8",
         "spatie/laravel-translatable": "^4.3",
         "spatie/regex": "^1.4",
