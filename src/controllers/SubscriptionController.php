@@ -86,7 +86,13 @@ class SubscriptionController extends Controller
       $subscriber->delete();
     }
 
-    if(config('folio.subscribers.notify-admins')) {
+    $shouldNotifyAdmins = config('folio.subscribers.notify-admins');
+    $shouldNotifyAdminsOfSpam = config('folio.subscribers.notify-admins-of-spam');
+
+    if(
+      (!$isSpam && $shouldNotifyAdmins) ||
+      ( $isSpam && $shouldNotifyAdminsOfSpam)
+      ) {
 
       Mail::send('folio::email.new-subscriber',
       [
