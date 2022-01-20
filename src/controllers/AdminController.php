@@ -124,7 +124,7 @@ class AdminController extends Controller
 
 	public function postItemCreate(Request $request) {
 
-		$this->setLocaleToFirstTranslation();
+		Folio::setLocaleToFirstTranslation();
 
 		$item = new Item();
 		$item->title = $request->input('title');

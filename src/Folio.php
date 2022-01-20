@@ -402,4 +402,17 @@ class Folio {
     return trans((string)$key);
   }
 
+  /**
+   * Set the app's locale to the first available Folio translation
+   * or fallback to a provided locale.
+   */
+	public static function setLocaleToFirstTranslation($fallback = 'en') {
+		$default_locale = $fallback;
+		$translations = config('folio.translations');
+		if($translations && \Symfony\Component\Intl\Locales::exists($translations[0])) {
+			$default_locale = $translations[0];
+		}
+		app()->setLocale($default_locale);
+	}
+
 }
