@@ -44,7 +44,7 @@
         "rap2hpoutre/laravel-log-viewer": "^1.4",
         "rtconner/laravel-tagging": "~4.0",
         "symfony/intl": "^5.0",
-        "vinkla/hashids": "^9.0",
+        "hashids/hashids": "^4.0.0",
         "nasyrov/laravel-imgix": "8.x-dev",
         "mpociot/versionable": "^4.0.0",
         "laravel/ui": "^3.0",

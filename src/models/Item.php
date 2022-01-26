@@ -159,7 +159,7 @@ class Item extends Model implements Feedable, Searchable
 
 	// An encoded path that provides access to hidden items
 	public function encodedPath($absolute = false) {
-		$path = '/e/'.\Hashids::encode($this->id);
+		$path = '/e/'.Folio::hashids()->encode($this->id);
 		if($absolute) {
 			return $this->domain().$path;
 		}

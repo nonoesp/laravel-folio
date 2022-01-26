@@ -139,6 +139,26 @@ return [
     ],
 
     /*
+    * Settings for hashing.
+    */
+    'hashing' => [
+        /*
+         * Pass a project name to make output ids unique.
+         */
+        'salt' => 'Folio Project',
+
+        /*
+        * Alphabet.
+        */
+        'alphabet' => 'abcdefghijkntmqrspuvxyzm89237456',
+
+        /*
+         * Pad hashes to make them longer.
+         */
+        'padding' => 0,
+    ],
+
+    /*
     |--------------------------------------------------------------------------
     | Third-party services
     |--------------------------------------------------------------------------

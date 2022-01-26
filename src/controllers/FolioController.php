@@ -203,7 +203,7 @@ class FolioController extends Controller
 						$user->is_admin
 					) {
 						if($item->trashed()) {
-							$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
+							$notification = '<a href="/e/'.Folio::hashids()->encode($item->id).'">'.
 											'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
 											trans('folio::base.this-page-is-hidden');
 						} else {
@@ -311,7 +311,7 @@ class FolioController extends Controller
 		$pathArray = explode('/', $request->path());
 		$path = join('/', array_slice($pathArray, 0, 3));
 
-		$pathHash = \Hashids::encode($item->id);
+		$pathHash = Folio::hashids()->encode($item->id);
 
 		$secretLink = '//'.$request->getHttpHost().'/'.$path.'/'.$pathStripTags.'/'.$locale.'/'.$pathHash;
 
