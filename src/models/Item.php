@@ -82,15 +82,17 @@ class Item extends Model implements Feedable, Searchable
 	/**
 	 * The feed representation of an Item.
 	 */
-	public function toFeedItem()
+	public function toFeedItem(): FeedItem
     {
         return FeedItem::create()
             ->id($this->id)
             ->title($this->title)
-            ->summary('summary')
+            ->summary('TK_SUMMARY')
             ->updated(new \Date($this->published_at))
-            ->link('url-here')
-            ->author('author');
+            ->link($this->Url())
+            ->authorName(config('folio.feed.default-author'))
+            ->authorEmail('TK.AUTHOR@EMAIL.COM')
+			;
 	}
 	
 	public function templateView() {
