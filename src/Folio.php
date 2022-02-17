@@ -323,9 +323,19 @@ class Folio {
   }
 
   public static function mediaUrl($path = '') {
+
+    // Imgix
     if (config('folio.imgix')) {
       return imgix($path);
     }
+
+    // Spaces
+    $uploadsDiskDriver = config('filesystems.disks.'.config('folio.uploader.disk').'.driver');
+    if ($uploadsDiskDriver == 'spaces') {
+      $path = Str::of($path)->start('/');
+      return 'https://'.env('DIGITAL_OCEAN_BUCKET').'.'.env('DIGITAL_OCEAN_REGION').'.digitaloceanspaces.com'.$path;
+    }
+
     return Folio::url($path);
   }
 

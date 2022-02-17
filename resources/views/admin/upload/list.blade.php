@@ -87,7 +87,7 @@
                             $imageHighRes = imgix($filePath);
                             $image = imgix($filePath, ['w' => 200, 'q' => 50, 'auto' => 'format,compress']);
                         } else {
-                            $image = $filePath;
+                            $image = Folio::mediaUrl($filePath);
                         }
                     @endphp
 
@@ -135,7 +135,7 @@
                             $imageHighRes = imgix($filePath);
                             $image = imgix($filePath, ['w' => 150, 'q' => 40, 'auto' => 'format,compress']);
                         } else {
-                            $image = $filePath;
+                            $image = Folio::mediaUrl($filePath);
                         }
                     @endphp
 
@@ -174,9 +174,10 @@
                         $extension = $extension[count($extension) - 1];
 
                         // Construct file path
-                        $filePath = Folio::upload($basename);
+                        // $filePath = Folio::upload($basename);
 
-                        $image = config('folio.imgix') ? imgix($filePath) : $filePath;
+                        $image = Folio::uploadUrl($basename);
+                        // $image = config('folio.imgix') ? imgix($filePath) : Folio::mediaUrl($filePath);
                     @endphp
 
                         <div class="[ grid__item one-whole ]">
