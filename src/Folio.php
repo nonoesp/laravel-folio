@@ -425,10 +425,10 @@ class Folio {
 		app()->setLocale($default_locale);
 	}
 
-  public static function hashids() {
-    $salt = config('folio.hashing.salt');
-    $alphabet = config('folio.hashing.alphabet');
-    $padding = config('folio.hashing.padding');
+  public static function hashids($salt = null, $padding = null, $alphabet = null) {
+    $salt = $salt ?? config('folio.hashing.salt');
+    $padding = $padding ?? config('folio.hashing.padding');
+    $alphabet = $alphabet ?? config('folio.hashing.alphabet');
     return new \Hashids\Hashids($salt, $padding, $alphabet);
   }
 

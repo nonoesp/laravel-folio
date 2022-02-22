@@ -158,7 +158,7 @@ return [
         /*
         * Alphabet.
         */
-        'alphabet' => 'abcdefghijkntmqrspuvxyzm89237456',
+        'alphabet' => '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_',
 
         /*
          * Pad hashes to make them longer.
