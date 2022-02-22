@@ -214,7 +214,7 @@ class FolioController extends Controller
 							$diffForHumans = $date->diffForHumans(null, \Carbon\CarbonInterface::DIFF_ABSOLUTE);
 							$is_blog = $item->is_blog ? 'blog' : '<span style="text-decoration: line-through;">blog</span>';
 							$is_rss = $item->rss ? 'rss' : '<span style="text-decoration: line-through;">rss</span>';
-							$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
+							$notification = '<a href="/e/'.\Folio::hashids()->encode($item->id).'">'.
 							'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
 							trans('folio::base.scheduled-for').' '.$dateForHumans.' at '.$dateTime.' · Live in '.$diffForHumans.' &nbsp;·&nbsp; '.$is_blog.' &nbsp;·&nbsp; '.$is_rss;
 						}

@@ -21,8 +21,8 @@
 <h3>jenssegers/date</h3>
 {{ Date::now()->format('M d,   Y') }}
 
-<h3>vinkla/hashids</h3>
-{{ Hashids::encode(248) }}
+<h3>hashids/hashids</h3>
+{{ Folio::hashids()->encode(248) }}
 
 <?php $item = Item::find(200); ?>
 <h3>nonoesp/folio</h3>
@@ -38,14 +38,17 @@
 <h3>take {{ $amount }} more items</h3>
 <?php $items = Item::orderBy('id','DESC')->take($amount)->get(); ?>
 @foreach($items as $item)
-  {{ Html::link(Folio::path().$item->id, Folio::path().$item->id) }} ({{ $item->title }})
+  {{ Html::link(Folio::path().$item->id, Folio::path().$item->id) }} · {{ $item->title }}
   <br>
 @endforeach
 
 <h3>take {{ $amount }} more items with hashids</h3>
 <?php $items = Item::orderBy('id','DESC')->skip($amount)->take($amount)->get(); ?>
 @foreach($items as $item)
-  {{ Html::link('e/'.Hashids::encode($item->id), 'e/'.Hashids::encode($item->id)) }} ({{ $item->title }})
+  @php
+      $link = 'e/'.Folio::hashids()->encode($item->id);
+  @endphp
+  {{ Html::link($link, $link) }} · {{ $item->title }}
   <br>
 @endforeach
 

@@ -237,7 +237,7 @@ Route::group([
 	$path = Folio::path();
 
 	Route::get('/e/{hash}', function($domain, $hash) use ($path) {
-		$decode = Hashids::decode($hash);
+		$decode = Folio::hashids()->decode($hash);
 		if(count($decode)) {
 			$item = Item::withTrashed()->find($decode[0]);
 			if ($item) {
