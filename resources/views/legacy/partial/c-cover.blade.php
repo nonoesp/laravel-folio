@@ -22,8 +22,8 @@
 		<div class="[  lazy  ] [  c-cover__image  ]"></div>
 	@else
 		<div class="[ c-cover__image ]" style="
-		@if($image) style="background-image:url('{!! $image !!}') @endif
-		@if($background_color) style="background-color:{{ $background_color }} @endif
+		@if($image) background-image:url('{!! $image !!}'); @endif
+		@if($background_color) background-color:{{ $background_color }}; @endif
 		"></div>
 	@endif
 
