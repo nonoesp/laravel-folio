@@ -31,14 +31,17 @@
 <h3>take {{ $amount }} items</h3>
 <?php $items = Item::take($amount)->get(); ?>
   @foreach($items as $item)
-    {{ Html::link(Folio::path().$item->slug, $item->title) }}
+    {{ Html::link($item->path(), $item->title) }}
     <br>
   @endforeach
 
-<h3>take {{ $amount }} more items</h3>
+<h3>take {{ $amount }} more items · permalinks</h3>
 <?php $items = Item::orderBy('id','DESC')->take($amount)->get(); ?>
 @foreach($items as $item)
-  {{ Html::link(Folio::path().$item->id, Folio::path().$item->id) }} · {{ $item->title }}
+  @php
+      $link = $item->permalink();
+  @endphp
+  {{ Html::link($link, $link) }} · {{ $item->title }}
   <br>
 @endforeach
 
