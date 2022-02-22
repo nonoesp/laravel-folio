@@ -207,12 +207,16 @@ class FolioController extends Controller
 											'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
 											trans('folio::base.this-page-is-hidden');
 						} else {
-							$date = Item::formatDate($item->published_at, 'l, F j, Y');
+							$tz = config('folio.timezone') ?? config('app.timezone');
+							$date = \Date::create($item->published_at)->setTimezone(config('app.timezone'))->timezone($tz);
+							$dateForHumans = Item::formatDate($date, 'l, F j, Y');
+							$dateTime = Item::formatDate($date, 'g:i A');
+							$diffForHumans = $date->diffForHumans(null, \Carbon\CarbonInterface::DIFF_ABSOLUTE);
 							$is_blog = $item->is_blog ? 'blog' : '<span style="text-decoration: line-through;">blog</span>';
 							$is_rss = $item->rss ? 'rss' : '<span style="text-decoration: line-through;">rss</span>';
 							$notification = '<a href="/e/'.\Hashids::encode($item->id).'">'.
 							'<i class="[ fa fa-link fa--social ]"></i></a>&nbsp;&nbsp;'.
-							trans('folio::base.scheduled-for').' '.$date.' &nbsp;·&nbsp; '.$is_blog.' &nbsp;·&nbsp; '.$is_rss;
+							trans('folio::base.scheduled-for').' '.$dateForHumans.' at '.$dateTime.' · Live in '.$diffForHumans.' &nbsp;·&nbsp; '.$is_blog.' &nbsp;·&nbsp; '.$is_rss;
 						}
 					} else {
 						$notification = trans('folio::base.preview-of-unpublished-page');

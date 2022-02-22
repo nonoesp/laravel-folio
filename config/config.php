@@ -111,6 +111,14 @@ return [
      */
     'sitemap' => null,
 
+    /**
+     * Editor timezone.
+     * string or null
+     * Serves to display selected times in the editor's timezone.
+     * Does not affect the application's timezone (set in app.timezone)
+     */
+    'timezone' => 'GMT+1', // Europe/Madrid
+
     /*
     |--------------------------------------------------------------------------
     | Assets
