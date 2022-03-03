@@ -30,7 +30,7 @@ class ItemPropertiesExport extends Command
             // Replace output file if it exists
             $replace = $this->option('replace');
             // Find item by id
-            $item = \Item::find($id);
+            $item = \Item::withTrashed()->find($id);
             // Encode properties as JSON
             if ($item->properties) {
 
