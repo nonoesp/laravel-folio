@@ -44,7 +44,7 @@
         "rtconner/laravel-tagging": "~4.0",
         "symfony/intl": "^5.0",
         "hashids/hashids": "^4.0.0",
-        "nasyrov/laravel-imgix": "8.x-dev",
+        "nasyrov/laravel-imgix": "9.x-dev",
         "mpociot/versionable": "^4.0.0",
         "laravel/ui": "^3.0",
         "spatie/laravel-honeypot": "^4.0",
