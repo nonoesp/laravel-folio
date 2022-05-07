@@ -747,21 +747,23 @@ class Item extends Model implements Feedable, Searchable
 			$parser == 'vtalbot'
 			) {
 
-				// CommonMark
-
+			// CommonMark
+			// https://commonmark.thephpleague.com/2.3/extensions/commonmark/#manual-usage
 			// Obtain a pre-configured Environment with all the CommonMark parsers/renderers ready-to-go
-			$environment = \League\CommonMark\Environment::createCommonMarkEnvironment();
+			$config = ['html_input' => 'allow'];
+			$environment = new \League\CommonMark\Environment\Environment($config);
+			// Core CommonMark extension
+			$environment->addExtension(new \League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension);
 			// Optional: Add your own parsers, renderers, extensions, etc. (if desired)
 			$environment->addExtension(new \League\CommonMark\Extension\Attributes\AttributesExtension);
 			$environment->addExtension(new \League\CommonMark\Extension\Footnote\FootnoteExtension);
 			// For example:  $environment->addInlineParser(new TwitterHandleParser());
 			// Define your configuration (reference at https://commonmark.thephpleague.com/configuration/):
-			$config = ['html_input' => 'allow'];
 			// Create the converter
-			$converter = new \League\CommonMark\CommonMarkConverter($config, $environment);
+			$converter = new \League\CommonMark\MarkdownConverter($environment);
 
 			// read and parse markdown
-			$html = $converter->convertToHtml($text);
+			$html = $converter->convert($text);
 
 			$html = str_replace(
 				["<p><img", "/></p>"],
