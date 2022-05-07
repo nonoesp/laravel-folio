@@ -21,10 +21,10 @@
     },
     "minimum-stability": "dev",
     "require": {
-        "php": "^8.0.1|^7.3.0",
+        "php": "^8.0.2",
         "illuminate/support": "^8.0",
         "aws/aws-sdk-php": "~3.0",
-        "graham-campbell/markdown": "^13.0.0",
+        "graham-campbell/markdown": "^13.1.2",
         "jenssegers/date": "^4.0.0",
         "laravelcollective/html": "^6.0",
         "laravelium/feed": "^8.0.0",
