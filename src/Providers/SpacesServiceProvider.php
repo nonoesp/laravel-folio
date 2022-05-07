@@ -31,24 +31,6 @@ class SpacesServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // 8.x
-        // Storage::extend('spaces', function ($app, $config) {
-        //     $client = new S3Client([
-        //         'credentials' => [
-        //             'key'    => $config['key'],
-        //             'secret' => $config['secret'],
-        //         ],
-        //         'region' => $config['region'],
-        //         'version' => 'latest',
-        //         'endpoint' => $config['endpoint'],
-        //     ]);
-
-        //     $adapter = new AwsS3Adapter($client, $config['bucket']);
-
-        //     return new Filesystem($adapter);
-        // });
-
-        // 9.x
         Storage::extend('spaces', function ($app, $config) {
             $client = new S3Client([
                 'credentials' => [
