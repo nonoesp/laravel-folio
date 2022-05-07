@@ -31,7 +31,7 @@
         "graham-campbell/markdown": "^14.0-dev",
         "jenssegers/date": "^4.0.0",
         "laravelcollective/html": "^6.0",
-        "league/flysystem-aws-s3-v3": "^1.0@dev",
+        "league/flysystem-aws-s3-v3": "^3.x-dev",
         "michelf/php-markdown": "^1.9",
         "mtownsend/read-time": "^2.0.0",
         "spatie/eloquent-sortable": "^4.0.1",
