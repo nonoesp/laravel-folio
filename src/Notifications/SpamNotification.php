@@ -33,18 +33,17 @@ class SpamNotification
                     'path' => $path,
                     'data' => $data,
                 ],
-                function ($m) {
+                function ($email) {
 
-                    $m->from(
-                        config('folio.subscribers.from.email'),
-                        config('folio.subscribers.from.name')
-                    );
-                    
-                    $m->to(
-                        config('folio.subscribers.to.email'),
-                        config('folio.subscribers.to.name')
-                        )
-                    ->subject('[SPAM] Subscriber to '.config('folio.title-short'));
+                    $email->to(
+                                config('folio.subscribers.to.email'),
+                                config('folio.subscribers.to.name')
+                            )
+                          ->from(
+                                config('folio.subscribers.from.email'),
+                                config('folio.subscribers.from.name')
+                          )
+                          ->subject('[SPAM] Subscriber to '.config('folio.title-short'));
 
                 }
             );
