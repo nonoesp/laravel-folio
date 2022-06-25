@@ -16,7 +16,7 @@
 <br>
 
 <h3>grahamcampbell/markdown</h3>
-{!! Item::convertToHtml('This is a Markdown *test*—go **bold** letters') !!}
+{!! Item::convertToHtml('This is a *Markdown* test—go **bold** letters.') !!}
 
 <h3>jenssegers/date</h3>
 {{ Date::now()->format('M d,   Y') }}
@@ -24,9 +24,13 @@
 <h3>hashids/hashids</h3>
 {{ Folio::hashids()->encode(248) }}
 
-<?php $item = Item::find(200); ?>
+<?php $item = Item::find(200) ?? Item::first(); ?>
 <h3>nonoesp/folio</h3>
+@if($item)
 {{ Html::link(Folio::path().$item->slug, Folio::path().$item->slug) }}
+@else
+No items.
+@endif
 
 <h3>take {{ $amount }} items</h3>
 <?php $items = Item::take($amount)->get(); ?>

@@ -980,7 +980,14 @@ class Item extends Model implements Feedable, Searchable
 		// Fallback to Item full text if no more-tag or excerpt-tag were found
 		return $this->htmlText($options);
     }
-    
+
+    /**
+     * Read more call to action text. Defaults to trans('folio.read-more').
+     */
+    public function readMoreText($default = null) {
+        return $this->stringProperty('read-more-text', $default ?? trans('folio.read-more'));
+    }
+
     /**
      * Add target="_blank" and class="is-external" to any links
      * with an href starting on http:// or https://
