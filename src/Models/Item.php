@@ -690,6 +690,7 @@ class Item extends Model implements Feedable, Searchable
 				'c-item-v2__cover-media',
 				$this->videoImage(),
 				$this->boolProperty('fade'),
+				$this->boolProperty('dark-play'),
 			);
 		}
 	}
