@@ -1,6 +1,11 @@
 ![Folio for Laravel.](assets/folio-dark@2x.gif#gh-dark-mode-only)
 ![Folio for Laravel.](assets/folio-light@2x.gif#gh-light-mode-only)
 
+<p>
+<img src="assets/folio-dark@2x.gif#gh-dark-mode-only" alt="Folio for Laravel logo." width="150">
+<img src="assets/folio-light@2x.gif#gh-light-mode-only" alt="Folio for Laravel logo." width="150">
+</p>
+
 A customizable Laravel content-management system.
 
 You can see it working at [Nono.MA](https://nono.ma), [Getting Simple](https://gettingsimple.com), [Burns.art](https://burns.art), [RCA Media Studies](https://ms.rca-architecture.com), or [Luis Ruiz Padrón](https://luisruiz.es).
