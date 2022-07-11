@@ -1,21 +1,24 @@
-<img src="assets/folio@2x.gif?reload2" alt="Folio for Laravel logo." width="200px">
+<img src="assets/folio-dark@2x.gif#gh-dark-mode-only" alt="Folio for Laravel logo." width="150">
+<img src="assets/folio-light@2x.gif#gh-light-mode-only" alt="Folio for Laravel logo." width="150">
 
-A customizable Laravel content-management system. (Currently in beta.)
+A customizable Laravel content-management system.
 
-## Live Examples
+You can see it working at [Nono.MA](https://nono.ma), [Getting Simple](https://gettingsimple.com), [Burns.art](https://burns.art), [RCA Media Studies](https://ms.rca-architecture.com), or [Luis Ruiz Padrón](https://luisruiz.es).
 
-[Nono.MA](https://nono.ma) | [Getting Simple](https://gettingsimple.com) | [Lourdes.AC](https://lourdes.ac) | [AR-MA](https://ar-ma.net) | [Getting Architecture Done](http://gettingarchitecturedone.com/writing) | [Nacho.MA](https://nacho.ma) | [Burns.art](https://burns.art) | [RCA Media Studies](https://ms.rca-architecture.com) | [Luis Ruiz Padrón](https://luisruiz.es)
+## Installation · Laravel 9.x
 
-## Installation · Laravel 8.x
-
-- Add alternate VCS repos for packages without Laravel 8 support to `composer.json`.
+- Add alternate VCS repos for packages without Laravel 9.x support to `composer.json`.
 
 ```json
     "repositories": [
         {
             "type": "vcs",
             "url": "https://github.com/nonoesp/laravel-imgix"
-        }
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/nonoesp/laravel-spam-protector"
+        }        
     ],
 ```
 
@@ -71,7 +74,7 @@ php artisan vendor:publish --provider="Nonoesp\Folio\FolioServiceProvider" --tag
 ## Other
 
 - Subscriber email notifications can be configured in `folio.subscribers` and setting up Amazon SES in `services.ses`.
-- Backups can be configured by adding disks to `backup.destination.disks` (having those disks configured in `filesystems`, say [Dropbox](https://www.dropbox.com/developers/apps), Digital Ocean, or S3).
+- Backups can be configured by adding disks to `backup.destination.disks` (having those disks configured in `filesystems`, say [Dropbox](https://www.dropbox.com/developers/apps), DigitalOcean, or AWS S3).
 
 ## License
 
@@ -79,11 +82,11 @@ Folio is licensed under the [MIT license](http://opensource.org/licenses/MIT).
 
 ## Me
 
-Hi. I'm [Nono Martínez Alonso](https://nono.ma/about) (Nono.MA), a computational designer with a penchant for simplicity.
+Hi. I'm [Nono Martínez Alonso](https://nono.ma/about) (Nono.MA), a creative technologist with a penchant for simplicity.
 
-I host [Getting Simple](https://gettingsimple.com)—a podcast about how you can live a meaningful, creative, simple life—[sketch](https://sketch.nono.ma) things that call my attention, [write](https://gettingsimple.com/writing) about enjoying a slower life, and recently started [live streaming and recording videos](https://youtube.com/NonoMartinezAlonso) on machine learning, life hacking, and more.
+I host [Getting Simple](https://gettingsimple.com) — a podcast about simple living, lifestyle design, technology, and culture — [sketch](https://sketch.nono.ma) things that call my attention, [write](https://gettingsimple.com/writing) about enjoying a slower life, and record creative coding and machine intelligence [live streams](https://youtube.com/NonoMartinezAlonso) on YouTube.
 
-[Join the Discord community](https://nono.ma/discord).
+[Join us on Discord](https://nono.ma/discord). 🗣
 
 If you find Folio useful in any way, reach out on Twitter at [@nonoesp](https://twitter.com/nonoesp). Cheers!
 
@@ -97,3 +100,4 @@ If you find Folio useful in any way, reach out on Twitter at [@nonoesp](https://
 ✍🏻 [Blog](https://nono.ma)  
 🐦 [Twitter](https://twitter.com/nonoesp)  
 📸 [Instagram](https://instagram.com/nonoesp)
+📸 [YouTube](https://youtube.com/NonoMartinezAlonso)
