@@ -113,7 +113,7 @@ class Thinker {
 		return false;
 	}
 
-	public static function videoWithURL($video, $class, $thumbnail = null) {
+	public static function videoWithURL($video, $class, $thumbnail = null, $fade = false, $darkPlayButton = false) {
 
 		$isYoutube = false;
 		$isVimeo = false;
@@ -141,8 +141,18 @@ class Thinker {
 					$class_append = '-custom';
 				}
 				return '<p class="[ '.$class.' ]  [ o-video-thumb  js-video-thumb ]" data-url="'.$code.'" data-service="youtube">'
-						.'<img class="o-video-thumb__mask" src="'.Folio::asset('images/video-mask-youtube.png').'">'
-						.'<img class="o-video-thumb__image o-video-thumb__image--youtube'.$class_append.'" src="'.$image.'">'
+						.'<img class="o-video-thumb__mask" src="'
+						.Folio::asset('images/video-mask-youtube.png')
+						.'"'
+						.($darkPlayButton ? ' style="filter:grayscale(0.55) contrast(2.5)"' : null)
+						.'>'
+						.'<img class="o-video-thumb__image o-video-thumb__image--youtube'
+						.$class_append
+						.'" src="'
+						.$image
+						.'"'
+						.($fade ? ' style="filter:brightness(0.98)"' : null)
+						.'>'
 						.'</p>';
 			} else {
 				return '';
