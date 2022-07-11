@@ -1,9 +1,6 @@
-![Folio for Laravel.](assets/folio-dark@2x.gif#gh-dark-mode-only)
-![Folio for Laravel.](assets/folio-light@2x.gif#gh-light-mode-only)
-
 <p>
-<img src="assets/folio-dark@2x.gif#gh-dark-mode-only" alt="Folio for Laravel logo." width="150">
-<img src="assets/folio-light@2x.gif#gh-light-mode-only" alt="Folio for Laravel logo." width="150">
+<img src="assets/folio-dark@2x.gif#gh-dark-mode-only" alt="Folio for Laravel logo." width="138">
+<img src="assets/folio-light@2x.gif#gh-light-mode-only" alt="Folio for Laravel logo." width="138">
 </p>
 
 A customizable Laravel content-management system.
