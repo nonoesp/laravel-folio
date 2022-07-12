@@ -207,8 +207,11 @@ class Folio {
    */
   public static function templates() {
 
+    $defaultTemplate = config('folio.view.item');
+    $defaultTemplateViewName = ucwords(strtolower(last(explode('.', $defaultTemplate))));
+
     $templates = [];
-    $templates["null"] = ucwords(strtolower('default template'));
+    $templates["null"] = ucwords(strtolower('default template'))."($defaultTemplateViewName)";
 
     $template_paths = [];
 
@@ -217,8 +220,7 @@ class Folio {
     // Get template full paths
     // if($config_paths = config('folio.custom-template-views-foldername')) {
     if($config_paths = $custom_template_views_folder) {
-      foreach($config_paths as $name=>$folder) {
-        //$name.' · resources/views/'.$dir
+      foreach($config_paths as $name => $folder) {
         $template_paths[$name] = [
           'folder' => $folder,
           'path' => resource_path().'/views/'.$folder,
