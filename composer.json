@@ -12,10 +12,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/nonoesp/laravel-imgix"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/nonoesp/laravel-spam-protector"
         }
     ],
     "autoload": {
@@ -52,7 +48,7 @@
         "mpociot/versionable": "^4.0.0",
         "laravel/ui": "^3.0",
         "spatie/laravel-honeypot": "^4.0",
-        "johannebert/laravel-spam-protector": "9.x-dev"
+        "johannebert/laravel-spam-protector": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.0"
