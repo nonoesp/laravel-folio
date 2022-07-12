@@ -211,7 +211,7 @@ class Folio {
     $defaultTemplateViewName = ucwords(strtolower(last(explode('.', $defaultTemplate))));
 
     $templates = [];
-    $templates["null"] = ucwords(strtolower('default template'))."($defaultTemplateViewName)";
+    $templates["null"] = ucwords(strtolower('default template'))." › $defaultTemplateViewName";
 
     $template_paths = [];
 
