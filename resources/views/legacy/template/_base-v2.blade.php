@@ -89,7 +89,7 @@
           $og_description = $item->stringProperty('meta-description', $og_description);
         }
         $og_type = 'article';
-        $og_url = $item->permalink();
+        $og_url = $og_url ?? $item->permalink();
         $apple_touch_icon = $item->stringProperty('apple-touch-icon');
         ?>
 
