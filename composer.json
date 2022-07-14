@@ -12,7 +12,11 @@
         {
             "type": "vcs",
             "url": "https://github.com/nonoesp/laravel-imgix"
-        }
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/macpaw/laravel-feed"
+        }        
     ],
     "autoload": {
         "psr-4": {
