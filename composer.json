@@ -16,7 +16,7 @@
         {
             "type": "vcs",
             "url": "https://github.com/macpaw/laravel-feed"
-        }        
+        }
     ],
     "autoload": {
         "psr-4": {

@@ -16,7 +16,11 @@ You can see it working at [Nono.MA](https://nono.ma), [Getting Simple](https://g
         {
             "type": "vcs",
             "url": "https://github.com/nonoesp/laravel-imgix"
-        }    
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/macpaw/laravel-feed"
+        } 
     ],
 ```
 
