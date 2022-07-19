@@ -338,8 +338,8 @@ class Folio {
     if ($uploadsDisk['driver'] == 's3') {
       $path = Str::of($path)->start('/');
       $protocol = 'https://';
-      $url = Str::of($uploadsDisk['endpoint'])->explode('://')->last();
-      return $protocol.$uploadsDisk['bucket'].'.'.$url.$path;
+      $endpoint = Str::of($uploadsDisk['endpoint'])->explode('://')->last();
+      return $protocol.$uploadsDisk['bucket'].'.'.$endpoint.$path;
     }
 
     return Folio::url($path);
