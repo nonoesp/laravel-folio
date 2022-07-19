@@ -542,6 +542,7 @@ class Item extends Model implements Feedable, Searchable
 			$this->image,
 			'VIDEO_IMAGE',
 			config('folio.og.image'),
+			config('folio.image-src'), // TODO: Deprecate
 		]);
 		
 		$params = array_merge($params, [
