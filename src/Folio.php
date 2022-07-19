@@ -331,11 +331,15 @@ class Folio {
       return imgix($path);
     }
 
-    // Spaces
-    $uploadsDiskDriver = config('filesystems.disks.'.config('folio.uploader.disk').'.driver');
-    if ($uploadsDiskDriver == 'spaces') {
+    // Spaces/S3
+    $uploaderDisk = config('folio.uploader.disk');
+    $uploadsDisk = config('filesystems.disks.'.$uploaderDisk);
+
+    if ($uploadsDisk['driver'] == 's3') {
       $path = Str::of($path)->start('/');
-      return 'https://'.env('DIGITAL_OCEAN_BUCKET').'.'.env('DIGITAL_OCEAN_REGION').'.digitaloceanspaces.com'.$path;
+      $protocol = 'https://';
+      $url = Str::of($uploadsDisk['endpoint'])->explode('://')->last();
+      return $protocol.$uploadsDisk['bucket'].'.'.$url.$path;
     }
 
     return Folio::url($path);
