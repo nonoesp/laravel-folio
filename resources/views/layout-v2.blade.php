@@ -52,7 +52,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>{{ $title }}</title>
     <link rel="stylesheet" type="text/css" href="{{ $css }}">
-    <link rel="icon" type="image/png" href="{{ $favicon }}" />
+    <link rel="icon" type="image/png" href="{{ $favicon }}" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" href="{{ str_replace('.png', '@dark.png', $favicon) }}" media="(prefers-color-scheme: dark)" />
     <link rel="alternate" type="application/atom+xml" href="/{{ $rss }}" />
     <link rel="canonical" href="{{ $canonical }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
