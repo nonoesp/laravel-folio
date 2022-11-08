@@ -81,6 +81,14 @@ class GenerateSitemap extends Command
                         
                         // Find Folio item paths
                         if (Folio::isFolioURI($url->path())) {
+
+                            if($item = \Item::bySlug($url->path())) {
+                                // Override domain when specified as property
+                                if ($domain = $item->stringProperty('domain')) {
+                                    $url = new \Spatie\Sitemap\Tags\Url('https://'.$domain.$url->path());
+                                }
+                            }
+
                             $urlType = 'ITEM';
                             $url->setPriority(1);
                         }
