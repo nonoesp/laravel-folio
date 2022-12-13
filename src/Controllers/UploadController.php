@@ -80,6 +80,19 @@ class UploadController extends Controller
             // Confirm we're overwriting
             if ($imgExists) {
                 array_push($messages, 'The file has been replaced.');
+
+                // Purge from imgix if possible
+                $imgix_api_key = env('IMGIX_API_KEY');
+                $imgix_purge_on_replace = env('IMGIX_PURGE_ON_REPLACE');
+                if ($imgix_api_key && $imgix_purge_on_replace) {
+                    $imgix_url = imgix($uploaderUploadsFolder.'/'.$filename);
+                    $purge_response = \Folio::purgeImgix($imgix_url);
+                    if ($purge_response) {
+                        array_push($messages, 'The file has been purged from imgix.');
+                    } else {
+                        array_push($messages, 'Failed to purge the file from imgix.');
+                    }
+                }
             }
 
             // Store file

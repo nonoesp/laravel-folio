@@ -438,4 +438,39 @@ class Folio {
     return new \Hashids\Hashids($salt, $padding, $alphabet);
   }
 
+  /**
+   * Purges an imgix asset by Url.
+   */
+  public static function purgeImgix($url) {
+    if (!$url) {
+      return false;
+    }
+    $imgix_api_key = env('IMGIX_API_KEY');
+    if ($imgix_api_key) {
+        # https://gist.github.com/jacktasia/17cefd2c41a5b44d8460
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->post('https://api.imgix.com/api/v1/purge', [
+                'headers' => [
+                    'Content-Type'  => 'application/vnd.api+json',
+                    'Authorization' => 'Bearer '.$imgix_api_key
+                ],
+                \GuzzleHttp\RequestOptions::JSON => [
+                    'data' => [
+                        'attributes' => [
+                            'url' => $url
+                        ],
+                        'type' => 'purges'
+                    ]
+                ]
+            ]);
+            return true;
+        }
+        catch (\Guzzle\Http\Exception\ClientErrorResponseException $exception) {
+            $responseBody = $exception->getResponse()->getBody(true);
+            return false;
+        }
+    }
+  }
+
 }
