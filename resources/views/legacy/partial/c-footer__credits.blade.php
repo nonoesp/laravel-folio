@@ -15,6 +15,19 @@
         <p>
           @if($text)
 
+            @php
+            $text = str_replace(
+                [
+                    '{year}',
+                    '{footer-text}',
+                ],
+                [
+                    Item::formatDate(Date::now(), 'Y'),
+                    trans('folio.footer-text'),
+                ],
+                $text);
+            @endphp          
+
             {!! $text !!}
 
           @else
