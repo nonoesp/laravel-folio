@@ -760,6 +760,7 @@ class Item extends Model implements Feedable, Searchable
 			// Optional: Add your own parsers, renderers, extensions, etc. (if desired)
 			$environment->addExtension(new \League\CommonMark\Extension\Attributes\AttributesExtension);
 			$environment->addExtension(new \League\CommonMark\Extension\Footnote\FootnoteExtension);
+			$environment->addExtension(new \Wnx\CommonmarkMarkExtension\MarkExtension);
 			// For example:  $environment->addInlineParser(new TwitterHandleParser());
 			// Define your configuration (reference at https://commonmark.thephpleague.com/configuration/):
 			// Create the converter
