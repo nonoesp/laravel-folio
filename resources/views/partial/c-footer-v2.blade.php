@@ -12,7 +12,7 @@
   $subscribe_hidden = $subscribe_hidden ?? config('folio.subscribe.hidden');
 @endphp
 
-<footer class="{{ $class}} {{ $classes }} [ u-pad-b-4x u-mar-t-6x ]">
+<footer class="{{ $class}} {{ $classes }} [ u-pad-b-3x u-mar-t-4x ]">
 
   @if(!$subscribe_hidden)
     <div class="[ o-wrap o-wrap--size-400 o-wrap--palm-size-full u-mar-b-5x ]">

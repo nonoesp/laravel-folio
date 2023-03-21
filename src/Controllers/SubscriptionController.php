@@ -101,10 +101,10 @@ class SubscriptionController extends Controller
         'data' => $data,
         'text' => $text ?? null,
       ],
-      function ($m) use ($email, $email_subject) {
-        $m->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'));
-        $m->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))->
-            subject($email_subject);
+      function ($email) use ($email_subject) {
+        $email->to(config('folio.subscribers.to.email'), config('folio.subscribers.to.name'))
+              ->from(config('folio.subscribers.from.email'), config('folio.subscribers.from.name'))
+              ->subject($email_subject);
       });
 
     }

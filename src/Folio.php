@@ -207,8 +207,11 @@ class Folio {
    */
   public static function templates() {
 
+    $defaultTemplate = config('folio.view.item');
+    $defaultTemplateViewName = ucwords(strtolower(last(explode('.', $defaultTemplate))));
+
     $templates = [];
-    $templates["null"] = ucwords(strtolower('default template'));
+    $templates["null"] = ucwords(strtolower('default template'))." › $defaultTemplateViewName";
 
     $template_paths = [];
 
@@ -217,8 +220,7 @@ class Folio {
     // Get template full paths
     // if($config_paths = config('folio.custom-template-views-foldername')) {
     if($config_paths = $custom_template_views_folder) {
-      foreach($config_paths as $name=>$folder) {
-        //$name.' · resources/views/'.$dir
+      foreach($config_paths as $name => $folder) {
         $template_paths[$name] = [
           'folder' => $folder,
           'path' => resource_path().'/views/'.$folder,
@@ -329,11 +331,15 @@ class Folio {
       return imgix($path);
     }
 
-    // Spaces
-    $uploadsDiskDriver = config('filesystems.disks.'.config('folio.uploader.disk').'.driver');
-    if ($uploadsDiskDriver == 'spaces') {
+    // Spaces/S3
+    $uploaderDisk = config('folio.uploader.disk');
+    $uploadsDisk = config('filesystems.disks.'.$uploaderDisk);
+
+    if ($uploadsDisk['driver'] == 's3') {
       $path = Str::of($path)->start('/');
-      return 'https://'.env('DIGITAL_OCEAN_BUCKET').'.'.env('DIGITAL_OCEAN_REGION').'.digitaloceanspaces.com'.$path;
+      $protocol = 'https://';
+      $endpoint = Str::of($uploadsDisk['endpoint'])->explode('://')->last();
+      return $protocol.$uploadsDisk['bucket'].'.'.$endpoint.$path;
     }
 
     return Folio::url($path);
@@ -430,6 +436,41 @@ class Folio {
     $padding = $padding ?? config('folio.hashing.padding');
     $alphabet = $alphabet ?? config('folio.hashing.alphabet');
     return new \Hashids\Hashids($salt, $padding, $alphabet);
+  }
+
+  /**
+   * Purges an imgix asset by Url.
+   */
+  public static function purgeImgix($url) {
+    if (!$url) {
+      return false;
+    }
+    $imgix_api_key = env('IMGIX_API_KEY');
+    if ($imgix_api_key) {
+        # https://gist.github.com/jacktasia/17cefd2c41a5b44d8460
+        $client = new \GuzzleHttp\Client();
+        try {
+            $response = $client->post('https://api.imgix.com/api/v1/purge', [
+                'headers' => [
+                    'Content-Type'  => 'application/vnd.api+json',
+                    'Authorization' => 'Bearer '.$imgix_api_key
+                ],
+                \GuzzleHttp\RequestOptions::JSON => [
+                    'data' => [
+                        'attributes' => [
+                            'url' => $url
+                        ],
+                        'type' => 'purges'
+                    ]
+                ]
+            ]);
+            return true;
+        }
+        catch (\Guzzle\Http\Exception\ClientErrorResponseException $exception) {
+            $responseBody = $exception->getResponse()->getBody(true);
+            return false;
+        }
+    }
   }
 
 }

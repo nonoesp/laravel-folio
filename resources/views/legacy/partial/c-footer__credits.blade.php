@@ -2,7 +2,7 @@
   if(!isset($text)) {
       $footer = config('folio.footer');
       $text = null;
-      if($footer['credits_text']) {
+      if ($footer && array_key_exists('credits_text', $footer)) {
         $text = $footer['credits_text'];
       }
   }
@@ -14,6 +14,19 @@
 
         <p>
           @if($text)
+
+            @php
+            $text = str_replace(
+                [
+                    '{year}',
+                    '{footer-text}',
+                ],
+                [
+                    Item::formatDate(Date::now(), 'Y'),
+                    trans('folio.footer-text'),
+                ],
+                $text);
+            @endphp          
 
             {!! $text !!}
 
