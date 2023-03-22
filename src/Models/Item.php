@@ -37,7 +37,7 @@ class Item extends Model implements Feedable, Searchable
 	/**
 	 * @var array
 	 */
-	protected $dates = ['deleted_at'];
+	protected $casts = ['deleted_at'];
 
 	/**
 	 * @var boolean
