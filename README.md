@@ -101,5 +101,5 @@ If you find Folio useful in any way, reach out on Twitter at [@nonoesp](https://
 👨🏻‍🎨 [Sketches](https://sketch.nono.ma)  
 ✍🏻 [Blog](https://nono.ma)  
 🐦 [Twitter](https://twitter.com/nonoesp)  
-📸 [Instagram](https://instagram.com/nonoesp)
+📸 [Instagram](https://instagram.com/nonoesp)  
 📸 [YouTube](https://youtube.com/NonoMartinezAlonso)
