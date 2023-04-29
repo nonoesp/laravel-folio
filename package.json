@@ -48,7 +48,7 @@
         "validate-js": "^2.0.1",
         "vue": "^2.6.11",
         "vue-focus": "^2.1.0",
-        "vue-resource": "^1.5.1",
+        "vue-resource": "^1.5.3",
         "vuedraggable": "^2.23.2"
     }
 }
