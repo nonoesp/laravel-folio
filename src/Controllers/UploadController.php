@@ -85,11 +85,14 @@ class UploadController extends Controller
                 $imgix_api_key = env('IMGIX_API_KEY');
                 $imgix_purge_on_replace = env('IMGIX_PURGE_ON_REPLACE');
                 if ($imgix_api_key && $imgix_purge_on_replace) {
-                    $imgix_url = imgix($uploaderUploadsFolder.'/'.$filename);
+                    $imgix_url = imgix($uploaderPublicFolder);
+                    \Log::info('$imgix_url → '.$imgix_url);
                     $purge_response = \Folio::purgeImgix($imgix_url);
                     if ($purge_response) {
+                        \Log::info('Successful purge from imgix: '.$imgix_url);
                         array_push($messages, 'The file has been purged from imgix.');
                     } else {
+                        \Log::error('Failed purge from imgix: '.$imgix_url);
                         array_push($messages, 'Failed to purge the file from imgix.');
                     }
                 }

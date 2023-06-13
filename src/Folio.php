@@ -468,6 +468,7 @@ class Folio {
         }
         catch (\Guzzle\Http\Exception\ClientErrorResponseException $exception) {
             $responseBody = $exception->getResponse()->getBody(true);
+            \Log::error($responseBody);
             return false;
         }
     }
