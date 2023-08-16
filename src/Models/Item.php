@@ -370,6 +370,15 @@ class Item extends Model implements Feedable, Searchable
 			}
 		}
 		return $default;
+	}
+
+	public function floatProperty($key, $default = null) {
+		if($p = $this->property($key)) {
+			if ($p->value != '') {
+				return floatval($p->value);
+			}
+		}
+		return $default;
 	}	
 
 	public function scopeBlog($query)
