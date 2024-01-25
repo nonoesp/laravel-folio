@@ -11,6 +11,7 @@
 	$og_image = $og_image ?? config('folio.image-src');
 	$og_url = $og_url ?? Request::root().'/'.Request::path();
 	$fb_app_id = $fb_app_id ?? config('folio.social.facebook.app_id');
+	$mastodon_url = $mastodon_url ?? config('folio.social.mastodon.url');
 	$debug_load_time = $debug_load_time ?? config('folio.debug.load-time');
 
 	// Icons
@@ -85,6 +86,9 @@
 	<link rel="image_src" href="{{ $og_image }}" />
 @if($og_author)
 	<meta name="author" content="{{ $og_author }}" />
+@endif
+@if($mastodon_url)
+	<link rel="me" href="{{ $mastodon_url }}" />
 @endif
 
 	<!-- Open Graph meta data -->
