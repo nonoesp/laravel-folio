@@ -188,11 +188,11 @@ class Thinker {
 		$isVimeo = false;
 
 		if(strpos($video, "youtube.com") != false){
-		$isYoutube = true;
+			$isYoutube = true;
 		} else if (strpos($video, "youtu.be") != false) {
-		$isYoutube = true;
+			$isYoutube = true;
 		} else if (strpos($video, "vimeo.com") != false) {
-		$isVimeo = true;
+			$isVimeo = true;
 		}
 
 		if ($isYoutube) {

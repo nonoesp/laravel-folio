@@ -698,7 +698,7 @@ class Item extends Model implements Feedable, Searchable
 			return Thinker::videoWithURL(
 				$this->video,
 				'c-item-v2__cover-media',
-				$this->videoImage(),
+				$this->videoImage(['q' => 60, 'w' => 1200, 'auto' => 'format']),
 				$this->boolProperty('fade'),
 				$this->boolProperty('dark-play'),
 			);
