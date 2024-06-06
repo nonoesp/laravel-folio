@@ -1210,6 +1210,7 @@ class Item extends Model implements Feedable, Searchable
 	 */
 	public static function makeCollection($params) {
 
+		return collect();
 		$tags = Arr::get($params, 'tags');
 		$select = Arr::get($params, 'select', '*');
 		$sort = Arr::get($params, 'sort', 'published_at');
@@ -1218,10 +1219,10 @@ class Item extends Model implements Feedable, Searchable
 		$showAll = Arr::get($params, 'showAll', false);
 		$showHidden = Arr::get($params, 'showHidden', false);
 		$showScheduled = Arr::get($params, 'showScheduled', false);
-		$collection = [];
+		$collection = collect();
 
 		if (!$tags) {
-			return [];
+			return $collection;
 		}
 
 		$shouldShowTrashed = false;
