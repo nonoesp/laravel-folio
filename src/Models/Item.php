@@ -1209,10 +1209,10 @@ class Item extends Model implements Feedable, Searchable
 		$showAll = Arr::get($params, 'showAll', false);
 		$showHidden = Arr::get($params, 'showHidden', false);
 		$showScheduled = Arr::get($params, 'showScheduled', false);
-		$collection = [];
+		$collection = collect();
 
 		if (!$tags) {
-			return [];
+			return $collection;
 		}
 
 		$shouldShowTrashed = false;
