@@ -1082,7 +1082,7 @@ class Item extends Model implements Feedable, Searchable
 		$collectionLabels = [];
 
 		foreach($this->propertyArray('collection') as $collectionProperty) {
-			array_push($collectionLabels, $collectionProperty->label);
+			array_push($collectionLabels, $collectionProperty->value);
 		}
 
 		return $collectionLabels;
