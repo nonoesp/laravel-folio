@@ -29,6 +29,7 @@
             $images = [];
             $videos = [];
             $animations = [];
+            $otherFiles = [];
         @endphp
 
         @foreach($filenames as $filename)
@@ -44,19 +45,22 @@
                 
                 $isVideo = in_array($extension, ['mp4', 'mov', 'webm']);
                 $isAnimation = in_array($extension, ['gif']);
+                $isImage = in_array($extension, ['jpeg', 'jpg', 'svg', 'png', 'tiff', 'bmp', 'webp']);
 
                 if ($isVideo) {
                     // Videos
                     array_push($videos, $filename);
-                    continue;
                 } else if ($isAnimation) {
                     // Animations
                     array_push($animations, $filename);
-                    continue;
+                } else if ($isImage) {
+                    // Images
+                    array_push($images, $filename);
+                } else {
+                    // Other files
+                    array_push($otherFiles, $filename);
                 }
 
-                // Images
-                array_push($images, $filename);
             @endphp
         @endforeach
 
@@ -98,7 +102,7 @@
                                 <br/>
                                 {{ $basename }}
                                 ·
-                                <a class="o-image-upload__delete js--delete-image" data-url="/{{ Folio::adminPath().'upload/delete/'.$basename }}">╳</a>
+                                <a class="o-image-upload__delete js--delete-image u-cursor-pointer" data-url="/{{ Folio::adminPath().'upload/delete/'.$basename }}">╳</a>
                             </p>
                         </div>
                 @endforeach
@@ -156,7 +160,7 @@
         @endif
 
 
-
+        {{-- Videos --}}        
 
         @if(count($videos))
 
@@ -176,15 +180,13 @@
                         // Construct file path
                         // $filePath = Folio::upload($basename);
 
-                        $image = Folio::uploadUrl($basename);
+                        $video = Folio::uploadUrl($basename);
                         // $image = config('folio.imgix') ? imgix($filePath) : Folio::mediaUrl($filePath);
                     @endphp
 
                         <div class="[ grid__item one-whole ]">
                             <p>
-                                <a href="{{ $image }}" target="_blank">
-                                    {{ $basename }}
-                                </a>
+                                <a href="{{ $video }}" target="_blank">{{ $basename }}</a>
                                 ·
                                 <a
                                     class="js--delete-image u-cursor-pointer"
@@ -199,6 +201,42 @@
             </div>
 
         @endif
+
+        {{-- Other files --}}
+
+        @if(count($otherFiles))
+
+            <div class="admin-form grid">
+
+                <div class="grid__item one-whole u-mar-b-3x u-mar-t-3x u-font-size--g">
+                    <strong>Files</strong>
+                </div>        
+
+                @foreach($otherFiles as $filename)
+                    @php
+                        $basename = basename($filename);
+                        $extension = explode('.', $basename);
+                        $extension = $extension[count($extension) - 1];
+                        $file = Folio::uploadUrl($basename);
+                    @endphp
+
+                        <div class="[ grid__item one-whole ]">
+                            <p>
+                                <a href="{{ $file }}" target="_blank">{{ $basename }}</a>
+                                ·
+                                <a
+                                    class="js--delete-image u-cursor-pointer"
+                                    data-url="/{{ Folio::adminPath("upload/delete/$basename") }}"
+                                >
+                                    ╳
+                                </a>
+                            </p>
+                        </div>
+                @endforeach    
+            
+            </div>
+        
+        @endif        
 
 	</div>
 
