@@ -790,17 +790,11 @@ class Item extends Model implements Feedable, Searchable
 
 				$veilPath = Folio::asset('images/veil.gif');
 
-				$search = [
-					// '/<img src="(.*?)" alt="(.*?)" \/>/is',
-					'/<img(.*?)src="(.*?)" alt="(.*?)" \/>/is',
-				]; 
+				$pattern = '/<img([^>]*?)src="([^"]*?)"([^>]*?)\/>/i';
 
-				$replace = [
-						// '<img src="'.$veilPath.'" data-src="$1" alt="$2" />',
-						'<img$1src="'.$veilPath.'" data-src="$2" alt="$3" />',
-				];
+				$replacement = '<img$1src="'.$veilPath.'" data-src="$2"$3/>';
 
-				$html = preg_replace ($search, $replace, $html); 
+				$html = preg_replace ($pattern, $replacement, $html); 
 			}
 
 			// Use imgix?
