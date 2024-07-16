@@ -44,9 +44,9 @@ class LoginController extends Controller
         
         $this->guard()->logout();
 
-        $request->session()->invalidate();
+        session()->invalidate();
 
-        $request->session()->regenerateToken();
+        session()->regenerateToken();
 
         session(['email' => $email]); // Nono+
 

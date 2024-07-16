@@ -160,7 +160,7 @@
 		]) !!}
 	@endif
 
-	@if($notification = Request::session()->get('notification'))
+	@if($notification = session()->get('notification'))
 		{!! view('folio::partial.o-notification', [
 			'notification' => $notification,
 			'classes' => ['o-notification--light'],

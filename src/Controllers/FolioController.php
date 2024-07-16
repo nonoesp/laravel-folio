@@ -222,7 +222,7 @@ class FolioController extends Controller
 						$notification = trans('folio::base.preview-of-unpublished-page');
 					}
 
-					$request->session()->flash('notification', $notification);
+					session()->flash('notification', $notification);
 				} else {
 					// private and hidden (no auth)
 					return response()->view('errors.404', [], 404);
