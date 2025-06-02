@@ -277,6 +277,11 @@ Route::group([
 		// Feed
 		Route::get(config('folio.feed.route'), ['as' => 'feed', 'uses' => 'Nonoesp\Folio\Controllers\FeedController@makeFeed']);
 
+		// CSRF token refresh
+		Route::get('csrf-token', function() {
+			return response()->json(['token' => csrf_token()]);
+		});
+
 		// Debug
 		Route::get('debug/folio', 'Nonoesp\Folio\Controllers\DebugController@helloFolio');
 		Route::get('debug/load-time', 'Nonoesp\Folio\Controllers\DebugController@loadTime');
