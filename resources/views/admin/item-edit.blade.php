@@ -702,7 +702,7 @@ const admin = createApp({
 				</div>
 				<div v-if="!!!properties.length" class="[ grid__item ] [ u-pad-b-1x ]">
 					<p @click="add_property" class="c-admin__property-add">Add Properties</p>
-				</div>				
+				</div>
 
 				<draggable 
 					v-model="properties"
